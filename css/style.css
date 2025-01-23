@@ -1,25 +1,26 @@
+/* General styling */
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
 }
 
+h2 {
+    margin-bottom: 1.5rem;
+}
+
+/* Header styling */
 header {
     background: #333;
     color: #fff;
-    padding: 2rem 0;
-    text-align: center;
+    padding: 3rem 0;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+header h1,
+header h2 {
+    margin: 0;
 }
 
-header p {
-    font-size: 1.2rem;
-}
-
-.btn {
+header .btn {
     margin: 0.5rem;
     color: #fff;
     background: #007bff;
@@ -29,13 +30,8 @@ header p {
     text-decoration: none;
 }
 
-.btn:hover {
+header .btn:hover {
     background: #0056b3;
-}
-
-section h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
 }
 
 /* Section animations */
@@ -50,7 +46,23 @@ section.active {
     transform: translateY(0);
 }
 
-/* Timeline enhancements */
+/* Skills styling */
+.skill-box {
+    display: inline-block;
+    margin: 1rem 0;
+    transition: transform 0.3s;
+}
+
+.skill-box:hover {
+    transform: scale(1.1);
+}
+
+.skill-box i {
+    color: #007bff;
+    margin-bottom: 0.5rem;
+}
+
+/* Timeline styling */
 .timeline {
     position: relative;
     padding: 2rem 0;
@@ -71,11 +83,6 @@ section.active {
     position: relative;
     margin-bottom: 2rem;
     padding-left: 2rem;
-}
-
-.timeline-item h3 {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
 }
 
 .timeline-item::before {
