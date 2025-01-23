@@ -31,3 +31,31 @@ window.addEventListener("scroll", () => {
 backToTopButton.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// Typing effect for header
+new Typed("#typed", {
+    strings: ["Hello, my name is"],
+    typeSpeed: 50,
+    backSpeed: 25,
+    loop: false
+});
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Skill box hover effect
+document.querySelectorAll(".skill-box").forEach(box => {
+    box.addEventListener("mouseenter", () => {
+        box.innerHTML = `<p>${box.dataset.skill}</p>`;
+    });
+    box.addEventListener("mouseleave", () => {
+        box.innerHTML = `<i class="fas fa-code fa-3x"></i><p>${box.querySelector('p').textContent}</p>`;
+    });
+});
