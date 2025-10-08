@@ -60,8 +60,8 @@ body {
 }
 
 .hero-img {
-    width: 160px;
-    height: 160px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
     border: 1px solid var(--stroke);
 }
@@ -237,4 +237,56 @@ footer {
     .timeline .timeline-item.card {
         margin-left: 40px;
     }
+}
+
+/* Contact form tweaks (already aligned with Bootstrap) */
+.contact-form {
+    max-width: 760px;
+}
+
+/* JSON-driven placeholders */
+#projectsGrid .card,
+#experienceTimeline .card {
+    background: var(--panel);
+    color: var(--text);
+}
+
+/* ===== Dynamic Header Text Styling ===== */
+
+/* Dark gray header text when background shifts to white */
+header.scrolled {
+    background-color: #ffffff;
+    color: #222222 !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+header.scrolled h1,
+header.scrolled h2,
+header.scrolled p {
+    color: #222222 !important;
+}
+
+/* Add a subtle shadow for better readability */
+header.scrolled h1,
+header.scrolled h2 {
+    text-shadow: none;
+}
+
+/* ===== Tagline Styling ("Data Scientist • ML Engineer • Analytics") ===== */
+header p.lead {
+    color: #2e86de;
+    /* bright blue for contrast */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* When background turns white (after scroll), make tagline darker for readability */
+header.scrolled p.lead {
+    color: #1a73e8;
+    /* Google-style blue */
+}
+
+/* ===== Transition Effect ===== */
+header {
+    transition: background-color 0.4s ease, color 0.4s ease;
 }

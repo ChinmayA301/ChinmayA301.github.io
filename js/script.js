@@ -95,6 +95,17 @@ async function loadExperience() {
 loadProjects();
 loadExperience();
 
+// Header background + text color shift on scroll
+const header = document.querySelector("header");
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 80) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+});
+
+
 // Contact form (Formspree)
 const form = document.getElementById("contactForm");
 const msg = document.getElementById("formMsg");
