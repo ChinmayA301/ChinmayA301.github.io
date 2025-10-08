@@ -54,14 +54,15 @@ body {
 }
 
 /* Hero */
-.hero {
+/* .hero {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
     padding: 80px 0 48px;
-}
+} */
 
 .hero-img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
     object-fit: cover;
     border: 1px solid var(--stroke);
 }
@@ -76,36 +77,37 @@ body {
 /* ===== Dynamic Header Text Styling ===== */
 
 /* Dark gray header text when background shifts to white */
+/* Keep hero background dark; only invert text for readability on scroll */ 
+
 .hero {
-    transition: background-color 0.8s ease, color 0.8s ease;
+    transition: color 0.4s ease;
 }
 
 .hero.scrolled {
-    background-color: #ffffff;
-    /* only the hero band turns white */
-    color: #222222 !important;
-    /* dark text for contrast */
+    background-color: transparent !important;
+    /* keep the dark gradient */
 }
 
 .hero.scrolled h1,
 .hero.scrolled h2,
-.hero.scrolled p {
-    color: #222222 !important;
+.hero.scrolled p,
+.hero.scrolled .btn,
+.hero.scrolled .btn:hover {
+    color: #e9eef6 !important;
+    /* slightly lighter for contrast on dark */
     text-shadow: none;
 }
 
-/* ===== Tagline Styling ("Data Scientist • ML Engineer • Analytics") ===== */
+/* Tagline contrast (more punch) */
 header p.lead {
     color: #2e86de;
-    /* bright blue for contrast */
     font-weight: 700;
     letter-spacing: 0.5px;
 }
 
-/* When background turns white (after scroll), make tagline darker for readability */
-header.scrolled p.lead {
-    color: #1a73e8;
-    /* Google-style blue */
+.hero.scrolled p.lead {
+    color: #76a9ff;
+    /* brighter against dark bg while scrolled */
 }
 
 /* Skills */
@@ -187,6 +189,22 @@ header.scrolled p.lead {
     transform: translateY(-4px);
     border-color: rgba(46, 130, 255, .4);
     box-shadow: 0 14px 40px rgba(0, 0, 0, .35);
+}
+
+/* Remove underline from project cards and inner elements */
+.project-box.card,
+.project-box.card * {
+    text-decoration: none !important;
+}
+
+/* Lighter project description text */
+.project-box.card .card-body p {
+    color: var(--muted);
+}
+
+/* Optional: make titles a touch brighter for hierarchy */
+.project-box.card .card-body h3 {
+    color: #eaf0ff;
 }
 
 .badge {

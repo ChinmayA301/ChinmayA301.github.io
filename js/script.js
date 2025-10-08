@@ -96,7 +96,7 @@ loadProjects();
 loadExperience();
 
 // Header background + text color shift on scroll
-const hero = document.querySelector("hero");
+const hero = document.querySelector(".hero");
 window.addEventListener("scroll", () => {
     if (window.scrollY > 80) {
         hero?.classList.add("scrolled");
