@@ -60,8 +60,8 @@ body {
 }
 
 .hero-img {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
     border: 1px solid var(--stroke);
 }
@@ -121,22 +121,23 @@ body {
     transform: translateX(-50%) translateY(0);
 }
 
-.hero {
-    transition: background-color 0.4s ease, color 0.4s ease;
+
+/* More vertical spacing between skill rows */
+#skills .row {
+    row-gap: 28px;
+    /* adds space between wrapped rows */
 }
 
-.hero.scrolled {
-    background-color: #ffffff;
-    /* only the hero band turns white */
-    color: #222222 !important;
-    /* dark text for contrast */
+@media (min-width: 768px) {
+    #skills .row {
+        row-gap: 36px;
+    }
 }
 
-.hero.scrolled h1,
-.hero.scrolled h2,
-.hero.scrolled p {
-    color: #222222 !important;
-    text-shadow: none;
+/* Optional: extra room for hover tooltip under boxes */
+.skill-box {
+    margin-bottom: 8px;
+    /* ensures tooltip has breathing room */
 }
 
 /* Project cards */
@@ -273,7 +274,7 @@ footer {
 
 /* Dark gray header text when background shifts to white */
 .hero {
-    transition: background-color 0.4s ease, color 0.4s ease;
+    transition: background-color 0.8s ease, color 0.8s ease;
 }
 
 .hero.scrolled {
@@ -305,6 +306,6 @@ header.scrolled p.lead {
 }
 
 /* ===== Transition Effect ===== */
-header {
+/* header {
     transition: background-color 0.4s ease, color 0.4s ease;
-}
+} */
