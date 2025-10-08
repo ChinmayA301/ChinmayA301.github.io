@@ -60,8 +60,8 @@ body {
 }
 
 .hero-img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     border: 1px solid var(--stroke);
 }
@@ -119,6 +119,24 @@ body {
 .skill-box:hover::after {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+}
+
+.hero {
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.hero.scrolled {
+    background-color: #ffffff;
+    /* only the hero band turns white */
+    color: #222222 !important;
+    /* dark text for contrast */
+}
+
+.hero.scrolled h1,
+.hero.scrolled h2,
+.hero.scrolled p {
+    color: #222222 !important;
+    text-shadow: none;
 }
 
 /* Project cards */
@@ -254,21 +272,21 @@ footer {
 /* ===== Dynamic Header Text Styling ===== */
 
 /* Dark gray header text when background shifts to white */
-header.scrolled {
-    background-color: #ffffff;
-    color: #222222 !important;
+.hero {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-header.scrolled h1,
-header.scrolled h2,
-header.scrolled p {
+.hero.scrolled {
+    background-color: #ffffff;
+    /* only the hero band turns white */
     color: #222222 !important;
+    /* dark text for contrast */
 }
 
-/* Add a subtle shadow for better readability */
-header.scrolled h1,
-header.scrolled h2 {
+.hero.scrolled h1,
+.hero.scrolled h2,
+.hero.scrolled p {
+    color: #222222 !important;
     text-shadow: none;
 }
 

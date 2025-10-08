@@ -96,12 +96,12 @@ loadProjects();
 loadExperience();
 
 // Header background + text color shift on scroll
-const header = document.querySelector("header");
+const hero = document.querySelector("hero");
 window.addEventListener("scroll", () => {
     if (window.scrollY > 80) {
-        header.classList.add("scrolled");
+        hero?.classList.add("scrolled");
     } else {
-        header.classList.remove("scrolled");
+        hero?.classList.remove("scrolled");
     }
 });
 
