@@ -80,7 +80,7 @@ body {
 /* Keep hero background dark; only invert text for readability on scroll */ 
 
 .hero {
-    transition: color 0.4s ease;
+    transition: color 0.8s ease;
 }
 
 .hero.scrolled {
@@ -178,12 +178,12 @@ header p.lead {
 }
 
 /* Project cards */
-.project-box.card {
+/* .project-box.card {
     border: 1px solid var(--stroke);
     background: var(--panel);
     color: var(--text);
     transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-}
+} */
 
 .project-box.card:hover {
     transform: translateY(-4px);
@@ -296,10 +296,10 @@ footer {
     filter: brightness(1.08);
 }
 
-@media (max-width: 992px) {
+@media (min-width: 992px) {
     .hero-img {
-        width: 136px;
-        height: 136px;
+        width: 196px;
+        height: 196px;
     }
 
     .timeline::before {

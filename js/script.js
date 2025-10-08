@@ -1,8 +1,8 @@
 // Typed headline
 new Typed("#typed", {
     strings: ["Hello, my name is"],
-    typeSpeed: 22,
-    backSpeed: 12,
+    typeSpeed: 62,
+    backSpeed: 22,
     loop: false,
     showCursor: true
 });
