@@ -1,0 +1,63 @@
+[
+    {
+        "title": "Graduate Research Assistant",
+        "org": "UMN • BPIC & Hennepin County DX/IDA",
+        "time": "Sep 2024 – Present",
+        "location": "Minneapolis, MN",
+        "bullets": [
+            "ML-driven resident segmentation & automated ETL pipelines; Power BI reporting for digital accessibility.",
+            "Responsible AI evaluation: fairness metrics, human-in-loop review, bias mitigation in county operations.",
+            "Geo/stat analysis using ArcGIS/GeoPandas/PySAL; integrated ADI/SVI & cohort data."
+        ]
+    },
+    {
+        "title": "Data Science Intern",
+        "org": "MarketMaker CRE",
+        "time": "Jul 2024 – Sep 2024",
+        "location": "Remote, USA",
+        "bullets": [
+            "Python async scraping → ETL (dbt) → ML (XGBoost/RF) with SHAP/LIME explainability.",
+            "Deployed containerized FastAPI services; Azure SQL/Mongo integrations."
+        ]
+    },
+    {
+        "title": "Data Analyst (Marketing) Intern",
+        "org": "Confetti AI",
+        "time": "May 2024 – Jul 2024",
+        "location": "Remote, USA",
+        "bullets": [
+            "A/B testing & funnel analytics (+25% conversion, +30% segmentation accuracy).",
+            "Built Tableau/Power BI dashboards for growth KPIs."
+        ]
+    },
+    {
+        "title": "IT Support Engineer / Data Analyst",
+        "org": "Luthra Corporate Advisors",
+        "time": "Nov 2021 – Jul 2023",
+        "location": "Remote / New Delhi, India",
+        "bullets": [
+            "Financial analytics for US freight forwarding clients (Power BI, SQL, Excel VBA) – automated reporting & forecasting.",
+            "Deployed an LLM chatbot (LangChain/HuggingFace/Supabase/Chroma) to reduce support queries."
+        ]
+    },
+    {
+        "title": "M.S. in Data Science",
+        "org": "University of Minnesota",
+        "time": "2023 – 2025",
+        "location": "Twin Cities, MN",
+        "bullets": [
+            "Courses: Data Mining, ML, Spatial DS, Viz w/ AI, Categorical & Multivariate Stats, DB Systems, AI for Sequential Decisions.",
+            "Projects: RAG systems, OCR+NLP, Sports Analytics, Manufacturing Optimizer."
+        ]
+    },
+    {
+        "title": "B.Tech. in Computer Science",
+        "org": "SRM Institute of Science & Technology",
+        "time": "2019 – 2023",
+        "location": "Chennai, India",
+        "bullets": [
+            "Research: Face Mask Detection, Medical Image Segmentation; 2 papers (IJSER).",
+            "Leadership: Enactus SRM – product & ops for e-commerce initiative."
+        ]
+    }
+]

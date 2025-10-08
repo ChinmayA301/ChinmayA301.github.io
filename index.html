@@ -2,158 +2,182 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chinmay Arora - Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Icons / Effects -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <!-- Header Section -->
-    <header id="home" class="d-flex align-items-center">
+    <!-- Nav -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark glass">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">CA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
+                aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#timeline">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-outline-light btn-sm" href="assets/Chinmay_Arora_Resume.pdf" target="_blank"
+                            rel="noopener">Download CV</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Hero -->
+    <header id="home" class="d-flex align-items-center hero">
         <div class="container text-center">
-            <img src="assets/images/profile.jpg" alt="Profile Picture" class="rounded-circle mb-3"
-                style="width: 150px; height: 150px;">
-            <h1><span id="typed"></span></h1>
-            <h2>Chinmay Arora</h2>
-            <p>Data Scientist | Analyst | Innovator</p>
-            <a href="https://www.linkedin.com/in/chinmay-arora-27682211b/" target="_blank"
-                class="btn btn-primary">LinkedIn</a>
-            <a href="https://github.com/yourusername" target="_blank" class="btn btn-secondary">GitHub</a>
-            <a href="assets/ChinmayArora_CV.pdf" target="_blank" class="btn btn-outline-primary">Download CV</a>
+            <div class="d-flex justify-content-center">
+                <img src="assets/images/profile.jpg" alt="Profile Picture" class="rounded-4 shadow-lg hero-img">
+            </div>
+            <h1 class="mt-3 text-gradient"><span id="typed"></span></h1>
+            <h2 class="fw-bold">Chinmay Arora</h2>
+            <p class="lead text-muted">Data Scientist • ML Engineer • Analytics</p>
+            <div class="mt-2">
+                <a href="https://www.linkedin.com/in/chinmay-arora-27682211b/" target="_blank"
+                    class="btn btn-primary me-2">LinkedIn</a>
+                <a href="https://github.com/ChinmayA301" target="_blank" class="btn btn-outline-light me-2">GitHub</a>
+                <a href="assets/Chinmay_Arora_Resume.pdf" target="_blank" class="btn btn-outline-primary">Download
+                    CV</a>
+            </div>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="mt-5">
+    <!-- About -->
+    <section id="about" class="section">
         <div class="container text-center">
-            <h2>About Me</h2>
-            <p>I am a Data Science Master’s student at the University of Minnesota, Twin Cities. With a strong
-                foundation in machine learning, data visualization, and predictive analytics, I am passionate about
-                solving real-world problems through data-driven insights.</p>
+            <h2 class="section-title">About Me</h2>
+            <p class="section-text mx-auto">
+                I’m a Data Science MS student at the University of Minnesota focused on building reliable, explainable,
+                and scalable AI.
+                I’ve shipped end-to-end ML pipelines (web scraping → ETL → modeling → APIs), designed RAG systems, and
+                built BI dashboards
+                that turn data into decisions. I care about responsible AI, fairness, and user-centric design—especially
+                in public-sector
+                and high-impact domains.
+            </p>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="bg-light py-5">
+    <!-- Skills -->
+    <section id="skills" class="section alt-bg">
         <div class="container">
-            <h2 class="text-center">Skills</h2>
-            <div class="row text-center">
-                <div class="col-md-3">
-                    <div class="skill-box" data-skill="Proficient in Python, R, SQL, and MATLAB.">
-                        <i class="fas fa-code fa-3x"></i>
-                        <p>Programming</p>
+            <h2 class="section-title text-center">Skills</h2>
+            <div class="row g-3 text-center justify-content-center">
+                <div class="col-6 col-md-3">
+                    <div class="skill-box" data-skill="Python, R, SQL, dbt, Pandas, NumPy, SciPy">
+                        <i class="fas fa-code fa-2x"></i>
+                        <p class="mb-0 fw-semibold">Core & Data</p>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="skill-box" data-skill="Expertise in Tableau and Power BI for visual analytics.">
-                        <i class="fas fa-chart-line fa-3x"></i>
-                        <p>Data Visualization</p>
+                <div class="col-6 col-md-3">
+                    <div class="skill-box" data-skill="Scikit-learn, XGBoost, TensorFlow, PyTorch, CV/NLP">
+                        <i class="fas fa-brain fa-2x"></i>
+                        <p class="mb-0 fw-semibold">ML & Modeling</p>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="skill-box" data-skill="Experienced with TensorFlow, PyTorch, and Scikit-learn.">
-                        <i class="fas fa-brain fa-3x"></i>
-                        <p>Machine Learning</p>
+                <div class="col-6 col-md-3">
+                    <div class="skill-box" data-skill="LangChain, HuggingFace, ChromaDB, RAG, Text-to-SQL">
+                        <i class="fas fa-robot fa-2x"></i>
+                        <p class="mb-0 fw-semibold">GenAI & RAG</p>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="skill-box" data-skill="Proficient in ArcGIS and QGIS for spatial analysis.">
-                        <i class="fas fa-map fa-3x"></i>
-                        <p>Geospatial Analysis</p>
+                <div class="col-6 col-md-3">
+                    <div class="skill-box" data-skill="Docker, FastAPI, CI/CD, MLflow, Supabase, Prometheus">
+                        <i class="fas fa-boxes fa-2x"></i>
+                        <p class="mb-0 fw-semibold">MLOps & Infra</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="skill-box" data-skill="Power BI, Tableau, Qlik, KPI design, storytelling">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                        <p class="mb-0 fw-semibold">BI & Viz</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="skill-box" data-skill="ArcGIS, QGIS, GeoPandas, ADI/SVI, spatial stats">
+                        <i class="fas fa-map-marked-alt fa-2x"></i>
+                        <p class="mb-0 fw-semibold">GeoAI</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-5">
+    <!-- Projects (JSON-driven) -->
+    <section id="projects" class="section">
         <div class="container">
-            <h2 class="text-center">Projects</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="https://github.com/yourusername/pacman-project" target="_blank" class="project-box">
-                        <h3>Interactive PAC-MAN Using MobileNet</h3>
-                        <p>Gesture-controlled PAC-MAN game using MobileNet for real-time gameplay.</p>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="https://github.com/yourusername/geoai-analysis" target="_blank" class="project-box">
-                        <h3>GeoAI for Environmental Analysis</h3>
-                        <p>Geospatial AI techniques applied to analyze and predict environmental changes.</p>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="https://github.com/yourusername/health-informatics" target="_blank" class="project-box">
-                        <h3>Health Informatics: Diabetes and Neighborhood Indices</h3>
-                        <p>Exploring diabetes prevalence and socioeconomic factors using spatial visualization.</p>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="https://github.com/yourusername/socialmedia-optimization" target="_blank"
-                        class="project-box">
-                        <h3>Business Process Optimization Using Social Media</h3>
-                        <p>Leveraged NLP and predictive modeling for trend detection and business insights.</p>
-                    </a>
-                </div>
+            <h2 class="section-title text-center">Projects</h2>
+            <div id="projectsGrid" class="row g-3">
+                <!-- Populated via JS from /data/projects.json -->
             </div>
         </div>
     </section>
 
-    <!-- Timeline Section -->
-    <section id="timeline" class="bg-light py-5">
+    <!-- Experience (JSON-driven) -->
+    <section id="timeline" class="section alt-bg">
         <div class="container">
-            <h2 class="text-center">Education and Work Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Master of Science in Data Science</h3>
-                    <p><strong>University of Minnesota</strong> | 2023-2025</p>
-                    <ul>
-                        <li>Courses: Data Mining, Machine Learning, Spatial Data Science, AI for Sequential Decisions.
-                        </li>
-                        <li>Projects: GeoAI Analysis, Interactive PAC-MAN, Health Informatics.</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>IT Support Engineer</h3>
-                    <p><strong>Luthra Corporate Advisors</strong> | 2021-2023</p>
-                    <ul>
-                        <li>Developed an AI-powered chatbot, boosting engagement by 40%.</li>
-                        <li>Conducted financial data analysis, improving reporting time by 20%.</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>Bachelor of Technology in Computer Science</h3>
-                    <p><strong>SRM Institute of Science and Technology</strong> | 2019-2023</p>
-                    <ul>
-                        <li>Research: Face Mask Detection, Medical Image Segmentation.</li>
-                        <li>Achievements: Published 2 papers in IJSER.</li>
-                    </ul>
-                </div>
+            <h2 class="section-title text-center">Education & Work Experience</h2>
+            <div id="experienceTimeline" class="timeline mx-auto">
+                <!-- Populated via JS from /data/experience.json -->
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5">
+    <!-- Contact (Formspree-ready) -->
+    <section id="contact" class="section">
         <div class="container text-center">
-            <h2>Contact Me</h2>
-            <p>Email: <a href="mailto:chinmayarora2001@gmail.com">chinmayarora2001@gmail.com</a></p>
-            <p>Phone: 737-340-7827</p>
+            <h2 class="section-title">Contact Me</h2>
+            <p class="mb-1">Email: <a href="mailto:chinmayarora2001@gmail.com">chinmayarora2001@gmail.com</a></p>
+            <p class="mb-4">Phone: 737-340-7827</p>
+
+            <form id="contactForm" class="contact-form mx-auto" action="https://formspree.io/f/xrbyalqp"
+                method="POST">
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" name="name" placeholder="Your Name" required />
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control" type="email" name="email" placeholder="Your Email" required />
+                    </div>
+                </div>
+                <input class="form-control mt-2" type="text" name="subject" placeholder="Subject" />
+                <textarea class="form-control mt-2" name="message" rows="6" placeholder="Your message..."
+                    required></textarea>
+                <button class="btn btn-primary mt-3" type="submit">Send Message</button>
+                <p id="formMsg" class="form-msg mt-2 small text-muted" role="status" aria-live="polite"></p>
+            </form>
+
+            <div class="mt-3">
+                <a href="https://github.com/ChinmayA301" class="btn btn-outline-dark me-2" target="_blank">GitHub</a>
+                <a href="assets/Chinmay_Arora_Resume.pdf" class="btn btn-primary" target="_blank">Download CV</a>
+            </div>
         </div>
     </section>
 
-    <footer class="bg-dark text-white py-3">
-        <div class="container text-center">
-            <p>&copy; 2025 Chinmay Arora. All Rights Reserved.</p>
+    <footer class="bg-dark text-white py-3 border-top">
+        <div class="container text-center small">
+            <p class="mb-0">&copy; <span id="year"></span> Chinmay Arora. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>

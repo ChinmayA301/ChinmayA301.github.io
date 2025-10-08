@@ -1,0 +1,79 @@
+[
+    {
+        "title": "Financial Balance Sheet RAG System",
+        "description": "Hybrid agentic RAG for balance-sheet Q&A using LangChain, HuggingFace, ChromaDB, Supabase (private server). Text-to-SQL for tabular reasoning, multi-hop retrieval; MLOps with Docker, CI/CD, MLflow; eval via RAGAS/Prometheus.",
+        "tags": [
+            "GenAI",
+            "RAG",
+            "Text-to-SQL",
+            "MLOps"
+        ],
+        "link": "https://github.com/ChinmayA301"
+    },
+    {
+        "title": "Resident Segmentation & Responsible AI (Hennepin County)",
+        "description": "ML-driven resident segmentation with automated ETL and Power BI reporting to enhance digital accessibility. Built a Responsible AI evaluation framework (fairness metrics, human-in-loop review, bias mitigation).",
+        "tags": [
+            "ML",
+            "Responsible AI",
+            "Power BI"
+        ]
+    },
+    {
+        "title": "Real Estate ML Pipelines (MarketMaker CRE)",
+        "description": "Async scraping → ETL (dbt) → ML (XGBoost/RF) with SHAP/LIME for valuation & segmentation. Containerized FastAPI microservices, Azure SQL/Mongo integrations.",
+        "tags": [
+            "ETL",
+            "XGBoost",
+            "FastAPI"
+        ],
+        "link": "https://github.com/ChinmayA301"
+    },
+    {
+        "title": "Selected Academic Projects",
+        "description": "Stock Market ML (Python), Sports Analytics (R), Manufacturing Cost Optimizer (LP), OCR + NLP (EasyOCR + spaCy) for document parsing with ETL middleware.",
+        "tags": [
+            "ML",
+            "NLP",
+            "ETL"
+        ],
+        "link": "https://github.com/ChinmayA301"
+    },
+    {
+        "title": "Interactive PAC-MAN using MobileNet",
+        "description": "Gesture-controlled PAC-MAN using MobileNet for real-time gameplay.",
+        "tags": [
+            "Computer Vision",
+            "MobileNet"
+        ],
+        "link": "https://github.com/ChinmayA301"
+    },
+    {
+        "title": "GeoAI for Environmental Analysis",
+        "description": "Geospatial AI with spatial statistics to analyze and predict environmental changes.",
+        "tags": [
+            "GeoAI",
+            "Spatial Stats"
+        ],
+        "link": "https://github.com/ChinmayA301"
+    },
+    {
+        "title": "Health Informatics: Diabetes & SDOH",
+        "description": "Analyzed diabetes prevalence against ADI/SVI neighborhood indices using spatial visualization.",
+        "tags": [
+            "Health Data",
+            "SDOH"
+        ],
+        "link": "https://github.com/ChinmayA301"
+    },
+    {
+        "title": "Business Optimization via Social Data",
+        "description": "NLP + RL + Bayesian optimization for virality detection, ad optimization, and trend forecasting.",
+        "tags": [
+            "NLP",
+            "RL",
+            "Bayesian Opt"
+        ],
+        "link": "https://github.com/ChinmayA301"
+    }
+]
