@@ -1,10 +1,10 @@
 // Typed headline
 new Typed("#typed", {
     strings: ["Hello, my name is"],
-    typeSpeed: 42,
-    backSpeed: 22,
+    typeSpeed: 22,
+    backSpeed: 12,
     loop: false,
-    showCursor: false
+    showCursor: true
 });
 
 // Smooth scrolling
