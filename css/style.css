@@ -178,12 +178,12 @@ header p.lead {
 }
 
 /* Project cards */
-/* .project-box.card {
+.project-box.card {
     border: 1px solid var(--stroke);
     background: var(--panel);
     color: var(--text);
     transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-} */
+}
 
 .project-box.card:hover {
     transform: translateY(-4px);
@@ -191,20 +191,27 @@ header p.lead {
     box-shadow: 0 14px 40px rgba(0, 0, 0, .35);
 }
 
-/* Remove underline from project cards and inner elements */
-.project-box.card,
-.project-box.card * {
+/* Remove underline and lighten project description text */
+.project-box.card {
     text-decoration: none !important;
 }
 
-/* Lighter project description text */
-.project-box.card .card-body p {
-    color: var(--muted);
+.project-box.card p {
+    text-decoration: none !important;
+    color: #cfd6df !important;
+    /* lighter gray text for better readability */
 }
 
-/* Optional: make titles a touch brighter for hierarchy */
-.project-box.card .card-body h3 {
-    color: #eaf0ff;
+/* Optional: brighten project titles slightly for hierarchy */
+.project-box.card h3 {
+    color: #eaf0ff !important;
+}
+
+/* Ensure hover doesn't add underline back */
+.project-box.card:hover,
+.project-box.card:hover p,
+.project-box.card:hover h3 {
+    text-decoration: none !important;
 }
 
 .badge {
