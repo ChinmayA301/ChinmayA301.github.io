@@ -182,7 +182,8 @@
             <h2 class="section-title text-center">Upload Project Content</h2>
             <p class="section-text mx-auto text-center">
                 Upload JSON to update your Projects, Reports, Coursework, or Future Ideas without editing the codebase.
-                Data is stored locally in your browser (localStorage) and can be cleared anytime.
+                Data is stored locally in your browser (localStorage) and can be cleared anytime. You can also publish
+                directly to GitHub with an admin token.
             </p>
             <div class="upload-card mx-auto mt-4">
                 <form id="uploadForm" class="row g-3">
@@ -213,6 +214,46 @@
                         <button id="clearUpload" class="btn btn-outline-light btn-sm" type="button">Clear Stored
                             Upload</button>
                         <span id="uploadStatus" class="small text-muted align-self-center"></span>
+                    </div>
+                </form>
+                <div class="upload-divider"></div>
+                <form id="githubPublishForm" class="row g-3">
+                    <div class="col-12">
+                        <h3 class="h6 mb-1">Publish to GitHub (Admin Only)</h3>
+                        <p class="small text-muted mb-0">
+                            Uses GitHub Contents API to commit the selected JSON file. Keep your token private.
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label">Owner</label>
+                        <input id="githubOwner" class="form-control" type="text" placeholder="ChinmayA301" />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label">Repository</label>
+                        <input id="githubRepo" class="form-control" type="text" placeholder="ChinmayA301.github.io" />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label">Branch</label>
+                        <input id="githubBranch" class="form-control" type="text" placeholder="main" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">File Path</label>
+                        <input id="githubPath" class="form-control" type="text" placeholder="data/projects.json" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Commit Message</label>
+                        <input id="githubCommitMsg" class="form-control" type="text"
+                            placeholder="Update portfolio data" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">GitHub Token</label>
+                        <input id="githubToken" class="form-control" type="password"
+                            placeholder="ghp_... (stored only for this session)" />
+                    </div>
+                    <div class="col-12 d-flex flex-wrap gap-2">
+                        <button id="githubPublish" class="btn btn-outline-light btn-sm" type="submit">Publish to
+                            GitHub</button>
+                        <span id="githubStatus" class="small text-muted align-self-center"></span>
                     </div>
                 </form>
             </div>

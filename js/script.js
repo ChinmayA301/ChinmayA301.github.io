@@ -235,8 +235,22 @@ const uploadText = document.getElementById("uploadText");
 const uploadStatus = document.getElementById("uploadStatus");
 const downloadUpload = document.getElementById("downloadUpload");
 const clearUpload = document.getElementById("clearUpload");
+const githubPublishForm = document.getElementById("githubPublishForm");
+const githubOwner = document.getElementById("githubOwner");
+const githubRepo = document.getElementById("githubRepo");
+const githubBranch = document.getElementById("githubBranch");
+const githubPath = document.getElementById("githubPath");
+const githubToken = document.getElementById("githubToken");
+const githubCommitMsg = document.getElementById("githubCommitMsg");
+const githubStatus = document.getElementById("githubStatus");
 
 const LOCAL_KEY_PREFIX = "portfolio_upload_";
+const SESSION_TOKEN_KEY = "portfolio_github_token";
+const GITHUB_DEFAULTS = {
+    owner: "ChinmayA301",
+    repo: "ChinmayA301.github.io",
+    branch: "main"
+};
 
 async function loadJsonWithOverrides(key, fallbackPath) {
     const stored = localStorage.getItem(`${LOCAL_KEY_PREFIX}${key}`);
@@ -255,6 +269,12 @@ function setUploadStatus(message, isError = false) {
     if (!uploadStatus) return;
     uploadStatus.textContent = message;
     uploadStatus.classList.toggle("text-danger", isError);
+}
+
+function setGithubStatus(message, isError = false) {
+    if (!githubStatus) return;
+    githubStatus.textContent = message;
+    githubStatus.classList.toggle("text-danger", isError);
 }
 
 async function readFileAsText(file) {
@@ -321,6 +341,129 @@ async function refreshAllSections() {
     ]);
 }
 
+function getFallbackPath(target) {
+    return {
+        projects: "data/projects.json",
+        project_reports: "data/project_reports.json",
+        coursework_projects: "data/coursework_projects.json",
+        future_ideas: "data/future_ideas.json"
+    }[target];
+}
+
+function getDefaultGithubPath(target) {
+    const fallbackPath = getFallbackPath(target);
+    return fallbackPath || "data/projects.json";
+}
+
+function getCurrentGithubConfig() {
+    return {
+        owner: githubOwner?.value?.trim() || GITHUB_DEFAULTS.owner,
+        repo: githubRepo?.value?.trim() || GITHUB_DEFAULTS.repo,
+        branch: githubBranch?.value?.trim() || GITHUB_DEFAULTS.branch,
+        path: githubPath?.value?.trim() || "data/projects.json",
+        message: githubCommitMsg?.value?.trim() || "Update portfolio data"
+    };
+}
+
+function encodeBase64(input) {
+    return btoa(unescape(encodeURIComponent(input)));
+}
+
+async function getDatasetForPublish(target) {
+    const textValue = uploadText?.value?.trim();
+    if (textValue) {
+        const parsed = JSON.parse(textValue);
+        if (!Array.isArray(parsed)) {
+            throw new Error("JSON must be an array.");
+        }
+        return parsed;
+    }
+    return loadJsonWithOverrides(target, getFallbackPath(target));
+}
+
+async function publishToGithub(e) {
+    e.preventDefault();
+    if (!uploadTarget) return;
+    const token = githubToken?.value?.trim() || sessionStorage.getItem(SESSION_TOKEN_KEY);
+    if (!token) {
+        setGithubStatus("GitHub token required.", true);
+        return;
+    }
+
+    sessionStorage.setItem(SESSION_TOKEN_KEY, token);
+
+    const target = uploadTarget.value;
+    if (githubPath && !githubPath.value.trim()) {
+        githubPath.value = getDefaultGithubPath(target);
+    }
+
+    const { owner, repo, branch, path, message } = getCurrentGithubConfig();
+    if (!owner || !repo || !branch || !path) {
+        setGithubStatus("Owner, repo, branch, and path are required.", true);
+        return;
+    }
+
+    let data;
+    try {
+        data = await getDatasetForPublish(target);
+    } catch (err) {
+        setGithubStatus(err.message || "Invalid JSON.", true);
+        return;
+    }
+
+    setGithubStatus("Publishing to GitHub...");
+
+    const apiBase = "https://api.github.com";
+    const fileUrl = `${apiBase}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encodeURIComponent(path)}`;
+    let sha = null;
+
+    try {
+        const getRes = await fetch(`${fileUrl}?ref=${encodeURIComponent(branch)}`, {
+            headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" }
+        });
+        if (getRes.ok) {
+            const fileData = await getRes.json();
+            sha = fileData.sha;
+        } else if (getRes.status !== 404) {
+            const errBody = await getRes.json().catch(() => ({}));
+            setGithubStatus(errBody.message || "Failed to read existing file.", true);
+            return;
+        }
+    } catch (err) {
+        setGithubStatus("Network error while reading GitHub file.", true);
+        return;
+    }
+
+    try {
+        const payload = {
+            message,
+            content: encodeBase64(JSON.stringify(data, null, 4)),
+            branch
+        };
+        if (sha) payload.sha = sha;
+
+        const putRes = await fetch(fileUrl, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/vnd.github+json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!putRes.ok) {
+            const errBody = await putRes.json().catch(() => ({}));
+            setGithubStatus(errBody.message || "Publish failed.", true);
+            return;
+        }
+
+        setGithubStatus("Published to GitHub successfully.");
+    } catch (err) {
+        setGithubStatus("Network error while publishing.", true);
+    }
+}
+
 async function handleDownload() {
     if (!uploadTarget) return;
     const target = uploadTarget.value;
@@ -331,12 +474,7 @@ async function handleDownload() {
         return;
     }
     try {
-        const fallbackPath = {
-            projects: "data/projects.json",
-            project_reports: "data/project_reports.json",
-            coursework_projects: "data/coursework_projects.json",
-            future_ideas: "data/future_ideas.json"
-        }[target];
+        const fallbackPath = getFallbackPath(target);
         const res = await fetch(fallbackPath, { cache: "no-store" });
         const data = await res.json();
         downloadJsonFile(`${target}.json`, data);
@@ -362,6 +500,23 @@ if (downloadUpload) {
 }
 if (clearUpload) {
     clearUpload.addEventListener("click", handleClearUpload);
+}
+if (githubPublishForm) {
+    githubPublishForm.addEventListener("submit", publishToGithub);
+}
+
+if (githubOwner && !githubOwner.value) githubOwner.value = GITHUB_DEFAULTS.owner;
+if (githubRepo && !githubRepo.value) githubRepo.value = GITHUB_DEFAULTS.repo;
+if (githubBranch && !githubBranch.value) githubBranch.value = GITHUB_DEFAULTS.branch;
+if (githubPath && !githubPath.value && uploadTarget) {
+    githubPath.value = getDefaultGithubPath(uploadTarget.value);
+}
+if (uploadTarget && githubPath) {
+    uploadTarget.addEventListener("change", () => {
+        if (!githubPath.value.trim()) {
+            githubPath.value = getDefaultGithubPath(uploadTarget.value);
+        }
+    });
 }
 
 // Header background + text color shift on scroll

@@ -228,6 +228,12 @@ header p.lead {
     box-shadow: 0 14px 40px rgba(0, 0, 0, .3);
 }
 
+.upload-divider {
+    height: 1px;
+    background: var(--stroke);
+    margin: 20px 0;
+}
+
 .upload-card textarea,
 .upload-card .form-control,
 .upload-card .form-select {
