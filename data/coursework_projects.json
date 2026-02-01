@@ -1,0 +1,85 @@
+[
+    {
+        "title": "Stock Market Prediction Pipeline",
+        "course": "Applied Machine Learning",
+        "term": "Fall 2023",
+        "summary": "Time-series forecasting and classification of market movement with feature engineering and model comparison.",
+        "focus": [
+            "Feature engineering on financial time series",
+            "Baseline vs. advanced model benchmarking",
+            "Error analysis across market regimes"
+        ],
+        "deliverables": [
+            "Model report with metrics",
+            "Reproducible notebook",
+            "Presentation deck"
+        ],
+        "tools": [
+            "Python",
+            "Scikit-learn",
+            "Pandas"
+        ],
+        "links": [
+            {
+                "label": "Report",
+                "url": ""
+            },
+            {
+                "label": "Notebook",
+                "url": ""
+            }
+        ]
+    },
+    {
+        "title": "OCR + NLP Document Parsing",
+        "course": "Natural Language Processing",
+        "term": "Spring 2024",
+        "summary": "End-to-end pipeline converting scanned documents to structured entities for downstream analytics.",
+        "focus": [
+            "OCR preprocessing and quality checks",
+            "Entity extraction with NLP pipelines",
+            "ETL middleware for structured outputs"
+        ],
+        "deliverables": [
+            "Technical writeup",
+            "Evaluation benchmark",
+            "Demo script"
+        ],
+        "tools": [
+            "EasyOCR",
+            "spaCy",
+            "Python"
+        ],
+        "links": [
+            {
+                "label": "Writeup",
+                "url": ""
+            }
+        ]
+    },
+    {
+        "title": "Manufacturing Cost Optimizer",
+        "course": "Operations Research",
+        "term": "Spring 2023",
+        "summary": "Linear programming model to optimize production cost under capacity and resource constraints.",
+        "focus": [
+            "Formulation of objective and constraints",
+            "Sensitivity analysis on resource shocks",
+            "Operational recommendations"
+        ],
+        "deliverables": [
+            "Optimization model",
+            "Sensitivity analysis report"
+        ],
+        "tools": [
+            "Python",
+            "PuLP"
+        ],
+        "links": [
+            {
+                "label": "Report",
+                "url": ""
+            }
+        ]
+    }
+]

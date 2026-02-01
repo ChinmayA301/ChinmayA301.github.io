@@ -48,15 +48,14 @@ async function loadProjects() {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
     try {
-        const res = await fetch("data/projects.json", { cache: "no-store" });
-        const projects = await res.json();
+        const projects = await loadJsonWithOverrides("projects", "data/projects.json");
         grid.innerHTML = projects.map(p => `
       <div class="col-md-6">
         <a ${p.link ? `href="${p.link}" target="_blank"` : ""} class="project-box card shadow-sm h-100">
           <div class="card-body">
             <h3 class="h5">${p.title}</h3>
             <p class="mb-2 small text-muted">${p.description}</p>
-            ${(p.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join('')}
+            ${(p.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
           </div>
         </a>
       </div>
@@ -92,8 +91,278 @@ async function loadExperience() {
     }
 }
 
+// Render Project Reports (long-form case studies)
+async function loadProjectReports() {
+    const wrap = document.getElementById("projectReports");
+    if (!wrap) return;
+    try {
+        const reports = await loadJsonWithOverrides("project_reports", "data/project_reports.json");
+        wrap.innerHTML = reports.map(r => `
+      <article class="report-card">
+        <header class="report-header">
+          <div>
+            <h3 class="h4 mb-1">${r.title}</h3>
+            ${r.subtitle ? `<p class="report-subtitle mb-2">${r.subtitle}</p>` : ""}
+          </div>
+          <div class="report-meta">
+            ${r.timeframe ? `<span>${r.timeframe}</span>` : ""}
+            ${r.role ? `<span>${r.role}</span>` : ""}
+            ${r.status ? `<span>${r.status}</span>` : ""}
+          </div>
+        </header>
+        ${r.summary ? `<p class="report-summary">${r.summary}</p>` : ""}
+        ${(r.sections || []).map(s => `
+          <section class="report-section">
+            <h4 class="h6">${s.title}</h4>
+            ${s.text ? `<p>${s.text}</p>` : ""}
+            ${(s.bullets || []).length ? `<ul>${s.bullets.map(b => `<li>${b}</li>`).join("")}</ul>` : ""}
+          </section>
+        `).join("")}
+        <div class="report-footer">
+          ${(r.stack || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
+          ${(r.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
+        </div>
+        ${(r.artifacts || []).length ? `
+          <div class="report-links">
+            ${(r.artifacts || []).map(a => a.link
+                ? `<a class="btn btn-outline-light btn-sm me-2" href="${a.link}" target="_blank" rel="noopener">${a.label}</a>`
+                : `<span class="btn btn-outline-light btn-sm me-2 disabled">${a.label}</span>`).join("")}
+          </div>` : ""}
+      </article>
+    `).join("");
+    } catch (e) {
+        wrap.innerHTML = `<p class="text-danger small">Could not load project reports.</p>`;
+        console.error("Project reports load error:", e);
+    }
+}
+
+// Render Coursework Projects
+async function loadCourseworkProjects() {
+    const grid = document.getElementById("courseworkProjects");
+    if (!grid) return;
+    try {
+        const items = await loadJsonWithOverrides("coursework_projects", "data/coursework_projects.json");
+        grid.innerHTML = items.map(p => `
+      <div class="col-lg-6">
+        <article class="course-card card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+              <h3 class="h5 mb-0">${p.title}</h3>
+              ${p.term ? `<span class="course-meta">${p.term}</span>` : ""}
+            </div>
+            ${p.course ? `<p class="course-subtitle mb-2">${p.course}</p>` : ""}
+            ${p.summary ? `<p class="mb-2">${p.summary}</p>` : ""}
+            ${(p.focus || []).length ? `
+              <div class="mb-2">
+                <h4 class="h6 mb-1">Focus</h4>
+                <ul class="mb-0">${p.focus.map(f => `<li>${f}</li>`).join("")}</ul>
+              </div>` : ""}
+            ${(p.deliverables || []).length ? `
+              <div class="mb-2">
+                <h4 class="h6 mb-1">Deliverables</h4>
+                <ul class="mb-0">${p.deliverables.map(d => `<li>${d}</li>`).join("")}</ul>
+              </div>` : ""}
+            <div class="course-tags">
+              ${(p.tools || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
+            </div>
+            ${(p.links || []).length ? `
+              <div class="mt-3">
+                ${p.links.map(l => l.url
+                    ? `<a class="btn btn-outline-light btn-sm me-2" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
+                    : `<span class="btn btn-outline-light btn-sm me-2 disabled">${l.label}</span>`).join("")}
+              </div>` : ""}
+          </div>
+        </article>
+      </div>
+    `).join("");
+    } catch (e) {
+        grid.innerHTML = `<p class="text-danger small">Could not load coursework projects.</p>`;
+        console.error("Coursework load error:", e);
+    }
+}
+
+// Render Future Ideas
+async function loadFutureIdeas() {
+    const grid = document.getElementById("futureIdeas");
+    if (!grid) return;
+    try {
+        const ideas = await loadJsonWithOverrides("future_ideas", "data/future_ideas.json");
+        grid.innerHTML = ideas.map(i => `
+      <div class="col-lg-6">
+        <article class="idea-card card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+              <h3 class="h5 mb-0">${i.title}</h3>
+              ${i.status ? `<span class="idea-meta">${i.status}</span>` : ""}
+            </div>
+            ${i.one_liner ? `<p class="idea-subtitle mb-2">${i.one_liner}</p>` : ""}
+            ${(i.motivation || i.proposed_approach) ? `
+              <div class="mb-2">
+                ${i.motivation ? `<p><strong>Motivation:</strong> ${i.motivation}</p>` : ""}
+                ${i.proposed_approach ? `<p><strong>Proposed approach:</strong> ${i.proposed_approach}</p>` : ""}
+              </div>` : ""}
+            ${i.potential_impact ? `<p><strong>Potential impact:</strong> ${i.potential_impact}</p>` : ""}
+            ${(i.planned_artifacts || []).length ? `
+              <div class="mb-2">
+                <h4 class="h6 mb-1">Planned artifacts</h4>
+                <ul class="mb-0">${i.planned_artifacts.map(a => `<li>${a}</li>`).join("")}</ul>
+              </div>` : ""}
+            ${i.ip_note ? `<p class="idea-ip"><strong>IP note:</strong> ${i.ip_note}</p>` : ""}
+            <div class="idea-tags">
+              ${(i.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
+            </div>
+          </div>
+        </article>
+      </div>
+    `).join("");
+    } catch (e) {
+        grid.innerHTML = `<p class="text-danger small">Could not load future ideas.</p>`;
+        console.error("Future ideas load error:", e);
+    }
+}
+
 loadProjects();
 loadExperience();
+loadProjectReports();
+loadCourseworkProjects();
+loadFutureIdeas();
+
+// Upload helpers (client-side only)
+const uploadForm = document.getElementById("uploadForm");
+const uploadTarget = document.getElementById("uploadTarget");
+const uploadFile = document.getElementById("uploadFile");
+const uploadText = document.getElementById("uploadText");
+const uploadStatus = document.getElementById("uploadStatus");
+const downloadUpload = document.getElementById("downloadUpload");
+const clearUpload = document.getElementById("clearUpload");
+
+const LOCAL_KEY_PREFIX = "portfolio_upload_";
+
+async function loadJsonWithOverrides(key, fallbackPath) {
+    const stored = localStorage.getItem(`${LOCAL_KEY_PREFIX}${key}`);
+    if (stored) {
+        try {
+            return JSON.parse(stored);
+        } catch (err) {
+            console.warn("Invalid stored JSON, falling back.", err);
+        }
+    }
+    const res = await fetch(fallbackPath, { cache: "no-store" });
+    return res.json();
+}
+
+function setUploadStatus(message, isError = false) {
+    if (!uploadStatus) return;
+    uploadStatus.textContent = message;
+    uploadStatus.classList.toggle("text-danger", isError);
+}
+
+async function readFileAsText(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsText(file);
+    });
+}
+
+function downloadJsonFile(filename, data) {
+    const blob = new Blob([JSON.stringify(data, null, 4)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+}
+
+async function handleUploadSubmit(e) {
+    e.preventDefault();
+    if (!uploadTarget) return;
+    const target = uploadTarget.value;
+    let raw = uploadText?.value?.trim();
+
+    if (!raw && uploadFile?.files?.length) {
+        try {
+            raw = await readFileAsText(uploadFile.files[0]);
+        } catch (err) {
+            setUploadStatus("Could not read file.", true);
+            return;
+        }
+    }
+
+    if (!raw) {
+        setUploadStatus("Paste JSON or upload a file first.", true);
+        return;
+    }
+
+    try {
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) {
+            setUploadStatus("JSON must be an array of items.", true);
+            return;
+        }
+        localStorage.setItem(`${LOCAL_KEY_PREFIX}${target}`, JSON.stringify(parsed));
+        setUploadStatus("Upload saved. Refreshing sections...");
+        await refreshAllSections();
+    } catch (err) {
+        setUploadStatus("Invalid JSON. Please check formatting.", true);
+    }
+}
+
+async function refreshAllSections() {
+    await Promise.all([
+        loadProjects(),
+        loadProjectReports(),
+        loadCourseworkProjects(),
+        loadFutureIdeas()
+    ]);
+}
+
+async function handleDownload() {
+    if (!uploadTarget) return;
+    const target = uploadTarget.value;
+    const stored = localStorage.getItem(`${LOCAL_KEY_PREFIX}${target}`);
+    if (stored) {
+        downloadJsonFile(`${target}.json`, JSON.parse(stored));
+        setUploadStatus("Downloaded stored JSON.");
+        return;
+    }
+    try {
+        const fallbackPath = {
+            projects: "data/projects.json",
+            project_reports: "data/project_reports.json",
+            coursework_projects: "data/coursework_projects.json",
+            future_ideas: "data/future_ideas.json"
+        }[target];
+        const res = await fetch(fallbackPath, { cache: "no-store" });
+        const data = await res.json();
+        downloadJsonFile(`${target}.json`, data);
+        setUploadStatus("Downloaded default JSON.");
+    } catch (err) {
+        setUploadStatus("Could not download JSON.", true);
+    }
+}
+
+function handleClearUpload() {
+    if (!uploadTarget) return;
+    const target = uploadTarget.value;
+    localStorage.removeItem(`${LOCAL_KEY_PREFIX}${target}`);
+    setUploadStatus("Stored upload cleared. Refreshing sections...");
+    refreshAllSections();
+}
+
+if (uploadForm) {
+    uploadForm.addEventListener("submit", handleUploadSubmit);
+}
+if (downloadUpload) {
+    downloadUpload.addEventListener("click", handleDownload);
+}
+if (clearUpload) {
+    clearUpload.addEventListener("click", handleClearUpload);
+}
 
 // Header background + text color shift on scroll
 const hero = document.querySelector(".hero");

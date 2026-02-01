@@ -1,0 +1,40 @@
+[
+    {
+        "title": "Transparent City Service Copilot",
+        "one_liner": "RAG + policy graph assistant for public-facing service questions with audit trails.",
+        "status": "Idea brief",
+        "motivation": "Residents struggle to navigate city services; agencies need transparent, verifiable answers.",
+        "proposed_approach": "Ingest policy manuals, build a citation-aware retrieval system, add human-in-the-loop review for high-risk responses.",
+        "potential_impact": "Faster service resolution, improved public trust, and measurable accuracy with auditability.",
+        "planned_artifacts": [
+            "Technical blog post",
+            "Evaluation rubric",
+            "Prototype demo"
+        ],
+        "ip_note": "Public disclosure to establish prior art before implementation.",
+        "tags": [
+            "RAG",
+            "GovTech",
+            "Responsible AI"
+        ]
+    },
+    {
+        "title": "Spatial Risk Early-Warning System",
+        "one_liner": "GeoAI pipeline that fuses census, climate, and infrastructure data to prioritize interventions.",
+        "status": "Research outline",
+        "motivation": "Communities need proactive insight into environmental or infrastructure risk patterns.",
+        "proposed_approach": "Develop spatial feature store, train predictive risk models, and expose insights via a map-based dashboard.",
+        "potential_impact": "Supports data-driven planning, resource allocation, and equitable response strategies.",
+        "planned_artifacts": [
+            "Research note",
+            "Interactive map concept",
+            "Data dictionary"
+        ],
+        "ip_note": "Drafted for visibility and collaboration outreach.",
+        "tags": [
+            "GeoAI",
+            "Spatial Stats",
+            "Sustainability"
+        ]
+    }
+]

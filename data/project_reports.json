@@ -1,0 +1,352 @@
+[
+    {
+        "title": "Diabetes Outcomes & Neighborhood Deprivation Study",
+        "subtitle": "Spatial modeling of SDOH signals to surface community-level risk patterns",
+        "timeframe": "Jan 2025 - Present",
+        "role": "Researcher",
+        "status": "In progress",
+        "summary": "A spatial analytics study linking diabetes outcomes with neighborhood deprivation indices to inform public health interventions and resource allocation strategies.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Public health stakeholders need actionable, location-specific insight into how social determinants of health influence chronic disease outcomes."
+            },
+            {
+                "title": "Problem",
+                "text": "Quantify and visualize the relationship between diabetes outcomes and deprivation indices to identify high-risk clusters and underserved areas."
+            },
+            {
+                "title": "Approach",
+                "text": "Built a spatial modeling workflow using neighborhood indices, outcome rates, and geographic covariates. Applied correlation analysis, spatial autocorrelation checks, and risk surface mapping."
+            },
+            {
+                "title": "Evaluation",
+                "text": "Validated spatial signal stability with sensitivity checks and cross-comparisons across multiple index definitions."
+            },
+            {
+                "title": "Impact",
+                "text": "Informed community-level intervention thinking and prioritization frameworks for public health planning."
+            }
+        ],
+        "stack": [
+            "R",
+            "Spatial Statistics",
+            "Power BI",
+            "Python"
+        ],
+        "tags": [
+            "Health Analytics",
+            "SDOH",
+            "GeoAI"
+        ],
+        "artifacts": [
+            {
+                "label": "Study Brief",
+                "link": ""
+            },
+            {
+                "label": "Maps",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Financial Balance-Sheet RAG System (FinBizInfo)",
+        "subtitle": "Internal AI analyst for ratio extraction, risk flags, and forecasting",
+        "timeframe": "Oct 2024 - Present",
+        "role": "ML Engineer",
+        "status": "Production prototype",
+        "summary": "Retrieval-augmented system that ingests noisy financial PDFs and returns structured balance-sheet insights with citations and risk indicators.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Analysts were spending extensive time manually parsing and reconciling financial statements across heterogeneous PDF sources."
+            },
+            {
+                "title": "Problem",
+                "text": "Automate extraction of ratios, anomalies, and risk flags while preserving traceability to source documents."
+            },
+            {
+                "title": "Approach",
+                "text": "Implemented a hybrid RAG pipeline with document chunking, structured extraction, and text-to-SQL reasoning for tabular validation. Added agent routing for forecasting and risk summarization."
+            },
+            {
+                "title": "Evaluation",
+                "text": "Combined RAGAS-style checks with manual QA to validate financial consistency, citation accuracy, and robustness to PDF noise."
+            },
+            {
+                "title": "Impact",
+                "text": "Reduced manual analysis time by ~60% while standardizing reporting format and auditability."
+            }
+        ],
+        "stack": [
+            "LangChain",
+            "ChromaDB",
+            "HuggingFace",
+            "Supabase",
+            "FastAPI",
+            "Docker"
+        ],
+        "tags": [
+            "RAG",
+            "Financial NLP",
+            "Text-to-SQL"
+        ],
+        "artifacts": [
+            {
+                "label": "Case Study",
+                "link": ""
+            },
+            {
+                "label": "Demo",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Distributed RAG Microservices (MLOps-Ready)",
+        "subtitle": "Modular inference services with CI/CD templates",
+        "timeframe": "Jan 2025 - Dec 2025",
+        "role": "ML Engineer",
+        "status": "In progress",
+        "summary": "Microservice architecture for deploying retrieval and inference components as reusable modules, enabling faster iteration across AI products.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "AI deployments needed a consistent, reusable architecture for retrieval, inference, and evaluation across multiple projects."
+            },
+            {
+                "title": "Problem",
+                "text": "Design a modular, MLOps-ready pipeline that decouples retrieval, embedding, and inference layers with clear CI/CD workflows."
+            },
+            {
+                "title": "Approach",
+                "text": "Defined microservice boundaries, containerized each service, and implemented CI/CD pipelines for automated testing and deployments."
+            },
+            {
+                "title": "Impact",
+                "text": "Created a reusable template that accelerates future RAG deployments and standardizes observability."
+            }
+        ],
+        "stack": [
+            "Docker",
+            "FastAPI",
+            "Supabase",
+            "ChromaDB",
+            "GitHub Actions"
+        ],
+        "tags": [
+            "MLOps",
+            "Microservices",
+            "RAG"
+        ],
+        "artifacts": [
+            {
+                "label": "Architecture Diagram",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "County-Wide Digital Access Segmentation (Hennepin County DX + IDA)",
+        "subtitle": "Resident personas built from ADI/SVI and tech-access proxies",
+        "timeframe": "May 2025 - Aug 2025",
+        "role": "Data Scientist",
+        "status": "Delivered",
+        "summary": "Segmentation framework that blends socioeconomic indices with behavioral signals to guide equitable digital service redesign.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "County leadership needed an evidence-based picture of digital inequity and readiness for AI-enabled services."
+            },
+            {
+                "title": "Problem",
+                "text": "Identify resident segments with distinct access barriers and translate findings into actionable policy insights."
+            },
+            {
+                "title": "Approach",
+                "text": "Integrated ADI/SVI scores, device/internet proxies, and service usage patterns; built clustering models and persona narratives."
+            },
+            {
+                "title": "Impact",
+                "text": "Informed digital service redesign priorities and AI readiness planning across departments."
+            }
+        ],
+        "stack": [
+            "Python",
+            "Power BI",
+            "ArcGIS",
+            "R",
+            "SQL"
+        ],
+        "tags": [
+            "Responsible AI",
+            "Public Sector",
+            "Segmentation"
+        ],
+        "artifacts": [
+            {
+                "label": "Brief",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Trend Forecasting & Influence Optimization",
+        "subtitle": "NLP + Bayesian optimization + RL for campaign virality",
+        "timeframe": "Dec 2024 - May 2025",
+        "role": "Researcher",
+        "status": "Completed",
+        "summary": "A modeling framework that predicts social trend lift and recommends interventions to improve campaign reach and ROI.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Marketing teams needed early-warning trend signals and a systematic way to optimize influencer or content strategy."
+            },
+            {
+                "title": "Approach",
+                "text": "Combined NLP feature extraction, time-series forecasting, and reinforcement learning to recommend actions that maximize engagement lift."
+            },
+            {
+                "title": "Impact",
+                "text": "Delivered a reusable optimization framework for campaign planning and experimentation."
+            }
+        ],
+        "stack": [
+            "Python",
+            "Transformers",
+            "RL Toolkits",
+            "Prophet",
+            "scikit-learn"
+        ],
+        "tags": [
+            "NLP",
+            "Bayesian Optimization",
+            "Marketing Analytics"
+        ],
+        "artifacts": [
+            {
+                "label": "Report",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Commercial Real Estate Data Pipeline on Azure",
+        "subtitle": "Automated ingestion and ML-ready normalization for property data",
+        "timeframe": "Aug 2024 - Sep 2024",
+        "role": "Data Engineer",
+        "status": "Delivered",
+        "summary": "Scalable ETL and data quality workflows that unified multi-source property data and accelerated downstream modeling.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Property data arrived from multiple sources with inconsistent formats and latency constraints."
+            },
+            {
+                "title": "Approach",
+                "text": "Built Azure Data Factory pipelines, dbt models, and MongoDB/Azure SQL integration to standardize data and support ML workflows."
+            },
+            {
+                "title": "Impact",
+                "text": "Improved data acquisition speed by 4× and reduced manual reconciliation workload."
+            }
+        ],
+        "stack": [
+            "Azure Data Factory",
+            "dbt",
+            "MongoDB",
+            "Azure SQL",
+            "Python",
+            "PyMongo"
+        ],
+        "tags": [
+            "ETL",
+            "Data Engineering",
+            "Real Estate"
+        ],
+        "artifacts": [
+            {
+                "label": "Pipeline Diagram",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Customer Service Experience Dashboard",
+        "subtitle": "Automated KPI reporting for leadership visibility",
+        "timeframe": "Dec 2022 - Aug 2023",
+        "role": "BI Analyst",
+        "status": "Delivered",
+        "summary": "Power BI dashboards that automated KPI tracking and improved transparency across customer service teams.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Leadership needed a single source of truth for service quality, volume, and resolution trends."
+            },
+            {
+                "title": "Approach",
+                "text": "Built automated data refreshes, standardized KPI definitions, and created interactive dashboards for drill-down analysis."
+            },
+            {
+                "title": "Impact",
+                "text": "Enabled executive reporting and uncovered operational trends for performance improvement."
+            }
+        ],
+        "stack": [
+            "Power BI",
+            "DAX",
+            "SQL",
+            "API Automation"
+        ],
+        "tags": [
+            "BI",
+            "KPI Tracking",
+            "Analytics"
+        ],
+        "artifacts": [
+            {
+                "label": "Dashboard",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Sales Analytics Automation (KPMG Collaboration)",
+        "subtitle": "QlikSense dashboards for faster sales reporting",
+        "timeframe": "May 2022 - Jun 2022",
+        "role": "Data Analyst",
+        "status": "Delivered",
+        "summary": "Automated sales analytics dashboards that improved report turnaround time and data visibility for leadership teams.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Sales leadership required rapid, consistent insights across product lines and regions."
+            },
+            {
+                "title": "Approach",
+                "text": "Designed QlikSense dashboards and automated SQL-driven data extracts to support recurring reporting."
+            },
+            {
+                "title": "Impact",
+                "text": "Boosted reporting efficiency by ~35% and reduced manual Excel dependency."
+            }
+        ],
+        "stack": [
+            "QlikSense",
+            "SQL",
+            "Excel Automation"
+        ],
+        "tags": [
+            "Sales Analytics",
+            "Dashboarding",
+            "Automation"
+        ],
+        "artifacts": [
+            {
+                "label": "Dashboard",
+                "link": ""
+            }
+        ]
+    }
+]

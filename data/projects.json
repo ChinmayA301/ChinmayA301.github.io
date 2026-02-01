@@ -1,79 +1,77 @@
 [
     {
-        "title": "Financial Balance Sheet RAG System",
-        "description": "Hybrid agentic RAG for balance-sheet Q&A using LangChain, HuggingFace, ChromaDB, Supabase (private server). Text-to-SQL for tabular reasoning, multi-hop retrieval; MLOps with Docker, CI/CD, MLflow; eval via RAGAS/Prometheus.",
+        "title": "Financial Balance-Sheet RAG System (FinBizInfo)",
+        "description": "RAG system that extracts ratios, flags risks, and supports forecasting from noisy PDFs with citation-backed answers and tabular validation.",
         "tags": [
             "GenAI",
             "RAG",
             "Text-to-SQL",
             "MLOps"
         ],
-        "link": "https://github.com/ChinmayA301"
+        "link": ""
     },
     {
-        "title": "Resident Segmentation & Responsible AI (Hennepin County)",
-        "description": "ML-driven resident segmentation with automated ETL and Power BI reporting to enhance digital accessibility. Built a Responsible AI evaluation framework (fairness metrics, human-in-loop review, bias mitigation).",
+        "title": "Distributed RAG Microservices (MLOps-Ready)",
+        "description": "Modular microservice architecture with CI/CD to deploy retrieval and inference components as reusable templates.",
         "tags": [
-            "ML",
+            "MLOps",
+            "Microservices",
+            "RAG"
+        ],
+        "link": ""
+    },
+    {
+        "title": "County-Wide Digital Access Segmentation",
+        "description": "Resident personas built from ADI/SVI, tech-access proxies, and behavioral segmentation to inform equitable digital service redesign.",
+        "tags": [
             "Responsible AI",
-            "Power BI"
+            "Public Sector",
+            "Segmentation"
         ]
     },
     {
-        "title": "Real Estate ML Pipelines (MarketMaker CRE)",
-        "description": "Async scraping → ETL (dbt) → ML (XGBoost/RF) with SHAP/LIME for valuation & segmentation. Containerized FastAPI microservices, Azure SQL/Mongo integrations.",
+        "title": "Diabetes Outcomes & Neighborhood Deprivation Study",
+        "description": "Spatial modeling and correlation analysis linking diabetes outcomes with neighborhood deprivation indices to guide intervention planning.",
+        "tags": [
+            "Health Analytics",
+            "Spatial Stats",
+            "SDOH"
+        ]
+    },
+    {
+        "title": "Trend Forecasting & Influence Optimization",
+        "description": "NLP + Bayesian optimization + RL to predict campaign virality and recommend actions to improve marketing ROI.",
+        "tags": [
+            "NLP",
+            "Bayesian Opt",
+            "RL"
+        ]
+    },
+    {
+        "title": "Commercial Real Estate Data Pipeline on Azure",
+        "description": "Automated multi-source property ingestion and dbt modeling; accelerated data acquisition 4× for ML workflows.",
         "tags": [
             "ETL",
-            "XGBoost",
-            "FastAPI"
-        ],
-        "link": "https://github.com/ChinmayA301"
+            "Azure",
+            "dbt"
+        ]
     },
     {
-        "title": "Selected Academic Projects",
-        "description": "Stock Market ML (Python), Sports Analytics (R), Manufacturing Cost Optimizer (LP), OCR + NLP (EasyOCR + spaCy) for document parsing with ETL middleware.",
+        "title": "Customer Service Experience Dashboard",
+        "description": "Power BI KPI automation and executive reporting for service performance transparency.",
         "tags": [
-            "ML",
-            "NLP",
-            "ETL"
-        ],
-        "link": "https://github.com/ChinmayA301"
+            "Power BI",
+            "DAX",
+            "Analytics"
+        ]
     },
     {
-        "title": "Interactive PAC-MAN using MobileNet",
-        "description": "Gesture-controlled PAC-MAN using MobileNet for real-time gameplay.",
+        "title": "Sales Analytics Automation (KPMG Collaboration)",
+        "description": "QlikSense dashboards and SQL automation that improved reporting efficiency by ~35%.",
         "tags": [
-            "Computer Vision",
-            "MobileNet"
-        ],
-        "link": "https://github.com/ChinmayA301"
-    },
-    {
-        "title": "GeoAI for Environmental Analysis",
-        "description": "Geospatial AI with spatial statistics to analyze and predict environmental changes.",
-        "tags": [
-            "GeoAI",
-            "Spatial Stats"
-        ],
-        "link": "https://github.com/ChinmayA301"
-    },
-    {
-        "title": "Health Informatics: Diabetes & SDOH",
-        "description": "Analyzed diabetes prevalence against ADI/SVI neighborhood indices using spatial visualization.",
-        "tags": [
-            "Health Data",
-            "SDOH"
-        ],
-        "link": "https://github.com/ChinmayA301"
-    },
-    {
-        "title": "Business Optimization via Social Data",
-        "description": "NLP + RL + Bayesian optimization for virality detection, ad optimization, and trend forecasting.",
-        "tags": [
-            "NLP",
-            "RL",
-            "Bayesian Opt"
-        ],
-        "link": "https://github.com/ChinmayA301"
+            "QlikSense",
+            "SQL",
+            "Automation"
+        ]
     }
 ]

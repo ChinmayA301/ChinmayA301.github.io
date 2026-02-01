@@ -29,6 +29,10 @@
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
                     <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reports">Project Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#coursework">Coursework</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#future-ideas">Future Ideas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#upload">Upload</a></li>
                     <li class="nav-item"><a class="nav-link" href="#timeline">Experience</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item ms-lg-2">
@@ -126,6 +130,91 @@
             <h2 class="section-title text-center">Projects</h2>
             <div id="projectsGrid" class="row g-3">
                 <!-- Populated via JS from /data/projects.json -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Reports (JSON-driven) -->
+    <section id="reports" class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title text-center">Project Reports</h2>
+            <p class="section-text mx-auto text-center">
+                Long-form case studies with context, decisions, evaluation, and outcomes. These are structured like
+                technical writeups so they can evolve into full reports or publications.
+            </p>
+            <div id="projectReports" class="report-grid mt-4">
+                <!-- Populated via JS from /data/project_reports.json -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Coursework Projects (JSON-driven) -->
+    <section id="coursework" class="section">
+        <div class="container">
+            <h2 class="section-title text-center">Coursework Projects</h2>
+            <p class="section-text mx-auto text-center">
+                Coursework-specific work with objectives, datasets, and deliverables summarized in an article-style
+                format.
+            </p>
+            <div id="courseworkProjects" class="row g-3 mt-2">
+                <!-- Populated via JS from /data/coursework_projects.json -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Ideas (JSON-driven) -->
+    <section id="future-ideas" class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title text-center">Future Project Ideas</h2>
+            <p class="section-text mx-auto text-center">
+                Idea briefs published early to establish visibility, document intent, and outline research direction
+                before implementation.
+            </p>
+            <div id="futureIdeas" class="row g-3 mt-2">
+                <!-- Populated via JS from /data/future_ideas.json -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload (client-side data) -->
+    <section id="upload" class="section">
+        <div class="container">
+            <h2 class="section-title text-center">Upload Project Content</h2>
+            <p class="section-text mx-auto text-center">
+                Upload JSON to update your Projects, Reports, Coursework, or Future Ideas without editing the codebase.
+                Data is stored locally in your browser (localStorage) and can be cleared anytime.
+            </p>
+            <div class="upload-card mx-auto mt-4">
+                <form id="uploadForm" class="row g-3">
+                    <div class="col-12 col-lg-4">
+                        <label class="form-label">Target Section</label>
+                        <select id="uploadTarget" class="form-select" required>
+                            <option value="projects">Projects</option>
+                            <option value="project_reports">Project Reports</option>
+                            <option value="coursework_projects">Coursework Projects</option>
+                            <option value="future_ideas">Future Ideas</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <label class="form-label">Upload JSON File</label>
+                        <input id="uploadFile" class="form-control" type="file" accept=".json,application/json" />
+                    </div>
+                    <div class="col-12 col-lg-3 d-flex align-items-end">
+                        <button class="btn btn-primary w-100" type="submit">Save Upload</button>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Or paste JSON</label>
+                        <textarea id="uploadText" class="form-control" rows="6"
+                            placeholder='Paste a JSON array (e.g., [{"title":"..."}])'></textarea>
+                    </div>
+                    <div class="col-12 d-flex flex-wrap gap-2">
+                        <button id="downloadUpload" class="btn btn-outline-light btn-sm" type="button">Download
+                            Current JSON</button>
+                        <button id="clearUpload" class="btn btn-outline-light btn-sm" type="button">Clear Stored
+                            Upload</button>
+                        <span id="uploadStatus" class="small text-muted align-self-center"></span>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
