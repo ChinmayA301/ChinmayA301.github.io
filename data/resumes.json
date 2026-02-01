@@ -1,0 +1,44 @@
+[
+    {
+        "role": "ML Engineer",
+        "title": "Machine Learning Engineer Resume",
+        "summary": "Model deployment, pipeline engineering, RAG systems, and MLOps experience.",
+        "file": "assets/Chinmay Arora ML Engineer.pdf",
+        "tags": ["MLOps", "RAG", "FastAPI"]
+    },
+    {
+        "role": "GenAI",
+        "title": "Generative AI Resume",
+        "summary": "Agentic workflows, retrieval-augmented generation, and evaluation tooling.",
+        "file": "assets/Chinmay Arora Gen AI.pdf",
+        "tags": ["LangChain", "ChromaDB", "LLMs"]
+    },
+    {
+        "role": "Data Scientist",
+        "title": "Data Scientist Resume",
+        "summary": "Applied ML, experimentation, analytics, and stakeholder delivery.",
+        "file": "assets/Chinmay Arora Data Scientist.pdf",
+        "tags": ["Modeling", "Analytics", "Python"]
+    },
+    {
+        "role": "Data Analyst",
+        "title": "Data Analyst Resume",
+        "summary": "BI dashboards, KPI automation, and insight storytelling.",
+        "file": "assets/Chinmay Arora Data Analyst.pdf",
+        "tags": ["Power BI", "SQL", "Dashboards"]
+    },
+    {
+        "role": "AI Strategy",
+        "title": "AI Strategy Resume",
+        "summary": "AI roadmap planning, governance, and deployment readiness.",
+        "file": "assets/resume_aistrat.pdf",
+        "tags": ["Strategy", "Governance", "AI Readiness"]
+    },
+    {
+        "role": "General",
+        "title": "Comprehensive CV",
+        "summary": "Full academic and professional history with complete project list.",
+        "file": "assets/ChinmayArora_CV.pdf",
+        "tags": ["Full CV"]
+    }
+]

@@ -43,13 +43,12 @@ toggleTop();
 // Year
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Render Projects from JSON
-async function loadProjects() {
+let projectCache = [];
+
+function renderProjects(projects) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
-    try {
-        const projects = await loadJsonWithOverrides("projects", "data/projects.json");
-        grid.innerHTML = projects.map(p => `
+    grid.innerHTML = projects.map(p => `
       <div class="col-md-6">
         <a ${p.link ? `href="${p.link}" target="_blank"` : ""} class="project-box card shadow-sm h-100">
           <div class="card-body">
@@ -60,6 +59,44 @@ async function loadProjects() {
         </a>
       </div>
     `).join("");
+    applyStagger(grid.querySelectorAll(".project-box"));
+}
+
+function buildProjectFilters(projects) {
+    const filterWrap = document.getElementById("projectsFilter");
+    if (!filterWrap) return;
+    const tags = new Set();
+    projects.forEach(p => (p.tags || []).forEach(t => tags.add(t)));
+    const tagList = ["All", ...Array.from(tags).sort()];
+    filterWrap.innerHTML = tagList.map(tag => `
+      <button class="filter-pill ${tag === "All" ? "active" : ""}" data-filter="${tag}">${tag}</button>
+    `).join("");
+    applyStagger(filterWrap.querySelectorAll(".filter-pill"));
+
+    filterWrap.querySelectorAll(".filter-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+            filterWrap.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            const filter = btn.getAttribute("data-filter");
+            if (filter === "All") {
+                renderProjects(projectCache);
+                return;
+            }
+            const filtered = projectCache.filter(p => (p.tags || []).includes(filter));
+            renderProjects(filtered);
+        });
+    });
+}
+
+// Render Projects from JSON
+async function loadProjects() {
+    const grid = document.getElementById("projectsGrid");
+    if (!grid) return;
+    try {
+        const projects = await loadJsonWithOverrides("projects", "data/projects.json");
+        projectCache = Array.isArray(projects) ? projects : [];
+        renderProjects(projectCache);
+        buildProjectFilters(projectCache);
     } catch (e) {
         grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
         console.error("Projects load error:", e);
@@ -130,6 +167,7 @@ async function loadProjectReports() {
           </div>` : ""}
       </article>
     `).join("");
+        applyStagger(wrap.querySelectorAll(".report-card"));
     } catch (e) {
         wrap.innerHTML = `<p class="text-danger small">Could not load project reports.</p>`;
         console.error("Project reports load error:", e);
@@ -175,6 +213,7 @@ async function loadCourseworkProjects() {
         </article>
       </div>
     `).join("");
+        applyStagger(grid.querySelectorAll(".course-card"));
     } catch (e) {
         grid.innerHTML = `<p class="text-danger small">Could not load coursework projects.</p>`;
         console.error("Coursework load error:", e);
@@ -215,9 +254,43 @@ async function loadFutureIdeas() {
         </article>
       </div>
     `).join("");
+        applyStagger(grid.querySelectorAll(".idea-card"));
     } catch (e) {
         grid.innerHTML = `<p class="text-danger small">Could not load future ideas.</p>`;
         console.error("Future ideas load error:", e);
+    }
+}
+
+// Render Resumes
+async function loadResumes() {
+    const grid = document.getElementById("resumesGrid");
+    if (!grid) return;
+    try {
+        const res = await fetch("data/resumes.json", { cache: "no-store" });
+        const resumes = await res.json();
+        grid.innerHTML = resumes.map(r => `
+      <div class="col-md-6 col-lg-4">
+        <div class="resume-card card h-100">
+          <div class="card-body">
+            <p class="eyebrow">${r.role || "Resume"}</p>
+            <h3 class="h5">${r.title}</h3>
+            ${r.summary ? `<p class="small text-muted">${r.summary}</p>` : ""}
+            ${(r.tags || []).length ? `
+              <div class="mb-3">
+                ${(r.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
+              </div>` : ""}
+            ${r.file ? `
+              <a class="btn btn-outline-light btn-sm" href="${r.file}" target="_blank" rel="noopener" download>
+                Download PDF
+              </a>` : ""}
+          </div>
+        </div>
+      </div>
+    `).join("");
+        applyStagger(grid.querySelectorAll(".resume-card"));
+    } catch (e) {
+        grid.innerHTML = `<p class="text-danger small">Could not load resumes.</p>`;
+        console.error("Resumes load error:", e);
     }
 }
 
@@ -226,6 +299,56 @@ loadExperience();
 loadProjectReports();
 loadCourseworkProjects();
 loadFutureIdeas();
+loadCaseStudy();
+loadResumes();
+
+function applyStagger(elements) {
+    elements.forEach((el, idx) => {
+        el.classList.add("stagger-item");
+        el.style.transitionDelay = `${idx * 40}ms`;
+        requestAnimationFrame(() => el.classList.add("is-visible"));
+    });
+}
+
+async function loadCaseStudy() {
+    const wrap = document.getElementById("caseStudy");
+    if (!wrap) return;
+    try {
+        const reports = await loadJsonWithOverrides("project_reports", "data/project_reports.json");
+        const featured = Array.isArray(reports) ? reports[0] : null;
+        if (!featured) return;
+        const bulletSource = (featured.sections || []).find(s => (s.bullets || []).length) || {};
+        wrap.innerHTML = `
+      <article class="case-hero">
+        <p class="eyebrow">Case Study</p>
+        <h3>${featured.title}</h3>
+        ${featured.subtitle ? `<p>${featured.subtitle}</p>` : ""}
+        ${featured.summary ? `<p>${featured.summary}</p>` : ""}
+        <div class="case-meta">
+          ${featured.timeframe ? `<span>${featured.timeframe}</span>` : ""}
+          ${featured.role ? `<span>${featured.role}</span>` : ""}
+          ${featured.status ? `<span>${featured.status}</span>` : ""}
+        </div>
+      </article>
+      <article class="case-panel">
+        <h4>Deep Dive</h4>
+        ${(featured.sections || []).map(s => `
+          <div class="mb-3">
+            <strong>${s.title}</strong>
+            ${s.text ? `<p class="mb-1">${s.text}</p>` : ""}
+          </div>
+        `).join("")}
+        ${(bulletSource.bullets || []).length ? `
+          <ul>${bulletSource.bullets.map(b => `<li>${b}</li>`).join("")}</ul>
+        ` : ""}
+      </article>
+    `;
+        applyStagger(wrap.querySelectorAll(".case-hero, .case-panel"));
+    } catch (e) {
+        wrap.innerHTML = `<p class="text-danger small">Could not load featured case study.</p>`;
+        console.error("Case study load error:", e);
+    }
+}
 
 // Upload helpers (client-side only)
 const uploadForm = document.getElementById("uploadForm");
