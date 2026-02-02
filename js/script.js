@@ -1,7 +1,7 @@
 // Typed headline
 if (document.querySelector("#typed")) {
     new Typed("#typed", {
-        strings: ["Hello, my name is"],
+        strings: ["Hello, Welcome to the world of.."],
         typeSpeed: 92,
         backSpeed: 22,
         loop: false,
