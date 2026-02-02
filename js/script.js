@@ -477,7 +477,10 @@ async function loadJsonWithOverrides(key, fallbackPath) {
     const stored = localStorage.getItem(`${LOCAL_KEY_PREFIX}${key}`);
     if (stored) {
         try {
-            return JSON.parse(stored);
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed)) {
+                return parsed;
+            }
         } catch (err) {
             console.warn("Invalid stored JSON, falling back.", err);
         }
