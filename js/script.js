@@ -837,17 +837,49 @@ function renderTiles() {
     const grid = document.getElementById("tilesGrid");
     if (!grid) return;
     grid.innerHTML = TILE_SECTIONS.map((tile, idx) => `
-      <a class="tile-card tile-${tile.tone}" href="${tile.href}"
-        style="left:${tile.x}%; top:${tile.y}%; --tile-delay:${idx * 40}ms;">
-        <span class="tile-dot" aria-hidden="true"></span>
-        <span class="tile-label">
+      <a class="scatter-node scatter-${tile.tone}" href="${tile.href}"
+        style="left:${tile.x}%; top:${tile.y}%; --node-delay:${idx * 40}ms;">
+        <span class="scatter-blob" aria-hidden="true"></span>
+        <span class="scatter-label">
           <span class="tile-metric">${tile.metric}</span>
           <span class="tile-title">${tile.title}</span>
           <span class="tile-desc">${tile.description}</span>
         </span>
       </a>
     `).join("");
-    applyStagger(grid.querySelectorAll(".tile-card"));
+    applyStagger(grid.querySelectorAll(".scatter-node"));
+    bindScatterMotion(grid);
 }
 
 renderTiles();
+
+function bindScatterMotion(container) {
+    const nodes = Array.from(container.querySelectorAll(".scatter-node"));
+    if (!nodes.length) return;
+
+    const handleMove = (event) => {
+        const rect = container.getBoundingClientRect();
+        const mx = event.clientX - rect.left;
+        const my = event.clientY - rect.top;
+        nodes.forEach(node => {
+            const nx = node.offsetLeft + node.offsetWidth / 2;
+            const ny = node.offsetTop + node.offsetHeight / 2;
+            const dx = mx - nx;
+            const dy = my - ny;
+            const dist = Math.hypot(dx, dy) || 1;
+            const strength = Math.max(0, 140 - dist) / 140;
+            const offsetX = (dx / dist) * strength * 10;
+            const offsetY = (dy / dist) * strength * 10;
+            node.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        });
+    };
+
+    const reset = () => {
+        nodes.forEach(node => {
+            node.style.transform = "";
+        });
+    };
+
+    container.addEventListener("mousemove", handleMove);
+    container.addEventListener("mouseleave", reset);
+}
