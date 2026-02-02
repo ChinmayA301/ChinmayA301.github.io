@@ -81,5 +81,110 @@
                 "url": ""
             }
         ]
+    },
+    {
+        "title": "Sports Analytics Modeling",
+        "course": "Sports Analytics",
+        "term": "Spring 2024",
+        "summary": "Predictive analytics on team performance with feature engineering and comparative model evaluation.",
+        "focus": [
+            "Player and team-level feature engineering",
+            "Model comparison using cross-validation",
+            "Insights for strategy optimization"
+        ],
+        "deliverables": [
+            "Modeling notebook",
+            "Insights report"
+        ],
+        "tools": [
+            "R",
+            "tidyverse",
+            "caret"
+        ],
+        "links": [
+            {
+                "label": "Report",
+                "url": ""
+            }
+        ]
+    },
+    {
+        "title": "Business Optimization via Social Data",
+        "course": "Advanced Analytics",
+        "term": "Fall 2024",
+        "summary": "NLP + Bayesian optimization + RL framework for virality detection and marketing ROI optimization.",
+        "focus": [
+            "Trend detection with NLP embeddings",
+            "Bayesian optimization for campaign tuning",
+            "Reinforcement learning for action policies"
+        ],
+        "deliverables": [
+            "Experiment report",
+            "Modeling prototype"
+        ],
+        "tools": [
+            "Python",
+            "Transformers",
+            "RL Toolkits",
+            "Prophet"
+        ],
+        "links": [
+            {
+                "label": "Report",
+                "url": ""
+            }
+        ]
+    },
+    {
+        "title": "GeoAI for Environmental Analysis",
+        "course": "Spatial Data Science",
+        "term": "Fall 2024",
+        "summary": "Geospatial modeling and spatial statistics to analyze and predict environmental change patterns.",
+        "focus": [
+            "Spatial feature engineering",
+            "Hotspot analysis and clustering",
+            "Map-based visualization"
+        ],
+        "deliverables": [
+            "Geospatial report",
+            "Map dashboard"
+        ],
+        "tools": [
+            "GeoPandas",
+            "ArcGIS",
+            "Python"
+        ],
+        "links": [
+            {
+                "label": "Report",
+                "url": ""
+            }
+        ]
+    },
+    {
+        "title": "Interactive PAC-MAN using MobileNet",
+        "course": "Computer Vision",
+        "term": "Fall 2022",
+        "summary": "Gesture-controlled PAC-MAN game using real-time MobileNet inference for interactive gameplay.",
+        "focus": [
+            "Real-time gesture classification",
+            "Latency optimization for game control",
+            "User testing and iteration"
+        ],
+        "deliverables": [
+            "Demo video",
+            "Project report"
+        ],
+        "tools": [
+            "TensorFlow",
+            "MobileNet",
+            "Python"
+        ],
+        "links": [
+            {
+                "label": "Demo",
+                "url": ""
+            }
+        ]
     }
 ]

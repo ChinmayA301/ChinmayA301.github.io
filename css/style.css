@@ -130,7 +130,9 @@ h4,
     height: 120px;
     border-radius: 16px;
     object-fit: cover;
-    border: 1px solid var(--stroke);
+    border: none;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+    filter: saturate(1.05);
 }
 
 .text-gradient {
@@ -572,6 +574,7 @@ header p.lead {
     display: grid;
     gap: 16px;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    position: relative;
 }
 
 .tile-card {
@@ -582,6 +585,26 @@ header p.lead {
     color: var(--text);
     text-decoration: none;
     transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tile-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 16px 16px;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+.tile-metric {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 6px;
 }
 
 .tile-card h3 {
@@ -598,6 +621,30 @@ header p.lead {
     transform: translateY(-4px);
     border-color: rgba(46, 130, 255, 0.45);
     box-shadow: 0 16px 44px rgba(0, 0, 0, 0.35);
+}
+
+.tile-card.tile-primary {
+    border-color: rgba(46, 130, 255, 0.35);
+}
+
+.tile-card.tile-accent {
+    border-color: rgba(138, 209, 255, 0.35);
+}
+
+.tile-card.tile-neutral {
+    border-color: rgba(255, 185, 92, 0.35);
+}
+
+.tile-dots {
+    position: absolute;
+    right: -30px;
+    bottom: -20px;
+    width: 140px;
+    height: 140px;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+    background-size: 12px 12px;
+    opacity: 0.25;
+    transform: rotate(12deg);
 }
 
 /* Timeline */

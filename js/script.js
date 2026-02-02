@@ -50,6 +50,10 @@ let projectCache = [];
 function renderProjects(projects) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
+    if (!projects.length) {
+        grid.innerHTML = `<p class="text-muted small">No projects found yet.</p>`;
+        return;
+    }
     grid.innerHTML = projects.map(p => `
       <div class="col-md-6">
         <a ${p.link ? `href="${p.link}" target="_blank"` : ""} class="project-box card shadow-sm h-100">
@@ -114,6 +118,12 @@ async function loadExperience() {
     try {
         const res = await fetch("data/experience.json", { cache: "no-store" });
         const items = await res.json();
+        if (!items.length) {
+            if (wrap) wrap.innerHTML = `<p class="text-muted small">No experience entries available yet.</p>`;
+            if (workWrap) workWrap.innerHTML = `<p class="text-muted small">No work experience available yet.</p>`;
+            if (eduWrap) eduWrap.innerHTML = `<p class="text-muted small">No education entries available yet.</p>`;
+            return;
+        }
         if (wrap) {
             wrap.innerHTML = renderTimelineItems(items);
         }
@@ -205,6 +215,10 @@ async function loadProjectReports() {
     if (!wrap) return;
     try {
         const reports = await loadJsonWithOverrides("project_reports", "data/project_reports.json");
+        if (!reports.length) {
+            wrap.innerHTML = `<p class="text-muted small">No reports available yet.</p>`;
+            return;
+        }
         wrap.innerHTML = reports.map(r => `
       <article class="report-card">
         <header class="report-header">
@@ -251,6 +265,10 @@ async function loadCourseworkProjects() {
     if (!grid) return;
     try {
         const items = await loadJsonWithOverrides("coursework_projects", "data/coursework_projects.json");
+        if (!items.length) {
+            grid.innerHTML = `<p class="text-muted small">No coursework projects available yet.</p>`;
+            return;
+        }
         grid.innerHTML = items.map(p => `
       <div class="col-lg-6">
         <article class="course-card card h-100">
@@ -297,6 +315,10 @@ async function loadFutureIdeas() {
     if (!grid) return;
     try {
         const ideas = await loadJsonWithOverrides("future_ideas", "data/future_ideas.json");
+        if (!ideas.length) {
+            grid.innerHTML = `<p class="text-muted small">No future ideas available yet.</p>`;
+            return;
+        }
         grid.innerHTML = ideas.map(i => `
       <div class="col-lg-6">
         <article class="idea-card card h-100">
@@ -338,6 +360,10 @@ async function loadResumes() {
     if (!grid) return;
     try {
         const resumes = await loadJsonWithOverrides("resumes", "data/resumes.json");
+        if (!resumes.length) {
+            grid.innerHTML = `<p class="text-muted small">No resumes available yet.</p>`;
+            return;
+        }
         grid.innerHTML = resumes.map(r => `
       <div class="col-md-6 col-lg-4">
         <div class="resume-card card h-100">
@@ -372,6 +398,7 @@ loadFutureIdeas();
 loadCaseStudy();
 loadResumes();
 loadHighlights();
+renderTiles();
 
 function applyStagger(elements) {
     elements.forEach((el, idx) => {
@@ -746,4 +773,62 @@ if (form) {
             msg.textContent = "Network error. Please try again later.";
         }
     });
+}
+const TILE_SECTIONS = [
+    {
+        title: "Projects",
+        description: "Flagship builds, rapid prototypes, and live systems.",
+        href: "projects.html",
+        metric: "12+ builds",
+        tone: "primary"
+    },
+    {
+        title: "Project Reports",
+        description: "Long-form case studies with context, evaluation, and results.",
+        href: "reports.html",
+        metric: "Deep dives",
+        tone: "accent"
+    },
+    {
+        title: "Coursework",
+        description: "Academic projects, deliverables, and research notes.",
+        href: "coursework.html",
+        metric: "MS + B.Tech",
+        tone: "neutral"
+    },
+    {
+        title: "Future Ideas",
+        description: "Concept briefs and research directions pre-implementation.",
+        href: "ideas.html",
+        metric: "Idea backlog",
+        tone: "accent"
+    },
+    {
+        title: "Experience",
+        description: "Work timeline + education history in separate views.",
+        href: "experience.html",
+        metric: "Industry + Research",
+        tone: "primary"
+    },
+    {
+        title: "Resumes",
+        description: "Role-specific resume downloads for targeted applications.",
+        href: "resumes.html",
+        metric: "6 roles",
+        tone: "neutral"
+    }
+];
+
+function renderTiles() {
+    const grid = document.getElementById("tilesGrid");
+    if (!grid) return;
+    grid.innerHTML = TILE_SECTIONS.map((tile, idx) => `
+      <a class="tile-card tile-${tile.tone}" href="${tile.href}" style="--tile-delay:${idx * 40}ms;">
+        <div class="tile-metric">${tile.metric}</div>
+        <h3>${tile.title}</h3>
+        <p>${tile.description}</p>
+        <div class="tile-dots" aria-hidden="true"></div>
+      </a>
+    `).join("");
+    applyStagger(grid.querySelectorAll(".tile-card"));
 }

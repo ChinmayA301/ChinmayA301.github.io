@@ -249,7 +249,7 @@
             },
             {
                 "title": "Impact",
-                "text": "Improved data acquisition speed by 4× and reduced manual reconciliation workload."
+                "text": "Improved data acquisition speed by 4\u00d7 and reduced manual reconciliation workload."
             }
         ],
         "stack": [
@@ -345,6 +345,194 @@
         "artifacts": [
             {
                 "label": "Dashboard",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Interactive PAC-MAN using MobileNet",
+        "subtitle": "Gesture-controlled gameplay with real-time vision inference",
+        "timeframe": "Fall 2022",
+        "role": "Computer Vision Engineer",
+        "status": "Completed",
+        "summary": "Built a live gesture-recognition loop that maps hand movements to PAC-MAN controls, balancing inference latency with gameplay responsiveness.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Demonstrate real-time computer vision control in an interactive game environment."
+            },
+            {
+                "title": "Problem",
+                "text": "Deliver low-latency gesture classification that feels responsive during gameplay."
+            },
+            {
+                "title": "Approach",
+                "text": "Trained a lightweight MobileNet classifier for hand gestures, added frame preprocessing and smoothing to stabilize predictions."
+            },
+            {
+                "title": "Evaluation",
+                "text": "Measured end-to-end latency and accuracy across gesture classes under different lighting conditions."
+            },
+            {
+                "title": "Outcome",
+                "text": "Achieved responsive control and stable classification suitable for live demos."
+            }
+        ],
+        "stack": [
+            "TensorFlow",
+            "MobileNet",
+            "Python",
+            "OpenCV"
+        ],
+        "tags": [
+            "Computer Vision",
+            "Real-time",
+            "HCI"
+        ],
+        "artifacts": [
+            {
+                "label": "Demo Video",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "GeoAI for Environmental Analysis",
+        "subtitle": "Spatial modeling to surface environmental change patterns",
+        "timeframe": "Fall 2024",
+        "role": "Spatial Data Scientist",
+        "status": "Completed",
+        "summary": "Geospatial analytics pipeline combining spatial statistics and visualization to identify hotspots and trend shifts in environmental indicators.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Environmental indicators often vary by geography and time, requiring spatially aware modeling."
+            },
+            {
+                "title": "Problem",
+                "text": "Identify statistically significant clusters and temporal changes across regions."
+            },
+            {
+                "title": "Approach",
+                "text": "Engineered spatial features, ran hotspot analysis, and built map-based summaries for stakeholders."
+            },
+            {
+                "title": "Evaluation",
+                "text": "Validated clustering consistency with sensitivity checks and spatial autocorrelation measures."
+            },
+            {
+                "title": "Impact",
+                "text": "Enabled clearer targeting of interventions and environmental monitoring priorities."
+            }
+        ],
+        "stack": [
+            "GeoPandas",
+            "ArcGIS",
+            "Python",
+            "Spatial Stats"
+        ],
+        "tags": [
+            "GeoAI",
+            "Spatial Analysis",
+            "Sustainability"
+        ],
+        "artifacts": [
+            {
+                "label": "Report",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Health Informatics: Diabetes & SDOH",
+        "subtitle": "Neighborhood-level analysis of diabetes prevalence and deprivation",
+        "timeframe": "Jan 2025 - Present",
+        "role": "Researcher",
+        "status": "In progress",
+        "summary": "Linked diabetes outcomes with ADI/SVI indices to quantify neighborhood-level disparities and inform public health planning.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Health outcomes are tightly coupled with social determinants and neighborhood context."
+            },
+            {
+                "title": "Problem",
+                "text": "Quantify disparities by linking outcomes with deprivation indices and mapping risk patterns."
+            },
+            {
+                "title": "Approach",
+                "text": "Integrated public health outcomes with ADI/SVI, ran spatial correlation and risk mapping."
+            },
+            {
+                "title": "Evaluation",
+                "text": "Checked stability of correlations across index variations and geographic resolutions."
+            },
+            {
+                "title": "Impact",
+                "text": "Supported community-level intervention planning and prioritization."
+            }
+        ],
+        "stack": [
+            "R",
+            "Spatial Statistics",
+            "Power BI",
+            "Python"
+        ],
+        "tags": [
+            "Health Analytics",
+            "SDOH",
+            "GeoAI"
+        ],
+        "artifacts": [
+            {
+                "label": "Study Brief",
+                "link": ""
+            }
+        ]
+    },
+    {
+        "title": "Business Optimization via Social Data",
+        "subtitle": "NLP + Bayesian optimization + RL for marketing ROI",
+        "timeframe": "Fall 2024",
+        "role": "ML Researcher",
+        "status": "Completed",
+        "summary": "Built a multi-stage optimization framework to detect virality signals and recommend actions that maximize engagement lift.",
+        "sections": [
+            {
+                "title": "Context",
+                "text": "Marketing teams need a systematic way to test and optimize content strategies."
+            },
+            {
+                "title": "Problem",
+                "text": "Predict and improve campaign performance using heterogeneous social signals."
+            },
+            {
+                "title": "Approach",
+                "text": "Extracted NLP features, applied Bayesian optimization for tuning, and used RL for action policies."
+            },
+            {
+                "title": "Evaluation",
+                "text": "Compared lift against baselines and measured stability across campaign segments."
+            },
+            {
+                "title": "Impact",
+                "text": "Produced a reusable framework for experimentation and ROI forecasting."
+            }
+        ],
+        "stack": [
+            "Python",
+            "Transformers",
+            "RL Toolkits",
+            "Prophet"
+        ],
+        "tags": [
+            "NLP",
+            "Bayesian Optimization",
+            "Marketing Analytics"
+        ],
+        "artifacts": [
+            {
+                "label": "Report",
                 "link": ""
             }
         ]

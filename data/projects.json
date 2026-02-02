@@ -73,5 +73,41 @@
             "SQL",
             "Automation"
         ]
+    },
+    {
+        "title": "Interactive PAC-MAN using MobileNet",
+        "description": "Gesture-controlled PAC-MAN game using real-time MobileNet inference for interactive gameplay.",
+        "tags": [
+            "Computer Vision",
+            "MobileNet",
+            "TensorFlow"
+        ]
+    },
+    {
+        "title": "GeoAI for Environmental Analysis",
+        "description": "Geospatial AI with spatial statistics to analyze and predict environmental changes.",
+        "tags": [
+            "GeoAI",
+            "Spatial Stats",
+            "Sustainability"
+        ]
+    },
+    {
+        "title": "Health Informatics: Diabetes & SDOH",
+        "description": "Analyzed diabetes prevalence against ADI/SVI neighborhood indices using spatial visualization.",
+        "tags": [
+            "Health Data",
+            "SDOH",
+            "GeoAI"
+        ]
+    },
+    {
+        "title": "Business Optimization via Social Data",
+        "description": "NLP + RL + Bayesian optimization for virality detection, ad optimization, and trend forecasting.",
+        "tags": [
+            "NLP",
+            "RL",
+            "Bayesian Opt"
+        ]
     }
 ]
