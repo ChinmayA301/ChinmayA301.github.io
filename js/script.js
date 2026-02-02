@@ -782,42 +782,54 @@ const TILE_SECTIONS = [
         description: "Flagship builds, rapid prototypes, and live systems.",
         href: "projects.html",
         metric: "12+ builds",
-        tone: "primary"
+        tone: "primary",
+        x: 12,
+        y: 20
     },
     {
         title: "Project Reports",
         description: "Long-form case studies with context, evaluation, and results.",
         href: "reports.html",
         metric: "Deep dives",
-        tone: "accent"
+        tone: "accent",
+        x: 58,
+        y: 16
     },
     {
         title: "Coursework",
         description: "Academic projects, deliverables, and research notes.",
         href: "coursework.html",
         metric: "MS + B.Tech",
-        tone: "neutral"
+        tone: "neutral",
+        x: 78,
+        y: 48
     },
     {
         title: "Future Ideas",
         description: "Concept briefs and research directions pre-implementation.",
         href: "ideas.html",
         metric: "Idea backlog",
-        tone: "accent"
+        tone: "accent",
+        x: 35,
+        y: 56
     },
     {
         title: "Experience",
         description: "Work timeline + education history in separate views.",
         href: "experience.html",
         metric: "Industry + Research",
-        tone: "primary"
+        tone: "primary",
+        x: 8,
+        y: 68
     },
     {
-        title: "Resumes",
+        title: "Resume",
         description: "Role-specific resume downloads for targeted applications.",
         href: "resumes.html",
         metric: "6 roles",
-        tone: "neutral"
+        tone: "neutral",
+        x: 62,
+        y: 74
     }
 ];
 
@@ -825,11 +837,14 @@ function renderTiles() {
     const grid = document.getElementById("tilesGrid");
     if (!grid) return;
     grid.innerHTML = TILE_SECTIONS.map((tile, idx) => `
-      <a class="tile-card tile-${tile.tone}" href="${tile.href}" style="--tile-delay:${idx * 40}ms;">
-        <div class="tile-metric">${tile.metric}</div>
-        <h3>${tile.title}</h3>
-        <p>${tile.description}</p>
-        <div class="tile-dots" aria-hidden="true"></div>
+      <a class="tile-card tile-${tile.tone}" href="${tile.href}"
+        style="left:${tile.x}%; top:${tile.y}%; --tile-delay:${idx * 40}ms;">
+        <span class="tile-dot" aria-hidden="true"></span>
+        <span class="tile-label">
+          <span class="tile-metric">${tile.metric}</span>
+          <span class="tile-title">${tile.title}</span>
+          <span class="tile-desc">${tile.description}</span>
+        </span>
       </a>
     `).join("");
     applyStagger(grid.querySelectorAll(".tile-card"));
