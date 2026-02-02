@@ -398,7 +398,6 @@ loadFutureIdeas();
 loadCaseStudy();
 loadResumes();
 loadHighlights();
-renderTiles();
 
 function applyStagger(elements) {
     elements.forEach((el, idx) => {
@@ -835,3 +834,5 @@ function renderTiles() {
     `).join("");
     applyStagger(grid.querySelectorAll(".tile-card"));
 }
+
+renderTiles();
