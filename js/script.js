@@ -1,11 +1,13 @@
 // Typed headline
-new Typed("#typed", {
-    strings: ["Hello, my name is"],
-    typeSpeed: 92,
-    backSpeed: 22,
-    loop: false,
-    showCursor: true
-});
+if (document.querySelector("#typed")) {
+    new Typed("#typed", {
+        strings: ["Hello, my name is"],
+        typeSpeed: 92,
+        backSpeed: 22,
+        loop: false,
+        showCursor: true
+    });
+}
 
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -106,11 +108,30 @@ async function loadProjects() {
 // Render Experience from JSON
 async function loadExperience() {
     const wrap = document.getElementById("experienceTimeline");
-    if (!wrap) return;
+    const workWrap = document.getElementById("workTimeline");
+    const eduWrap = document.getElementById("educationTimeline");
+    if (!wrap && !workWrap && !eduWrap) return;
     try {
         const res = await fetch("data/experience.json", { cache: "no-store" });
         const items = await res.json();
-        wrap.innerHTML = items.map(item => `
+        if (wrap) {
+            wrap.innerHTML = renderTimelineItems(items);
+        }
+        if (workWrap || eduWrap) {
+            const { workItems, eduItems } = splitExperience(items);
+            if (workWrap) workWrap.innerHTML = renderTimelineItems(workItems);
+            if (eduWrap) eduWrap.innerHTML = renderTimelineItems(eduItems);
+        }
+    } catch (e) {
+        if (wrap) wrap.innerHTML = `<p class="text-danger small">Could not load experience.</p>`;
+        if (workWrap) workWrap.innerHTML = `<p class="text-danger small">Could not load work experience.</p>`;
+        if (eduWrap) eduWrap.innerHTML = `<p class="text-danger small">Could not load education.</p>`;
+        console.error("Experience load error:", e);
+    }
+}
+
+function renderTimelineItems(items) {
+    return items.map(item => `
       <div class="timeline-item card">
         <div class="card-body">
           <h3 class="h5 mb-1">${item.title}</h3>
@@ -122,9 +143,59 @@ async function loadExperience() {
         </div>
       </div>
     `).join("");
-    } catch (e) {
-        wrap.innerHTML = `<p class="text-danger small">Could not load experience.</p>`;
-        console.error("Experience load error:", e);
+}
+
+function splitExperience(items) {
+    const eduItems = [];
+    const workItems = [];
+    items.forEach(item => {
+        const title = (item.title || "").toLowerCase();
+        const org = (item.org || "").toLowerCase();
+        const isEdu = title.includes("m.s.") || title.includes("b.tech") || title.includes("b.tech.")
+            || org.includes("university") || org.includes("institute");
+        if (isEdu) {
+            eduItems.push(item);
+        } else {
+            workItems.push(item);
+        }
+    });
+    return { workItems, eduItems };
+}
+
+async function loadHighlights() {
+    const currentRoleEl = document.getElementById("currentRole");
+    const educationEl = document.getElementById("educationHighlight");
+    if (!currentRoleEl && !educationEl) return;
+    try {
+        const res = await fetch("data/experience.json", { cache: "no-store" });
+        const items = await res.json();
+        const { workItems, eduItems } = splitExperience(items);
+        const current = workItems.find(item => (item.time || "").toLowerCase().includes("present")) || workItems[0];
+        const latestEdu = eduItems[0];
+        if (currentRoleEl && current) {
+            currentRoleEl.innerHTML = `
+        <p class="eyebrow">Current Position</p>
+        <h3 class="h5 mb-1">${current.title}</h3>
+        <p class="mb-1"><strong>${current.org}</strong> | ${current.time}</p>
+        ${current.location ? `<p class="small text-muted mb-2">${current.location}</p>` : ""}
+        <ul class="mb-0 small text-muted ps-3">
+          ${(current.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      `;
+        }
+        if (educationEl && latestEdu) {
+            educationEl.innerHTML = `
+        <p class="eyebrow">Education</p>
+        <h3 class="h5 mb-1">${latestEdu.title}</h3>
+        <p class="mb-1"><strong>${latestEdu.org}</strong> | ${latestEdu.time}</p>
+        ${latestEdu.location ? `<p class="small text-muted mb-2">${latestEdu.location}</p>` : ""}
+        <ul class="mb-0 small text-muted ps-3">
+          ${(latestEdu.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      `;
+        }
+    } catch (err) {
+        console.error("Highlights load error:", err);
     }
 }
 
@@ -266,8 +337,7 @@ async function loadResumes() {
     const grid = document.getElementById("resumesGrid");
     if (!grid) return;
     try {
-        const res = await fetch("data/resumes.json", { cache: "no-store" });
-        const resumes = await res.json();
+        const resumes = await loadJsonWithOverrides("resumes", "data/resumes.json");
         grid.innerHTML = resumes.map(r => `
       <div class="col-md-6 col-lg-4">
         <div class="resume-card card h-100">
@@ -301,6 +371,7 @@ loadCourseworkProjects();
 loadFutureIdeas();
 loadCaseStudy();
 loadResumes();
+loadHighlights();
 
 function applyStagger(elements) {
     elements.forEach((el, idx) => {
@@ -469,7 +540,8 @@ function getFallbackPath(target) {
         projects: "data/projects.json",
         project_reports: "data/project_reports.json",
         coursework_projects: "data/coursework_projects.json",
-        future_ideas: "data/future_ideas.json"
+        future_ideas: "data/future_ideas.json",
+        resumes: "data/resumes.json"
     }[target];
 }
 
@@ -641,6 +713,8 @@ if (uploadTarget && githubPath) {
         }
     });
 }
+
+applyStagger(document.querySelectorAll(".tile-card"));
 
 // Header background + text color shift on scroll
 const hero = document.querySelector(".hero");
