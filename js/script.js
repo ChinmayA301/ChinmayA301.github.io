@@ -47,6 +47,31 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 let projectCache = [];
 
+const LOCAL_KEY_PREFIX = "portfolio_upload_";
+const SESSION_TOKEN_KEY = "portfolio_github_token";
+const GITHUB_DEFAULTS = {
+    owner: "ChinmayA301",
+    repo: "ChinmayA301.github.io",
+    branch: "main"
+};
+
+async function fetchJsonStrict(path) {
+    const url = new URL(path, window.location.href).toString();
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) {
+        throw new Error(`Fetch failed ${res.status} ${res.statusText} for ${url}`);
+    }
+    const text = await res.text();
+    if (!text.trim()) {
+        throw new Error(`Empty response for ${url}`);
+    }
+    try {
+        return JSON.parse(text);
+    } catch (err) {
+        throw new Error(`Invalid JSON from ${url}: ${err.message}`);
+    }
+}
+
 function renderProjects(projects) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
@@ -116,8 +141,7 @@ async function loadExperience() {
     const eduWrap = document.getElementById("educationTimeline");
     if (!wrap && !workWrap && !eduWrap) return;
     try {
-        const res = await fetch("data/experience.json", { cache: "no-store" });
-        const items = await res.json();
+        const items = await fetchJsonStrict("data/experience.json");
         if (!items.length) {
             if (wrap) wrap.innerHTML = `<p class="text-muted small">No experience entries available yet.</p>`;
             if (workWrap) workWrap.innerHTML = `<p class="text-muted small">No work experience available yet.</p>`;
@@ -177,8 +201,7 @@ async function loadHighlights() {
     const educationEl = document.getElementById("educationHighlight");
     if (!currentRoleEl && !educationEl) return;
     try {
-        const res = await fetch("data/experience.json", { cache: "no-store" });
-        const items = await res.json();
+        const items = await fetchJsonStrict("data/experience.json");
         const { workItems, eduItems } = splitExperience(items);
         const current = workItems.find(item => (item.time || "").toLowerCase().includes("present")) || workItems[0];
         const latestEdu = eduItems[0];
@@ -464,14 +487,6 @@ const githubToken = document.getElementById("githubToken");
 const githubCommitMsg = document.getElementById("githubCommitMsg");
 const githubStatus = document.getElementById("githubStatus");
 
-const LOCAL_KEY_PREFIX = "portfolio_upload_";
-const SESSION_TOKEN_KEY = "portfolio_github_token";
-const GITHUB_DEFAULTS = {
-    owner: "ChinmayA301",
-    repo: "ChinmayA301.github.io",
-    branch: "main"
-};
-
 async function loadJsonWithOverrides(key, fallbackPath) {
     const stored = localStorage.getItem(`${LOCAL_KEY_PREFIX}${key}`);
     if (stored) {
@@ -484,8 +499,7 @@ async function loadJsonWithOverrides(key, fallbackPath) {
             console.warn("Invalid stored JSON, falling back.", err);
         }
     }
-    const res = await fetch(fallbackPath, { cache: "no-store" });
-    return res.json();
+    return fetchJsonStrict(fallbackPath);
 }
 
 function setUploadStatus(message, isError = false) {
