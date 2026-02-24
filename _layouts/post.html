@@ -108,11 +108,14 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const themeKey = 'blog-theme';
+    const root = document.documentElement;
     const body = document.body;
     const toggle = document.getElementById('themeToggle');
 
     const setTheme = (theme) => {
       const isLight = theme === 'light';
+      root.classList.toggle('theme-light', isLight);
+      root.setAttribute('data-theme', isLight ? 'light' : 'dark');
       body.classList.toggle('theme-light', isLight);
       toggle.textContent = isLight ? 'Dark Mode' : 'Light Mode';
       toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');

@@ -819,6 +819,10 @@ footer {
     color: var(--accent);
 }
 
+.blog-footer-muted {
+    color: rgba(208, 216, 230, 0.45);
+}
+
 .blog-quick-notes {
     font-size: 0.84rem;
     color: rgba(208, 216, 230, 0.68);
@@ -855,6 +859,50 @@ body.blog-theme.theme-light {
     color: var(--text);
 }
 
+html.theme-light body.blog-theme {
+    background:
+        radial-gradient(900px 500px at 85% -10%, rgba(11, 102, 209, .12), transparent 60%),
+        radial-gradient(800px 600px at -10% -10%, rgba(11, 102, 209, .08), transparent 60%),
+        linear-gradient(180deg, #f8fbff, #eef3f9);
+    color: #122033;
+}
+
+html.theme-light body.blog-theme h1,
+html.theme-light body.blog-theme h2,
+html.theme-light body.blog-theme h3,
+html.theme-light body.blog-theme h4,
+html.theme-light body.blog-theme p,
+html.theme-light body.blog-theme li,
+html.theme-light body.blog-theme time,
+html.theme-light body.blog-theme .section-title {
+    color: #122033;
+}
+
+html.theme-light body.blog-theme .section-text,
+html.theme-light body.blog-theme .small,
+html.theme-light body.blog-theme .text-muted {
+    color: #4d5b6d !important;
+}
+
+html.theme-light body.blog-theme .blog-card,
+html.theme-light body.blog-theme .bluf-box,
+html.theme-light body.blog-theme .tldr-box,
+html.theme-light body.blog-theme .blog-theme-toggle {
+    background: #ffffff;
+    color: #122033;
+    border-color: rgba(18, 32, 51, 0.18);
+}
+
+html.theme-light body.blog-theme a {
+    color: #0b66d1;
+}
+
+html.theme-light body.blog-theme .bg-dark,
+html.theme-light body.blog-theme footer {
+    background: #e9eff7 !important;
+    color: #122033 !important;
+}
+
 body.blog-theme.theme-light .section-text,
 body.blog-theme.theme-light .small.text-muted {
     color: var(--muted) !important;
@@ -862,6 +910,10 @@ body.blog-theme.theme-light .small.text-muted {
 
 body.blog-theme.theme-light .blog-quick-notes {
     color: rgba(77, 91, 109, 0.78);
+}
+
+body.blog-theme.theme-light .blog-footer-muted {
+    color: rgba(77, 91, 109, 0.55);
 }
 
 body.blog-theme.theme-light .bg-orb {
