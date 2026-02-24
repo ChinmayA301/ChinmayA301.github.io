@@ -49,16 +49,19 @@
   }
   </script>
 </head>
-<body>
+<body class="blog-theme">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-orb orb-3" aria-hidden="true"></div>
 
   <header class="section pb-0">
     <div class="container">
-      <nav aria-label="Breadcrumb" class="small mb-3">
-        <a href="{{ '/' | relative_url }}">Home</a> / <a href="{{ '/blog/index.html' | relative_url }}">Blog</a> / <span aria-current="page">{{ page.title }}</span>
-      </nav>
+      <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+        <nav aria-label="Breadcrumb" class="small mb-0">
+          <a href="{{ '/' | relative_url }}">Home</a> / <a href="{{ '/blog/index.html' | relative_url }}">Blog</a> / <span aria-current="page">{{ page.title }}</span>
+        </nav>
+        <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
+      </div>
       <h1 class="section-title">{{ page.title }}</h1>
       <p class="section-text">Published on <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
     </div>
@@ -103,6 +106,26 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const themeKey = 'blog-theme';
+    const body = document.body;
+    const toggle = document.getElementById('themeToggle');
+
+    const setTheme = (theme) => {
+      const isLight = theme === 'light';
+      body.classList.toggle('theme-light', isLight);
+      toggle.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+      toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    };
+
+    const savedTheme = localStorage.getItem(themeKey);
+    setTheme(savedTheme === 'light' ? 'light' : 'dark');
+
+    toggle.addEventListener('click', () => {
+      const nextTheme = body.classList.contains('theme-light') ? 'dark' : 'light';
+      localStorage.setItem(themeKey, nextTheme);
+      setTheme(nextTheme);
+    });
   </script>
 </body>
 </html>

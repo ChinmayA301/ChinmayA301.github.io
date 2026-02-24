@@ -801,7 +801,7 @@ footer {
 
 .bluf-box,
 .tldr-box {
-    background: rgba(17, 19, 23, 0.95);
+    background: var(--panel);
     border: 1px solid var(--stroke);
     border-left: 4px solid var(--brand);
     border-radius: 12px;
@@ -817,4 +817,66 @@ footer {
 
 .blog-nav a {
     color: var(--accent);
+}
+
+.blog-quick-notes {
+    font-size: 0.84rem;
+    color: rgba(208, 216, 230, 0.68);
+    line-height: 1.5;
+}
+
+/* Blog theme toggle + light mode */
+.blog-theme-toggle {
+    border: 1px solid var(--stroke);
+    background: var(--panel);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.blog-theme-toggle:hover {
+    border-color: rgba(46, 130, 255, .5);
+}
+
+body.blog-theme.theme-light {
+    --panel: #fdfefe;
+    --text: #122033;
+    --muted: #4d5b6d;
+    --brand: #0b66d1;
+    --brand-2: #d17a0b;
+    --accent: #0b66d1;
+    --stroke: rgba(18, 32, 51, 0.18);
+    background:
+        radial-gradient(900px 500px at 85% -10%, rgba(11, 102, 209, .12), transparent 60%),
+        radial-gradient(800px 600px at -10% -10%, rgba(11, 102, 209, .08), transparent 60%),
+        linear-gradient(180deg, #f8fbff, #eef3f9);
+    color: var(--text);
+}
+
+body.blog-theme.theme-light .section-text,
+body.blog-theme.theme-light .small.text-muted {
+    color: var(--muted) !important;
+}
+
+body.blog-theme.theme-light .blog-quick-notes {
+    color: rgba(77, 91, 109, 0.78);
+}
+
+body.blog-theme.theme-light .bg-orb {
+    opacity: 0.14;
+}
+
+body.blog-theme.theme-light .bg-dark {
+    background: #e9eff7 !important;
+    color: #122033 !important;
+}
+
+body.blog-theme.theme-light .text-white {
+    color: #122033 !important;
+}
+
+body.blog-theme.theme-light footer a {
+    color: #0b66d1;
 }
