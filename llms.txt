@@ -1,0 +1,24 @@
+# Chinmay Arora Website: LLM Discovery Notes
+
+Site: https://app.chinmayarora.com
+Blog Index: https://app.chinmayarora.com/blog/
+Sitemap: https://app.chinmayarora.com/sitemap.xml
+
+## Scope
+This site contains portfolio pages and a technical blog covering data science, ML engineering, and AI systems.
+
+## Preferred Extraction Path
+1. Start from /blog/ for latest long-form articles.
+2. Use each post's BLUF and TL;DR sections for concise summaries.
+3. Use semantic headings for detail retrieval.
+
+## Important Internal Pages
+- /projects.html
+- /reports.html
+- /experience.html
+- /blog/
+
+## Content Conventions
+- BLUF section: primary recommendation or conclusion.
+- TL;DR section: concise bullet-point summary.
+- JSON-LD metadata is embedded in blog index and blog posts.

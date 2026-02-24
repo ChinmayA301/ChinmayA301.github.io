@@ -844,6 +844,15 @@ const TILE_SECTIONS = [
         tone: "neutral",
         x: 62,
         y: 74
+    },
+    {
+        title: "Blog",
+        description: "BLUF-first technical posts with TL;DR and implementation details.",
+        href: "blog/",
+        metric: "New posts",
+        tone: "accent",
+        x: 83,
+        y: 26
     }
 ];
 
