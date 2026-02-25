@@ -1,5 +1,32 @@
 [
     {
+        "title": "ML + PostgreSQL Systems",
+        "course": "Coursework Project",
+        "term": "Spring 24",
+        "summary": "Built and maintained multiple machine learning project pipelines while managing and updating PostgreSQL systems for reliable data refresh, schema control, and model-ready datasets.",
+        "focus": [
+            "ML pipeline orchestration and maintenance",
+            "PostgreSQL schema updates and data refresh workflows",
+            "Data quality checks for model-ready datasets"
+        ],
+        "deliverables": [
+            "Pipeline implementation",
+            "Database updates",
+            "Operational documentation"
+        ],
+        "tools": [
+            "PostgreSQL",
+            "Python",
+            "Machine Learning"
+        ],
+        "links": [
+            {
+                "label": "Project Brief",
+                "url": ""
+            }
+        ]
+    },
+    {
         "title": "Stock Market Prediction Pipeline",
         "course": "Applied Machine Learning",
         "term": "B.Tech",
