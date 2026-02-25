@@ -284,11 +284,6 @@ async function loadProjectReports() {
           </div>
         </header>
         ${r.summary ? `<p class="report-summary">${r.summary}</p>` : ""}
-        ${(r.visual_path || r.pdf_path) ? `
-        <p class="small text-muted mb-3">
-          ${r.visual_path ? `Visual path: <code>${r.visual_path}</code>${r.pdf_path ? "<br>" : ""}` : ""}
-          ${r.pdf_path ? `PDF path: <code>${r.pdf_path}</code>` : ""}
-        </p>` : ""}
         ${(r.sections || []).map(s => `
           <section class="report-section">
             <h4 class="h6">${s.title}</h4>
