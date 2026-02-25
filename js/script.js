@@ -348,7 +348,7 @@ async function loadCourseworkProjects() {
 async function loadFutureIdeas() {
     const grid = document.getElementById("futureIdeas");
     if (!grid) return;
-    const blogHomePath = "blog/index.html";
+    const blogHomePath = "/blog/";
     try {
         const ideas = await loadJsonWithOverrides("future_ideas", "data/future_ideas.json");
         if (!ideas.length) {
@@ -807,7 +807,7 @@ const TILE_SECTIONS = [
     {
         title: "Blog",
         description: "BLUF-first technical posts with TL;DR and implementation details.",
-        href: "blog/",
+        href: "/blog/",
         metric: "New posts",
         tone: "accent",
         x: 16,
@@ -816,7 +816,7 @@ const TILE_SECTIONS = [
     {
         title: "Experience",
         description: "Work timeline + education history in separate views.",
-        href: "experience.html",
+        href: "/experience/",
         metric: "Industry + Research",
         tone: "primary",
         x: 48,
@@ -825,7 +825,7 @@ const TILE_SECTIONS = [
     {
         title: "Projects",
         description: "Flagship builds, rapid prototypes, and live systems.",
-        href: "projects.html",
+        href: "/projects/",
         metric: "12+ builds",
         tone: "primary",
         x: 78,
@@ -834,7 +834,7 @@ const TILE_SECTIONS = [
     {
         title: "The Lab",
         description: "A space to explore and visibilize future ideas pre-implementation.",
-        href: "ideas.html",
+        href: "/ideas/",
         metric: "Idea backlog",
         tone: "accent",
         x: 28,
@@ -843,7 +843,7 @@ const TILE_SECTIONS = [
     {
         title: "Coursework",
         description: "Academic projects, deliverables, and research notes.",
-        href: "coursework.html",
+        href: "/coursework/",
         metric: "MS + B.Tech",
         tone: "neutral",
         x: 58,
@@ -852,7 +852,7 @@ const TILE_SECTIONS = [
     {
         title: "Project Reports",
         description: "Long-form case studies with context, evaluation, and results.",
-        href: "reports.html",
+        href: "/reports/",
         metric: "Deep dives",
         tone: "accent",
         x: 78,
@@ -861,7 +861,7 @@ const TILE_SECTIONS = [
     {
         title: "Resume",
         description: "Role-specific resume downloads for targeted applications.",
-        href: "resumes.html",
+        href: "/resumes/",
         metric: "6 roles",
         tone: "neutral",
         x: 10,
