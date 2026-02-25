@@ -56,7 +56,7 @@ const GITHUB_DEFAULTS = {
 };
 
 async function fetchJsonStrict(path) {
-    const url = new URL(path, window.location.href).toString();
+    const url = resolveJsonUrl(path);
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) {
         throw new Error(`Fetch failed ${res.status} ${res.statusText} for ${url}`);
@@ -70,6 +70,17 @@ async function fetchJsonStrict(path) {
     } catch (err) {
         throw new Error(`Invalid JSON from ${url}: ${err.message}`);
     }
+}
+
+function resolveJsonUrl(path) {
+    if (!path) {
+        throw new Error("JSON path is required");
+    }
+    if (/^https?:\/\//i.test(path)) {
+        return path;
+    }
+    const normalized = path.replace(/^\.?\//, "");
+    return new URL(`/${normalized}`, window.location.origin).toString();
 }
 
 function renderProjects(projects) {
@@ -726,7 +737,7 @@ async function handleDownload() {
     }
     try {
         const fallbackPath = getFallbackPath(target);
-        const res = await fetch(fallbackPath, { cache: "no-store" });
+        const res = await fetch(resolveJsonUrl(fallbackPath), { cache: "no-store" });
         const data = await res.json();
         downloadJsonFile(`${target}.json`, data);
         setUploadStatus("Downloaded default JSON.");
