@@ -635,6 +635,39 @@ header p.lead {
     border-radius: 14px;
     padding: 10px 14px;
     min-width: 180px;
+    transform: scale(0.96) translateY(3px);
+    opacity: 0.78;
+    transition: transform .22s ease, opacity .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.scatter-label .tile-metric {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    transform: translateY(2px);
+    opacity: 0.82;
+    transition: transform .22s ease, opacity .22s ease, color .22s ease;
+}
+
+.scatter-label .tile-title {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 1.06rem;
+    font-weight: 700;
+    transform: translateY(2px);
+    transition: transform .22s ease, text-shadow .22s ease;
+}
+
+.scatter-label .tile-desc {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    transform: translateY(2px);
+    opacity: 0.78;
+    transition: transform .22s ease, opacity .22s ease, color .22s ease;
 }
 
 .scatter-node:hover {
@@ -642,8 +675,21 @@ header p.lead {
 }
 
 .scatter-node:hover .scatter-label {
+    transform: scale(1.03) translateY(-3px);
+    opacity: 1;
     border-color: rgba(46, 130, 255, 0.5);
     box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+.scatter-node:hover .tile-metric,
+.scatter-node:hover .tile-title,
+.scatter-node:hover .tile-desc {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.scatter-node:hover .tile-title {
+    text-shadow: 0 8px 24px rgba(46, 130, 255, 0.4);
 }
 
 .scatter-node.scatter-accent .scatter-blob {
@@ -816,6 +862,20 @@ footer {
     padding: 24px;
 }
 
+.blog-home-ca {
+    color: var(--text);
+    border: 1px solid var(--stroke);
+    border-radius: 10px;
+    padding: 6px 12px;
+    text-decoration: none;
+    line-height: 1.1;
+}
+
+.blog-home-ca:hover {
+    color: #fff;
+    border-color: rgba(46, 130, 255, 0.65);
+}
+
 .blog-stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -974,7 +1034,8 @@ html.theme-light body.blog-theme .blog-theme-toggle,
 html.theme-light body.blog-theme .blog-mini-hero,
 html.theme-light body.blog-theme .blog-stat,
 html.theme-light body.blog-theme .blog-route-card,
-html.theme-light body.blog-theme .blog-top-link {
+html.theme-light body.blog-theme .blog-top-link,
+html.theme-light body.blog-theme .blog-home-ca {
     background: #ffffff;
     color: #122033;
     border-color: rgba(18, 32, 51, 0.18);

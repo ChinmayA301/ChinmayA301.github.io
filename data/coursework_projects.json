@@ -2,7 +2,7 @@
     {
         "title": "Stock Market Prediction Pipeline",
         "course": "Applied Machine Learning",
-        "term": "Fall 2023",
+        "term": "B.Tech",
         "summary": "Time-series forecasting and classification of market movement with feature engineering and model comparison.",
         "focus": [
             "Feature engineering on financial time series",
@@ -31,9 +31,35 @@
         ]
     },
     {
+        "title": "Sports Analytics Modeling",
+        "course": "Sports Analytics",
+        "term": "B.Tech",
+        "summary": "Predictive analytics on team performance with feature engineering and comparative model evaluation.",
+        "focus": [
+            "Player and team-level feature engineering",
+            "Model comparison using cross-validation",
+            "Insights for strategy optimization"
+        ],
+        "deliverables": [
+            "Modeling notebook",
+            "Insights report"
+        ],
+        "tools": [
+            "R",
+            "tidyverse",
+            "caret"
+        ],
+        "links": [
+            {
+                "label": "Report",
+                "url": ""
+            }
+        ]
+    },
+    {
         "title": "OCR + NLP Document Parsing",
         "course": "Natural Language Processing",
-        "term": "Spring 2024",
+        "term": "B.Tech",
         "summary": "End-to-end pipeline converting scanned documents to structured entities for downstream analytics.",
         "focus": [
             "OCR preprocessing and quality checks",
@@ -60,7 +86,7 @@
     {
         "title": "Manufacturing Cost Optimizer",
         "course": "Operations Research",
-        "term": "Spring 2023",
+        "term": "B.Tech",
         "summary": "Linear programming model to optimize production cost under capacity and resource constraints.",
         "focus": [
             "Formulation of objective and constraints",
@@ -83,27 +109,27 @@
         ]
     },
     {
-        "title": "Sports Analytics Modeling",
-        "course": "Sports Analytics",
-        "term": "Spring 2024",
-        "summary": "Predictive analytics on team performance with feature engineering and comparative model evaluation.",
+        "title": "Swine Management System",
+        "course": "Information Systems",
+        "term": "Fall 2023",
+        "summary": "Farm operations and livestock tracking system for feeding cycles, health logs, and inventory visibility.",
         "focus": [
-            "Player and team-level feature engineering",
-            "Model comparison using cross-validation",
-            "Insights for strategy optimization"
+            "Data model for herd lifecycle tracking",
+            "CRUD workflows for daily farm operations",
+            "Reporting dashboard for operational planning"
         ],
         "deliverables": [
-            "Modeling notebook",
-            "Insights report"
+            "System design document",
+            "Working prototype"
         ],
         "tools": [
-            "R",
-            "tidyverse",
-            "caret"
+            "PostgreSQL",
+            "Python",
+            "Flask"
         ],
         "links": [
             {
-                "label": "Report",
+                "label": "Project Brief",
                 "url": ""
             }
         ]
@@ -111,7 +137,7 @@
     {
         "title": "Business Optimization via Social Data",
         "course": "Advanced Analytics",
-        "term": "Fall 2024",
+        "term": "Spring 2025",
         "summary": "NLP + Bayesian optimization + RL framework for virality detection and marketing ROI optimization.",
         "focus": [
             "Trend detection with NLP embeddings",
@@ -136,35 +162,9 @@
         ]
     },
     {
-        "title": "GeoAI for Environmental Analysis",
-        "course": "Spatial Data Science",
-        "term": "Fall 2024",
-        "summary": "Geospatial modeling and spatial statistics to analyze and predict environmental change patterns.",
-        "focus": [
-            "Spatial feature engineering",
-            "Hotspot analysis and clustering",
-            "Map-based visualization"
-        ],
-        "deliverables": [
-            "Geospatial report",
-            "Map dashboard"
-        ],
-        "tools": [
-            "GeoPandas",
-            "ArcGIS",
-            "Python"
-        ],
-        "links": [
-            {
-                "label": "Report",
-                "url": ""
-            }
-        ]
-    },
-    {
         "title": "Interactive PAC-MAN using MobileNet",
         "course": "Computer Vision",
-        "term": "Fall 2022",
+        "term": "Fall 2024",
         "summary": "Gesture-controlled PAC-MAN game using real-time MobileNet inference for interactive gameplay.",
         "focus": [
             "Real-time gesture classification",
@@ -183,6 +183,33 @@
         "links": [
             {
                 "label": "Demo",
+                "url": ""
+            }
+        ]
+    },
+    {
+        "title": "GeoSDOH & Diabetes Risk Mapping",
+        "course": "Capstone",
+        "term": "Capstone",
+        "summary": "Integrated geospatial deprivation indicators with diabetes outcomes to identify high-risk neighborhoods and intervention priority zones.",
+        "focus": [
+            "ADI/SVI feature integration with outcome data",
+            "Spatial clustering and hotspot detection",
+            "Actionable map outputs for public health planning"
+        ],
+        "deliverables": [
+            "Capstone report",
+            "Map dashboard"
+        ],
+        "tools": [
+            "R",
+            "GeoPandas",
+            "Power BI",
+            "Python"
+        ],
+        "links": [
+            {
+                "label": "Capstone Report",
                 "url": ""
             }
         ]

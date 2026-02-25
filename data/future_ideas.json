@@ -16,6 +16,12 @@
             "RAG",
             "GovTech",
             "Responsible AI"
+        ],
+        "links": [
+            {
+                "label": "LinkedIn",
+                "url": "https://www.linkedin.com/in/chinmay-arora-27682211b/"
+            }
         ]
     },
     {
@@ -35,6 +41,12 @@
             "GeoAI",
             "Spatial Stats",
             "Sustainability"
+        ],
+        "links": [
+            {
+                "label": "LinkedIn",
+                "url": "https://www.linkedin.com/in/chinmay-arora-27682211b/"
+            }
         ]
     }
 ]

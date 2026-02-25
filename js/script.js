@@ -75,13 +75,14 @@ async function fetchJsonStrict(path) {
 function renderProjects(projects) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
+    const githubProfile = "https://github.com/ChinmayA301";
     if (!projects.length) {
         grid.innerHTML = `<p class="text-muted small">No projects found yet.</p>`;
         return;
     }
     grid.innerHTML = projects.map(p => `
       <div class="col-md-6">
-        <a ${p.link ? `href="${p.link}" target="_blank"` : ""} class="project-box card shadow-sm h-100">
+        <a href="${p.link || githubProfile}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">
           <div class="card-body">
             <h3 class="h5">${p.title}</h3>
             <p class="mb-2 small text-muted">${p.description}</p>
@@ -165,9 +166,10 @@ async function loadExperience() {
 }
 
 function renderTimelineItems(items) {
+    const linkedInProfile = "https://www.linkedin.com/in/chinmay-arora-27682211b/";
     return items.map(item => `
-      <div class="timeline-item card">
-        <div class="card-body">
+      <a class="timeline-item card text-decoration-none" href="${linkedInProfile}" target="_blank" rel="noopener">
+        <div class="card-body text-white">
           <h3 class="h5 mb-1">${item.title}</h3>
           <p class="mb-1"><strong>${item.org}</strong> | ${item.time}</p>
           ${item.location ? `<p class="mb-2 small text-muted">${item.location}</p>` : ""}
@@ -175,7 +177,7 @@ function renderTimelineItems(items) {
             ${(item.bullets || []).map(b => `<li>${b}</li>`).join('')}
           </ul>
         </div>
-      </div>
+      </a>
     `).join("");
 }
 
@@ -236,6 +238,8 @@ async function loadHighlights() {
 async function loadProjectReports() {
     const wrap = document.getElementById("projectReports");
     if (!wrap) return;
+    const defaultVisualPath = "assets/images/profile.png";
+    const defaultPdfPath = "assets/ChinmayArora_CV.pdf";
     try {
         const reports = await loadJsonWithOverrides("project_reports", "data/project_reports.json");
         if (!reports.length) {
@@ -256,6 +260,10 @@ async function loadProjectReports() {
           </div>
         </header>
         ${r.summary ? `<p class="report-summary">${r.summary}</p>` : ""}
+        <p class="small text-muted mb-3">
+          Visual path: <code>${r.visual_path || defaultVisualPath}</code><br>
+          PDF path: <code>${r.pdf_path || defaultPdfPath}</code>
+        </p>
         ${(r.sections || []).map(s => `
           <section class="report-section">
             <h4 class="h6">${s.title}</h4>
@@ -273,6 +281,10 @@ async function loadProjectReports() {
                 ? `<a class="btn btn-outline-light btn-sm me-2" href="${a.link}" target="_blank" rel="noopener">${a.label}</a>`
                 : `<span class="btn btn-outline-light btn-sm me-2 disabled">${a.label}</span>`).join("")}
           </div>` : ""}
+        <div class="report-links">
+          <a class="btn btn-outline-light btn-sm me-2" href="${r.visual_path || defaultVisualPath}" target="_blank" rel="noopener">Open Visual</a>
+          <a class="btn btn-outline-light btn-sm me-2" href="${r.pdf_path || defaultPdfPath}" target="_blank" rel="noopener">Open PDF</a>
+        </div>
       </article>
     `).join("");
         applyStagger(wrap.querySelectorAll(".report-card"));
@@ -336,6 +348,7 @@ async function loadCourseworkProjects() {
 async function loadFutureIdeas() {
     const grid = document.getElementById("futureIdeas");
     if (!grid) return;
+    const blogHomePath = "blog/index.html";
     try {
         const ideas = await loadJsonWithOverrides("future_ideas", "data/future_ideas.json");
         if (!ideas.length) {
@@ -344,7 +357,7 @@ async function loadFutureIdeas() {
         }
         grid.innerHTML = ideas.map(i => `
       <div class="col-lg-6">
-        <article class="idea-card card h-100">
+        <a class="idea-card card h-100 text-decoration-none" href="${blogHomePath}" target="_blank" rel="noopener">
           <div class="card-body">
             <div class="d-flex justify-content-between flex-wrap gap-2">
               <h3 class="h5 mb-0">${i.title}</h3>
@@ -367,7 +380,7 @@ async function loadFutureIdeas() {
               ${(i.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
             </div>
           </div>
-        </article>
+        </a>
       </div>
     `).join("");
         applyStagger(grid.querySelectorAll(".idea-card"));
@@ -819,8 +832,8 @@ const TILE_SECTIONS = [
         y: 20
     },
     {
-        title: "Future Ideas",
-        description: "Concept briefs and research directions pre-implementation.",
+        title: "The Lab",
+        description: "A space to explore and visibilize future ideas pre-implementation.",
         href: "ideas.html",
         metric: "Idea backlog",
         tone: "accent",
