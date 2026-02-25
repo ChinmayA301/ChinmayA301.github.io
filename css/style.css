@@ -942,6 +942,17 @@ footer {
     max-width: 880px;
 }
 
+.blog-post img {
+    display: block;
+    width: min(100%, 760px);
+    height: auto;
+    margin: 18px auto;
+    border-radius: 14px;
+    border: 1px solid var(--stroke);
+    background: var(--panel);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
 .bluf-box,
 .tldr-box {
     background: var(--panel);
