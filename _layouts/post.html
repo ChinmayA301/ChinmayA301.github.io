@@ -120,7 +120,7 @@
     };
 
     const savedTheme = localStorage.getItem(themeKey);
-    setTheme(savedTheme === 'light' ? 'light' : 'dark');
+    setTheme(savedTheme === 'dark' ? 'dark' : 'light');
 
     toggle.addEventListener('click', () => {
       const nextTheme = body.classList.contains('theme-light') ? 'dark' : 'light';
