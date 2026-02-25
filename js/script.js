@@ -56,31 +56,46 @@ const GITHUB_DEFAULTS = {
 };
 
 async function fetchJsonStrict(path) {
-    const url = resolveJsonUrl(path);
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) {
-        throw new Error(`Fetch failed ${res.status} ${res.statusText} for ${url}`);
+    const urls = resolveJsonUrls(path);
+    const errors = [];
+    for (const url of urls) {
+        try {
+            const res = await fetch(url, { cache: "no-store" });
+            if (!res.ok) {
+                errors.push(`Fetch failed ${res.status} ${res.statusText} for ${url}`);
+                continue;
+            }
+            const text = await res.text();
+            if (!text.trim()) {
+                errors.push(`Empty response for ${url}`);
+                continue;
+            }
+            return JSON.parse(text);
+        } catch (err) {
+            errors.push(`Invalid JSON from ${url}: ${err.message}`);
+        }
     }
-    const text = await res.text();
-    if (!text.trim()) {
-        throw new Error(`Empty response for ${url}`);
-    }
-    try {
-        return JSON.parse(text);
-    } catch (err) {
-        throw new Error(`Invalid JSON from ${url}: ${err.message}`);
-    }
+    throw new Error(errors.join(" | "));
 }
 
-function resolveJsonUrl(path) {
+function resolveJsonUrls(path) {
     if (!path) {
         throw new Error("JSON path is required");
     }
     if (/^https?:\/\//i.test(path)) {
-        return path;
+        return [path];
     }
     const normalized = path.replace(/^\.?\//, "");
-    return new URL(`/${normalized}`, window.location.origin).toString();
+    const candidates = [];
+    candidates.push(new URL(`/${normalized}`, window.location.origin).toString());
+    candidates.push(new URL(normalized, window.location.href).toString());
+
+    const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
+    if (firstSegment && !normalized.startsWith(`${firstSegment}/`)) {
+        candidates.push(new URL(`/${firstSegment}/${normalized}`, window.location.origin).toString());
+    }
+
+    return Array.from(new Set(candidates));
 }
 
 function renderProjects(projects) {
@@ -737,8 +752,7 @@ async function handleDownload() {
     }
     try {
         const fallbackPath = getFallbackPath(target);
-        const res = await fetch(resolveJsonUrl(fallbackPath), { cache: "no-store" });
-        const data = await res.json();
+        const data = await fetchJsonStrict(fallbackPath);
         downloadJsonFile(`${target}.json`, data);
         setUploadStatus("Downloaded default JSON.");
     } catch (err) {
