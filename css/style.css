@@ -119,6 +119,20 @@ h4,
     z-index: 10;
 }
 
+.navbar-dark .navbar-nav .nav-link.nav-link-blog,
+.nav-link-blog {
+    color: #ffd89f;
+    border: 1px solid rgba(255, 185, 92, 0.55);
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.navbar-dark .navbar-nav .nav-link.nav-link-blog:hover,
+.nav-link-blog:hover {
+    color: #fff3de;
+    border-color: rgba(255, 185, 92, 0.8);
+}
+
 /* Hero */
 /* .hero {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
@@ -795,6 +809,75 @@ footer {
     padding: 16px;
 }
 
+.blog-mini-hero {
+    background: linear-gradient(140deg, rgba(46, 130, 255, 0.18), rgba(255, 185, 92, 0.13));
+    border: 1px solid var(--stroke);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.blog-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+}
+
+.blog-stat {
+    background: var(--panel);
+    border: 1px solid var(--stroke);
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.blog-stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.blog-stat-label {
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.blog-route-card {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--stroke);
+    border-radius: 12px;
+    padding: 14px;
+    color: var(--text);
+    text-decoration: none;
+    transition: transform .18s ease, border-color .18s ease;
+}
+
+.blog-route-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(46, 130, 255, 0.52);
+}
+
+.blog-top-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.blog-top-link {
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid var(--stroke);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 0.84rem;
+    transition: border-color .18s ease, color .18s ease;
+}
+
+.blog-top-link:hover {
+    color: var(--text);
+    border-color: rgba(46, 130, 255, 0.45);
+}
+
 .blog-post {
     max-width: 880px;
 }
@@ -887,7 +970,11 @@ html.theme-light body.blog-theme .text-muted {
 html.theme-light body.blog-theme .blog-card,
 html.theme-light body.blog-theme .bluf-box,
 html.theme-light body.blog-theme .tldr-box,
-html.theme-light body.blog-theme .blog-theme-toggle {
+html.theme-light body.blog-theme .blog-theme-toggle,
+html.theme-light body.blog-theme .blog-mini-hero,
+html.theme-light body.blog-theme .blog-stat,
+html.theme-light body.blog-theme .blog-route-card,
+html.theme-light body.blog-theme .blog-top-link {
     background: #ffffff;
     color: #122033;
     border-color: rgba(18, 32, 51, 0.18);

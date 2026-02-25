@@ -792,40 +792,13 @@ if (form) {
 }
 const TILE_SECTIONS = [
     {
-        title: "Projects",
-        description: "Flagship builds, rapid prototypes, and live systems.",
-        href: "projects.html",
-        metric: "12+ builds",
-        tone: "primary",
-        x: 12,
-        y: 20
-    },
-    {
-        title: "Project Reports",
-        description: "Long-form case studies with context, evaluation, and results.",
-        href: "reports.html",
-        metric: "Deep dives",
+        title: "Blog",
+        description: "BLUF-first technical posts with TL;DR and implementation details.",
+        href: "blog/",
+        metric: "New posts",
         tone: "accent",
-        x: 58,
+        x: 16,
         y: 16
-    },
-    {
-        title: "Coursework",
-        description: "Academic projects, deliverables, and research notes.",
-        href: "coursework.html",
-        metric: "MS + B.Tech",
-        tone: "neutral",
-        x: 78,
-        y: 48
-    },
-    {
-        title: "Future Ideas",
-        description: "Concept briefs and research directions pre-implementation.",
-        href: "ideas.html",
-        metric: "Idea backlog",
-        tone: "accent",
-        x: 35,
-        y: 56
     },
     {
         title: "Experience",
@@ -833,8 +806,44 @@ const TILE_SECTIONS = [
         href: "experience.html",
         metric: "Industry + Research",
         tone: "primary",
-        x: 8,
-        y: 68
+        x: 48,
+        y: 16
+    },
+    {
+        title: "Projects",
+        description: "Flagship builds, rapid prototypes, and live systems.",
+        href: "projects.html",
+        metric: "12+ builds",
+        tone: "primary",
+        x: 78,
+        y: 20
+    },
+    {
+        title: "Future Ideas",
+        description: "Concept briefs and research directions pre-implementation.",
+        href: "ideas.html",
+        metric: "Idea backlog",
+        tone: "accent",
+        x: 28,
+        y: 54
+    },
+    {
+        title: "Coursework",
+        description: "Academic projects, deliverables, and research notes.",
+        href: "coursework.html",
+        metric: "MS + B.Tech",
+        tone: "neutral",
+        x: 58,
+        y: 52
+    },
+    {
+        title: "Project Reports",
+        description: "Long-form case studies with context, evaluation, and results.",
+        href: "reports.html",
+        metric: "Deep dives",
+        tone: "accent",
+        x: 78,
+        y: 58
     },
     {
         title: "Resume",
@@ -842,17 +851,8 @@ const TILE_SECTIONS = [
         href: "resumes.html",
         metric: "6 roles",
         tone: "neutral",
-        x: 62,
+        x: 10,
         y: 74
-    },
-    {
-        title: "Blog",
-        description: "BLUF-first technical posts with TL;DR and implementation details.",
-        href: "blog/",
-        metric: "New posts",
-        tone: "accent",
-        x: 83,
-        y: 26
     }
 ];
 

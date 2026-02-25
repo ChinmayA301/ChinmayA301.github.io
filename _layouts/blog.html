@@ -29,11 +29,17 @@
   <header class="section pb-0">
     <div class="container">
       <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-        <nav aria-label="Breadcrumb" class="small mb-0">
-          <a href="{{ '/' | relative_url }}">Home</a> / <span aria-current="page">Blog</span>
-        </nav>
+        <a class="navbar-brand fw-bold" href="{{ '/' | relative_url }}">CA</a>
         <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
       </div>
+      <nav class="blog-top-nav mb-4" aria-label="Site navigation">
+        <a class="blog-top-link nav-link-blog active" aria-current="page" href="{{ '/blog/' | relative_url }}">Blog</a>
+        <a class="blog-top-link" href="{{ '/experience.html' | relative_url }}">Experience</a>
+        <a class="blog-top-link" href="{{ '/projects.html' | relative_url }}">Projects</a>
+        <a class="blog-top-link" href="{{ '/ideas.html' | relative_url }}">Future Ideas</a>
+        <a class="blog-top-link" href="{{ '/coursework.html' | relative_url }}">Coursework</a>
+        <a class="blog-top-link" href="{{ '/reports.html' | relative_url }}">Reports</a>
+      </nav>
       <h1 class="section-title">{{ page.title }}</h1>
       {% if page.description %}
       <p class="section-text">{{ page.description }}</p>

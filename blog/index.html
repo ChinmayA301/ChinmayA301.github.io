@@ -4,17 +4,39 @@ title: Blog
 description: Notes on data science, machine learning engineering, and AI system design.
 permalink: /blog/
 ---
-<section aria-labelledby="blog-overview" class="mb-5">
-  <h2 id="blog-overview" class="h3">What You Will Find</h2>
-  <p>Short, technical writing focused on practical implementation details, tradeoffs, and reproducible methods.</p>
-  <p class="blog-quick-notes mb-0">
-    Quick notes: This page lists all blog posts with summaries, each post starts with BLUF and TL;DR for fast scanning,
-    and structured data plus sitemap support search engines and LLM retrieval.
+<section class="blog-mini-hero" aria-labelledby="blog-overview">
+  <p class="eyebrow mb-2">Technical Notes</p>
+  <h2 id="blog-overview" class="h2 mb-3">A focused blog for building practical AI systems</h2>
+  <p class="section-text mb-4">
+    BLUF-first writing on model deployment, retrieval pipelines, evaluation, and real-world product tradeoffs.
   </p>
+  <div class="d-flex flex-wrap gap-2">
+    {% assign latest_post = site.posts.first %}
+    {% if latest_post %}
+    <a class="btn btn-primary btn-sm" href="{{ latest_post.url | relative_url }}">Read Latest Post</a>
+    {% endif %}
+    <a class="btn btn-outline-light btn-sm" href="{{ '/' | relative_url }}">Visit Portfolio Home</a>
+    <a class="btn btn-outline-light btn-sm" href="{{ '/projects.html' | relative_url }}">See Related Projects</a>
+  </div>
 </section>
 
-<section aria-labelledby="latest-posts">
-  <h2 id="latest-posts" class="h3 mb-3">Latest Posts</h2>
+<section aria-label="Blog stats" class="blog-stat-grid mt-4">
+  <article class="blog-stat">
+    <p class="blog-stat-value">{{ site.posts | size }}</p>
+    <p class="blog-stat-label mb-0">Published posts</p>
+  </article>
+  <article class="blog-stat">
+    <p class="blog-stat-value">BLUF + TL;DR</p>
+    <p class="blog-stat-label mb-0">Fast skim format</p>
+  </article>
+  <article class="blog-stat">
+    <p class="blog-stat-value">SEO Ready</p>
+    <p class="blog-stat-label mb-0">Structured data enabled</p>
+  </article>
+</section>
+
+<section aria-labelledby="latest-posts" class="mt-5">
+  <h2 id="latest-posts" class="h3 mb-3">All Posts</h2>
   <ol class="blog-list" itemscope itemtype="https://schema.org/ItemList">
     {% for post in site.posts %}
     <li class="blog-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -30,12 +52,27 @@ permalink: /blog/
 </section>
 
 <section aria-labelledby="internal-links" class="mt-5">
-  <h2 id="internal-links" class="h4">Internal Links</h2>
-  <ul>
-    <li><a href="{{ '/projects.html' | relative_url }}">Projects</a></li>
-    <li><a href="{{ '/reports.html' | relative_url }}">Project Reports</a></li>
-    <li><a href="{{ '/experience.html' | relative_url }}">Experience</a></li>
-  </ul>
+  <h2 id="internal-links" class="h4">Continue Exploring</h2>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <a class="blog-route-card" href="{{ '/experience.html' | relative_url }}">
+        <h3 class="h6 mb-1">Experience</h3>
+        <p class="mb-0 small">Industry, research, and education timeline.</p>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="blog-route-card" href="{{ '/projects.html' | relative_url }}">
+        <h3 class="h6 mb-1">Projects</h3>
+        <p class="mb-0 small">Production-focused ML and analytics builds.</p>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="blog-route-card" href="{{ '/reports.html' | relative_url }}">
+        <h3 class="h6 mb-1">Reports</h3>
+        <p class="mb-0 small">Long-form breakdowns and project outcomes.</p>
+      </a>
+    </div>
+  </div>
 </section>
 
 <script type="application/ld+json">
