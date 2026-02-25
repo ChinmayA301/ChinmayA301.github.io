@@ -264,8 +264,6 @@ async function loadHighlights() {
 async function loadProjectReports() {
     const wrap = document.getElementById("projectReports");
     if (!wrap) return;
-    const defaultVisualPath = "assets/images/profile.png";
-    const defaultPdfPath = "assets/ChinmayArora_CV.pdf";
     try {
         const reports = await loadJsonWithOverrides("project_reports", "data/project_reports.json");
         if (!reports.length) {
@@ -286,10 +284,11 @@ async function loadProjectReports() {
           </div>
         </header>
         ${r.summary ? `<p class="report-summary">${r.summary}</p>` : ""}
+        ${(r.visual_path || r.pdf_path) ? `
         <p class="small text-muted mb-3">
-          Visual path: <code>${r.visual_path || defaultVisualPath}</code><br>
-          PDF path: <code>${r.pdf_path || defaultPdfPath}</code>
-        </p>
+          ${r.visual_path ? `Visual path: <code>${r.visual_path}</code>${r.pdf_path ? "<br>" : ""}` : ""}
+          ${r.pdf_path ? `PDF path: <code>${r.pdf_path}</code>` : ""}
+        </p>` : ""}
         ${(r.sections || []).map(s => `
           <section class="report-section">
             <h4 class="h6">${s.title}</h4>
@@ -307,10 +306,11 @@ async function loadProjectReports() {
                 ? `<a class="btn btn-outline-light btn-sm me-2" href="${a.link}" target="_blank" rel="noopener">${a.label}</a>`
                 : `<span class="btn btn-outline-light btn-sm me-2 disabled">${a.label}</span>`).join("")}
           </div>` : ""}
+        ${(r.visual_path || r.pdf_path) ? `
         <div class="report-links">
-          <a class="btn btn-outline-light btn-sm me-2" href="${r.visual_path || defaultVisualPath}" target="_blank" rel="noopener">Open Visual</a>
-          <a class="btn btn-outline-light btn-sm me-2" href="${r.pdf_path || defaultPdfPath}" target="_blank" rel="noopener">Open PDF</a>
-        </div>
+          ${r.visual_path ? `<a class="btn btn-outline-light btn-sm me-2" href="${r.visual_path}" target="_blank" rel="noopener">Open Visual</a>` : ""}
+          ${r.pdf_path ? `<a class="btn btn-outline-light btn-sm me-2" href="${r.pdf_path}" target="_blank" rel="noopener">Open PDF</a>` : ""}
+        </div>` : ""}
       </article>
     `).join("");
         applyStagger(wrap.querySelectorAll(".report-card"));
