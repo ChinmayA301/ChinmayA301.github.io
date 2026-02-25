@@ -47,12 +47,11 @@ This is where Bayesian Optimization (BO) enters.
 
 Instead of treating virality as a prediction problem, we treat it as a **black-box optimization problem**.
 
-Traditional pipeline:
+### Traditional pipeline:
 
-```text
 Data → Model → Prediction
 
-New pipeline:
+### New pipeline:
 
 Decision → Propagation → Feedback → Optimization → Better Decision
 
@@ -60,69 +59,73 @@ The shift is subtle — but profound.
 
 We move from observing trends to engineering them.
 
-⸻
+---
 
-Trends as Propagation Systems
+## Trends as Propagation Systems
 
-A trend doesn’t appear instantly. It propagates through stages:
+A trend doesn’t appear instantly. It propagates through stages.
 
-1. Engagement Initiation
+### 1. Engagement Initiation
 
 Early signals emerge:
-	•	likes
-	•	comments
-	•	shares
-	•	watch time
+
+- likes  
+- comments  
+- shares  
+- watch time  
 
 These become a feature vector:
 
-[
+\[
 x \in \mathbb{R}^d
-]
+\]
 
-⸻
+---
 
-2. Amplification
+### 2. Amplification
 
 Influencers and network structure drive spread:
-	•	resharing velocity
-	•	high-degree nodes
-	•	algorithmic boosts
+
+- resharing velocity  
+- high-degree nodes  
+- algorithmic boosts  
 
 Amplification introduces uncertainty — exactly what BO exploits.
 
-⸻
+---
 
-3. Visibility Expansion
+### 3. Visibility Expansion
 
 Algorithms increase exposure:
-	•	explore pages
-	•	trending feeds
-	•	recommendations
+
+- explore pages  
+- trending feeds  
+- recommendations  
 
 This stage determines whether content dies or explodes.
 
-⸻
+---
 
-4. Virality
+### 4. Virality
 
 Sustained exponential spread occurs across the network.
 
 This becomes the optimization target.
 
-⸻
+---
 
-The Optimization Problem
+## The Optimization Problem
 
 Instead of predicting virality directly:
 
-[
+\[
 \max_{x \in X} f(x)
-]
+\]
 
 Where:
-	•	(x) = trend seeding strategy
-	•	(f(x)) = influence spread (unknown)
+
+- \(x\) = trend seeding strategy  
+- \(f(x)\) = influence spread (unknown)
 
 We cannot write this function analytically.
 
@@ -130,187 +133,196 @@ We can only evaluate it.
 
 That makes it a perfect black-box optimization problem.
 
-⸻
+---
 
-Influence Spread as the Objective
+## Influence Spread as the Objective
 
-We evaluate (f(x)) using the Independent Cascade (IC) model.
+We evaluate \(f(x)\) using the **Independent Cascade (IC) model**.
 
-Independent Cascade Simulation
-	1.	Seed nodes activate.
-	2.	Activated nodes attempt to activate neighbors with probability (p_{uv}).
-	3.	Process repeats until no new activations occur.
+### Independent Cascade Simulation
+
+1. Seed nodes activate.  
+2. Activated nodes attempt to activate neighbors with probability \(p_{uv}\).  
+3. Process repeats until no new activations occur.
 
 Expected influence:
 
-[
+\[
 f(x) = \mathbb{E}_{IC}[\text{Reach}(S_x)]
-]
+\]
 
 Estimated using Monte Carlo simulations.
 
 Each evaluation is expensive — which is exactly where BO shines.
 
-⸻
+---
 
-Bayesian Optimization Core
+## Bayesian Optimization Core
 
-Surrogate Model
+### Surrogate Model
 
-[
-f(x) \sim GP(\mu(x), k(x,x’))
-]
+\[
+f(x) \sim GP(\mu(x), k(x,x'))
+\]
 
 Gaussian Processes model:
-	•	predicted influence
-	•	uncertainty over unknown regions
 
-⸻
+- predicted influence  
+- uncertainty over unknown regions  
 
-Acquisition Function
+---
 
-[
+### Acquisition Function
+
+\[
 a(x) = \mu(x) + \kappa \sigma(x)
-]
+\]
 
 This balances:
-	•	exploitation (high-performing strategies)
-	•	exploration (uncertain but promising strategies)
 
-⸻
+- exploitation (high-performing strategies)  
+- exploration (uncertain but promising strategies)
 
-Sequential Loop
-	1.	Evaluate initial strategies
-	2.	Train GP surrogate
-	3.	Optimize acquisition function
-	4.	Test new strategy
-	5.	Update model
-	6.	Repeat
+---
+
+### Sequential Loop
+
+1. Evaluate initial strategies  
+2. Train GP surrogate  
+3. Optimize acquisition function  
+4. Test new strategy  
+5. Update model  
+6. Repeat  
 
 Optimization becomes intelligent exploration.
 
-⸻
+---
 
-Visualizing the Process
+## Visualizing the Process
 
-IC Spread Simulation
+### IC Spread Simulation
 
 A network graph showing:
-	•	seed nodes (red)
-	•	influenced nodes (blue)
-	•	propagation over time
 
+- seed nodes (red)  
+- influenced nodes (blue)  
+- propagation over time  
 
-⸻
+---
 
-Acquisition Function Evolution
+### Acquisition Function Evolution
 
 How BO decisions evolve over iterations:
-	•	uncertainty decreases
-	•	exploration shifts toward promising regions
 
+- uncertainty decreases  
+- exploration shifts toward promising regions  
 
-⸻
+---
 
-Search Space Trajectory
+### Search Space Trajectory
 
 Heatmap showing BO convergence toward high-performing strategies.
 
+---
 
-⸻
-
-Performance vs Random Strategy
+### Performance vs Random Strategy
 
 BO compared to baseline random seeding.
 
+---
 
-⸻
-
-Why This Is Innovative
+## Why This Is Innovative
 
 Bayesian Optimization is commonly used for:
-	•	protein synthesis
-	•	material discovery
-	•	hyperparameter tuning
+
+- protein synthesis  
+- material discovery  
+- hyperparameter tuning  
 
 This work applies BO to:
 
-Social influence optimization.
+**Social influence optimization**
 
 Key innovation:
-	•	trends become optimization landscapes
-	•	virality becomes an objective function
-	•	strategy becomes a decision variable
 
-⸻
+- trends become optimization landscapes  
+- virality becomes an objective function  
+- strategy becomes a decision variable  
 
-Why Not Reinforcement Learning?
+---
+
+## Why Not Reinforcement Learning?
 
 RL works best when:
-	•	dense rewards exist
-	•	continuous interaction is available
+
+- dense rewards exist  
+- continuous interaction is available  
 
 Here:
-	•	evaluations are expensive
-	•	rewards are delayed
-	•	sample efficiency matters
+
+- evaluations are expensive  
+- rewards are delayed  
+- sample efficiency matters  
 
 BO provides better uncertainty-aware exploration.
 
 RL becomes a future extension.
 
-⸻
+---
 
-Challenges & Limitations
+## Challenges & Limitations
 
 No idea is perfect.
 
 Key challenges include:
-	•	High evaluation noise from Monte Carlo simulations
-	•	Local traps in optimization space
-	•	High-dimensional strategy vectors
-	•	GP scalability limitations
+
+- high evaluation noise from Monte Carlo simulations  
+- local traps in optimization space  
+- high-dimensional strategy vectors  
+- GP scalability limitations  
 
 These motivate future research directions.
 
-⸻
+---
 
-The Deeper Insight
+## The Deeper Insight
 
-Traditional view:
+### Traditional view
 
 BO optimizes vectors.
 
-New view:
+### New view
 
 BO navigates complex social decision spaces.
 
 This reframes social systems as:
-	•	structured optimization landscapes
-	•	sequential experimentation environments
 
-⸻
+- structured optimization landscapes  
+- sequential experimentation environments  
 
-Future Directions
+---
+
+## Future Directions
 
 Where this research can go next:
-	•	Graph Neural Network surrogates
-	•	RL-based adaptive strategies
-	•	Multi-fidelity Bayesian Optimization
-	•	Dynamic, evolving social graphs
-	•	Real-time autonomous trend engineering
+
+- Graph Neural Network surrogates  
+- RL-based adaptive strategies  
+- Multi-fidelity Bayesian Optimization  
+- Dynamic, evolving social graphs  
+- Real-time autonomous trend engineering  
 
 This is where sequential decision-making and BO begin to merge.
 
-⸻
+---
 
-The Big Idea — Final Thought
+## The Big Idea — Final Thought
 
 Most systems try to predict trends after they happen.
 
 This work asks something different:
 
-What if AI could learn how to create them?
+**What if AI could learn how to create them?**
 
 By combining influence propagation models with Bayesian Optimization, we move from passive forecasting toward active, uncertainty-aware decision making.
 
@@ -318,21 +330,18 @@ Sometimes optimization isn’t about finding the answer.
 
 It’s about learning how to move through the space.
 
-⸻
+---
 
-References
-	•	Kempe et al. (2003). Maximizing the Spread of Influence through a Social Network
-	•	Snoek et al. (2012). Practical Bayesian Optimization
-	•	García-Hernández et al. (2022). Bayesian Optimization for Influence Maximization
-	•	Liang (2024). Bayesian Optimization of Functions over Node Subsets in Graphs
+## References
 
-⸻
+- Kempe et al. (2003). *Maximizing the Spread of Influence through a Social Network*  
+- Snoek et al. (2012). *Practical Bayesian Optimization*  
+- García-Hernández et al. (2022). *Bayesian Optimization for Influence Maximization*  
+- Liang (2024). *Bayesian Optimization of Functions over Node Subsets in Graphs*  
 
-Author Note
+---
 
-Written as part of my exploration in AI for Sequential Decision Making
+## Author Note
+
+Written as part of my exploration in **AI for Sequential Decision Making**  
 MS Data Science — University of Minnesota
-
-⸻
-
-
