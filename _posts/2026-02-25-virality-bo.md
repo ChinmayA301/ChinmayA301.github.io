@@ -400,12 +400,31 @@ BO can incorporate uncertainty and avoid being misled by noisy single samples.
 This diagram shows the typical qualitative behavior: BO climbs faster than random.
 
 ```mermaid
-xychart-beta
-    title "Best-So-Far Influence: BO vs Random"
-    x-axis "Iteration" 1 2 3 4 5 6 7 8 9 10
-    y-axis "Best-So-Far Reach" 0 --> 100
-    line "Random" 10 18 22 28 31 34 38 40 41 43
-    line "BO" 10 25 40 55 65 73 80 86 90 92
+graph LR
+
+subgraph Iterations
+I1["Iter 1"] --> I2["Iter 2"] --> I3["Iter 3"] --> I4["Iter 4"] --> I5["Iter 5"]
+end
+
+subgraph Random
+R1["10"] --> R2["18"] --> R3["22"] --> R4["28"] --> R5["31"]
+end
+
+subgraph BO
+B1["10"] --> B2["25"] --> B3["40"] --> B4["55"] --> B5["65"]
+end
+
+I1 --- R1
+I2 --- R2
+I3 --- R3
+I4 --- R4
+I5 --- R5
+
+I1 --- B1
+I2 --- B2
+I3 --- B3
+I4 --- B4
+I5 --- B5
 ```
 
 ---
@@ -415,11 +434,12 @@ xychart-beta
 With a fixed evaluation budget (e.g., 20 simulations), BO typically discovers a higher-performing strategy.
 
 ```mermaid
-xychart-beta
-    title "Fixed Budget Outcome (N evaluations)"
-    x-axis "Method" ["Random","BO"]
-    y-axis "Best Reach Found" 0 --> 100
-    bar "Best Reach" 55 85
+flowchart LR
+  R["Random\nBest Reach ≈ 55"]:::low --> C["Fixed Budget (N evals)"]
+  B["BO\nBest Reach ≈ 85"]:::high --> C
+
+  classDef low fill:#ffd6d6,stroke:#111,color:#111;
+  classDef high fill:#d6f5d6,stroke:#111,color:#111;
 ```
 
 ---
