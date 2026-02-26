@@ -10,7 +10,7 @@ tags: [Hennepin-County, AI-Governance, AI-Auditing, Digital-Experience, Evaluati
 og_image: "/assets/images/ai-audit-viz.png"
 canonical_url: "https://app.chinmayarora.com/blog/ai-impact-local-govt"
 
-summary: This post proposes a practical operating model for AI in local government digital experience: risk-tiered intake, auditable decision logs, and measurable outcomes across time/quality/equity. 
+summary: This post proposes a practical operating model for AI in local government digital experience for risk-tiered intake, auditable decision logs, and measurable outcomes across time,quality and equity. 
 
 ---
 
@@ -91,7 +91,7 @@ Controls scale by tier:
 - Tier 3: strict approvals, impact assessment, rigorous evaluation, continuous monitoring, independent review
 
 ---
-![governance_pipeline](/assests/blog/ai_governance_pipeline.png)
+![governance_pipeline](/assets/blog/ai_governance_pipeline.png)
 ---
 
 ## 4) The Audit Log: Minimal Schema That Makes Everything Defensible
@@ -199,7 +199,7 @@ $$
 **Important:** equity metrics should be framed carefully as monitoring signals, not absolute statements of fairness.
 
 ---
-![impact_scorecard](/assests/blog/impact_scorecard_tiles.png)
+![impact_scorecard](/assets/blog/impact_scorecard_tiles.png)
 ---
 
 ## 6) Evaluation Design: How to Pilot Without Fooling Yourself
