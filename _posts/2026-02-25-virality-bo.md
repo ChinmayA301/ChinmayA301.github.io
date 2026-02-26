@@ -354,13 +354,11 @@ Bayesian Optimization (BO) improves over random by **learning from every evaluat
 
 Assume the objective is expected reach:
 
-\[
-f(x) = \mathbb{E}_{IC}[\text{Reach}(S_x)]
-\]
+'f(x) = E_IC[Reach(S_x)]'
 
 We compare two methods under the same budget \(N\):
 
-- **Random**: sample \(x_1, x_2, \dots, x_N\) uniformly from the strategy space
+- **Random**: sample (x1, x2,....., xN) uniformly from the strategy space
 - **BO**: adaptively choose \(x_{t+1} = \arg\max a(x)\) after each evaluation
 
 ---
@@ -370,36 +368,28 @@ We compare two methods under the same budget \(N\):
 1. **Best-So-Far Influence (Simple & Strong)**  
    Measures progress as optimization proceeds:
 
-\[
-\text{BestSoFar}(t) = \max_{i \le t} f(x_i)
-\]
+'BestSoFar(t) = max_{i ≤ t} f(x_i)'
 
 BO should rise faster and reach higher values with fewer evaluations.
 
 2. **Area Under the Best-So-Far Curve (AUBC)**  
    A single-number summary of sample efficiency:
 
-\[
-\text{AUBC} = \sum_{t=1}^{N} \text{BestSoFar}(t)
-\]
+'AUBC = Σ_{t=1}^{N} BestSoFar(t)'
 
 Higher AUBC means you achieved strong performance earlier and consistently.
 
 3. **Regret (Optimization Lens)**  
    If we assume the true optimum is \(f(x^*)\), the simple regret is:
 
-\[
-r_N = f(x^*) - \max_{t \le N} f(x_t)
-\]
+'r_N = f(x*) − max_{t ≤ N} f(x_t)'
 
 BO should yield lower regret under equal budgets.
 
 4. **Stability Under Noise (Propagation Variance)**  
    Since MCST is stochastic, compare variance:
 
-\[
-\text{Var}(f(x)) \approx \frac{1}{K-1}\sum_{k=1}^{K}\left(\text{Reach}_k(S_x) - \overline{\text{Reach}}(S_x)\right)^2
-\]
+'Var(f(x)) ≈ (1 / (K − 1)) Σ_{k=1}^{K} ( Reach_k(S_x) − Ȓeach(S_x) )²'
 
 BO can incorporate uncertainty and avoid being misled by noisy single samples.
 
@@ -464,13 +454,13 @@ A realistic target framing for synthetic IC experiments:
 ## Performance vs Random Seeding (Figures)
 
 ### Best-so-far convergence (mean ± 95% CI)
-![Best-so-far convergence](./assets/blog/bo_vs_random_best_so_far_ci.png)
+![Best-so-far convergence](/assets/blog/bo_vs_random_best_so_far_ci.png)
 
 ### Fixed-budget outcome (bar chart)
-![Fixed-budget best reach](./assets/blog/bo_vs_random_final_bar.png)
+![Fixed-budget best reach](/assets/blog/bo_vs_random_final_bar.png)
 
 ### Distribution of best reach (violin plot)
-![Distribution of best reach](./assets/blog/bo_vs_random_final_violin.png)
+![Distribution of best reach](/assets/blog/bo_vs_random_final_violin.png)
 
 ---
 
@@ -561,15 +551,13 @@ At the heart of this system is a precise mathematical framework that turns socia
 
 ### 1. Estimating Influence Spread
 
-$$
-E_{IC}[\text{Reach}(S_x)] \approx \frac{1}{K} \sum_{k=1}^{K} \text{Reach}_k(S_x)
-$$
+'E_IC[Reach(S_x)] ≈ (1 / K) Σ_{k=1}^{K} Reach_k(S_x)'
 
 This equation approximates the **expected influence spread** under the Independent Cascade (IC) model.
 
-- \(S_x\) = seed set selected by strategy \(x\)
-- \(\text{Reach}_k(S_x)\) = number of activated nodes in simulation \(k\)
-- \(K\) = number of Monte Carlo simulations
+- (S_x) = seed set selected by strategy \(x\)
+- {Reach}_k(S_x)) = number of activated nodes in simulation \(k\)
+- (K) = number of Monte Carlo simulations
 
 Because influence propagation is stochastic, we simulate it multiple times and average the results. This gives us a stable estimate of expected virality.
 
@@ -579,14 +567,12 @@ Each evaluation is computationally expensive — making Bayesian Optimization id
 
 ### 2. Constructing the Virality Score
 
-$$
-\text{ViralityScore}(x) = \sum_i w_i \cdot f_i(x)
-$$
+'ViralityScore(x) = Σ_i w_i · f_i(x)'
 
 Virality is not a single signal — it is a weighted combination of measurable engagement features:
 
-- \(f_i(x)\) = engagement feature (e.g., share velocity, clustering coefficient, watch-time retention)
-- \(w_i\) = learned importance weight
+- (f_i(x)) = engagement feature (e.g., share velocity, clustering coefficient, watch-time retention)
+- (w_i) = learned importance weight
 
 This linear aggregation transforms raw social signals into a structured objective function.
 
@@ -594,15 +580,13 @@ This linear aggregation transforms raw social signals into a structured objectiv
 
 ### 3. Learning Optimal Feature Weights
 
-$$
-L(w) = - \sum_{t=1}^{T} \left( y_t - \sum_i w_i f_i(x_t) \right)^2
-$$
+'L(w) = - Σ_{t=1}^{T} ( y_t - Σ_i w_i f_i(x_t) )²'
 
 This loss function learns weights \(w_i\) that best align predicted virality with observed viral outcomes.
 
-- \(y_t\) = observed virality outcome at time \(t\)
-- \(x_t\) = strategy used
-- \(T\) = number of training instances
+- (y_t) = observed virality outcome at time \(t\)
+- (x_t) = strategy used
+- (T) = number of training instances
 
 The negative squared error formulation allows us to optimize weights using Bayesian Optimization itself, refining how virality is computed.
 
@@ -614,11 +598,9 @@ Bayesian Optimization does not optimize the true function directly. It optimizes
 
 #### Expected Improvement (EI)
 
-$$
-a_{EI}(x) = E[\max(0, f(x) - f(x^+))]
-$$
+'a_EI(x) = E[ max(0, f(x) - f(x⁺)) ]'
 
-- \(f(x^+)\) = best observed value so far
+- f(x⁺) = best observed value so far
 
 EI chooses strategies expected to outperform the current best — balancing exploration and exploitation.
 
@@ -626,13 +608,11 @@ EI chooses strategies expected to outperform the current best — balancing expl
 
 #### Upper Confidence Bound (UCB)
 
-$$
-a_{UCB}(x) = \mu(x) + \kappa \sigma(x)
-$$
+'a_UCB(x) = μ(x) + κ σ(x)'
 
-- \(\mu(x)\) = predicted mean
-- \(\sigma(x)\) = uncertainty
-- \(\kappa\) = exploration parameter
+- μ(x) = predicted mean
+- σ(x) = uncertainty
+- κ  = exploration parameter
 
 UCB explicitly trades off:
 
@@ -643,9 +623,7 @@ UCB explicitly trades off:
 
 ### 5. Strategy Selection
 
-$$
-x^* = \arg\max_{x \in X} a(x)
-$$
+'x* = argmax_{x ∈ X} a(x)'
 
 The next strategy tested is the one that maximizes the acquisition function.
 
@@ -659,9 +637,7 @@ The surrogate model uses kernels to measure similarity between strategies.
 
 #### Radial Basis Function (RBF)
 
-$$
-k_{RBF}(x, x') = \exp\left(-\frac{\|x - x'\|^2}{2\ell^2}\right)
-$$
+'k_RBF(x, x') = exp( - ||x - x'||² / (2ℓ²) )'
 
 - Smooth, infinitely differentiable
 - Assumes gradual changes in influence landscape
@@ -671,12 +647,7 @@ $$
 
 #### Matérn Kernel
 
-$$
-k_{Matern}(x, x') =
-\frac{2^{1-\nu}}{\Gamma(\nu)}
-\left(\frac{\sqrt{2\nu}\|x-x'\|}{\ell}\right)^\nu
-K_\nu\left(\frac{\sqrt{2\nu}\|x-x'\|}{\ell}\right)
-$$
+'k_Matern(x, x') = (2^(1-ν) / Γ(ν)) · ( (√(2ν) ||x - x'||) / ℓ )^ν · K_ν( (√(2ν) ||x - x'||) / ℓ )'
 
 - More flexible than RBF
 - Better suited for noisy, less smooth social systems
@@ -686,9 +657,7 @@ $$
 
 ### 7. Edge Activation Probability
 
-$$
-p_{uv}
-$$
+'p_uv'
 
 This represents the probability that an activated node \(u\) activates neighbor \(v\) in the Independent Cascade model.
 
