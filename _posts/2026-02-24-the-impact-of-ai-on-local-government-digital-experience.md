@@ -174,7 +174,7 @@ Examples:
 **Routing Accuracy:**
 
 $$
-Acc = \frac{\#\text{correct routing}}{\#\text{audited cases}}
+Acc = \frac{\mathrm{count}(\text{correct routing})}{\mathrm{count}(\text{audited cases})}
 $$
 
 ### 5.3 Equity (Distributional parity + error disparity)
