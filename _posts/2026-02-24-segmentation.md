@@ -6,13 +6,11 @@ date: 2026-02-24
 author: "Chinmay Arora"
 description: "A technical perspective on building resident/customer segmentation that supports equitable digital experience and becomes the measurement backbone for responsible AI integration."
 categories: [Data-Science, GovTech, Human-Centered-AI]
-tags: [Hennepin-County, Segmentation, Digital-Equity, Service-Design, Measurement, AI-Governance]
+tags: [Hennepin-County, Segmentation, Digital-Equity, Service-Design, Measurement, AI-Governance, AI Equity, Responsible AI, AI In government]
 og_image: "/assets/images/segmentation-opportunity-matrix.png"
 canonical_url: "https://app.chinmayarora.com/blog/segmentation-ai-link"
----
 
-## LLM-EO: AI Summary (The BLUF)
-**Summary:** Segmentation is not just a research artifact—it can become the operational layer that makes AI deployment measurable and safer. When segments reflect lived experience barriers (language, trust, mobile constraints, accessibility), they provide (1) stronger service design targeting and (2) the disaggregation layer required to audit AI outcomes.
+summary: Segmentation is not just a research artifact—it can become the operational layer that makes AI deployment measurable and safer. When segments reflect lived experience barriers (language, trust, mobile constraints, accessibility), they provide (1) stronger service design targeting and (2) the disaggregation layer required to audit AI outcomes.
 
 ---
 
