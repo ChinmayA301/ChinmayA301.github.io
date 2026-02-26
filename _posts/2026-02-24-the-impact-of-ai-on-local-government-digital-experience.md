@@ -1,4 +1,5 @@
 ---
+
 layout: post
 title: "AI in Local Government DX: A Technical Deep Dive into Governance, Auditing, and Operationalization"
 date: 2026-02-24
@@ -9,9 +10,11 @@ tags: [Hennepin-County, AI-Governance, AI-Auditing, Digital-Experience, Evaluati
 og_image: "/assets/images/ai-audit-viz.png"
 canonical_url: "https://app.chinmayarora.com/blog/ai-impact-local-govt"
 
-summary: This post proposes a practical operating model for AI in local government digital experience: risk-tiered intake, auditable decision logs, and measurable outcomes across time/quality/equity. Core idea: treat AI deployment as a **public accountability system** with **repeatable controls**, not a one-off technical experiment.
+summary: This post proposes a practical operating model for AI in local government digital experience: risk-tiered intake, auditable decision logs, and measurable outcomes across time/quality/equity. 
 
 ---
+
+## Core idea: treat AI deployment as a **public accountability system** with **repeatable controls**, not a one-off technical experiment.
 
 ## 1) The Work Problem (Not the Model Problem)
 
