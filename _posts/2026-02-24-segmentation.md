@@ -147,4 +147,4 @@ That’s the bridge between segmentation and AI integration: **segments operatio
 
 ![segment journey friction](/assets/blog/segment_journey_friction_map.png)  
 
-![Service × Barrier heatmap](/assets/blog/segment_barrier_overlay_heatmap.png)  
+![Service × Barrier heatmap](/assets/blog/service_barrier_overlay_heatmap.png)  
