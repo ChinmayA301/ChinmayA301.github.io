@@ -408,7 +408,7 @@ xychart-beta
     line "BO" 10 25 40 55 65 73 80 86 90 92
 ```
 
-⸻
+---
 
 ### 2) Budget Efficiency: Same Budget, Different Outcome
 
@@ -422,7 +422,7 @@ xychart-beta
     bar "Best Reach" 55 85
 ```
 
-⸻
+---
 
 3) Why Random Fails: Search Space Explosion
 
