@@ -1,5 +1,5 @@
-
 ---
+
 layout: post
 title: "Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment"
 date: 2026-02-24
