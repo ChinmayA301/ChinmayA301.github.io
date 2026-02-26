@@ -19,7 +19,7 @@ Treat AI deployment as a **public accountability system** with **repeatable cont
 
 ## 1) The Work Problem (Not the Model Problem)
 
-When local governments talk about “using AI,” the first constraint isn’t model capability—it’s **operational reality**:
+When local governments talk about “using AI,” the first constraint isn’t model capability, it’s **operational reality**:
 
 - Data access and purpose limitation
 - Traceability (what influenced an outcome?)
@@ -200,6 +200,7 @@ $$
 
 ---
 ![impact_scorecard](/assets/blog/impact_scorecard_tiles.png)
+
 ---
 
 ## 6) Evaluation Design: How to Pilot Without Fooling Yourself
