@@ -145,10 +145,6 @@ That’s the bridge between segmentation and AI integration: **segments operatio
 
 ---
 
-## Appendix: Visuals to Include
+![segment journey friction](/assets/blog/segment_journey_friction_map.png)  
 
-1) **Service × Barrier heatmap** (overlay matrix)  
-2) **Segment journey “friction map”** (drop-offs + repeats)  
-3) **AI outcome dashboard by segment** (time/quality/equity tiles)
-
-If you want, I can turn your existing segment definitions into a clean service-overlay heatmap template you can reuse in reports and leadership decks.
+![Service × Barrier heatmap](/assets/blog/segment_barrier_overlay_heatmap.png)  
