@@ -14,7 +14,8 @@ summary: This post proposes a practical operating model for AI in local governme
 
 ---
 
-## Core idea: treat AI deployment as a **public accountability system** with **repeatable controls**, not a one-off technical experiment.
+## Core idea: 
+Treat AI deployment as a **public accountability system** with **repeatable controls**, not a one-off technical experiment.
 
 ## 1) The Work Problem (Not the Model Problem)
 
