@@ -146,3 +146,11 @@ That’s the bridge between segmentation and AI integration: **segments operatio
 ![segment journey friction](/assets/blog/segment_journey_friction_map.png)  
 
 ![Service × Barrier heatmap](/assets/blog/service_barrier_overlay_heatmap.png)  
+
+---
+
+https://hup.umn.edu/news/designing-digital-services-around-resident-needs-advancing-equitable-access-hennepin-county
+
+https://hup.umn.edu/news/inside-hcra-students-journey-behind-research
+
+---
