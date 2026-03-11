@@ -576,6 +576,259 @@ header p.lead {
     font-size: 14px;
 }
 
+/* Venture lab */
+.venture-lab {
+    position: relative;
+}
+
+.venture-lab-intro {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.venture-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+}
+
+.venture-card {
+    grid-column: span 4;
+    position: relative;
+    min-height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 22px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03)),
+        linear-gradient(155deg, rgba(17, 19, 23, 0.92), rgba(12, 13, 17, 0.98));
+    box-shadow:
+        0 22px 60px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 0 28px rgba(46, 130, 255, 0.08);
+    backdrop-filter: blur(18px);
+    transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+
+.venture-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(138, 209, 255, 0.34);
+    box-shadow:
+        0 28px 70px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 34px rgba(46, 130, 255, 0.18);
+}
+
+.venture-card-featured {
+    grid-column: span 7;
+    grid-row: span 2;
+}
+
+.venture-card-tall {
+    grid-column: span 5;
+    grid-row: span 2;
+}
+
+.venture-card-wide {
+    grid-column: span 8;
+}
+
+.venture-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.venture-visual {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top right, rgba(138, 209, 255, 0.22), transparent 32%),
+        linear-gradient(135deg, rgba(46, 130, 255, 0.18), rgba(12, 13, 17, 0.78));
+}
+
+.venture-card-featured .venture-visual,
+.venture-card-tall .venture-visual {
+    aspect-ratio: 16 / 11;
+}
+
+.venture-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.02);
+    transition: transform .45s ease, filter .3s ease, opacity .3s ease;
+}
+
+.venture-visual-placeholder img {
+    object-fit: cover;
+}
+
+.venture-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 24px;
+    background: linear-gradient(180deg, rgba(8, 10, 14, 0.08), rgba(8, 10, 14, 0.86) 68%);
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+
+.venture-overlay p {
+    margin: 0;
+    color: #eef4ff;
+    line-height: 1.6;
+    max-width: 52ch;
+}
+
+.venture-link-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8ad1ff;
+}
+
+.venture-link-text::after {
+    content: "\2192";
+}
+
+.venture-card:hover .venture-visual img,
+.venture-card:focus-within .venture-visual img {
+    transform: scale(1.06);
+    filter: brightness(0.55);
+}
+
+.venture-card:hover .venture-overlay,
+.venture-card:focus-within .venture-overlay {
+    opacity: 1;
+}
+
+.venture-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 22px 24px;
+}
+
+.venture-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.venture-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.15;
+    color: #eef4ff;
+}
+
+.venture-badge {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.status-dev {
+    color: #0e2c20;
+    background: rgba(120, 255, 201, 0.9);
+    border-color: rgba(120, 255, 201, 0.35);
+}
+
+.status-stealth {
+    color: #301e0a;
+    background: rgba(255, 196, 112, 0.92);
+    border-color: rgba(255, 196, 112, 0.34);
+}
+
+.status-concept {
+    color: #0e2240;
+    background: rgba(138, 209, 255, 0.9);
+    border-color: rgba(138, 209, 255, 0.34);
+}
+
+.venture-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.venture-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #d5e0f2;
+    font-size: 0.82rem;
+}
+
+.venture-tag i {
+    color: #8ad1ff;
+}
+
+.venture-summary {
+    margin: 0;
+    color: #cfd8e6;
+    line-height: 1.65;
+}
+
+@media (max-width: 1199px) {
+    .venture-card,
+    .venture-card-featured,
+    .venture-card-tall,
+    .venture-card-wide {
+        grid-column: span 6;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .venture-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .venture-card,
+    .venture-card-featured,
+    .venture-card-tall,
+    .venture-card-wide {
+        grid-column: auto;
+    }
+
+    .venture-overlay {
+        opacity: 1;
+        padding: 20px;
+        background: linear-gradient(180deg, rgba(8, 10, 14, 0.04), rgba(8, 10, 14, 0.78) 72%);
+    }
+
+    .venture-header {
+        flex-direction: column;
+    }
+}
+
 /* Highlights + tiles */
 .highlight-card {
     border: 1px solid var(--stroke);

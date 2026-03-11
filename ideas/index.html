@@ -13,6 +13,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -44,14 +46,256 @@
         </div>
     </nav>
 
-    <section id="future-ideas" class="section">
+    <section id="lab" class="section venture-lab">
         <div class="container">
-            <h2 class="section-title text-center">The Lab</h2>
-            <p class="section-text mx-auto text-center">
-                The Lab is a space to explore and visibilize future ideas through early concept briefs, visible intent,
-                and clear research direction before implementation.
-            </p>
-            <div id="futureIdeas" class="row g-3 mt-2"></div>
+            <div class="venture-lab-intro text-center">
+                <p class="eyebrow">Venture Idea Showcase</p>
+                <h2 class="section-title">The Lab</h2>
+                <p class="section-text mx-auto">
+                    A forward-looking slate of venture concepts designed for operators, investors, and academic
+                    collaborators evaluating what should be built next.
+                </p>
+            </div>
+
+            <div class="venture-grid mt-4" aria-label="Venture idea showcase">
+                <article class="venture-card venture-card-featured">
+                    <a class="venture-card-link" href="/blog/" target="_blank" rel="noopener"
+                        aria-label="View case study for Aegis AI Strategy">
+                        <div class="venture-visual">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
+                                alt="Abstract boardroom strategy dashboard mockup for Aegis AI Strategy">
+                            <div class="venture-overlay">
+                                <p>
+                                    Aegis equips compliance teams with an AI-native control layer for reviewing policy,
+                                    legal, and operating documents in one place. It reduces audit prep time by
+                                    surfacing conflicts, gaps, and policy drift before they become regulatory risk.
+                                </p>
+                                <span class="venture-link-text">View Case Study</span>
+                            </div>
+                        </div>
+
+                        <div class="venture-body">
+                            <header class="venture-header">
+                                <h3>Aegis AI Strategy</h3>
+                                <span class="venture-badge status-dev">In Dev</span>
+                            </header>
+
+                            <div class="venture-tags" aria-label="Venture metadata">
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                                    AI Compliance &amp; Auditing
+                                </span>
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                                    Proprietary NLP Layer
+                                </span>
+                            </div>
+
+                            <p class="venture-summary">
+                                Legal document cross-referencing infrastructure for AI governance, internal controls,
+                                and enterprise audit readiness.
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="venture-card venture-card-tall venture-card-stealth">
+                    <a class="venture-card-link" href="#"
+                        aria-label="Placeholder for upcoming venture case study">
+                        <div class="venture-visual">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
+                                alt="Placeholder interface render for an upcoming venture concept">
+                            <div class="venture-overlay">
+                                <p>
+                                    Reserved for the next operator-facing concept brief. This slot is designed for a
+                                    stronger GTM narrative once your next idea description is ready.
+                                </p>
+                                <span class="venture-link-text">Coming Soon</span>
+                            </div>
+                        </div>
+
+                        <div class="venture-body">
+                            <header class="venture-header">
+                                <h3>Coming Soon</h3>
+                                <span class="venture-badge status-stealth">Stealth</span>
+                            </header>
+
+                            <div class="venture-tags" aria-label="Venture metadata">
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                                    Business Area TBD
+                                </span>
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                                    Primary Tech TBD
+                                </span>
+                            </div>
+
+                            <p class="venture-summary">
+                                Placeholder card for your next venture thesis, early customer signal, and product wedge.
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="venture-card">
+                    <a class="venture-card-link" href="#"
+                        aria-label="Placeholder for upcoming venture case study">
+                        <div class="venture-visual">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80"
+                                alt="Placeholder analytics render for an upcoming venture concept">
+                            <div class="venture-overlay">
+                                <p>
+                                    This card is ready for a concise problem statement, venture angle, and technical
+                                    moat once you provide the next concept.
+                                </p>
+                                <span class="venture-link-text">Coming Soon</span>
+                            </div>
+                        </div>
+
+                        <div class="venture-body">
+                            <header class="venture-header">
+                                <h3>Coming Soon</h3>
+                                <span class="venture-badge status-concept">Conceptual</span>
+                            </header>
+
+                            <div class="venture-tags" aria-label="Venture metadata">
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                                    Business Area TBD
+                                </span>
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                                    Primary Tech TBD
+                                </span>
+                            </div>
+
+                            <p class="venture-summary">
+                                Space held for a founder-grade product concept with a clear market story and technical
+                                leverage.
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="venture-card">
+                    <a class="venture-card-link" href="#"
+                        aria-label="Placeholder for upcoming venture case study">
+                        <div class="venture-visual">
+                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80"
+                                alt="Placeholder software workspace render for an upcoming venture concept">
+                            <div class="venture-overlay">
+                                <p>
+                                    Built to showcase another venture with a differentiated stack, user workflow, and
+                                    commercialization path.
+                                </p>
+                                <span class="venture-link-text">Coming Soon</span>
+                            </div>
+                        </div>
+
+                        <div class="venture-body">
+                            <header class="venture-header">
+                                <h3>Coming Soon</h3>
+                                <span class="venture-badge status-concept">Conceptual</span>
+                            </header>
+
+                            <div class="venture-tags" aria-label="Venture metadata">
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                                    Business Area TBD
+                                </span>
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                                    Primary Tech TBD
+                                </span>
+                            </div>
+
+                            <p class="venture-summary">
+                                Reserved for an applied AI or software systems idea with a sharper positioning memo.
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="venture-card venture-card-wide">
+                    <a class="venture-card-link" href="#"
+                        aria-label="Placeholder for upcoming venture case study">
+                        <div class="venture-visual">
+                            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80"
+                                alt="Placeholder collaborative product render for an upcoming venture concept">
+                            <div class="venture-overlay">
+                                <p>
+                                    Use this wider slot for a larger platform narrative, cross-functional workflow, or
+                                    systems-heavy concept once details are ready.
+                                </p>
+                                <span class="venture-link-text">Coming Soon</span>
+                            </div>
+                        </div>
+
+                        <div class="venture-body">
+                            <header class="venture-header">
+                                <h3>Coming Soon</h3>
+                                <span class="venture-badge status-stealth">Stealth</span>
+                            </header>
+
+                            <div class="venture-tags" aria-label="Venture metadata">
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                                    Business Area TBD
+                                </span>
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                                    Primary Tech TBD
+                                </span>
+                            </div>
+
+                            <p class="venture-summary">
+                                Allocated for a platform-scale idea that benefits from a broader visual and narrative
+                                footprint.
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="venture-card">
+                    <a class="venture-card-link" href="#"
+                        aria-label="Placeholder for upcoming venture case study">
+                        <div class="venture-visual venture-visual-placeholder">
+                            <img src="https://placehold.co/900x680/111317/C7D4EA?text=3D+Render+Coming+Soon"
+                                alt="Placeholder render card indicating that a new venture visual will be added">
+                            <div class="venture-overlay">
+                                <p>
+                                    A dedicated placeholder for one more venture concept, ready for your custom render,
+                                    positioning line, and investor-facing story.
+                                </p>
+                                <span class="venture-link-text">Coming Soon</span>
+                            </div>
+                        </div>
+
+                        <div class="venture-body">
+                            <header class="venture-header">
+                                <h3>Coming Soon</h3>
+                                <span class="venture-badge status-concept">Conceptual</span>
+                            </header>
+
+                            <div class="venture-tags" aria-label="Venture metadata">
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                                    Business Area TBD
+                                </span>
+                                <span class="venture-tag">
+                                    <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                                    Primary Tech TBD
+                                </span>
+                            </div>
+
+                            <p class="venture-summary">
+                                Final reserved slot for an additional idea once you share the next description set.
+                            </p>
+                        </div>
+                    </a>
+                </article>
+            </div>
         </div>
     </section>
 
