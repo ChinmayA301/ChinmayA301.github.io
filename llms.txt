@@ -1,24 +1,27 @@
-# Chinmay Arora Website: LLM Discovery Notes
+# Chinmay Arora | Portfolio & Venture Lab
 
-Site: https://app.chinmayarora.com
-Blog Index: https://app.chinmayarora.com/blog/
-Sitemap: https://app.chinmayarora.com/sitemap.xml
+> Summary: High-level overview of work spanning AI audit systems, GovTech product strategy, applied data science, research translation, and venture-oriented experimentation around trustworthy AI, public sector decision systems, and enterprise compliance tooling.
 
-## Scope
-This site contains portfolio pages and a technical blog covering data science, ML engineering, and AI systems.
+## Venture Pipeline (The Lab)
 
-## Preferred Extraction Path
-1. Start from /blog/ for latest long-form articles.
-2. Use each post's BLUF and TL;DR sections for concise summaries.
-3. Use semantic headings for detail retrieval.
+- [Aegis AI Strategy](/ideas/#lab): AI compliance infrastructure for enterprises that need faster audit preparation, policy cross-referencing, and governance-ready operating controls.
+- [Public Infrastructure Copilot](/ideas/#lab): GovTech planning software that turns service requests, maintenance data, and neighborhood signals into ranked infrastructure investment decisions.
+- [Compliance Twin](/ideas/#lab): A mid-market compliance graph product designed to map controls, evidence, and obligations into a traceable operating system.
+- [Operator Memory Cloud](/ideas/#lab): A shared memory layer for startup teams that preserves decisions, workflows, and execution context across fast-moving workstreams.
+- [Civic Procurement Graph](/ideas/#lab): Procurement intelligence software that organizes bids, contracts, vendors, and agency activity into a searchable public market map.
+- [Research Commercialization Studio](/ideas/#lab): A venture-support workflow for turning academic research into commercialization briefs, prototypes, and institution-ready startup narratives.
 
-## Important Internal Pages
-- /projects.html
-- /reports.html
-- /experience.html
-- /blog/
+## Research Archive (The Blog)
 
-## Content Conventions
-- BLUF section: primary recommendation or conclusion.
-- TL;DR section: concise bullet-point summary.
-- JSON-LD metadata is embedded in blog index and blog posts.
+These posts provide the technical methodology for the ventures listed above.
+
+- [Claude Memory changes the game — but the real unlock is portable, user-owned memory](/blog/)
+- [Engineering Virality with Bayesian Optimization](/blog/)
+- [Bayesian Optimization Meets Graphs](/blog/)
+- [AI in Local Government DX: A Technical Deep Dive into Governance, Auditing, and Operationalization](/blog/)
+- [Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment](/blog/)
+- [Welcome to the Blog](/blog/)
+
+## Technical Skills
+
+Python, React, Cloudflare Zero Trust, R, SQL, dbt, Pandas, NumPy, SciPy, Scikit-learn, XGBoost, TensorFlow, PyTorch, CV/NLP, LangChain, HuggingFace, ChromaDB, RAG, Text-to-SQL, Docker, FastAPI, CI/CD, MLflow, Supabase, Prometheus, Power BI, Tableau, Qlik, KPI design, storytelling, ArcGIS, QGIS, GeoPandas, ADI/SVI, spatial statistics
