@@ -9,7 +9,10 @@ from typing import Any
 from workers import Response, WorkerEntrypoint, fetch
 
 
-ALLOWED_ORIGIN = "https://app.chinmayarora.com"
+ALLOWED_ORIGINS = {
+    "https://app.chinmayarora.com",
+    "https://chinmayarora.com",
+}
 CORS_HEADERS = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
@@ -48,7 +51,10 @@ GENERATE_MODEL_ALIASES = {
 
 def build_cors_headers(origin: str | None) -> dict[str, str]:
     headers = dict(CORS_HEADERS)
-    headers["Access-Control-Allow-Origin"] = ALLOWED_ORIGIN if origin == ALLOWED_ORIGIN else ALLOWED_ORIGIN
+    if origin in ALLOWED_ORIGINS:
+        headers["Access-Control-Allow-Origin"] = origin
+    else:
+        headers["Access-Control-Allow-Origin"] = "https://app.chinmayarora.com"
     return headers
 
 
@@ -230,7 +236,7 @@ def error_payload(message: str, exc: Exception | None = None, env: Any = None) -
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
         origin = request.headers.get("Origin")
-        if origin and origin != ALLOWED_ORIGIN:
+        if origin and origin not in ALLOWED_ORIGINS:
             return json_response({"error": "Origin not allowed."}, status=403, origin=origin)
 
         if request.method == "GET":
