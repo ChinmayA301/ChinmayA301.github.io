@@ -134,7 +134,7 @@ h4,
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .site-nav {
@@ -145,6 +145,7 @@ h4,
 
 .site-nav-desktop {
     display: flex;
+    align-items: center;
 }
 
 .site-nav-mobile {
@@ -161,6 +162,13 @@ h4,
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+.site-nav-link,
+.site-nav-desktop .nav-link {
+    color: #e8eefc;
+    font-weight: 500;
+    text-decoration: none;
 }
 
 .site-nav-list .nav-item {
@@ -211,9 +219,9 @@ h4,
     height: clamp(220px, 24vw, 285px);
     border-radius: 36px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-    background: rgba(255, 255, 255, 0.03);
+    border: none;
+    box-shadow: none;
+    background: transparent;
 }
 
 .hero-img {
@@ -223,7 +231,7 @@ h4,
     filter: saturate(1.02) contrast(1.02);
     object-position: center center;
     display: block;
-    transform: scale(0.72);
+    transform: scale(1.08);
     transform-origin: center center;
 }
 
@@ -317,6 +325,22 @@ header p.lead {
     width: 3.1rem;
     height: 3.1rem;
     display: block;
+}
+
+.consultative-modal,
+.consultative-pane,
+.consultative-scroll,
+.consultative-shell {
+    -webkit-overflow-scrolling: touch;
+}
+
+.consultative-modal {
+    overscroll-behavior: contain;
+}
+
+.consultative-scroll,
+.consultative-pane {
+    overscroll-behavior: contain;
 }
 
 .hero.scrolled p.lead {
@@ -1266,6 +1290,10 @@ footer {
 }
 
 @media (min-width: 768px) {
+    .site-nav-shell .container {
+        flex-wrap: nowrap;
+    }
+
     .site-nav-toggle,
     .site-nav-mobile {
         display: none !important;
@@ -1277,6 +1305,10 @@ footer {
 }
 
 @media (max-width: 767px) {
+    .site-nav-shell .container {
+        flex-wrap: wrap;
+    }
+
     .site-nav-desktop {
         display: none !important;
     }
@@ -1311,6 +1343,31 @@ footer {
     .site-nav-list .btn {
         width: 100%;
         justify-content: flex-start;
+    }
+
+    .consultative-modal {
+        align-items: flex-start;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .consultative-shell {
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+    }
+
+    .consultative-grid {
+        max-height: none;
+    }
+
+    .consultative-pane {
+        max-height: none !important;
+        overflow-y: visible;
+    }
+
+    .consultative-scroll {
+        max-height: 32vh !important;
+        overflow-y: auto !important;
     }
 }
 
