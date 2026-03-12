@@ -122,41 +122,9 @@ h4,
 .navbar .container,
 .navbar-brand,
 .navbar-nav,
-.navbar-collapse,
-.site-nav,
-.site-nav-list {
+.navbar-collapse {
     position: relative;
     z-index: 2;
-}
-
-.site-nav-shell .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.site-nav {
-    flex: 1 1 auto;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.site-nav-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.25rem 0.55rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.site-nav-list .nav-item {
-    margin: 0;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -1193,10 +1161,6 @@ footer {
     z-index: 1000;
 }
 
-.site-nav-list.navbar-nav {
-    flex-direction: row;
-}
-
 #back-to-top:hover {
     filter: brightness(1.08);
 }
@@ -1245,16 +1209,6 @@ footer {
 }
 
 @media (max-width: 767px) {
-    .site-nav {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .site-nav-list {
-        flex-direction: row;
-        justify-content: center;
-    }
-
     .consultative-fab {
         right: 1rem;
         bottom: 1rem;
