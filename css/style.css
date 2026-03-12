@@ -195,14 +195,15 @@ h4,
 } */
 
 .hero-img {
-    width: 180px;
-    height: 220px;
-    border-radius: 28px;
+    width: clamp(180px, 22vw, 240px);
+    height: clamp(230px, 30vw, 320px);
+    border-radius: 32px;
     object-fit: cover;
-    border: none;
-    box-shadow: none;
-    filter: saturate(1.05);
-    object-position: 50% 15%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    filter: saturate(1.02) contrast(1.02);
+    object-position: 50% 12%;
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .text-gradient {
