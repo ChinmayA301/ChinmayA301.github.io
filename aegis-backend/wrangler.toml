@@ -12,3 +12,8 @@ PINECONE_NAMESPACE = "portfolio"
 GEMINI_MODEL = "models/gemini-2.5-flash"
 GEMINI_EMBED_MODEL = "models/gemini-embedding-001"
 GEMINI_EMBED_DIMENSIONS = "1024"
+
+[[routes]]
+pattern = "rag.chinmayarora.com"
+zone_name = "chinmayarora.com"
+custom_domain = true
