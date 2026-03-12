@@ -132,6 +132,16 @@ def is_sparse_unsupported(body: str) -> bool:
     return "does not support sparse values" in lowered or "only indexes that are sparse or using dotproduct are supported" in lowered
 
 
+def is_gemini_quota_error(message: str) -> bool:
+    lowered = (message or "").lower()
+    return (
+        "gemini embed http 429" in lowered
+        or "resource_exhausted" in lowered
+        or "quota exceeded" in lowered
+        or "embed_content_free_tier_requests" in lowered
+    )
+
+
 async def post_json(url: str, headers: dict[str, str], payload: dict[str, Any], service: str) -> Any:
     try:
         response = await fetch(
@@ -278,6 +288,7 @@ class Default(WorkerEntrypoint):
             )
 
         try:
+            retrieval_degraded = False
             try:
                 research_packet = await self.fetch_company_research(company_name, job_title)
             except Exception as exc:
@@ -286,7 +297,11 @@ class Default(WorkerEntrypoint):
             try:
                 matches = await self.query_portfolio_matches(visitor_name, company_name, job_title, research_packet)
             except Exception as exc:
-                raise RuntimeError(f"retrieval_phase failed: {type(exc).__name__}: {exc}") from exc
+                if is_gemini_quota_error(str(exc)):
+                    retrieval_degraded = True
+                    matches = []
+                else:
+                    raise RuntimeError(f"retrieval_phase failed: {type(exc).__name__}: {exc}") from exc
 
             if matches:
                 try:
@@ -310,11 +325,14 @@ class Default(WorkerEntrypoint):
             "portfolio_matches": matches[:4],
             "pitch": pitch,
         }
+        if retrieval_degraded:
+            payload["notice"] = "Portfolio retrieval is temporarily rate-limited. Returning a research-based pitch."
         if debug_enabled(self.env):
             payload["retrieval_debug"] = {
                 "namespace": self.env.PINECONE_NAMESPACE,
                 "index": self.env.PINECONE_INDEX,
                 "embed_dimensions": parse_embed_dimensions(getattr(self.env, "GEMINI_EMBED_DIMENSIONS", None)),
+                "degraded": retrieval_degraded,
             }
         return json_response(payload, origin=origin)
 
