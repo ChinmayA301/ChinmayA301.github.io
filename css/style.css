@@ -145,6 +145,7 @@ h4,
 
 .site-nav-list {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
@@ -1191,6 +1192,10 @@ footer {
     z-index: 1000;
 }
 
+.site-nav-list.navbar-nav {
+    flex-direction: row;
+}
+
 #back-to-top:hover {
     filter: brightness(1.08);
 }
@@ -1245,6 +1250,7 @@ footer {
     }
 
     .site-nav-list {
+        flex-direction: row;
         justify-content: center;
     }
 
