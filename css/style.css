@@ -195,14 +195,15 @@ h4,
 } */
 
 .hero-img {
-    width: clamp(180px, 22vw, 240px);
-    height: clamp(230px, 30vw, 320px);
-    border-radius: 32px;
+    width: clamp(210px, 24vw, 290px);
+    aspect-ratio: 1 / 1;
+    height: auto;
+    border-radius: 36px;
     object-fit: cover;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
     filter: saturate(1.02) contrast(1.02);
-    object-position: 50% 12%;
+    object-position: 50% 18%;
     background: rgba(255, 255, 255, 0.03);
 }
 
