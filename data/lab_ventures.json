@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Aegis AI Strategy",
+        "summary": "AI compliance infrastructure for audit preparation, policy cross-referencing, and governance-ready enterprise controls.",
+        "business_hook": "Aegis shortens audit cycles and reduces regulatory risk by surfacing policy conflicts before they become operational failures.",
+        "url": "https://chinmayarora.com/ideas/aegis-ai-strategy/",
+        "tags": ["AI Compliance", "Auditing", "NLP", "B2B SaaS"]
+    },
+    {
+        "title": "Public Infrastructure Copilot",
+        "summary": "GovTech planning engine that converts maintenance records and service requests into ranked infrastructure priorities.",
+        "business_hook": "Designed for municipalities that need faster capital planning, clearer prioritization, and evidence-backed infrastructure allocation.",
+        "url": "https://chinmayarora.com/ideas/public-infrastructure-copilot/",
+        "tags": ["GovTech", "Geospatial Forecasting", "Public Sector"]
+    },
+    {
+        "title": "Compliance Twin",
+        "summary": "A control-system graph for teams managing obligations, evidence, and assurance workflows across regulated environments.",
+        "business_hook": "Compliance Twin replaces spreadsheet governance with a persistent operating graph for mid-market compliance teams.",
+        "url": "https://chinmayarora.com/ideas/compliance-twin/",
+        "tags": ["Compliance", "Knowledge Graph", "B2B SaaS"]
+    },
+    {
+        "title": "Operator Memory Cloud",
+        "summary": "Shared execution memory for startup teams that need durable access to decisions, context, and workflow history.",
+        "business_hook": "The product compounds execution velocity by reducing repeated context transfer and lost institutional knowledge.",
+        "url": "https://chinmayarora.com/ideas/operator-memory-cloud/",
+        "tags": ["LLM Retrieval", "Knowledge Ops", "B2B SaaS"]
+    },
+    {
+        "title": "Civic Procurement Graph",
+        "summary": "Procurement intelligence layer for agencies and vendors navigating fragmented public bids, contracts, and supplier histories.",
+        "business_hook": "Creates recurring workflow value by making public procurement discovery and supplier intelligence searchable and actionable.",
+        "url": "https://chinmayarora.com/ideas/civic-procurement-graph/",
+        "tags": ["GovTech Marketplace", "Entity Resolution", "Procurement"]
+    },
+    {
+        "title": "Research Commercialization Studio",
+        "summary": "Commercialization workflow for translating academic and lab research into venture briefs, prototype plans, and market tests.",
+        "business_hook": "Built for innovation offices and technical founders who need a clearer path from research output to startup narrative.",
+        "url": "https://chinmayarora.com/ideas/research-commercialization-studio/",
+        "tags": ["Academic Innovation", "Workflow Intelligence", "Commercialization"]
+    }
+]

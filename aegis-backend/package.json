@@ -1,0 +1,14 @@
+{
+	"name": "aegis-backend",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"sync": "UV_PYTHON=3.12 uv run pywrangler sync",
+		"deploy": "UV_PYTHON=3.12 uv run pywrangler deploy --config wrangler.toml",
+		"dev": "npm run sync && npx wrangler dev --config wrangler.toml",
+		"start": "npm run sync && npx wrangler dev --config wrangler.toml"
+	},
+	"devDependencies": {
+		"wrangler": "4.72.0"
+	}
+}

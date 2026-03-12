@@ -191,6 +191,17 @@ header p.lead {
     letter-spacing: 0.5px;
 }
 
+.consultative-trigger {
+    border-color: rgba(138, 209, 255, 0.4) !important;
+    color: #eaf2ff !important;
+    box-shadow: 0 12px 28px rgba(46, 130, 255, 0.15);
+}
+
+.consultative-trigger:hover {
+    background: rgba(138, 209, 255, 0.12) !important;
+    border-color: rgba(138, 209, 255, 0.6) !important;
+}
+
 .hero.scrolled p.lead {
     color: #76a9ff;
     /* brighter against dark bg while scrolled */

@@ -9,6 +9,15 @@ if (document.querySelector("#typed")) {
     });
 }
 
+const CONSULTATIVE_AI_ENDPOINT = "https://app.chinmayarora.com";
+const CONSULT_STATUS_STEPS = [
+    "Connecting to Cloudflare...",
+    "Scanning company signals...",
+    "Researching operating pressure points...",
+    "Finding matches in projects and lab ventures...",
+    "Synthesizing a concise pitch..."
+];
+
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener("click", (e) => {
@@ -41,6 +50,179 @@ const toggleTop = () => backToTopButton.style.display = window.scrollY > 200 ? "
 window.addEventListener("scroll", toggleTop);
 backToTopButton.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 toggleTop();
+
+const consultativeAiModal = document.getElementById("consultativeAiModal");
+const openConsultativeAi = document.getElementById("openConsultativeAi");
+const closeConsultativeAi = document.getElementById("closeConsultativeAi");
+const consultativeAiOverlay = document.getElementById("consultativeAiOverlay");
+const consultativeAiForm = document.getElementById("consultativeAiForm");
+const consultStatusLog = document.getElementById("consultStatusLog");
+const consultationResult = document.getElementById("consultationResult");
+const consultativeAiSubmit = document.getElementById("consultativeAiSubmit");
+let consultStatusTimer = null;
+
+function setConsultModalState(isOpen) {
+    if (!consultativeAiModal) return;
+    consultativeAiModal.classList.toggle("hidden", !isOpen);
+    consultativeAiModal.classList.toggle("flex", isOpen);
+    consultativeAiModal.setAttribute("aria-hidden", String(!isOpen));
+    document.body.style.overflow = isOpen ? "hidden" : "";
+}
+
+function appendConsultStatus(message, tone = "neutral") {
+    if (!consultStatusLog) return;
+    const palette = {
+        neutral: "text-slate-300 border-white/8 bg-white/[0.03]",
+        success: "text-emerald-200 border-emerald-400/20 bg-emerald-400/10",
+        error: "text-rose-200 border-rose-400/20 bg-rose-400/10"
+    };
+    const row = document.createElement("div");
+    row.className = `mb-2 rounded-2xl border px-3 py-2 ${palette[tone] || palette.neutral}`;
+    row.textContent = message;
+    consultStatusLog.appendChild(row);
+    consultStatusLog.scrollTop = consultStatusLog.scrollHeight;
+}
+
+function resetConsultationUi() {
+    if (consultStatusLog) {
+        consultStatusLog.innerHTML = "";
+    }
+    if (consultationResult) {
+        consultationResult.innerHTML = `<p class="m-0 text-slate-400">Your personalized pitch and matched portfolio evidence will appear here.</p>`;
+    }
+}
+
+function startConsultStatusFeed(companyName) {
+    if (consultStatusTimer) {
+        clearInterval(consultStatusTimer);
+    }
+    const queue = [
+        CONSULT_STATUS_STEPS[0],
+        `Researching ${companyName}...`,
+        "Consulting Aegis Lab...",
+        "Reviewing project and blog matches...",
+        CONSULT_STATUS_STEPS[4]
+    ];
+    let index = 0;
+    appendConsultStatus(queue[index]);
+    consultStatusTimer = window.setInterval(() => {
+        index += 1;
+        if (index >= queue.length) {
+            clearInterval(consultStatusTimer);
+            consultStatusTimer = null;
+            return;
+        }
+        appendConsultStatus(queue[index]);
+    }, 900);
+}
+
+function stopConsultStatusFeed() {
+    if (consultStatusTimer) {
+        clearInterval(consultStatusTimer);
+        consultStatusTimer = null;
+    }
+}
+
+function renderConsultationResult(payload) {
+    if (!consultationResult) return;
+    const matches = (payload.portfolio_matches || []).slice(0, 3);
+    consultationResult.innerHTML = `
+        <div class="space-y-4">
+            <div class="rounded-[20px] border border-sky-300/15 bg-sky-300/10 p-4">
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-sky-100">Pitch</p>
+                <p class="m-0 text-sm leading-7 text-slate-100">${payload.pitch || "No pitch returned."}</p>
+            </div>
+            <div>
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">Matched Evidence</p>
+                <div class="space-y-2">
+                    ${matches.map(match => `
+                        <a class="block rounded-[18px] border border-white/10 bg-white/[0.04] p-3 text-slate-200 no-underline transition hover:bg-white/[0.08]" href="${match.url || "/"}" target="_blank" rel="noopener">
+                            <p class="mb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">${match.source || "portfolio"}</p>
+                            <p class="mb-1 text-sm font-semibold text-white">${match.title || "Portfolio Match"}</p>
+                            <p class="m-0 text-sm text-slate-300">${match.summary || ""}</p>
+                        </a>
+                    `).join("") || `<p class="m-0 text-slate-400">No supporting matches returned.</p>`}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+async function handleConsultativeAiSubmit(event) {
+    event.preventDefault();
+    if (!consultativeAiForm || !consultativeAiSubmit) return;
+    const formData = new FormData(consultativeAiForm);
+    const visitorName = (formData.get("visitor_name") || "").toString().trim();
+    const companyName = (formData.get("company_name") || "").toString().trim();
+    if (!visitorName || !companyName) return;
+
+    resetConsultationUi();
+    startConsultStatusFeed(companyName);
+    consultativeAiSubmit.disabled = true;
+    consultativeAiSubmit.textContent = "Working...";
+    let timeoutId;
+
+    try {
+        const endpoint = consultativeAiForm.dataset.endpoint || CONSULTATIVE_AI_ENDPOINT;
+        const controller = new AbortController();
+        timeoutId = window.setTimeout(() => controller.abort(), 20000);
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            signal: controller.signal,
+            body: JSON.stringify({
+                visitor_name: visitorName,
+                company_name: companyName,
+                job_title: "decision maker"
+            })
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) {
+            throw new Error(payload.error || `Consultation request failed (${response.status}).`);
+        }
+
+        stopConsultStatusFeed();
+        appendConsultStatus("Pitch ready.", "success");
+        renderConsultationResult(payload);
+    } catch (error) {
+        stopConsultStatusFeed();
+        const message = error.name === "AbortError"
+            ? "The consultation request timed out. Please try again."
+            : (error.message || "The consultation request failed.");
+        appendConsultStatus(message, "error");
+        if (consultationResult) {
+            consultationResult.innerHTML = `<p class="m-0 text-rose-200">${message}</p>`;
+        }
+    } finally {
+        if (timeoutId) {
+            window.clearTimeout(timeoutId);
+        }
+        consultativeAiSubmit.disabled = false;
+        consultativeAiSubmit.textContent = "Generate Pitch";
+    }
+}
+
+if (openConsultativeAi) {
+    openConsultativeAi.addEventListener("click", () => {
+        resetConsultationUi();
+        setConsultModalState(true);
+    });
+}
+if (closeConsultativeAi) {
+    closeConsultativeAi.addEventListener("click", () => setConsultModalState(false));
+}
+if (consultativeAiOverlay) {
+    consultativeAiOverlay.addEventListener("click", () => setConsultModalState(false));
+}
+if (consultativeAiForm) {
+    consultativeAiForm.addEventListener("submit", handleConsultativeAiSubmit);
+}
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        setConsultModalState(false);
+    }
+});
 
 // Year
 document.getElementById("year").textContent = new Date().getFullYear();

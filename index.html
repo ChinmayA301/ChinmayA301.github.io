@@ -15,6 +15,15 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            corePlugins: {
+                preflight: false
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Icons / Effects -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
@@ -27,7 +36,7 @@
             "@id": "https://chinmaya301.github.io/#person",
             "name": "Chinmay Arora",
             "jobTitle": "Data Scientist, AI Strategist & Research Assistant",
-            "url": "https://chinmaya301.github.io/",
+            "url": "https://chinmayarora.com/",
             "worksFor": {
                 "@type": "CollegeOrUniversity",
                 "name": "University of Minnesota",
@@ -36,43 +45,43 @@
             "founder": {
                 "@type": "Organization",
                 "name": "Aegis AI Strategy",
-                "url": "https://chinmaya301.github.io/ideas/aegis-ai-strategy/"
+                "url": "https://chinmayarora.com/ideas/aegis-ai-strategy/"
             },
             "subjectOf": {
                 "@type": "Blog",
                 "name": "Chinmay Arora Blog",
-                "url": "https://chinmaya301.github.io/blog/"
+                "url": "https://chinmayarora.com/blog/"
             },
             "hasPart": [
                 {
                     "@type": "CreativeWork",
                     "name": "Aegis AI Strategy",
-                    "url": "https://chinmaya301.github.io/ideas/aegis-ai-strategy/"
+                    "url": "https://chinmayarora.com/ideas/aegis-ai-strategy/"
                 },
                 {
                     "@type": "CreativeWork",
                     "name": "Public Infrastructure Copilot",
-                    "url": "https://chinmaya301.github.io/ideas/public-infrastructure-copilot/"
+                    "url": "https://chinmayarora.com/ideas/public-infrastructure-copilot/"
                 },
                 {
                     "@type": "CreativeWork",
                     "name": "Compliance Twin",
-                    "url": "https://chinmaya301.github.io/ideas/compliance-twin/"
+                    "url": "https://chinmayarora.com/ideas/compliance-twin/"
                 },
                 {
                     "@type": "CreativeWork",
                     "name": "Operator Memory Cloud",
-                    "url": "https://chinmaya301.github.io/ideas/operator-memory-cloud/"
+                    "url": "https://chinmayarora.com/ideas/operator-memory-cloud/"
                 },
                 {
                     "@type": "CreativeWork",
                     "name": "Civic Procurement Graph",
-                    "url": "https://chinmaya301.github.io/ideas/civic-procurement-graph/"
+                    "url": "https://chinmayarora.com/ideas/civic-procurement-graph/"
                 },
                 {
                     "@type": "CreativeWork",
                     "name": "Research Commercialization Studio",
-                    "url": "https://chinmaya301.github.io/ideas/research-commercialization-studio/"
+                    "url": "https://chinmayarora.com/ideas/research-commercialization-studio/"
                 }
             ]
         }
@@ -124,9 +133,87 @@
                     class="btn btn-primary">LinkedIn</a>
                 <a href="https://github.com/ChinmayA301" target="_blank" class="btn btn-outline-light">GitHub</a>
                 <a href="/blog/" class="btn btn-outline-light nav-link-blog">Blog</a>
+                <button id="openConsultativeAi" type="button" class="btn btn-outline-light consultative-trigger">
+                    Consultative AI
+                </button>
             </div>
         </div>
     </header>
+
+    <div id="consultativeAiModal"
+        class="hidden fixed inset-0 z-[1200] items-center justify-center px-4 py-8 text-white"
+        aria-hidden="true">
+        <button id="consultativeAiOverlay" type="button"
+            class="absolute inset-0 border-0 bg-slate-950/80 backdrop-blur-xl"
+            aria-label="Close consultative AI modal"></button>
+        <div
+            class="relative w-full max-w-5xl overflow-hidden rounded-[28px] border border-white/10 bg-[rgba(11,12,16,0.82)] shadow-[0_28px_80px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
+            <div class="grid gap-0 md:grid-cols-[1.1fr_0.9fr]">
+                <section class="border-b border-white/10 p-6 md:border-b-0 md:border-r md:p-8">
+                    <div class="mb-6 flex items-start justify-between gap-4">
+                        <div>
+                            <p class="mb-2 text-xs uppercase tracking-[0.28em] text-slate-300">Consultative AI</p>
+                            <h2 class="mb-2 font-['Fraunces'] text-3xl text-white">Ask Aegis Architect</h2>
+                            <p class="m-0 max-w-xl text-sm leading-7 text-slate-300">
+                                Research a visitor, infer the company's current pressure points, and map them to
+                                projects, lab ventures, and technical writing.
+                            </p>
+                        </div>
+                        <button id="closeConsultativeAi" type="button"
+                            class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-200 transition hover:bg-white/10">
+                            Close
+                        </button>
+                    </div>
+
+                    <form id="consultativeAiForm" class="space-y-4" data-endpoint="https://app.chinmayarora.com">
+                        <div>
+                            <label for="consultVisitorName"
+                                class="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">Name</label>
+                            <input id="consultVisitorName" name="visitor_name" type="text" required
+                                class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/50 focus:bg-white/10"
+                                placeholder="Ada Lovelace Ventures" />
+                        </div>
+                        <div>
+                            <label for="consultCompanyName"
+                                class="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">Company</label>
+                            <input id="consultCompanyName" name="company_name" type="text" required
+                                class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/50 focus:bg-white/10"
+                                placeholder="Hennepin County or your target company" />
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                            <button id="consultativeAiSubmit" type="submit"
+                                class="rounded-full bg-[linear-gradient(135deg,#2e82ff,#8ad1ff)] px-5 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_28px_rgba(46,130,255,0.4)] transition hover:translate-y-[-1px]">
+                                Generate Pitch
+                            </button>
+                            <p class="m-0 text-xs uppercase tracking-[0.18em] text-slate-400">
+                                Response stays under 100 words
+                            </p>
+                        </div>
+                    </form>
+                </section>
+
+                <aside class="flex flex-col gap-4 bg-white/[0.03] p-6 md:p-8">
+                    <div>
+                        <p class="mb-2 text-xs uppercase tracking-[0.28em] text-slate-300">Status Feed</p>
+                        <div id="consultStatusLog"
+                            class="min-h-[180px] rounded-[22px] border border-white/10 bg-slate-950/40 p-4 text-sm text-slate-200">
+                            <p class="m-0 text-slate-400">Connecting to Cloudflare...</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="mb-2 text-xs uppercase tracking-[0.28em] text-slate-300">Consultation Output</p>
+                        <div id="consultationResult"
+                            class="rounded-[22px] border border-white/10 bg-white/[0.04] p-4 text-sm leading-7 text-slate-200">
+                            <p class="m-0 text-slate-400">
+                                Your personalized pitch and matched portfolio evidence will appear here.
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
 
     <!-- About -->
     <section id="about" class="section">

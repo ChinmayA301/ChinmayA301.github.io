@@ -1,0 +1,4 @@
+httpx
+pinecone
+pinecone-text
+PyYAML
