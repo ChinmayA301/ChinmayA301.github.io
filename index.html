@@ -97,11 +97,27 @@
     <nav class="navbar navbar-expand-md sticky-top navbar-dark glass site-nav-shell">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">CA</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
+            <div class="site-nav site-nav-desktop">
+                <ul class="navbar-nav site-nav-list ms-auto">
+                    <li class="nav-item"><a class="nav-link nav-link-blog" href="/blog/">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/experience/">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/projects/">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/ideas/">The Lab</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/coursework/">Coursework</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/reports/">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/upload/">Upload</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-primary btn-sm" href="/resumes/" target="_blank"
+                            rel="noopener">Resume</a>
+                    </li>
+                </ul>
+            </div>
+            <button class="navbar-toggler site-nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
                 aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse site-nav" id="nav">
+            <div class="collapse navbar-collapse site-nav site-nav-mobile" id="nav">
                 <ul class="navbar-nav site-nav-list ms-auto">
                     <li class="nav-item"><a class="nav-link nav-link-blog" href="/blog/">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="/experience/">Experience</a></li>

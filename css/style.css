@@ -143,6 +143,14 @@ h4,
     justify-content: flex-end;
 }
 
+.site-nav-desktop {
+    display: flex;
+}
+
+.site-nav-mobile {
+    display: none;
+}
+
 .site-nav-list {
     display: flex;
     flex-direction: row;
@@ -211,11 +219,11 @@ h4,
 .hero-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     filter: saturate(1.02) contrast(1.02);
-    object-position: center 18%;
+    object-position: center center;
     display: block;
-    transform: scale(1.12);
+    transform: scale(0.72);
     transform-origin: center center;
 }
 
@@ -1257,7 +1265,31 @@ footer {
     gap: 16px;
 }
 
+@media (min-width: 768px) {
+    .site-nav-toggle,
+    .site-nav-mobile {
+        display: none !important;
+    }
+
+    .site-nav-desktop {
+        display: flex !important;
+    }
+}
+
 @media (max-width: 767px) {
+    .site-nav-desktop {
+        display: none !important;
+    }
+
+    .site-nav-toggle {
+        display: inline-flex;
+    }
+
+    .site-nav-mobile {
+        display: block;
+        flex-basis: 100%;
+    }
+
     .site-nav {
         width: 100%;
         justify-content: flex-start;
