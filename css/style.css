@@ -266,6 +266,22 @@ header p.lead {
     display: block;
 }
 
+.consultative-modal,
+.consultative-shell,
+.consultative-pane,
+.consultative-scroll {
+    -webkit-overflow-scrolling: touch;
+}
+
+.consultative-modal,
+.consultative-shell {
+    overscroll-behavior: contain;
+}
+
+.consultative-scroll {
+    overscroll-behavior: contain;
+}
+
 .hero.scrolled p.lead {
     color: #76a9ff;
     /* brighter against dark bg while scrolled */
@@ -1209,6 +1225,28 @@ footer {
 }
 
 @media (max-width: 767px) {
+    .consultative-modal {
+        align-items: flex-start;
+    }
+
+    .consultative-shell {
+        max-height: calc(100vh - 2rem);
+    }
+
+    .consultative-grid {
+        max-height: none;
+    }
+
+    .consultative-pane {
+        max-height: none !important;
+        overflow-y: visible;
+    }
+
+    .consultative-scroll {
+        max-height: 32vh !important;
+        overflow-y: auto !important;
+    }
+
     .consultative-fab {
         right: 1rem;
         bottom: 1rem;
