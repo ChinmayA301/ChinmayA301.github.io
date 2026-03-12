@@ -9,7 +9,7 @@ if (document.querySelector("#typed")) {
     });
 }
 
-const CONSULTATIVE_AI_ENDPOINT = "https://app.chinmayarora.com";
+const CONSULTATIVE_AI_ENDPOINT = "https://rag.chinmayarora.com";
 const CONSULT_STATUS_STEPS = [
     "Connecting to Cloudflare...",
     "Scanning company signals...",

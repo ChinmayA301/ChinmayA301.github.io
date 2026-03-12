@@ -9,7 +9,7 @@ from typing import Any
 from workers import Response, WorkerEntrypoint, fetch
 
 
-ALLOWED_ORIGIN = "https://chinmayarora.com"
+ALLOWED_ORIGIN = "https://app.chinmayarora.com"
 CORS_HEADERS = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
