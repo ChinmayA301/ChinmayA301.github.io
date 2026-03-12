@@ -121,17 +121,51 @@ h4,
 
 .navbar .container,
 .navbar-brand,
-.navbar-toggler,
 .navbar-nav,
-.navbar-collapse {
+.navbar-collapse,
+.site-nav,
+.site-nav-list {
     position: relative;
     z-index: 2;
+}
+
+.site-nav-shell .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.site-nav {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.site-nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.25rem 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-nav-list .nav-item {
+    margin: 0;
 }
 
 .navbar-dark .navbar-nav .nav-link {
     color: #e8eefc;
     font-weight: 500;
     opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0.45rem 0.7rem;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
@@ -190,9 +224,9 @@ h4,
 }
 
 .hero-name {
-    font-size: clamp(3.8rem, 10vw, 8.5rem);
-    line-height: 0.92;
-    letter-spacing: -0.04em;
+    font-size: clamp(5.2rem, 15vw, 12rem);
+    line-height: 0.86;
+    letter-spacing: -0.06em;
     margin-top: 0.4rem;
     margin-bottom: 0.6rem;
 }
@@ -1205,6 +1239,15 @@ footer {
 }
 
 @media (max-width: 767px) {
+    .site-nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .site-nav-list {
+        justify-content: center;
+    }
+
     .consultative-fab {
         right: 1rem;
         bottom: 1rem;
