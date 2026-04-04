@@ -96,6 +96,69 @@
             ]
         }
     </script>
+    <style>
+        #home-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1400;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+            background: rgba(12, 13, 17, 0.65);
+            backdrop-filter: saturate(160%) blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            isolation: isolate;
+        }
+
+        #home-navbar .container,
+        #home-navbar .navbar-brand,
+        #home-navbar .navbar-nav,
+        #home-navbar .navbar-collapse {
+            position: relative;
+            z-index: 2;
+        }
+
+        #home-navbar .navbar-brand,
+        #home-navbar .navbar-toggler,
+        #home-navbar .nav-link {
+            color: #e8eefc;
+        }
+
+        #home-navbar .navbar-nav {
+            list-style: none;
+            margin-bottom: 0;
+        }
+
+        #home-navbar .nav-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 2.25rem;
+            padding: 0.45rem 0.7rem;
+            font-weight: 500;
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        #home-navbar .nav-link:hover,
+        #home-navbar .nav-link:focus,
+        #home-navbar .navbar-brand:hover,
+        #home-navbar .navbar-brand:focus {
+            color: #ffffff;
+        }
+
+        #home-navbar .nav-link.nav-link-blog {
+            color: #ffd89f;
+            border: 1px solid rgba(255, 185, 92, 0.55);
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        #home-navbar .nav-link.nav-link-blog:hover,
+        #home-navbar .nav-link.nav-link-blog:focus {
+            color: #fff3de;
+            border-color: rgba(255, 185, 92, 0.8);
+        }
+    </style>
 </head>
 
 <body>
@@ -104,7 +167,7 @@
     <div class="bg-orb orb-3" aria-hidden="true"></div>
 
     <!-- Nav -->
-    <nav class="navbar navbar-expand-lg sticky-top navbar-dark glass">
+    <nav id="home-navbar" class="navbar navbar-expand-lg sticky-top navbar-dark glass">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">CA</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
