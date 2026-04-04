@@ -1135,6 +1135,20 @@ function setupHeroGlobe() {
             const centerX = state.width / 2;
             const centerY = state.height / 2;
 
+            ctx.fillStyle = "rgba(3, 6, 12, 0.92)";
+            ctx.fillRect(0, 0, state.width, state.height);
+
+            const stars = 34;
+            for (let i = 0; i < stars; i += 1) {
+                const starX = ((i * 97) % state.width);
+                const starY = ((i * 53) % state.height);
+                const starSize = (i % 3) + 0.7;
+                ctx.fillStyle = `rgba(226, 236, 255, ${0.1 + (i % 5) * 0.05})`;
+                ctx.beginPath();
+                ctx.arc(starX, starY, starSize, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
             const gradient = ctx.createRadialGradient(
                 centerX - radius * 0.35,
                 centerY - radius * 0.4,
@@ -1160,6 +1174,12 @@ function setupHeroGlobe() {
 
             drawGrid(radius);
             drawPins(radius);
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(138, 209, 255, 0.22)";
+            ctx.lineWidth = 10;
+            ctx.arc(centerX, centerY, radius * 1.01, -0.85, 0.85);
+            ctx.stroke();
         }
 
         function animate() {
@@ -1218,24 +1238,25 @@ function setupHeroGlobe() {
 
         return {
             resize,
+            draw,
             state
         };
     }
 
-    createGlobe(inlineCanvas, {
+    const inlineGlobe = createGlobe(inlineCanvas, {
         autorotate: true,
         interactive: false,
         radiusFactor: 0.4,
         glow: 1
     });
-    createGlobe(previewCanvas, {
+    const previewGlobe = createGlobe(previewCanvas, {
         autorotate: true,
         interactive: false,
         radiusFactor: 0.42,
         glow: 1.15,
         showLabels: false
     });
-    createGlobe(modalCanvas, {
+    const modalGlobe = createGlobe(modalCanvas, {
         autorotate: true,
         interactive: true,
         radiusFactor: 0.43,
@@ -1256,6 +1277,18 @@ function setupHeroGlobe() {
             modal.hidden = false;
             modal.setAttribute("aria-hidden", "false");
             document.body.style.overflow = "hidden";
+            window.requestAnimationFrame(() => {
+                inlineGlobe.resize();
+                inlineGlobe.draw();
+                previewGlobe.resize();
+                previewGlobe.draw();
+                modalGlobe.resize();
+                modalGlobe.draw();
+                window.requestAnimationFrame(() => {
+                    modalGlobe.resize();
+                    modalGlobe.draw();
+                });
+            });
         }, 360);
     }
 

@@ -222,35 +222,6 @@
             transform: scale(1.1);
         }
 
-        .hero-globe-caption,
-        .hero-media-cta {
-            position: absolute;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(12, 13, 17, 0.76);
-            color: #f7f9fc;
-            backdrop-filter: blur(10px);
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-        .hero-globe-caption {
-            left: 50%;
-            bottom: -1.25rem;
-            transform: translateX(-50%);
-            padding: 0.45rem 0.8rem;
-            font-size: 0.72rem;
-            letter-spacing: 0.14em;
-        }
-
-        .hero-media-cta {
-            right: 0.3rem;
-            bottom: 0.3rem;
-            padding: 0.45rem 0.75rem;
-            font-size: 0.68rem;
-            letter-spacing: 0.12em;
-        }
-
         .hero-globe-modal[hidden] {
             display: none !important;
         }
@@ -420,17 +391,6 @@
                 height: min(86vw, 320px);
             }
 
-            .hero-globe-caption {
-                bottom: -1rem;
-                font-size: 0.65rem;
-            }
-
-            .hero-media-cta {
-                right: 0.1rem;
-                bottom: 0.1rem;
-                font-size: 0.64rem;
-            }
-
             .hero-globe-modal {
                 padding: 0.8rem;
             }
@@ -490,15 +450,12 @@
                                 <canvas id="heroGlobeCanvas" class="hero-globe-canvas" aria-hidden="true"></canvas>
                                 <img src="assets/images/profile1.png" alt="Profile Picture"
                                     class="rounded-4 shadow-lg hero-img">
-                                <div class="hero-globe-caption">Global footprint</div>
-                                <div class="hero-media-cta">Tap to explore</div>
                             </div>
                         </div>
                         <div class="hero-media-face hero-media-face-back">
                             <div class="hero-globe-stage">
                                 <div class="hero-globe-halo"></div>
                                 <canvas id="heroGlobePreviewCanvas" class="hero-globe-canvas" aria-hidden="true"></canvas>
-                                <div class="hero-globe-caption">Opening interactive map</div>
                             </div>
                         </div>
                     </div>
@@ -541,27 +498,27 @@
                     <ul class="hero-globe-location-list">
                         <li>
                             <p class="hero-globe-location-name">New Delhi</p>
-                            <p class="hero-globe-location-note">India origin point and personal anchor.</p>
+                            <p class="hero-globe-location-note">Home</p>
                         </li>
                         <li>
                             <p class="hero-globe-location-name">Chennai</p>
-                            <p class="hero-globe-location-note">South India connection and operating context.</p>
+                            <p class="hero-globe-location-note">College</p>
                         </li>
                         <li>
                             <p class="hero-globe-location-name">Minneapolis</p>
-                            <p class="hero-globe-location-note">University and day-to-day build base.</p>
+                            <p class="hero-globe-location-note">Current home</p>
                         </li>
                         <li>
                             <p class="hero-globe-location-name">Dubai</p>
-                            <p class="hero-globe-location-note">Global business corridor and strategy lens.</p>
+                            <p class="hero-globe-location-note">Second home</p>
                         </li>
                         <li>
                             <p class="hero-globe-location-name">Miami</p>
-                            <p class="hero-globe-location-note">US international gateway and venture signal.</p>
+                            <p class="hero-globe-location-note">Internship location</p>
                         </li>
                         <li>
                             <p class="hero-globe-location-name">NYC</p>
-                            <p class="hero-globe-location-note">Finance, enterprise, and network density.</p>
+                            <p class="hero-globe-location-note">Future home</p>
                         </li>
                     </ul>
                 </aside>
