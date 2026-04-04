@@ -979,6 +979,9 @@ function setupHeroGlobe() {
     const modal = document.getElementById("heroGlobeModal");
     const modalOverlay = document.getElementById("heroGlobeModalOverlay");
     const modalClose = document.getElementById("heroGlobeClose");
+    const locationName = document.getElementById("heroGlobeLocationName");
+    const locationNote = document.getElementById("heroGlobeLocationNote");
+    const locationChips = document.getElementById("heroGlobeLocationChips");
     const inlineCanvas = document.getElementById("heroGlobeCanvas");
     const previewCanvas = document.getElementById("heroGlobePreviewCanvas");
     const modalCanvas = document.getElementById("heroGlobeModalCanvas");
@@ -986,43 +989,107 @@ function setupHeroGlobe() {
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const locations = [
-        { name: "New Delhi", lat: 28.6139, lon: 77.2090 },
-        { name: "Chennai", lat: 13.0827, lon: 80.2707 },
-        { name: "Minneapolis", lat: 44.9778, lon: -93.2650 },
-        { name: "Dubai", lat: 25.2048, lon: 55.2708 },
-        { name: "Miami", lat: 25.7617, lon: -80.1918 },
-        { name: "NYC", lat: 40.7128, lon: -74.0060 }
+        { name: "New Delhi", lat: 28.6139, lon: 77.2090, note: "Home" },
+        { name: "Chennai", lat: 13.0827, lon: 80.2707, note: "College" },
+        { name: "Minneapolis", lat: 44.9778, lon: -93.2650, note: "Current home" },
+        { name: "Dubai", lat: 25.2048, lon: 55.2708, note: "Second home" },
+        { name: "Miami", lat: 25.7617, lon: -80.1918, note: "Internship location" },
+        { name: "NYC", lat: 40.7128, lon: -74.0060, note: "Future home" }
     ];
-    const continentPolygons = [
+    const landPolygons = [
         [
-            [-168, 72], [-150, 70], [-138, 63], [-128, 55], [-124, 48], [-123, 42], [-117, 34],
-            [-112, 31], [-106, 28], [-97, 24], [-90, 18], [-83, 12], [-82, 24], [-86, 31],
-            [-95, 40], [-104, 49], [-112, 58], [-126, 67], [-145, 72]
+            [-168, 72], [-160, 70], [-152, 68], [-145, 64], [-140, 60], [-136, 56], [-132, 52], [-129, 48],
+            [-127, 44], [-125, 40], [-123, 36], [-121, 33], [-117, 32], [-113, 31], [-108, 29], [-103, 27],
+            [-97, 25], [-92, 22], [-88, 19], [-85, 18], [-82, 20], [-80, 24], [-80, 28], [-82, 31], [-85, 34],
+            [-89, 38], [-94, 42], [-99, 47], [-104, 52], [-110, 57], [-117, 62], [-126, 66], [-138, 70], [-150, 72]
         ],
         [
-            [-81, 12], [-77, 8], [-74, 1], [-70, -6], [-66, -14], [-63, -24], [-60, -35], [-56, -45],
-            [-52, -54], [-47, -52], [-45, -38], [-49, -22], [-54, -7], [-60, 2], [-69, 8], [-76, 10]
+            [-81, 12], [-79, 10], [-77, 8], [-75, 4], [-74, 0], [-72, -5], [-70, -10], [-68, -15], [-66, -20],
+            [-64, -25], [-62, -30], [-60, -35], [-58, -40], [-55, -46], [-52, -51], [-49, -53], [-46, -50],
+            [-45, -44], [-46, -38], [-48, -32], [-50, -25], [-53, -18], [-56, -10], [-60, -3], [-64, 2], [-69, 6], [-75, 9]
         ],
         [
-            [-10, 72], [4, 70], [18, 67], [28, 60], [35, 52], [38, 44], [32, 38], [22, 35], [15, 40],
-            [10, 45], [2, 48], [-4, 44], [-6, 36], [-1, 41], [8, 43], [18, 46], [28, 42], [36, 36],
-            [42, 31], [48, 26], [38, 20], [29, 22], [18, 24], [10, 29], [2, 31], [-5, 36], [-12, 43],
-            [-16, 55], [-14, 64]
+            [-10, 72], [-4, 72], [2, 70], [8, 68], [16, 66], [22, 63], [27, 59], [31, 55], [34, 50], [34, 46],
+            [30, 43], [24, 41], [18, 41], [14, 43], [10, 46], [6, 49], [1, 51], [-4, 50], [-7, 47], [-8, 43],
+            [-7, 39], [-5, 36], [-1, 37], [5, 39], [10, 41], [16, 42], [22, 42], [28, 40], [34, 37], [40, 34],
+            [44, 31], [42, 28], [36, 28], [29, 30], [21, 31], [14, 31], [8, 30], [2, 33], [-4, 38], [-8, 45], [-11, 53], [-14, 61]
         ],
         [
-            [-18, 34], [-10, 30], [-5, 20], [-3, 8], [2, 0], [8, -8], [14, -18], [20, -26], [28, -31],
-            [34, -34], [40, -28], [45, -20], [48, -8], [44, 4], [36, 14], [28, 22], [18, 28], [8, 32], [0, 35]
+            [-18, 34], [-14, 32], [-10, 30], [-7, 26], [-5, 21], [-3, 16], [-1, 10], [1, 5], [4, 0], [7, -5],
+            [10, -10], [13, -15], [16, -20], [20, -25], [24, -29], [28, -32], [32, -34], [36, -33], [40, -29],
+            [43, -24], [46, -18], [48, -11], [47, -4], [45, 2], [42, 8], [38, 14], [34, 19], [29, 24], [23, 28],
+            [16, 31], [8, 33], [0, 34]
         ],
         [
-            [34, 34], [45, 40], [60, 47], [78, 55], [96, 57], [118, 53], [136, 49], [150, 44], [160, 36],
-            [150, 28], [132, 24], [116, 18], [104, 10], [92, 9], [82, 16], [76, 24], [68, 28], [58, 26],
-            [48, 22], [42, 27], [38, 33]
+            [34, 34], [40, 38], [47, 41], [54, 44], [62, 47], [70, 50], [78, 53], [86, 55], [95, 56], [104, 55],
+            [114, 54], [123, 51], [132, 49], [141, 46], [149, 43], [156, 39], [160, 34], [156, 30], [149, 28],
+            [141, 26], [132, 24], [123, 21], [114, 18], [106, 14], [98, 11], [90, 9], [82, 11], [76, 16], [72, 22],
+            [68, 28], [62, 30], [56, 30], [50, 28], [45, 28], [40, 30], [36, 32]
         ],
         [
-            [112, -12], [118, -18], [126, -22], [136, -26], [146, -34], [151, -41], [144, -40], [134, -35],
-            [124, -30], [116, -24], [112, -18]
+            [112, -12], [116, -16], [121, -19], [127, -21], [133, -23], [139, -26], [145, -30], [150, -35],
+            [152, -40], [147, -41], [140, -39], [133, -35], [127, -31], [121, -27], [116, -22], [112, -17]
         ]
     ];
+    const boundaryLines = [
+        [[-125, 49], [-96, 49], [-95, 26]],
+        [[-79, 8], [-71, -4], [-66, -16], [-60, -32]],
+        [[-8, 54], [2, 51], [14, 47], [24, 41]],
+        [[-17, 15], [0, 17], [16, 12], [32, 4]],
+        [[34, 32], [48, 40], [62, 46], [78, 52]],
+        [[72, 23], [84, 20], [96, 20], [108, 18], [120, 17]],
+        [[113, -22], [128, -25], [141, -31]]
+    ];
+    const landSamples = buildLandSamples(landPolygons, 4);
+
+    function buildLandSamples(polygons, step) {
+        const samples = [];
+        polygons.forEach((polygon) => {
+            let minLon = Infinity;
+            let maxLon = -Infinity;
+            let minLat = Infinity;
+            let maxLat = -Infinity;
+            polygon.forEach(([lon, lat]) => {
+                minLon = Math.min(minLon, lon);
+                maxLon = Math.max(maxLon, lon);
+                minLat = Math.min(minLat, lat);
+                maxLat = Math.max(maxLat, lat);
+            });
+            for (let lat = minLat; lat <= maxLat; lat += step) {
+                for (let lon = minLon; lon <= maxLon; lon += step) {
+                    if (pointInPolygon([lon, lat], polygon)) {
+                        samples.push({ lat, lon });
+                    }
+                }
+            }
+        });
+        return samples;
+    }
+
+    function pointInPolygon(point, polygon) {
+        const [x, y] = point;
+        let inside = false;
+        for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i, i += 1) {
+            const [xi, yi] = polygon[i];
+            const [xj, yj] = polygon[j];
+            const intersects = ((yi > y) !== (yj > y))
+                && (x < ((xj - xi) * (y - yi)) / ((yj - yi) || Number.EPSILON) + xi);
+            if (intersects) inside = !inside;
+        }
+        return inside;
+    }
+
+    function updateLocationDetails(location) {
+        if (!locationName || !locationNote || !location) return;
+        locationName.textContent = location.name;
+        locationNote.textContent = location.note;
+        if (locationChips) {
+            Array.from(locationChips.children).forEach((chip) => {
+                chip.classList.toggle("is-active", chip.textContent === location.name);
+                chip.setAttribute("aria-pressed", chip.textContent === location.name ? "true" : "false");
+            });
+        }
+    }
 
     function createGlobe(canvas, options = {}) {
         const ctx = canvas.getContext("2d");
@@ -1039,6 +1106,10 @@ function setupHeroGlobe() {
             showLabels: options.showLabels ?? false,
             glow: options.glow ?? 1,
             labelScale: options.labelScale ?? 1,
+            hoveredLocation: null,
+            selectedLocation: options.selectedLocation ?? null,
+            pointerMoved: false,
+            lastVisibleLocations: [],
             width: 0,
             height: 0,
             dpr: Math.min(window.devicePixelRatio || 1, 2)
@@ -1118,26 +1189,35 @@ function setupHeroGlobe() {
             });
         }
 
-        function drawContinents(radius) {
-            continentPolygons.forEach((polygon) => {
-                const visiblePoints = polygon
-                    .map(([lon, lat]) => project(lat, lon, radius))
-                    .filter((point) => point.depth > -0.12);
-                if (visiblePoints.length < 3) return;
-
+        function drawLand(radius) {
+            landSamples.forEach((sample) => {
+                const point = project(sample.lat, sample.lon, radius);
+                if (point.depth <= 0) return;
+                const size = 2.1 + point.depth * 1.25;
                 ctx.beginPath();
-                visiblePoints.forEach((point, index) => {
-                    if (index === 0) {
+                ctx.fillStyle = `rgba(104, 180, 142, ${0.16 + point.depth * 0.22})`;
+                ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            boundaryLines.forEach((line) => {
+                ctx.beginPath();
+                let started = false;
+                line.forEach(([lon, lat]) => {
+                    const point = project(lat, lon, radius);
+                    if (point.depth <= 0.02) {
+                        started = false;
+                        return;
+                    }
+                    if (!started) {
                         ctx.moveTo(point.x, point.y);
+                        started = true;
                     } else {
                         ctx.lineTo(point.x, point.y);
                     }
                 });
-                ctx.closePath();
-                ctx.fillStyle = "rgba(104, 180, 142, 0.28)";
-                ctx.strokeStyle = "rgba(214, 239, 224, 0.28)";
+                ctx.strokeStyle = "rgba(221, 241, 230, 0.26)";
                 ctx.lineWidth = 1;
-                ctx.fill();
                 ctx.stroke();
             });
         }
@@ -1146,22 +1226,34 @@ function setupHeroGlobe() {
             const visible = locations
                 .map((location) => ({ location, point: project(location.lat, location.lon, radius) }))
                 .sort((a, b) => a.point.depth - b.point.depth);
+            state.lastVisibleLocations = visible.map(({ location, point }) => ({
+                location,
+                x: point.x,
+                y: point.y,
+                depth: point.depth,
+                radius: point.depth > 0 ? 9 : 5
+            }));
 
             visible.forEach(({ location, point }) => {
                 const alpha = point.depth > 0 ? 0.95 : 0.18;
+                const isActive = state.selectedLocation?.name === location.name || state.hoveredLocation?.name === location.name;
                 const dotRadius = point.depth > 0 ? 4.6 * state.glow : 3.2;
                 ctx.beginPath();
-                ctx.fillStyle = `rgba(255, 185, 92, ${alpha})`;
-                ctx.arc(point.x, point.y, dotRadius, 0, Math.PI * 2);
+                ctx.fillStyle = isActive
+                    ? `rgba(255, 214, 138, ${Math.min(alpha + 0.08, 1)})`
+                    : `rgba(255, 185, 92, ${alpha})`;
+                ctx.arc(point.x, point.y, isActive ? dotRadius + 1.5 : dotRadius, 0, Math.PI * 2);
                 ctx.fill();
 
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(138, 209, 255, ${point.depth > 0 ? 0.42 : 0.1})`;
-                ctx.lineWidth = 1.4;
-                ctx.arc(point.x, point.y, dotRadius + 5.5, 0, Math.PI * 2);
+                ctx.strokeStyle = isActive
+                    ? `rgba(255, 214, 138, ${point.depth > 0 ? 0.72 : 0.18})`
+                    : `rgba(138, 209, 255, ${point.depth > 0 ? 0.42 : 0.1})`;
+                ctx.lineWidth = isActive ? 2 : 1.4;
+                ctx.arc(point.x, point.y, dotRadius + (isActive ? 8 : 5.5), 0, Math.PI * 2);
                 ctx.stroke();
 
-                if (state.showLabels && point.depth > 0) {
+                if (state.showLabels && point.depth > 0 && isActive) {
                     const labelX = point.x + 12;
                     const labelY = point.y - 12;
                     const fontSize = 12 * state.labelScale;
@@ -1226,7 +1318,7 @@ function setupHeroGlobe() {
             ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
             ctx.stroke();
 
-            drawContinents(radius);
+            drawLand(radius);
             drawGrid(radius);
             drawPins(radius);
 
@@ -1235,6 +1327,35 @@ function setupHeroGlobe() {
             ctx.lineWidth = 10;
             ctx.arc(centerX, centerY, radius * 1.01, -0.85, 0.85);
             ctx.stroke();
+        }
+
+        function getNearestLocation(clientX, clientY) {
+            const rect = canvas.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            let nearest = null;
+            let nearestDistance = Infinity;
+            state.lastVisibleLocations.forEach((item) => {
+                if (item.depth <= 0.05) return;
+                const distance = Math.hypot(item.x - x, item.y - y);
+                if (distance < item.radius + 8 && distance < nearestDistance) {
+                    nearest = item.location;
+                    nearestDistance = distance;
+                }
+            });
+            return nearest;
+        }
+
+        function setActiveLocation(location, { locked = false } = {}) {
+            if (locked) {
+                state.selectedLocation = location;
+            } else {
+                state.hoveredLocation = location;
+            }
+            if (options.onLocationChange) {
+                options.onLocationChange(location || state.selectedLocation || locations[2]);
+            }
+            canvas.style.cursor = location ? "pointer" : (state.interactive ? "grab" : "default");
         }
 
         function animate() {
@@ -1254,15 +1375,25 @@ function setupHeroGlobe() {
             if (!state.interactive) return;
             state.dragging = true;
             state.pointerId = event.pointerId;
+            state.pointerMoved = false;
             canvas.setPointerCapture(event.pointerId);
             state.startX = event.clientX;
             state.startY = event.clientY;
         }
 
         function onPointerMove(event) {
-            if (!state.interactive || !state.dragging || state.pointerId !== event.pointerId) return;
+            if (!state.interactive) return;
+
+            if (!state.dragging) {
+                const hovered = getNearestLocation(event.clientX, event.clientY);
+                setActiveLocation(hovered, { locked: false });
+                return;
+            }
+
+            if (state.pointerId !== event.pointerId) return;
             const deltaX = event.clientX - state.startX;
             const deltaY = event.clientY - state.startY;
+            state.pointerMoved = state.pointerMoved || Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3;
             state.rotationY += deltaX * 0.008;
             state.rotationX += deltaY * 0.006;
             state.startX = event.clientX;
@@ -1273,6 +1404,12 @@ function setupHeroGlobe() {
 
         function onPointerUp(event) {
             if (!state.interactive || state.pointerId !== event.pointerId) return;
+            if (!state.pointerMoved) {
+                const clicked = getNearestLocation(event.clientX, event.clientY);
+                if (clicked) {
+                    setActiveLocation(clicked, { locked: true });
+                }
+            }
             state.dragging = false;
             canvas.releasePointerCapture(event.pointerId);
             state.pointerId = null;
@@ -1284,6 +1421,13 @@ function setupHeroGlobe() {
             canvas.addEventListener("pointermove", onPointerMove);
             canvas.addEventListener("pointerup", onPointerUp);
             canvas.addEventListener("pointercancel", onPointerUp);
+            canvas.addEventListener("pointerleave", () => {
+                state.hoveredLocation = null;
+                canvas.style.cursor = "grab";
+                if (options.onLocationChange) {
+                    options.onLocationChange(state.selectedLocation || locations[2]);
+                }
+            });
         }
 
         resize();
@@ -1319,8 +1463,11 @@ function setupHeroGlobe() {
         showLabels: true,
         labelScale: 1.04,
         rotationY: -0.25,
-        rotationX: -0.2
+        rotationX: -0.2,
+        selectedLocation: locations[2],
+        onLocationChange: updateLocationDetails
     });
+    updateLocationDetails(locations[2]);
 
     let closeTimeout = null;
     function openModal() {

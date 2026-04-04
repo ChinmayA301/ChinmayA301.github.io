@@ -343,6 +343,10 @@
         }
 
         .hero-globe-modal-sidebar {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 0.95rem;
             padding: 1.1rem;
             border-radius: 28px;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -356,31 +360,66 @@
             font-size: 1.25rem;
         }
 
-        .hero-globe-location-list {
-            display: grid;
-            gap: 0.8rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
+        .hero-globe-location-card {
+            padding: 1rem 1.05rem;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background:
+                linear-gradient(180deg, rgba(17, 22, 31, 0.92), rgba(10, 13, 20, 0.92));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
 
-        .hero-globe-location-list li {
-            padding: 0.8rem 0.9rem;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(9, 12, 18, 0.7);
+        .hero-globe-location-eyebrow {
+            margin: 0 0 0.45rem;
+            color: rgba(255, 185, 92, 0.88);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
         }
 
         .hero-globe-location-name {
-            margin: 0 0 0.25rem;
+            margin: 0 0 0.35rem;
             color: #f7f9fc;
             font-weight: 600;
+            font-size: 1.2rem;
         }
 
         .hero-globe-location-note {
-            margin: 0;
+            margin: 0 0 0.8rem;
             color: rgba(208, 216, 230, 0.72);
-            font-size: 0.92rem;
+            font-size: 0.98rem;
+        }
+
+        .hero-globe-location-hint {
+            margin: 0;
+            color: rgba(208, 216, 230, 0.58);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .hero-globe-location-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .hero-globe-location-chip {
+            display: inline-flex;
+            align-items: center;
+            min-height: 2.05rem;
+            padding: 0.45rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(247, 249, 252, 0.82);
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+
+        .hero-globe-location-chip.is-active {
+            border-color: rgba(255, 185, 92, 0.45);
+            background: rgba(255, 185, 92, 0.12);
+            color: #fff3de;
         }
 
         @media (max-width: 991px) {
@@ -518,32 +557,22 @@
                 </div>
                 <aside class="hero-globe-modal-sidebar">
                     <h3 class="hero-globe-sidebar-title">Pinned cities</h3>
-                    <ul class="hero-globe-location-list">
-                        <li>
-                            <p class="hero-globe-location-name">New Delhi</p>
-                            <p class="hero-globe-location-note">Home</p>
-                        </li>
-                        <li>
-                            <p class="hero-globe-location-name">Chennai</p>
-                            <p class="hero-globe-location-note">College</p>
-                        </li>
-                        <li>
-                            <p class="hero-globe-location-name">Minneapolis</p>
-                            <p class="hero-globe-location-note">Current home</p>
-                        </li>
-                        <li>
-                            <p class="hero-globe-location-name">Dubai</p>
-                            <p class="hero-globe-location-note">Second home</p>
-                        </li>
-                        <li>
-                            <p class="hero-globe-location-name">Miami</p>
-                            <p class="hero-globe-location-note">Internship location</p>
-                        </li>
-                        <li>
-                            <p class="hero-globe-location-name">NYC</p>
-                            <p class="hero-globe-location-note">Future home</p>
-                        </li>
-                    </ul>
+                    <div class="hero-globe-location-card">
+                        <p class="hero-globe-location-eyebrow">Active pin</p>
+                        <p id="heroGlobeLocationName" class="hero-globe-location-name">Minneapolis</p>
+                        <p id="heroGlobeLocationNote" class="hero-globe-location-note">Current home</p>
+                        <p class="hero-globe-location-hint">
+                            Hover a visible pin or tap it on mobile to inspect the city context directly from the globe.
+                        </p>
+                    </div>
+                    <div id="heroGlobeLocationChips" class="hero-globe-location-chips" aria-label="Pinned cities">
+                        <span class="hero-globe-location-chip">New Delhi</span>
+                        <span class="hero-globe-location-chip">Chennai</span>
+                        <span class="hero-globe-location-chip">Minneapolis</span>
+                        <span class="hero-globe-location-chip">Dubai</span>
+                        <span class="hero-globe-location-chip">Miami</span>
+                        <span class="hero-globe-location-chip">NYC</span>
+                    </div>
                 </aside>
             </div>
         </div>
