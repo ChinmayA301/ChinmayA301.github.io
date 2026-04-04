@@ -993,6 +993,36 @@ function setupHeroGlobe() {
         { name: "Miami", lat: 25.7617, lon: -80.1918 },
         { name: "NYC", lat: 40.7128, lon: -74.0060 }
     ];
+    const continentPolygons = [
+        [
+            [-168, 72], [-150, 70], [-138, 63], [-128, 55], [-124, 48], [-123, 42], [-117, 34],
+            [-112, 31], [-106, 28], [-97, 24], [-90, 18], [-83, 12], [-82, 24], [-86, 31],
+            [-95, 40], [-104, 49], [-112, 58], [-126, 67], [-145, 72]
+        ],
+        [
+            [-81, 12], [-77, 8], [-74, 1], [-70, -6], [-66, -14], [-63, -24], [-60, -35], [-56, -45],
+            [-52, -54], [-47, -52], [-45, -38], [-49, -22], [-54, -7], [-60, 2], [-69, 8], [-76, 10]
+        ],
+        [
+            [-10, 72], [4, 70], [18, 67], [28, 60], [35, 52], [38, 44], [32, 38], [22, 35], [15, 40],
+            [10, 45], [2, 48], [-4, 44], [-6, 36], [-1, 41], [8, 43], [18, 46], [28, 42], [36, 36],
+            [42, 31], [48, 26], [38, 20], [29, 22], [18, 24], [10, 29], [2, 31], [-5, 36], [-12, 43],
+            [-16, 55], [-14, 64]
+        ],
+        [
+            [-18, 34], [-10, 30], [-5, 20], [-3, 8], [2, 0], [8, -8], [14, -18], [20, -26], [28, -31],
+            [34, -34], [40, -28], [45, -20], [48, -8], [44, 4], [36, 14], [28, 22], [18, 28], [8, 32], [0, 35]
+        ],
+        [
+            [34, 34], [45, 40], [60, 47], [78, 55], [96, 57], [118, 53], [136, 49], [150, 44], [160, 36],
+            [150, 28], [132, 24], [116, 18], [104, 10], [92, 9], [82, 16], [76, 24], [68, 28], [58, 26],
+            [48, 22], [42, 27], [38, 33]
+        ],
+        [
+            [112, -12], [118, -18], [126, -22], [136, -26], [146, -34], [151, -41], [144, -40], [134, -35],
+            [124, -30], [116, -24], [112, -18]
+        ]
+    ];
 
     function createGlobe(canvas, options = {}) {
         const ctx = canvas.getContext("2d");
@@ -1088,6 +1118,30 @@ function setupHeroGlobe() {
             });
         }
 
+        function drawContinents(radius) {
+            continentPolygons.forEach((polygon) => {
+                const visiblePoints = polygon
+                    .map(([lon, lat]) => project(lat, lon, radius))
+                    .filter((point) => point.depth > -0.12);
+                if (visiblePoints.length < 3) return;
+
+                ctx.beginPath();
+                visiblePoints.forEach((point, index) => {
+                    if (index === 0) {
+                        ctx.moveTo(point.x, point.y);
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                });
+                ctx.closePath();
+                ctx.fillStyle = "rgba(104, 180, 142, 0.28)";
+                ctx.strokeStyle = "rgba(214, 239, 224, 0.28)";
+                ctx.lineWidth = 1;
+                ctx.fill();
+                ctx.stroke();
+            });
+        }
+
         function drawPins(radius) {
             const visible = locations
                 .map((location) => ({ location, point: project(location.lat, location.lon, radius) }))
@@ -1172,6 +1226,7 @@ function setupHeroGlobe() {
             ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
             ctx.stroke();
 
+            drawContinents(radius);
             drawGrid(radius);
             drawPins(radius);
 
