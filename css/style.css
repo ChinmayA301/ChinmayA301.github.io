@@ -208,6 +208,13 @@ h4,
     margin-bottom: 0.6rem;
 }
 
+#typed,
+.typed-cursor {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff;
+    opacity: 1 !important;
+}
+
 .hero.scrolled {
     background-color: transparent !important;
     /* keep the dark gradient */
