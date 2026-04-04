@@ -7,7 +7,7 @@ description: "Claude’s Memory + import flow is a major validation of a bigger 
 categories: [AI, LLM, Product, Agents]
 tags: [Claude, Memory, Context-Portability, MCP, NotebookLM, Multi-Assistant, Workflow, BuildInPublic, AI-Infra, Knowledge-Management]
 og_image: "/assets/images/context-passport-hero.png"
-canonical_url: "https://app.chinmayarora.com/blog/claude-memory-context-passport"
+canonical_url: "https://app.chinmayarora.com/blog/context-passport/"
 
 summary: Claude’s Memory + import tool makes a key truth explicit—continuity is becoming the product. But assistant-native memory isn’t enough. The missing layer is user-owned, portable project-state memory that works across ChatGPT ↔ Gemini ↔ Claude and other tools, with provenance, diffs, privacy scopes, and token-budgeted context packs.
 ---

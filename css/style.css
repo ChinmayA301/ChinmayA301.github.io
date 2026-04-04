@@ -116,7 +116,14 @@ h4,
     background: rgba(12, 13, 17, 0.65);
     backdrop-filter: saturate(160%) blur(8px);
     border-bottom: 1px solid var(--stroke);
-    z-index: 10;
+    position: relative;
+    z-index: 1200;
+    isolation: isolate;
+}
+
+.navbar.glass {
+    position: sticky;
+    top: 0;
 }
 
 .navbar .container,

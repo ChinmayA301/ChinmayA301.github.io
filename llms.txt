@@ -1,26 +1,32 @@
-# Chinmay Arora | Portfolio & Venture Lab
+# Chinmay Arora | Portfolio, Venture Lab, and Technical Writing
 
-> Summary: High-level overview of work spanning AI audit systems, GovTech product strategy, applied data science, research translation, and venture-oriented experimentation around trustworthy AI, public sector decision systems, and enterprise compliance tooling.
+> Summary: Structured overview of Chinmay Arora's portfolio, venture concepts, and technical writing spanning AI audit systems, GovTech product strategy, applied data science, LLM system design, and enterprise compliance tooling.
+
+## Canonical Entry Points
+
+- [Portfolio Home](https://app.chinmayarora.com/): Main landing page covering professional profile, projects, venture work, and technical writing.
+- [The Lab](https://app.chinmayarora.com/ideas/): Collection page for venture concepts and startup theses.
+- [Blog](https://app.chinmayarora.com/blog/): Index of technical posts on AI systems, evaluation, retrieval, and deployment.
 
 ## Venture Pipeline (The Lab)
 
-- [Aegis AI Strategy](/ideas/#lab): AI compliance infrastructure for enterprises that need faster audit preparation, policy cross-referencing, and governance-ready operating controls.
-- [Public Infrastructure Copilot](/ideas/#lab): GovTech planning software that turns service requests, maintenance data, and neighborhood signals into ranked infrastructure investment decisions.
-- [Compliance Twin](/ideas/#lab): A mid-market compliance graph product designed to map controls, evidence, and obligations into a traceable operating system.
-- [Operator Memory Cloud](/ideas/#lab): A shared memory layer for startup teams that preserves decisions, workflows, and execution context across fast-moving workstreams.
-- [Civic Procurement Graph](/ideas/#lab): Procurement intelligence software that organizes bids, contracts, vendors, and agency activity into a searchable public market map.
-- [Research Commercialization Studio](/ideas/#lab): A venture-support workflow for turning academic research into commercialization briefs, prototypes, and institution-ready startup narratives.
+- [Aegis AI Strategy](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): AI compliance infrastructure for enterprises that need faster audit preparation, policy cross-referencing, and governance-ready operating controls.
+- [Public Infrastructure Copilot](https://app.chinmayarora.com/ideas/public-infrastructure-copilot/): GovTech planning software that turns service requests, maintenance data, and neighborhood signals into ranked infrastructure investment decisions.
+- [Compliance Twin](https://app.chinmayarora.com/ideas/compliance-twin/): A mid-market compliance graph product designed to map controls, evidence, and obligations into a traceable operating system.
+- [Operator Memory Cloud](https://app.chinmayarora.com/ideas/operator-memory-cloud/): A shared memory layer for startup teams that preserves decisions, workflows, and execution context across fast-moving workstreams.
+- [Civic Procurement Graph](https://app.chinmayarora.com/ideas/civic-procurement-graph/): Procurement intelligence software that organizes bids, contracts, vendors, and agency activity into a searchable public market map.
+- [Research Commercialization Studio](https://app.chinmayarora.com/ideas/research-commercialization-studio/): A venture-support workflow for turning academic research into commercialization briefs, prototypes, and institution-ready startup narratives.
 
 ## Research Archive (The Blog)
 
 These posts provide the technical methodology for the ventures listed above.
 
-- [Claude Memory changes the game — but the real unlock is portable, user-owned memory](/blog/)
-- [Engineering Virality with Bayesian Optimization](/blog/)
-- [Bayesian Optimization Meets Graphs](/blog/)
-- [AI in Local Government DX: A Technical Deep Dive into Governance, Auditing, and Operationalization](/blog/)
-- [Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment](/blog/)
-- [Welcome to the Blog](/blog/)
+- [Claude Memory changes the game — but the real unlock is portable, user-owned memory](https://app.chinmayarora.com/blog/context-passport/): Notes on portable memory, canonical context, and research workflows for LLM-powered systems.
+- [Engineering Virality with Bayesian Optimization](https://app.chinmayarora.com/blog/virality-bo/): Framing content growth as a Bayesian optimization problem.
+- [Bayesian Optimization Meets Graphs](https://app.chinmayarora.com/blog/bo-graph/): Graph-informed experimentation and optimization ideas.
+- [AI in Local Government DX: A Technical Deep Dive into Governance, Auditing, and Operationalization](https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/): Public sector AI deployment, governance, and auditability patterns.
+- [Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment](https://app.chinmayarora.com/blog/segmentation/): Segmentation and risk-aware service design in government contexts.
+- [Welcome to the Blog](https://app.chinmayarora.com/blog/welcome-to-the-blog/): Introductory note on the purpose and scope of the research archive.
 
 ## Technical Skills
 

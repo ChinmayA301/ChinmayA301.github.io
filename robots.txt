@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /upload/
+
+Sitemap: https://app.chinmayarora.com/sitemap.xml

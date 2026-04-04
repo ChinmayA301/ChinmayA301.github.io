@@ -8,7 +8,7 @@ description: "A technical perspective on building resident/customer segmentation
 categories: [Data-Science, GovTech, Human-Centered-AI]
 tags: [Hennepin-County, Segmentation, Digital-Equity, Service-Design, Measurement, AI-Governance, AI Equity, Responsible AI, AI In government]
 og_image: "/assets/images/segmentation-opportunity-matrix.png"
-canonical_url: "https://app.chinmayarora.com/blog/segmentation-ai-link"
+canonical_url: "https://app.chinmayarora.com/blog/segmentation/"
 
 summary: Segmentation is not just a research artifact—it can become the operational layer that makes AI deployment measurable and safer. When segments reflect lived experience barriers (language, trust, mobile constraints, accessibility), they provide (1) stronger service design targeting and (2) the disaggregation layer required to audit AI outcomes.
 

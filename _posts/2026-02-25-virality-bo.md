@@ -15,7 +15,7 @@ tags:
 
 # SEO: Meta Tags
 og_image: "/assets/images/bo-virality.png"
-canonical_url: "https://app.chinmayarora.com/blog/bo-virality"
+canonical_url: "https://app.chinmayarora.com/blog/virality-bo/"
 ---
 
 ## The Core Question
