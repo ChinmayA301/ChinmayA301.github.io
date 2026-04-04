@@ -118,6 +118,29 @@
             z-index: 2;
         }
 
+        #home-navbar .container {
+            width: 100%;
+            max-width: 1320px;
+            margin-right: auto;
+            margin-left: auto;
+            padding-right: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+            padding-left: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
+        }
+
+        #home-navbar .navbar-collapse {
+            visibility: visible !important;
+        }
+
+        #home-navbar .navbar-collapse.collapse:not(.show) {
+            display: none;
+        }
+
+        @media (min-width: 992px) {
+            #home-navbar .navbar-collapse.collapse {
+                display: flex !important;
+            }
+        }
+
         #home-navbar .navbar-brand,
         #home-navbar .navbar-toggler,
         #home-navbar .nav-link {
