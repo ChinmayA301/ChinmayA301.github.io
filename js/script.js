@@ -974,6 +974,312 @@ if (uploadTarget && githubPath) {
 
 applyStagger(document.querySelectorAll(".tile-card"));
 
+function setupHeroGlobe() {
+    const trigger = document.getElementById("heroGlobeToggle");
+    const modal = document.getElementById("heroGlobeModal");
+    const modalOverlay = document.getElementById("heroGlobeModalOverlay");
+    const modalClose = document.getElementById("heroGlobeClose");
+    const inlineCanvas = document.getElementById("heroGlobeCanvas");
+    const previewCanvas = document.getElementById("heroGlobePreviewCanvas");
+    const modalCanvas = document.getElementById("heroGlobeModalCanvas");
+    if (!trigger || !modal || !inlineCanvas || !previewCanvas || !modalCanvas) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const locations = [
+        { name: "New Delhi", lat: 28.6139, lon: 77.2090 },
+        { name: "Chennai", lat: 13.0827, lon: 80.2707 },
+        { name: "Minneapolis", lat: 44.9778, lon: -93.2650 },
+        { name: "Dubai", lat: 25.2048, lon: 55.2708 },
+        { name: "Miami", lat: 25.7617, lon: -80.1918 },
+        { name: "NYC", lat: 40.7128, lon: -74.0060 }
+    ];
+
+    function createGlobe(canvas, options = {}) {
+        const ctx = canvas.getContext("2d");
+        const state = {
+            rotationY: options.rotationY ?? -0.7,
+            rotationX: options.rotationX ?? -0.15,
+            velocityY: 0,
+            velocityX: 0,
+            dragging: false,
+            pointerId: null,
+            autorotate: options.autorotate ?? true,
+            interactive: options.interactive ?? false,
+            radiusFactor: options.radiusFactor ?? 0.38,
+            showLabels: options.showLabels ?? false,
+            glow: options.glow ?? 1,
+            labelScale: options.labelScale ?? 1,
+            width: 0,
+            height: 0,
+            dpr: Math.min(window.devicePixelRatio || 1, 2)
+        };
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            state.width = Math.max(rect.width, 10);
+            state.height = Math.max(rect.height, 10);
+            state.dpr = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = Math.round(state.width * state.dpr);
+            canvas.height = Math.round(state.height * state.dpr);
+            ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+        }
+
+        function project(lat, lon, radius) {
+            const phi = lat * Math.PI / 180;
+            const theta = lon * Math.PI / 180 + state.rotationY;
+            let x = Math.cos(phi) * Math.sin(theta);
+            let y = Math.sin(phi);
+            let z = Math.cos(phi) * Math.cos(theta);
+
+            const cosX = Math.cos(state.rotationX);
+            const sinX = Math.sin(state.rotationX);
+            const y2 = y * cosX - z * sinX;
+            const z2 = y * sinX + z * cosX;
+
+            return {
+                x: state.width / 2 + x * radius,
+                y: state.height / 2 - y2 * radius,
+                depth: z2
+            };
+        }
+
+        function drawGrid(radius) {
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "rgba(138, 209, 255, 0.14)";
+            const latitudes = [-60, -30, 0, 30, 60];
+            const longitudes = [-150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 150];
+
+            latitudes.forEach((lat) => {
+                ctx.beginPath();
+                let started = false;
+                for (let lon = -180; lon <= 180; lon += 6) {
+                    const point = project(lat, lon, radius);
+                    if (point.depth <= 0) {
+                        started = false;
+                        continue;
+                    }
+                    if (!started) {
+                        ctx.moveTo(point.x, point.y);
+                        started = true;
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                }
+                ctx.stroke();
+            });
+
+            longitudes.forEach((lon) => {
+                ctx.beginPath();
+                let started = false;
+                for (let lat = -90; lat <= 90; lat += 4) {
+                    const point = project(lat, lon, radius);
+                    if (point.depth <= 0) {
+                        started = false;
+                        continue;
+                    }
+                    if (!started) {
+                        ctx.moveTo(point.x, point.y);
+                        started = true;
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                }
+                ctx.stroke();
+            });
+        }
+
+        function drawPins(radius) {
+            const visible = locations
+                .map((location) => ({ location, point: project(location.lat, location.lon, radius) }))
+                .sort((a, b) => a.point.depth - b.point.depth);
+
+            visible.forEach(({ location, point }) => {
+                const alpha = point.depth > 0 ? 0.95 : 0.18;
+                const dotRadius = point.depth > 0 ? 4.6 * state.glow : 3.2;
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255, 185, 92, ${alpha})`;
+                ctx.arc(point.x, point.y, dotRadius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(138, 209, 255, ${point.depth > 0 ? 0.42 : 0.1})`;
+                ctx.lineWidth = 1.4;
+                ctx.arc(point.x, point.y, dotRadius + 5.5, 0, Math.PI * 2);
+                ctx.stroke();
+
+                if (state.showLabels && point.depth > 0) {
+                    const labelX = point.x + 12;
+                    const labelY = point.y - 12;
+                    const fontSize = 12 * state.labelScale;
+                    ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
+                    const textWidth = ctx.measureText(location.name).width;
+                    const labelWidth = textWidth + 18;
+                    const labelHeight = 24 * state.labelScale;
+
+                    ctx.fillStyle = "rgba(11, 12, 16, 0.82)";
+                    ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.roundRect(labelX, labelY - labelHeight + 2, labelWidth, labelHeight, 10);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.fillStyle = "rgba(247, 249, 252, 0.96)";
+                    ctx.fillText(location.name, labelX + 9, labelY - 8);
+                }
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, state.width, state.height);
+            const radius = Math.min(state.width, state.height) * state.radiusFactor;
+            const centerX = state.width / 2;
+            const centerY = state.height / 2;
+
+            const gradient = ctx.createRadialGradient(
+                centerX - radius * 0.35,
+                centerY - radius * 0.4,
+                radius * 0.15,
+                centerX,
+                centerY,
+                radius * 1.15
+            );
+            gradient.addColorStop(0, "rgba(84, 166, 255, 0.32)");
+            gradient.addColorStop(0.55, "rgba(19, 56, 102, 0.58)");
+            gradient.addColorStop(1, "rgba(5, 12, 24, 0.88)");
+
+            ctx.beginPath();
+            ctx.fillStyle = gradient;
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(255,255,255,0.12)";
+            ctx.lineWidth = 1.2;
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            drawGrid(radius);
+            drawPins(radius);
+        }
+
+        function animate() {
+            if (state.autorotate && !state.dragging && !prefersReducedMotion) {
+                state.rotationY += 0.0035;
+            }
+            state.rotationY += state.velocityY;
+            state.rotationX += state.velocityX;
+            state.rotationX = Math.max(-0.9, Math.min(0.9, state.rotationX));
+            state.velocityY *= 0.92;
+            state.velocityX *= 0.92;
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        function onPointerDown(event) {
+            if (!state.interactive) return;
+            state.dragging = true;
+            state.pointerId = event.pointerId;
+            canvas.setPointerCapture(event.pointerId);
+            state.startX = event.clientX;
+            state.startY = event.clientY;
+        }
+
+        function onPointerMove(event) {
+            if (!state.interactive || !state.dragging || state.pointerId !== event.pointerId) return;
+            const deltaX = event.clientX - state.startX;
+            const deltaY = event.clientY - state.startY;
+            state.rotationY += deltaX * 0.008;
+            state.rotationX += deltaY * 0.006;
+            state.startX = event.clientX;
+            state.startY = event.clientY;
+            state.velocityY = deltaX * 0.0007;
+            state.velocityX = deltaY * 0.0005;
+        }
+
+        function onPointerUp(event) {
+            if (!state.interactive || state.pointerId !== event.pointerId) return;
+            state.dragging = false;
+            canvas.releasePointerCapture(event.pointerId);
+            state.pointerId = null;
+        }
+
+        if (state.interactive) {
+            canvas.style.touchAction = "none";
+            canvas.addEventListener("pointerdown", onPointerDown);
+            canvas.addEventListener("pointermove", onPointerMove);
+            canvas.addEventListener("pointerup", onPointerUp);
+            canvas.addEventListener("pointercancel", onPointerUp);
+        }
+
+        resize();
+        draw();
+        requestAnimationFrame(animate);
+        window.addEventListener("resize", resize);
+
+        return {
+            resize,
+            state
+        };
+    }
+
+    createGlobe(inlineCanvas, {
+        autorotate: true,
+        interactive: false,
+        radiusFactor: 0.4,
+        glow: 1
+    });
+    createGlobe(previewCanvas, {
+        autorotate: true,
+        interactive: false,
+        radiusFactor: 0.42,
+        glow: 1.15,
+        showLabels: false
+    });
+    createGlobe(modalCanvas, {
+        autorotate: true,
+        interactive: true,
+        radiusFactor: 0.43,
+        glow: 1.2,
+        showLabels: true,
+        labelScale: 1.04,
+        rotationY: -0.25,
+        rotationX: -0.2
+    });
+
+    let closeTimeout = null;
+    function openModal() {
+        if (closeTimeout) {
+            window.clearTimeout(closeTimeout);
+        }
+        trigger.classList.add("is-flipped");
+        window.setTimeout(() => {
+            modal.hidden = false;
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        }, 360);
+    }
+
+    function closeModal() {
+        modal.setAttribute("aria-hidden", "true");
+        modal.hidden = true;
+        document.body.style.overflow = "";
+        closeTimeout = window.setTimeout(() => {
+            trigger.classList.remove("is-flipped");
+        }, 120);
+    }
+
+    trigger.addEventListener("click", openModal);
+    modalOverlay?.addEventListener("click", closeModal);
+    modalClose?.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !modal.hidden) {
+            closeModal();
+        }
+    });
+}
+
+setupHeroGlobe();
+
 // Header background + text color shift on scroll
 const hero = document.querySelector(".hero");
 window.addEventListener("scroll", () => {
