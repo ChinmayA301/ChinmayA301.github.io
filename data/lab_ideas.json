@@ -40,5 +40,19 @@
         "summary": "Commercialization workflow for translating academic and lab research into venture briefs, prototype plans, and market tests.",
         "business_hook": "Bridges research outputs and venture formation with commercialization-ready operating assets.",
         "tags": ["Research", "Commercialization", "Lab", "AI Strategy"]
+    },
+    {
+        "title": "Visual Overlay AI for Shopping, Grooming, and Guided Personal Interfaces",
+        "url": "https://chinmayarora.com/ideas/visual-overlay-ai/",
+        "summary": "Concept-stage visual interface exploration for try-on, grooming guidance, and personal overlay experiences.",
+        "business_hook": "Tests whether structured capture and CV overlays can create a reusable personal layer for commerce and instruction.",
+        "tags": ["AI", "Computer Vision", "Interfaces", "Personalization", "Commerce"]
+    },
+    {
+        "title": "Ad Delivery Systems and Platform-Controlled Entertainment Economies",
+        "url": "https://chinmayarora.com/ideas/ad-delivery-systems/",
+        "summary": "Research exploration of ad targeting, recommendation systems, attention capture, and platform-controlled media delivery.",
+        "business_hook": "Compares creator-led monetization with platform-led infrastructure models and the responsibility risks that come with them.",
+        "tags": ["Media Systems", "Platform Strategy", "Recommendation Systems", "Advertising", "AI"]
     }
 ]

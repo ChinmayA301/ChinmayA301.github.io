@@ -40,5 +40,19 @@
         "business_hook": "Built for innovation offices and technical founders who need a clearer path from research output to startup narrative.",
         "url": "https://chinmayarora.com/ideas/research-commercialization-studio/",
         "tags": ["Academic Innovation", "Workflow Intelligence", "Commercialization"]
+    },
+    {
+        "title": "Visual Overlay AI for Shopping, Grooming, and Guided Personal Interfaces",
+        "summary": "R&D concept for a reusable personal visual model that could support try-on, grooming previews, and guided overlay interfaces.",
+        "business_hook": "Explores a personal visual interface layer between commerce, self-presentation, instruction, and service experiences.",
+        "url": "https://chinmayarora.com/ideas/visual-overlay-ai/",
+        "tags": ["AI", "Computer Vision", "Interfaces", "Commerce", "Venture Exploration"]
+    },
+    {
+        "title": "Ad Delivery Systems and Platform-Controlled Entertainment Economies",
+        "summary": "Systems research into how recommendation, modular entertainment, personalization, and ad orchestration could reshape media monetization.",
+        "business_hook": "Maps the commercial opportunity and responsibility risks of platform-led attention infrastructure.",
+        "url": "https://chinmayarora.com/ideas/ad-delivery-systems/",
+        "tags": ["Media Systems", "Platform Strategy", "Recommendation Systems", "Advertising", "Venture Exploration"]
     }
 ]
