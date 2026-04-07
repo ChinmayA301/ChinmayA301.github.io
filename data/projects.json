@@ -1,5 +1,33 @@
 [
     {
+        "title": "Geo Visualizer for the Indian Subcontinent",
+        "description": "Portfolio-grade historical flat-map visualization for culture, trade, religion, migration, political power, and ideas across the subcontinent, with a time slider, animated routes, filters, clickable nodes, and an explanatory legacy panel.",
+        "tags": [
+            "React",
+            "TypeScript",
+            "Geo Visualization",
+            "Interactive Data Product"
+        ],
+        "link": "https://twitter.com/Ch_Aurora3/status/2041647175566807496",
+        "tweetUrl": "https://twitter.com/Ch_Aurora3/status/2041647175566807496?ref_src=twsrc%5Etfw",
+        "tweetText": "Geo Visualizer for culture movement in subcontinent_p1 pic.twitter.com/IX9NMmKooI",
+        "tweetDate": "April 7, 2026"
+    },
+    {
+        "title": "Severance-Style User Segmentation Interface",
+        "description": "High-concept segmentation product that presents user, resident, or customer segments as sterile identity modules and rooms, with strong transitions, comparison views, deliberate reveal, and mocked React + TypeScript data architecture.",
+        "tags": [
+            "React",
+            "TypeScript",
+            "Segmentation",
+            "Product Design"
+        ],
+        "link": "https://twitter.com/Ch_Aurora3/status/2041646983270576282",
+        "tweetUrl": "https://twitter.com/Ch_Aurora3/status/2041646983270576282?ref_src=twsrc%5Etfw",
+        "tweetText": "Severance style data viz for user segmentation pic.twitter.com/HSUDU2DLIQ",
+        "tweetDate": "April 7, 2026"
+    },
+    {
         "title": "Financial Balance-Sheet RAG System (FinBizInfo)",
         "description": "RAG system that extracts ratios, flags risks, and supports forecasting from noisy PDFs with citation-backed answers and tabular validation.",
         "tags": [

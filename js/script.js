@@ -237,6 +237,32 @@ const GITHUB_DEFAULTS = {
     branch: "main"
 };
 
+function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;"
+    }[char]));
+}
+
+function loadTwitterWidgets(root) {
+    if (!root?.querySelector(".twitter-tweet")) return;
+    if (window.twttr?.widgets?.load) {
+        window.twttr.widgets.load(root);
+        return;
+    }
+    if (document.getElementById("twitter-widgets-js")) return;
+    const script = document.createElement("script");
+    script.id = "twitter-widgets-js";
+    script.async = true;
+    script.src = "https://platform.twitter.com/widgets.js";
+    script.charset = "utf-8";
+    script.onload = () => window.twttr?.widgets?.load?.(root);
+    document.body.appendChild(script);
+}
+
 async function fetchJsonStrict(path) {
     const urls = resolveJsonUrls(path);
     const errors = [];
@@ -288,17 +314,39 @@ function renderProjects(projects) {
         grid.innerHTML = `<p class="text-muted small">No projects found yet.</p>`;
         return;
     }
-    grid.innerHTML = projects.map(p => `
-      <div class="col-md-6">
-        <a href="${p.link || githubProfile}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">
-          <div class="card-body">
-            <h3 class="h5">${p.title}</h3>
-            <p class="mb-2 small text-muted">${p.description}</p>
-            ${(p.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
+    grid.innerHTML = projects.map(p => {
+        const link = p.link || p.tweetUrl || githubProfile;
+        const tags = (p.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${escapeHtml(t)}</span>`).join("");
+        const tweetEmbed = p.tweetUrl ? `
+            <div class="project-embed mt-3">
+                <blockquote class="twitter-tweet" data-media-max-width="560">
+                    <p lang="en" dir="ltr">${escapeHtml(p.tweetText || p.title)}</p>
+                    &mdash; Chinmay A (@Ch_Aurora3)
+                    <a href="${escapeHtml(p.tweetUrl)}">${escapeHtml(p.tweetDate || "April 7, 2026")}</a>
+                </blockquote>
+            </div>
+        ` : "";
+        const cta = p.tweetUrl ? `
+            <a class="project-cta" href="${escapeHtml(link)}" target="_blank" rel="noopener">Open video post</a>
+        ` : "";
+        const cardBody = `
+            <div class="card-body">
+                <h3 class="h5">${escapeHtml(p.title)}</h3>
+                <p class="mb-2 small text-muted">${escapeHtml(p.description)}</p>
+                <div class="project-tags">${tags}</div>
+                ${tweetEmbed}
+                ${cta}
+            </div>
+        `;
+        return `
+          <div class="col-md-6">
+            ${p.tweetUrl
+                ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
+                : `<a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">${cardBody}</a>`}
           </div>
-        </a>
-      </div>
-    `).join("");
+        `;
+    }).join("");
+    loadTwitterWidgets(grid);
     applyStagger(grid.querySelectorAll(".project-box"));
 }
 

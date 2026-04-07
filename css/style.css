@@ -391,6 +391,7 @@ header p.lead {
     background: linear-gradient(120deg, rgba(46, 130, 255, 0.12), transparent 60%);
     opacity: 0;
     transition: opacity .2s ease;
+    pointer-events: none;
 }
 
 .project-box.card:hover::after {
@@ -406,6 +407,33 @@ header p.lead {
     text-decoration: none !important;
     color: #d8e1ee !important;
     /* lighter gray text for better readability */
+}
+
+.project-box.card .card-body {
+    position: relative;
+    z-index: 1;
+}
+
+.project-embed {
+    overflow: hidden;
+}
+
+.project-embed .twitter-tweet {
+    margin: 0 !important;
+}
+
+.project-cta {
+    display: inline-flex;
+    margin-top: 12px;
+    color: #9dc2ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.project-cta:hover {
+    color: #eaf0ff;
+    text-decoration: underline;
 }
 
 /* Optional: brighten project titles slightly for hierarchy */
