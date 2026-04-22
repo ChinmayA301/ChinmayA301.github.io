@@ -6,6 +6,14 @@ on:
       - main
     paths:
       - '_posts/**'
+      - 'index.html'
+      - 'experience/**'
+      - 'projects/**'
+      - 'reports/**'
+      - 'resumes/**'
+      - 'coursework/**'
+      - 'ideas/**'
+      - 'blog/**'
       - 'data/lab_ideas.json'
       - 'data/*.json'
       - 'aegis-backend/ingest.py'
@@ -26,7 +34,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |

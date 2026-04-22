@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import json
 import os
 import re
 import time
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 POSTS_DIR = ROOT / "_posts"
 DEFAULT_DATA_DIR = ROOT / "data"
 SITE_URL = "https://chinmayarora.com"
+APP_SITE_URL = "https://app.chinmayarora.com"
 DEFAULT_EMBED_MODEL = "models/gemini-embedding-001"
 SUMMARY_MODEL = "models/gemini-2.5-flash"
 CHUNK_WORDS = 50
@@ -22,6 +26,73 @@ EMBED_BATCH_SIZE = 20
 API_CALL_DELAY_SECONDS = 5
 RATE_LIMIT_RETRY_SECONDS = 20
 MAX_RETRIES = 4
+PAGE_PATHS = [
+    Path("index.html"),
+    Path("experience/index.html"),
+    Path("projects/index.html"),
+    Path("reports/index.html"),
+    Path("resumes/index.html"),
+    Path("coursework/index.html"),
+    Path("ideas/index.html"),
+    Path("blog/index.html"),
+]
+PAGE_GLOBS = [
+    "ideas/*/index.html",
+]
+
+
+class HtmlTextExtractor(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.text_parts: list[str] = []
+        self.title_parts: list[str] = []
+        self.meta_description = ""
+        self.canonical_url = ""
+        self._skip_depth = 0
+        self._title_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attrs_map = dict(attrs)
+        if tag in {"script", "style", "noscript"}:
+            self._skip_depth += 1
+            return
+        if tag == "title":
+            self._title_depth += 1
+        if tag == "meta":
+            name = (attrs_map.get("name") or attrs_map.get("property") or "").lower()
+            content = (attrs_map.get("content") or "").strip()
+            if name == "description" and content and not self.meta_description:
+                self.meta_description = content
+        elif tag == "link":
+            rel = (attrs_map.get("rel") or "").lower()
+            href = (attrs_map.get("href") or "").strip()
+            if rel == "canonical" and href and not self.canonical_url:
+                self.canonical_url = href
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in {"script", "style", "noscript"} and self._skip_depth:
+            self._skip_depth -= 1
+            return
+        if tag == "title" and self._title_depth:
+            self._title_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if self._skip_depth:
+            return
+        cleaned = " ".join(data.split()).strip()
+        if not cleaned:
+            return
+        self.text_parts.append(cleaned)
+        if self._title_depth:
+            self.title_parts.append(cleaned)
+
+    @property
+    def title(self) -> str:
+        return " ".join(self.title_parts).strip()
+
+    @property
+    def text(self) -> str:
+        return " ".join(self.text_parts).strip()
 
 
 def load_dotenv(path: Path) -> None:
@@ -211,6 +282,60 @@ def _generate_summary_request(client: httpx.Client, api_key: str, model_name: st
     )
     response.raise_for_status()
     return response
+
+
+def page_url_for_path(path: Path) -> str:
+    relative_path = path.relative_to(ROOT)
+    if relative_path.name == "index.html":
+        parent = relative_path.parent.as_posix()
+        if not parent or parent == ".":
+            return f"{APP_SITE_URL}/"
+        return f"{APP_SITE_URL}/{parent}/"
+    return f"{APP_SITE_URL}/{relative_path.as_posix()}"
+
+
+def build_page_documents() -> list[dict[str, Any]]:
+    page_paths: list[Path] = []
+    seen_paths: set[Path] = set()
+    for relative_path in PAGE_PATHS:
+        absolute_path = ROOT / relative_path
+        if absolute_path.exists() and absolute_path not in seen_paths:
+            seen_paths.add(absolute_path)
+            page_paths.append(absolute_path)
+    for pattern in PAGE_GLOBS:
+        for absolute_path in sorted(ROOT.glob(pattern)):
+            if absolute_path.exists() and absolute_path not in seen_paths:
+                seen_paths.add(absolute_path)
+                page_paths.append(absolute_path)
+
+    documents = []
+    for path in page_paths:
+        extractor = HtmlTextExtractor()
+        extractor.feed(path.read_text(encoding="utf-8"))
+
+        title = extractor.title or path.parent.name.replace("-", " ").title() or "Page"
+        summary = extractor.meta_description or summarize_chunk(extractor.text)
+        url = extractor.canonical_url or page_url_for_path(path)
+        source_text = " ".join(part for part in [title, summary, extractor.text] if part)
+        chunks = chunk_text(source_text)
+        if not chunks:
+            continue
+
+        relative_path = path.relative_to(ROOT).as_posix()
+        page_slug = slugify(relative_path.replace("/", "-").replace(".html", ""))
+        for chunk_index, chunk in enumerate(chunks):
+            documents.append(
+                {
+                    "id": f"page-{page_slug}-{chunk_index}",
+                    "title": title,
+                    "url": url,
+                    "type": "page",
+                    "summary": summary,
+                    "chunk_text": chunk,
+                    "fulltext": f"{title}\n{chunk}",
+                }
+            )
+    return documents
 
 
 def build_blog_documents() -> list[dict[str, Any]]:
@@ -412,7 +537,9 @@ def main() -> None:
     embed_model = os.getenv("GEMINI_EMBED_MODEL", DEFAULT_EMBED_MODEL)
     embed_dimensions = parse_optional_int(os.getenv("GEMINI_EMBED_DIMENSIONS"))
 
-    documents = build_blog_documents() + build_data_documents(data_dir)
+    documents = build_page_documents() + build_blog_documents() + build_data_documents(data_dir)
+    if not documents:
+        raise RuntimeError("No documents were generated for ingestion.")
     corpus = [doc["chunk_text"] for doc in documents]
     bm25 = BM25Encoder().fit(corpus)
 
