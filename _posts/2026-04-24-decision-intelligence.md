@@ -1,4 +1,4 @@
-
+---
 layout: post
 title: "The Success Directory: A Decision Intelligence Framework for High-Stakes, Ambiguous Choices"
 date: 2026-04-24
@@ -19,6 +19,7 @@ draft: false
 schema_type: "Article"
 keywords: "decision intelligence, decision-as-a-service, reference class forecasting, inverse reinforcement learning, CATE, causal AI, expert heuristics, LLM applications, strategy tool"
 last_modified_at: 2026-04-24
+---
 
 Key takeaways
 
