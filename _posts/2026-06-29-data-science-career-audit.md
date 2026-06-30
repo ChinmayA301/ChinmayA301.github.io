@@ -29,6 +29,7 @@ last_modified_at: 2026-06-29
 - The occupation is still growing: BLS projects 34% growth for data scientists, 2024–2034 (~11x all occupations). Data science is not "dead."
 - But the bundle is being unbundled. Across 728k real 2023 postings, "Data Analyst," "Data Engineer," and "Data Scientist" are near-equal in volume and ask for completely different stacks.
 - GenAI/LLM language went from ~0.1% of 2023 data postings to ~27% of a 2026 snapshot (directional, cross-source). The procedural layer is being automated.
+- The pressure is uneven. External payroll research (Stanford, 2025) shows early-career workers (22–25) in the most AI-exposed jobs down ~13% in relative employment while senior peers held steady. The entry rung is the most exposed.
 - The durable value moves up: problem framing, domain judgment, causal reasoning, validation, decision design. The title was the bundle; the value was never the title.
 - This is a descriptive, source-backed audit — no causal claims, no fitted regression.
 
@@ -213,6 +214,12 @@ By the ~June 2026 snapshot, GenAI / LLM language appears in roughly **27%** of d
 
 This is the awkward part for the field. Data science was sold on automation, prediction, optimization, and clean presentation. Generative AI shows up and says "I do those too." A career built around automation cannot be morally surprised when automation reaches the career. That doesn't make every data scientist replaceable. It makes the **generic** version replaceable — and adds a new column to the job description for everyone else.
 
+**And the shock is not landing evenly — it lands hardest on the entry rung.** Stanford's Digital Economy Lab (*Canaries in the Coal Mine*, 2025) tracked payroll data and found early-career workers (ages 22–25) in the most AI-exposed occupations down about **13% in relative employment** since generative AI took off, while their more experienced colleagues in the *same* jobs stayed flat or grew. The declines concentrate exactly where AI automates rather than augments. (I'll keep their own caveat: under the strictest controls the effect is clearest from 2024 onward.)
+
+I tried to find this in my own job-posting data and, honestly, couldn't — and that null is worth showing. Postings list skills for every level, so "Senior" postings carry *at least* as much SQL, Excel, and dashboarding as junior ones, and GenAI sits near 0% across all tiers in 2023. So the posting text can't prove "entry-level is hit hardest." That claim stands on the payroll research and on the plain logic of the automation table above: the procedural tasks AI eats first — basic queries, cleaning, standard dashboards — *are* the entry-level job. The senior job was always judgment and ownership, which is the part that survives.
+
+That's the uncomfortable asymmetry. The rung you climb in on is the rung being sawed off.
+
 ## 10) What actually matters now
 
 If you trained a model to predict career resilience for data scientists, the top features would not be "knows pandas." They'd look more like: problem framing, domain understanding, communication, causal reasoning, data-engineering literacy, AI-workflow literacy, statistical judgment, product sense — with "specific library memorization" near the bottom.
@@ -264,6 +271,7 @@ The title was always a market bundle. The value was never the title.
 - **Type of study:** descriptive, source-backed audit. No model is fit. No causal effect is estimated. The regression and DAG in Sections 4 and 11 are explicitly labeled as conceptual.
 - **Macro figures:** BLS Occupational Outlook Handbook (Data Scientists), BLS employment-projections overview, Stanford HAI AI Index 2025, McKinsey State of AI 2025, WEF Future of Jobs 2025.
 - **Job postings:** `lukebarousse/data_jobs` (≈785k postings, 2023, controlled skill vocabulary) and `NextGig-Rocks/global-job-postings-multi-ats` (≈113k global postings, ~June 2026, free text).
+- **Entry-level effect:** Stanford Digital Economy Lab, *Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence* (Brynjolfsson, Chandar, Chen, 2025). The job-posting layer here does *not* establish the entry-level effect; it's cited from that payroll study, and my own seniority check is reported as a null.
 - **The big caveat:** the 2023 → 2026 GenAI comparison crosses two sources with different extraction methods (controlled skill list vs. free-text descriptions) and very different sample sizes (728k vs. ~888 data roles). It is directional only. The statistically robust GenAI result is the *within-2023* monthly trend.
 
 Code, data pointers, and all reproducible outputs: **[github.com/ChinmayA301/data-science-career-audit](https://github.com/ChinmayA301/data-science-career-audit)**
