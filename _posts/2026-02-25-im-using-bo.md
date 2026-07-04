@@ -51,7 +51,8 @@ normalized out-degree, PageRank, and k-core — and let it optimize the blend.
 BO picks weights, the weights rank the nodes, the top twenty become the seed
 set, IC scores it.
 
-{% include figure.html src="/assets/images/bo/bo_convergence.png" alt="Convergence trace: BO vs random search, with top-degree and random-seed reference lines. BO reaches the high-spread region in about seven evaluations; random search takes twenty-plus and plateaus lower." caption="BO reaches high-spread seeds in far fewer objective evaluations than random search. Bands span min–max over five runs." %}
+![Convergence trace: BO vs random search, with top-degree and random-seed reference lines. BO reaches the high-spread region in about seven evaluations; random search takes twenty-plus and plateaus lower.](/assets/blog/bo_convergence.png)
+*BO reaches high-spread seeds in far fewer objective evaluations than random search. Bands span min-max over five runs on the real Higgs retweet graph.*
 
 BO worked — in the narrow sense. It converged fast (well inside ten
 evaluations, versus twenty-plus for random search) and landed at a spread of
@@ -59,14 +60,18 @@ evaluations, versus twenty-plus for random search) and landed at a spread of
 PageRank (**22.3**), and k-core (**23.1**), everything degree-flavoured wins in
 a landslide.
 
-{% include figure.html src="/assets/images/bo/bo_seeding_comparison.png" alt="Horizontal bar chart of expected spread by seeding strategy. BO-optimized and top-degree cluster at the top near 73–74; k-core, PageRank, and random seeds sit far below near 21–23." caption="On this graph, out-degree dominates. BO rediscovers that fact rather than beating it." %}
+![Horizontal bar chart of expected spread by seeding strategy. BO-optimized and top-degree cluster at the top near 73-74; k-core, PageRank, and random seeds sit far below near 21-23.](/assets/blog/bo_seeding_comparison.png)
+*On this graph, out-degree dominates. BO rediscovers that fact rather than beating it.*
 
-But look at what BO actually learned: it put ~94% of its weight on out-degree
-and essentially zero on PageRank. It didn't *beat* the heuristic — it
+But look at what BO actually learned: it put most of its weight on out-degree,
+a smaller share on k-core, and essentially zero on PageRank. It didn't *beat* the heuristic — it
 **rediscovered** it. The optimizer had been handed a search space whose only
 good region was "basically top-degree," and it dutifully found it. That's a
 real result about the graph (out-degree carries the diffusion signal here), but
 it's not a win for BO. It's BO confirming the baseline.
+
+![Bar chart of the normalized BO-optimal blend: out-degree carries most of the signal, k-core contributes a smaller share, and PageRank contributes almost nothing.](/assets/blog/bo_learned_weights.png)
+*The learned ranking rule is interpretable: out-degree carries the diffusion signal, with PageRank effectively ignored.*
 
 ## Attempt 2 — Give BO room to be different
 
@@ -83,6 +88,12 @@ This time BO reached **178.2** against top-degree's **174.9**, and beat CELF
 estimates per seed set — and the gap held: **+2.5%, p < 0.0001**. A real,
 statistically significant win.
 
+![Convergence trace for the stronger design space, where BO converges above top-degree and CELF.](/assets/blog/bo_strong_convergence.png)
+*The stronger design space moves BO above top-degree and CELF, but the margin is still modest.*
+
+![Horizontal bar chart showing BO beating top-degree by a small but statistically real margin.](/assets/blog/bo_strong_comparison.png)
+*The gain is statistically real, but small: refinement, not a wholesale replacement for the heuristic.*
+
 Except the mechanism wasn't what I'd designed for. BO's winning seed set shared
 **18 of 20 nodes** with top-degree, and the seed-region overlap was essentially
 identical (0.19 vs 0.20). The redundancy penalty barely fired. BO won by
@@ -90,6 +101,9 @@ swapping out two weak hubs for two better-placed ones — **fine-tuning, not
 diversity.** The honest headline for attempt 2 is: *a small, real refinement of
 top-degree, achieved by sharpening the degree signal rather than by the
 mechanism I added.*
+
+![Bar chart showing BO shares 18 of 20 seeds with top-degree and only swaps two nodes.](/assets/blog/bo_strong_mechanism.png)
+*The mechanism is honest: BO mostly keeps the top-degree seed set and improves it through two better swaps.*
 
 ## Attempt 3 — Take the training wheels off
 
@@ -106,7 +120,8 @@ non-obvious seed sets no ranking would ever produce.
 
 It was a decisive failure.
 
-{% include figure.html src="/assets/images/bo/bo_freenode_progression.png" alt="Grouped bar chart across three experiments. Rule-tuning: top-degree 175, BO 179. Free-node naive: top-degree 176, BO collapses to 91. Free-node constrained: top-degree 175, BO 183. Shared-seed counts annotated inside BO bars: 18/20, 1/20, 14/20." caption="Same graph, same budget, same objective — three ways of framing the search space, three completely different outcomes." %}
+![Grouped bar chart across three experiments. Rule-tuning: top-degree 175, BO 179. Free-node naive: top-degree 176, BO collapses to 91. Free-node constrained: top-degree 175, BO 183. Shared-seed counts annotated inside BO bars: 18/20, 1/20, 14/20.](/assets/blog/bo_freenode_progression.png)
+*Same graph, same budget, same objective: three ways of framing the search space, three completely different outcomes.*
 
 Free-node BO collapsed to **91.0** against top-degree's **175.8** — a **48%
 loss**, p < 0.0001 in the wrong direction. And here's the twist: it achieved
@@ -121,7 +136,8 @@ nodes: BO spread its seeds beautifully across parts of the graph that don't
 actually propagate anything. **Diversity for its own sake is worthless if it
 means seeding dead ends.**
 
-{% include figure.html src="/assets/images/bo/bo_freenode_failure.png" alt="Convergence trace of naive free-node BO and random search, both plateauing near 90, far below the top-degree line at 176 and the constrained free-node line at 183." caption="A 120-D search starves at this evaluation budget: both BO and random search stall near 90, nowhere near the baselines." %}
+![Convergence trace of naive free-node BO and random search, both plateauing near 90, far below the top-degree line at 176 and the constrained free-node line at 183.](/assets/blog/bo_freenode_failure.png)
+*A 120-D search starves at this evaluation budget: both BO and random search stall near 90, nowhere near the baselines.*
 
 ## Attempt 4 — Diversity, but only among nodes that matter
 
@@ -136,7 +152,8 @@ This was the best result of the four: **183.1** against top-degree's **175.2**
 shared only **14 of 20** nodes with top-degree, meaning it replaced **30%** of
 the naive hub picks with better-coordinated ones and came out ahead.
 
-{% include figure.html src="/assets/images/bo/bo_freenode_synthesis.png" alt="Bar chart of spread for top-degree, rule-tuning BO, and constrained free-node BO (175, 179, 183), overlaid with a red line showing seed diversity rising from 10% to 30% across the three." caption="The synthesis: the constrained free-node design achieves both the highest diversity and the highest spread — the combination the first three attempts each missed." %}
+![Bar chart of spread for top-degree, rule-tuning BO, and constrained free-node BO (175, 179, 183), overlaid with a red line showing seed diversity rising from 10% to 30% across the three.](/assets/blog/bo_freenode_synthesis.png)
+*The synthesis: the constrained free-node design achieves both the highest diversity and the highest spread, which is the combination the first three attempts each missed.*
 
 Diversity finally paid — because it was diversity *among nodes that can carry a
 cascade*, not diversity in the abstract.

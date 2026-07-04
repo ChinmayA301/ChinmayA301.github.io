@@ -289,6 +289,10 @@ A serious version of the project would need multiple evaluation layers.
 
 The model should also include a **do-not-decide zone**.
 
+![Three-panel synthetic evaluation of an AI-text detector: feature overlap, ROC curve with AUC around 0.927, and calibration curve.](/assets/blog/detector_evaluation.png)
+
+*Synthetic data, real evaluation pipeline: the detector looks strong by ROC, but the feature-overlap panel shows where real misclassifications live. This is why the system needs abstention and human review rather than a hard authorship verdict.*
+
 For example:
 
 ```python

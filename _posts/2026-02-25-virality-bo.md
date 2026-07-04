@@ -484,6 +484,26 @@ A realistic target framing for synthetic IC experiments:
 
 ---
 
+## Real-Graph Research Artifact: Higgs Retweet Network
+
+The synthetic IC figures above explain the optimization intuition. The research-artifact version uses the SNAP Higgs retweet graph: **223,833 nodes**, **308,596 edges**, and a seed budget of **k = 20**.
+
+![Convergence trace showing Bayesian Optimization finding high-spread seeds faster than random search on the Higgs retweet graph.](/assets/blog/bo_convergence.png)
+
+*Real data: BO reaches the high-spread region in fewer evaluations than random search, while top-degree remains an extremely strong baseline.*
+
+![Grouped bar chart showing rule-tuning, naive free-node selection, and constrained free-node selection across the same graph and objective.](/assets/blog/bo_freenode_progression.png)
+
+*The actual lesson is structural: the search-space design decides whether BO refines a strong heuristic, collapses, or finds a better diverse subset.*
+
+![Bar chart and diversity line showing constrained free-node BO achieving the best spread and the most useful seed diversity.](/assets/blog/bo_freenode_synthesis.png)
+
+*Diversity only pays when it is constrained to nodes that can actually carry a cascade.*
+
+For the full build log and limitations, see [Influence Maximization using BO](/blog/influence-maximization-using-bo/).
+
+---
+
 ## Why This Is Innovative
 
 Bayesian Optimization is commonly used for:

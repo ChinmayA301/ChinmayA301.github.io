@@ -90,13 +90,11 @@ The useful thing about the SpaceX figure is that, unlike most private-company pr
 
 **The growth rate is extreme but precisely stated.** $3.2B → $322B is a 100.6x increase, a compound annual growth rate of about **151% per year sustained for five years**. Goldman's disclosed path is steeper in shape than that average implies: it rises **388% to $15.6B in 2026**, reaches **$34.5B in 2027**, then more than nine-folds between 2028 and 2030.
 
-<!--
-IMAGE EMBED #3 — revenue path chart  (PRIMARY VISUAL)
-Place RIGHT HERE, after the paragraph above.
-File: save chart_revenue_path.png to /assets/blog/ai-forecast-revenue-path.png
--->
-![SpaceX AI revenue: Goldman's disclosed path versus a smooth constant-CAGR path, with the back-loaded 2028–2030 region shaded.](/assets/blog/ai-forecast-revenue-path.png)
-*Both paths end at $322B — but Goldman front-loads year one, then defers the bulk of the climb into the out-years, where the forecast is least testable.*
+![Implied-CAGR waterfall showing the annual increments required for a 100x AI revenue build from $3.2B to $322B.](/assets/blog/forecast_cagr_waterfall.png)
+*A constant-CAGR decomposition shows what the 100x build mechanically requires: the largest dollar lift lands in the least testable out-year.*
+
+![SpaceX AI revenue path comparison: Goldman's disclosed path versus a smooth constant-CAGR path.](/assets/blog/forecast_path_comparison.png)
+*Both paths end at $322B, but the disclosed path front-loads year one and then defers the heavy lift into the out-years.*
 
 A forecast whose mass sits in the out-years is exactly the kind whose present value is most sensitive to assumptions you can't check today.
 
@@ -116,13 +114,8 @@ Roughly two dollars lost per dollar of revenue. And the revenue base isn't even 
 correlated downside:  0.75 × 0.85 = 0.64  →  ~$205B
 ```
 
-<!--
-IMAGE EMBED #4 — sensitivity chart
-Place RIGHT HERE, after the correlated-downside line.
-File: save chart_sensitivity.png to /assets/images/ai-forecast-sensitivity.png
--->
-![2030 revenue sensitivity: correlated downside scenarios versus base case and mild upside.](/assets/blog/ai-forecast-sensitivity.png)
-*Drivers move together, so the downside multiplies rather than subtracts. The spread from downside to upside is about $185B — on a forecast presented as a single line.*
+![Monte Carlo simulation showing the $322B headline sitting in the upper tail of correlated 2030 AI revenue assumptions.](/assets/blog/forecast_monte_carlo.png)
+*Drivers move together, so the downside multiplies rather than subtracts. In this illustrative Monte Carlo, the headline sits above the median and about 70% of simulated outcomes fall below it.*
 
 If five independent drivers each have an 80% chance of hitting their assumed value, the joint probability all five land is `0.8^5 ≈ 0.33`. The base case is the *upper corner* of a distribution, not its center.
 

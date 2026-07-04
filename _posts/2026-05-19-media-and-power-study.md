@@ -360,6 +360,10 @@ $$
 
 This turns the study from a linear causal question into a compounding systems question.
 
+![Synthetic media influence artifact with a cross-correlation peak at a positive six-day lag and a causal DAG showing direct effect, confounding, and reverse causation.](/assets/blog/media_influence_ccf_dag.png)
+
+*Synthetic data, real method: the cross-correlation shows a positive-lag peak consistent with media exports leading the influence index, but the DAG is the important guardrail. A lagged correlation is compatible with direct influence, a shared confounder, or reverse causation; it is not causal proof by itself.*
+
 ---
 
 ## 10) What Rising Powers Can Learn
