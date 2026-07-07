@@ -276,7 +276,7 @@ p = 0.403
 
 Raw forward pressure volume barely explained team points in the sample.
 
-![Raw forward pressing vs team outcomes](/assets/blog/pressing-naive-relationship.png)
+![Raw forward pressing vs team outcomes](/assets/blog/pressing_naive_relationship.png)
 
 ### Model 2: Add Attacking Tradeoff
 
@@ -302,7 +302,7 @@ Once attacking value entered the model, the pressure coefficient effectively dis
 
 That does not mean pressing is irrelevant. It means raw pressure volume was not carrying a clean standalone signal once attacking output was included.
 
-![Pressing volume vs attacking tradeoff](/assets/blog/pressing-attacking-tradeoff.png)
+![Pressing volume vs attacking tradeoff](/assets/blog/pressing_attacking_tradeoff.png)
 
 ### Model 3: Add Team Context
 
@@ -327,7 +327,7 @@ p = 0.523
 
 Model fit improved, but the individual pressure coefficient still was not statistically meaningful.
 
-![Forward pressing in team style context](/assets/blog/team-style-interaction.png)
+![Forward pressing in team style context](/assets/blog/team_style_interaction.png)
 
 ### Model 4: Pressure x Team Style
 
