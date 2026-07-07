@@ -1,16 +1,44 @@
 ---
-layout: post
-title: "Cristiano Ronaldo and Portugal: A Data-Driven Look at Impact, Tradeoffs, and the Lazy Myth of Addition by Subtraction"
-date: 2026-06-29
-author: "Chinmay Arora"
-
-description: "A football analytics research note on Cristiano Ronaldo's impact on Portugal, separating legacy, tactical tradeoffs, pressing decline, xG variance, and cultural influence from lazy narratives about whether Portugal are better without him."
-summary: "Cristiano Ronaldo is no longer Portugal's entire tactical system. But the claim that Portugal are simply better without him is statistically weak. This piece uses recent with-vs-without samples, xG context, pressing profiles, shot volume, box-touch behavior, and Portuguese football development indicators to evaluate Ronaldo as what he now is: an elite box-value player with real aging-related tactical costs."
-tags: [football-analytics, sports-data-science, portugal, cristiano-ronaldo, expected-goals, tactical-analysis, data-science]
-categories: [Sports Analytics, Data Science, Football]
+title: "Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data"
+date: "2026-07-07"
+description: "An updated Ronaldo-Portugal football analytics note using public StatsBomb event data to test why raw pressing numbers are incomplete without role, system, and attacking context."
+tags:
+  - football analytics
+  - Cristiano Ronaldo
+  - Portugal
+  - pressing
+  - TacticAI
 ---
 
-# Cristiano Ronaldo and Portugal: A Data-Driven Look at Impact, Tradeoffs, and the Lazy Myth of Addition by Subtraction
+# Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data
+
+## BLUF
+
+Cristiano Ronaldo is no longer Portugal's entire tactical system. But the claim that Portugal are simply better without him is still too lazy.
+
+The updated evidence points to a more precise conclusion:
+
+> Ronaldo is now a high-value, high-tradeoff player: elite box gravity and shot generation on one side, reduced pressing and repeated mobility on the other. The pressing cost is real, but raw pressure volume alone is a weak explanation of team outcomes.
+
+I ran a public-data MVP using StatsBomb open event data across 43 player-team-competition-season rows and 11 elite forwards. The naive pressure-only model barely explained team points (`R2 = 0.017`, `p = 0.403`). Adding attacking output and team-context variables improved model fit, while the pressure coefficient itself stayed unstable and statistically weak.
+
+That does not mean pressing does not matter.
+
+It means pressing is not a morality stat.
+
+The correct question is not:
+
+> Does Ronaldo press enough?
+
+The correct question is:
+
+> Given Portugal's current squad and tactical plan, does Ronaldo's attacking value justify the defensive and mobility costs in this specific match context?
+
+That is the standard this debate needs.
+
+---
+
+## 1. The Baseline Problem: People Compare the Wrong Eras
 
 There are two bad ways to talk about Cristiano Ronaldo and Portugal.
 
@@ -20,67 +48,41 @@ Ronaldo is the greatest Portuguese footballer ever, therefore he must still star
 
 That is not analysis.
 
-The second is reactionary “modern football” discourse.
+The second is reactionary "modern football" discourse.
 
 Ronaldo is old, presses less, and did not score at Euro 2024, therefore Portugal are automatically better without him.
 
 That is also not analysis.
 
-The more honest framing is less viral but much more accurate:
+A common anti-Ronaldo argument compares current Portugal with Ronaldo to current Portugal without Ronaldo. That is useful, but incomplete.
 
-> Cristiano Ronaldo is no longer Portugal’s entire attacking system. But the claim that he simply hurts Portugal is statistically weak. He is now a high-value, high-tradeoff player: elite box gravity and shot generation on one side, reduced pressing and repeated mobility on the other.
+Portugal today have Bruno Fernandes, Bernardo Silva, Vitinha, Joao Neves, Rafael Leao, Nuno Mendes, Pedro Neto, Goncalo Ramos, Joao Felix, Ruben Dias, Diogo Costa, and one of the deepest player pools in the country's history.
 
-This post treats the Ronaldo-Portugal debate like a data science and football analytics problem rather than a fan argument.
+So when people say "Portugal look better now without Ronaldo," they are often comparing:
 
-The core question is not:
-
-> Is Ronaldo still Ronaldo?
-
-He is not. Not in the 2008, 2012, 2016, or even 2018 sense.
-
-The better question is:
-
-> Given Portugal’s current squad, what does Ronaldo still add, what does he now cost, and when does the tradeoff become worth it?
-
-![Forward role quadrant](/assets/blog/forward-role-quadrant.png)
-
----
-
-## 1. The Baseline Problem: People Compare the Wrong Eras
-
-A common argument against Ronaldo is built by comparing current Portugal with Ronaldo to current Portugal without Ronaldo.
-
-That is useful, but incomplete.
-
-Portugal today have Bruno Fernandes, Bernardo Silva, Vitinha, João Neves, Rafael Leão, Nuno Mendes, Pedro Neto, Gonçalo Ramos, João Félix, Rúben Dias, Diogo Costa, and a much deeper player pool than many previous Portuguese teams.
-
-So when people say “Portugal look better now without Ronaldo,” they are often comparing:
-
-- Ronaldo at age 39–41
-- against one of Portugal’s deepest generations ever
-- in a tiny sample of games
+- Ronaldo at age 39-41
+- against one of Portugal's deepest generations ever
+- in small samples
 - often against uneven opposition
-- while ignoring the long-run effect Ronaldo had on Portugal’s football identity
-
-That is bad causal framing.
+- while ignoring the long-run effect Ronaldo had on Portugal's football identity
 
 The fairer question has three layers:
 
-1. **Historical impact**: How did Portugal’s international profile change during Ronaldo’s era?
-2. **Recent tactical value**: What does Ronaldo still add or subtract in the last 4–6 years?
-3. **Role optimization**: Should he start, rotate, or be used situationally?
+1. Historical impact: How did Portugal's international profile change during Ronaldo's era?
+2. Recent tactical value: What does Ronaldo still add or subtract in the last 4-6 years?
+3. Role optimization: Should he start, rotate, or be used situationally?
+
+This post keeps that frame, but updates the strongest tactical criticism: pressing.
 
 ---
 
-## 2. Portugal’s Historical Success Before and During Ronaldo
+## 2. Portugal's Historical Success Before and During Ronaldo
 
-Portugal had great footballers before Ronaldo. Eusébio, Luís Figo, Rui Costa, Deco, Fernando Couto, Pauleta, and others were not minor figures.
+Portugal had great footballers before Ronaldo. Eusebio, Luis Figo, Rui Costa, Deco, Fernando Couto, Pauleta, and others were not minor figures.
 
-But Portugal before Ronaldo were not a sustained tournament-winning national team.
+But Portugal before Ronaldo were not a sustained tournament-winning senior national team.
 
-During Ronaldo’s senior international era, Portugal became a permanent fixture in major tournaments and won their first senior men’s international trophies.
-
-The senior trophy record is simple:
+During Ronaldo's senior international era, Portugal became a permanent fixture in major tournaments and won their first major senior men's international trophies.
 
 | Tournament | Portugal Result | Ronaldo Era? |
 |---|---:|---:|
@@ -88,72 +90,43 @@ The senior trophy record is simple:
 | UEFA Nations League 2019 | Champions | Yes |
 | UEFA Nations League 2025 | Champions | Yes |
 
-UEFA lists Portugal as the first two-time UEFA Nations League winner after their 2025 win over Spain, and UEFA’s own record pages place Ronaldo at the center of the country’s modern tournament era. [[1]](#sources-and-further-reading)
-
 That does not mean Ronaldo alone won every trophy. Football is not tennis.
 
 But it does mean this:
 
-> Portugal’s greatest period of senior national-team achievement happened during the Ronaldo era.
+> Portugal's greatest period of senior national-team achievement happened during the Ronaldo era.
 
-That is not a social media opinion. That is the trophy record.
+Ronaldo's individual Portugal record is also structurally abnormal. UEFA's June 2026 update lists him as the all-time leading scorer in men's international football, with 143 goals for Portugal.
 
-Ronaldo’s individual Portugal record is also structurally abnormal. UEFA’s June 2026 update lists him as the all-time leading scorer in men’s international football, with 143 goals for Portugal. [[2]](#sources-and-further-reading)
+The historical conclusion is simple:
 
-From a data standpoint, this matters because it sets the prior.
-
-The prior should not be:
-
-> Ronaldo is old, therefore he must be harmful.
-
-The prior should be:
-
-> Ronaldo has historically generated extreme attacking value for Portugal, but age likely changes the form and cost of that value.
-
-That is the actual research question.
+> Ronaldo generated extreme attacking and cultural value for Portugal. Age changes the form and cost of that value, but it does not erase the value itself.
 
 ---
 
 ## 3. Recent With-vs-Without Ronaldo Data: Useful, but Easy to Abuse
 
-The cleanest current debate is whether Portugal perform better without Ronaldo.
+Recent with-vs-without samples are useful, but they are easy to overread.
 
-Flashscore’s recent with-vs-without analysis after the 2022 World Cup gives a useful starting point. In matches Ronaldo featured in, Portugal had a reported win rate of 70% and scored 2.2 goals per game. Without Ronaldo, the win rate was 66.6%, while goals per game jumped to 4.8. [[3]](#sources-and-further-reading)
+If Portugal score more without Ronaldo in a short run of games, that is evidence worth inspecting. It is not proof that Ronaldo hurts Portugal overall.
 
-![Portugal with vs without Ronaldo](/assets/blog/with-vs-without-ronaldo.png)
+Small international samples are volatile. A few blowout wins can distort goals per game. Opponent quality varies. Game state matters. Lineups change. Tournament incentives change. And the replacement profile matters: Portugal without Ronaldo can mean Goncalo Ramos, Diogo Jota-style pressing, Joao Felix as a false nine, Leao as a transition outlet, or a different midfield structure entirely.
 
-That table looks like this:
-
-| Sample Since 2022 World Cup | Win Rate | Goals Per Game | Interpretation |
-|---|---:|---:|---|
-| Portugal with Ronaldo | 70.0% | 2.2 | Stable winning, lower goal volume |
-| Portugal without Ronaldo | 66.6% | 4.8 | Higher scoring, tiny sample, outlier-sensitive |
-
-A lazy anti-Ronaldo read says:
-
-> Portugal score more without him. Therefore they are better without him.
-
-That is not rigorous.
-
-The without-Ronaldo sample is small. It is heavily influenced by blowout wins. A few high-scoring matches can distort goals per game very quickly. In small samples, goal difference and goals per game are volatile, especially in international football where opponent quality varies sharply.
-
-The better interpretation is:
+The right interpretation is:
 
 > Portugal may become more fluid without Ronaldo in some match contexts, but the available with-vs-without sample does not prove they are better overall without him.
 
-This is an important distinction.
+The better question is role-specific:
 
-The data supports a tactical question.
-
-It does not support a sweeping verdict.
+> When does Portugal need Ronaldo's box value more than they need a higher-mobility forward?
 
 ---
 
-## 4. Ronaldo’s Current Player Profile: Box Value, Not Full-Pitch Value
+## 4. Ronaldo's Current Player Profile: Box Value, Not Full-Pitch Value
 
-The modern Ronaldo profile is very different from younger Ronaldo.
+Prime Ronaldo was a multi-phase attacking weapon.
 
-Younger Ronaldo gave you:
+He offered:
 
 - elite ball carrying
 - repeated channel running
@@ -165,212 +138,286 @@ Younger Ronaldo gave you:
 - counterattack carrying
 - defensive effort that varied by era and system, but came with more athletic range
 
-Current Ronaldo gives you something narrower:
+Current Ronaldo is different.
+
+He still offers:
 
 - penalty-box movement
 - high shot volume
 - box gravity
 - aerial threat
 - penalty and set-piece gravity
+- finishing volume
 - experience and dressing-room hierarchy
-- finishing volume, though with more tournament variance
-- much less pressing and repeat defensive running
 
-That means his value has become more conditional.
+But he also brings:
 
-He is not a modern all-phase forward in the style of Diogo Jota, Julian Álvarez, Darwin Núñez, Gabriel Jesus, or younger versions of Benzema/Suárez-level connective forwards.
+- much less pressing
+- less repeated defensive running
+- less open-field ball carrying
+- less ability to stretch games every few minutes
+- more risk of becoming a shot sink
+- lower off-ball value outside the box
 
-He is now closer to a high-usage penalty-area weapon.
+He is not a modern all-phase forward in the style of a high-pressing Jota-type forward, Gabriel Jesus, Julian Alvarez, or a younger connective striker.
 
-That can still be very valuable.
+He is now a box-value forward.
 
-But it has to be priced correctly.
-
-![Ronaldo tactical tradeoff profile](/assets/blog/ronaldo-tradeoff-profile.png)
+That can still be useful. It just has to be priced correctly.
 
 ---
 
-## 5. Pressing: This Is the Strongest Anti-Ronaldo Argument
+## 5. Pressing: This Is Still the Strongest Anti-Ronaldo Argument
 
-If the argument is that Ronaldo is not Portugal’s best pressing forward, the data and eye test agree.
+If the argument is that Ronaldo is not Portugal's best pressing forward, the data and eye test agree.
 
-Ronaldo is no longer a high-volume defensive forward. Reuters described Diogo Jota as a modern, high-energy forward suited to intense pressing systems, and that profile is clearly more useful for a team trying to defend from the front. [[4]](#sources-and-further-reading)
+Ronaldo is no longer a high-volume defensive forward. He is not the player you choose if your first tactical requirement is front-foot counterpressing, repeated sprint pressure, and constant defensive coverage from the striker line.
 
-In available FotMob World Cup 2026 defensive contribution data, Ronaldo appears with 3 defensive contributions and 1.5 per 90 in the tournament sample. That is not a high defensive workload profile. [[5]](#sources-and-further-reading)
+That is the strongest anti-Ronaldo argument.
 
-The point is not that Ronaldo does nothing defensively.
+But it is often made badly.
 
-The point is that Ronaldo is not the player you choose if your first tactical requirement is front-foot counter-pressing.
+The lazy version is:
 
-A rough role comparison:
+> Ronaldo does not press, therefore he is the problem.
 
-| Forward Profile | Pressing Value | Box Value | Transition Running | Best Use |
-|---|---:|---:|---:|---|
-| Cristiano Ronaldo | Low | High | Medium-low | Low blocks, box service, controlled possession |
-| Diogo Jota | High | Medium-high | High | Pressing, chaotic games, second-ball attacks |
-| Gonçalo Ramos | Medium | High | Medium | Structured striker role, pressing upgrade over Ronaldo |
-| Rafael Leão | Low-medium | Medium-high | High | Open space, counterattack, carrying |
-| Pedro Neto | Medium-high | Medium | High | Width, speed, direct transition |
+The better version is:
 
-The defensive tradeoff is real.
+> Ronaldo's lower pressing creates a tactical cost. Whether that cost is acceptable depends on Portugal's system, opponent, game state, and whether he pays it back with attacking value.
 
-The mistake is pretending that one tradeoff defines the whole player.
+That distinction matters because pressing is not an individual morality stat.
+
+A pressure count tells us that a player applied pressure. It does not automatically tell us:
+
+- whether the press was tactically correct
+- whether teammates moved with him
+- whether the midfield stepped behind him
+- whether the team was designed to press high
+- whether the player was supposed to conserve energy for box occupation
+- whether the team was leading, chasing, or sitting compact
+- whether the press reduced opponent possession value
+- whether the player compensated with attacking value
+
+Pressing is collective. A forward pressing alone can hurt the team if the midfield does not step with him. A winger can sprint at a centre-back and still fail to block the correct passing lane. A striker can look passive in a screenshot while correctly holding compact shape.
+
+So I ran a small public-data test of the claim.
+
+### The Updated Pressing Study
+
+I used StatsBomb open event data to build an exploratory sample of elite forwards.
+
+The sample included:
+
+- Cristiano Ronaldo
+- Lionel Messi
+- Karim Benzema
+- Robert Lewandowski
+- Harry Kane
+- Kylian Mbappe
+- Luis Suarez
+- Romelu Lukaku
+- Olivier Giroud
+- Roberto Firmino
+- Gabriel Jesus
+
+The derived dataset had:
+
+- 43 player-team-competition-season rows
+- 11 selected forwards
+- full La Liga 2015/16 coverage
+- partial Bundesliga and Ligue 1 samples
+- recent World Cups and Euros
+- selected Champions League finals
+
+This is not a full Opta, Wyscout, SkillCorner, or Second Spectrum audit. Public StatsBomb open data has uneven coverage and no tracking data. That means it cannot fully model distance, angle, velocity, cover shadow, teammate synchronization, line height, or time-to-intercept.
+
+That limitation is not just a caveat. It is the point.
+
+Pressure counts are event labels. Pressing value is spatial, temporal, collective, and role-dependent.
+
+### Model 1: The Naive Pressing Model
+
+The first model was intentionally incomplete:
+
+```text
+team points per match ~ forward pressures per 90
+```
+
+Result:
+
+```text
+R2 = 0.017
+pressure coefficient = -0.0193
+p = 0.403
+```
+
+Raw forward pressure volume barely explained team points in the sample.
+
+### Model 2: Add Attacking Tradeoff
+
+Then I added attacking contribution:
+
+```text
+team points per match ~ pressures per 90
+                      + non-penalty xG per 90
+                      + goals per 90
+                      + box touches per 90
+                      + progressive receptions per 90
+```
+
+Result:
+
+```text
+R2 = 0.161
+pressure coefficient = -0.0009
+p = 0.971
+```
+
+Once attacking value entered the model, the pressure coefficient effectively disappeared.
+
+That does not mean pressing is irrelevant. It means raw pressure volume was not carrying a clean standalone signal once attacking output was included.
+
+### Model 3: Add Team Context
+
+Then I added team-context proxies:
+
+```text
+team points per match ~ pressures per 90
+                      + team PPDA-style proxy
+                      + possession proxy
+                      + xG difference
+                      + non-penalty xG per 90
+                      + goals per 90
+```
+
+Result:
+
+```text
+R2 = 0.364
+pressure coefficient = 0.0186
+p = 0.523
+```
+
+Model fit improved, but the individual pressure coefficient still was not statistically meaningful.
+
+### Model 4: Pressure x Team Style
+
+Finally, I tested an interaction between forward pressure volume and team pressing context:
+
+```text
+team points per match ~ pressures per 90 * team PPDA-style proxy
+                      + possession proxy
+                      + xG difference
+                      + non-penalty xG per 90
+                      + goals per 90
+```
+
+Result:
+
+```text
+R2 = 0.365
+pressure coefficient = -0.0106
+p = 0.916
+```
+
+The interaction model did not rescue the raw pressure number.
+
+The disciplined conclusion is:
+
+> In this public-data MVP, raw forward pressure volume is a weak standalone predictor of team points. Adding attacking output and team-context proxies improves model fit, while the pressure coefficient itself remains unstable and not statistically meaningful.
+
+That supports the anti-lazy version of the Ronaldo argument.
+
+Ronaldo's low pressing is real.
+
+But low pressing alone is not a complete diagnosis.
 
 ---
 
 ## 6. Speed: Max Speed Is Not the Same as Repeat Mobility
 
-A common criticism says Ronaldo is simply slow now.
+Ronaldo can still produce impressive top-speed moments. That matters less than people think.
 
-That is too crude.
+Max speed is not the same as repeat mobility.
 
-Reports from Euro 2024 had Ronaldo reaching a top speed of 32.7 km/h at age 39. [[6]](#sources-and-further-reading)
+A striker can hit a strong sprint once and still be unable to support a 90-minute high-pressing system. Pressing requires repeated accelerations, decelerations, body orientation, recovery runs, and synchronized movement with teammates.
 
-That is not slow.
+Portugal do not need to ask whether Ronaldo can still sprint.
 
-But max speed is not the same as football mobility.
+They need to ask whether he can repeatedly execute the defensive and transition actions required by the match plan.
 
-The more useful distinction is:
+For a low block or box-focused attacking plan, the answer may be yes.
 
-| Speed Concept | What It Measures | Ronaldo Now |
-|---|---|---|
-| Top speed | Peak sprint velocity in one action | Still surprisingly strong |
-| Acceleration frequency | How often a player explodes into runs | Lower than younger forwards |
-| Repeat sprint ability | Ability to keep making high-intensity runs | Declining |
-| Recovery sprinting | Ability to sprint backward/defensively after attacks | Lower |
-| Pressing mobility | Ability to close angles repeatedly | Low |
-
-This is where online debate gets sloppy.
-
-Ronaldo can still hit a sprint.
-
-But Portugal cannot build a 90-minute high-pressing system around his repeated sprint capacity.
-
-That is the actual issue.
+For a high-intensity pressing plan against elite buildup teams, the answer is much weaker.
 
 ---
 
 ## 7. Channel Running and Counterattack Value
 
-There is no perfect public metric called “channel runs per 90” for Portugal.
+Ronaldo is still useful as the final receiver in transition.
 
-With paid event data from StatsBomb, Wyscout, SkillCorner, or Second Spectrum-style tracking, we would measure:
+He is no longer the main transition engine.
 
-- runs in behind per 90
-- high-speed runs into channels
-- off-ball runs creating xThreat
-- possessions where Ronaldo’s run displaced a center-back
-- counterattack involvements
-- box-arrival timing
-- receiver vs decoy-run value
+That difference matters.
 
-Without that, we rely on proxies:
+Portugal can still benefit from his box occupation, weak-side movement, penalty-area instincts, and ability to occupy centre-backs. But if the game requires repeated open-field carrying, defensive sprint recovery, or constant channel running, other profiles may fit better.
 
-- touches in the opposition box
-- total touches
-- shots
-- dribbles
-- progressive carries
-- offsides
-- shot locations
-- transition possessions
-- defensive recoveries after attacking runs
+Rafael Leao, Pedro Neto, Joao Felix, Goncalo Ramos, and Jota-like profiles offer different forms of dynamism.
 
-Current Ronaldo profiles as a box endpoint, not a transition carrier.
+Ronaldo offers more box occupation and finishing gravity.
 
-FootyStats’ 2025/26 Ronaldo page lists 161 shots in 30 Saudi Pro League matches, 60 on target, and 28 goals. It also gives him 0.96 goals per 90 and roughly 0.81 non-penalty xG per 90. [[7]](#sources-and-further-reading)
+The tactical question is not which profile is morally superior.
 
-That is high shot and xG volume.
-
-But it does not describe a player carrying Portugal up the pitch in transition.
-
-The current role is clearer:
-
-> Ronaldo is still useful as the final receiver in transition. He is no longer the main transition engine.
-
-That distinction matters.
-
-Rafael Leão, Pedro Neto, João Félix, and historically Jota-like profiles offer more open-field dynamism. Ronaldo offers more box occupation and finishing gravity.
+The tactical question is which profile the game requires.
 
 ---
 
 ## 8. xG and Finishing: Euro 2024 Was Bad, but One Tournament Is Not a Career Model
 
-Euro 2024 is the strongest evidence for the anti-Ronaldo case.
+Ronaldo's Euro 2024 finishing was poor.
 
-He had 23 shots and zero goals. ESPN noted his scoreless group stage, and public tournament analysis widely reported his finishing underperformance. [[8]](#sources-and-further-reading)
+That can be true without becoming a permanent career model.
 
-The more aggressive version of the critique is that Ronaldo became a shot sink: Portugal created chances, Ronaldo absorbed shots, and the attack lost efficiency.
+A five-game tournament sample is informative, but it is not enough to prove finishing collapse. xG and finishing evaluation are noisy, especially in tournament football where shot samples are small, game states are strange, and tactical roles shift quickly.
 
-That is a valid tournament-level criticism.
+The sharper criticism is not:
 
-But the data science issue is sample size.
+> Ronaldo missed chances, therefore he is finished.
 
-Finishing is noisy. xG overperformance or underperformance across five tournament matches is informative, but not definitive.
+The sharper criticism is:
 
-This is not just a fan excuse. Recent football analytics research has specifically warned that xG-based finishing evaluation is noisy, sample-size sensitive, and affected by model bias. Davis and Robberechts argue that xG models can confound finishing ability, especially when using raw goals-minus-xG as a simple skill measure. [[9]](#sources-and-further-reading)
+> Portugal must prevent Ronaldo from becoming an inefficient shot sink against elite tournament defenses.
 
-So the correct conclusion is:
+That is a real tactical risk.
 
-> Ronaldo’s Euro 2024 finishing was poor. But one tournament does not prove permanent finishing collapse.
+If Portugal's possessions are over-funneled into Ronaldo, the team may lose shot diversity. Bruno, Bernardo, Leao, Neto, Ramos, Felix, and arriving midfielders may be better final-action options in some sequences.
 
-Season-level numbers still show strong output. In 2025/26 league data, Ronaldo is listed with 28 goals in 30 matches, 161 shots, and 0.96 goals per 90. [[7]](#sources-and-further-reading)
+The question is not only whether Ronaldo can still finish.
 
-That does not mean Saudi Pro League output transfers perfectly to Portugal at elite tournament level.
-
-It does mean the “he cannot finish anymore” take is too broad.
-
-The more accurate statement is:
-
-> Ronaldo still generates and converts shot volume, but Portugal must manage the risk of him becoming an inefficient shot sink against elite tournament defenses.
-
-![Shot conversion comparison](/assets/blog/shot-conversion-comparison.png)
+It is whether his presence improves the distribution of Portugal's chances.
 
 ---
 
 ## 9. Shot Conversion and Usage
 
-A high-usage shooter can look inefficient because he absorbs more of the attack.
+Standard xG evaluates shots that happen. It does not fully answer whether a different forward movement pattern would have created a better shot before the shot occurred.
 
-This matters for Ronaldo because his current attacking value is shot-centric.
+That is crucial for Ronaldo.
 
-Using available public data:
+Portugal need to ask:
 
-| Player / Sample | Goals | Shots | Approx. Shot Conversion |
-|---|---:|---:|---:|
-| Cristiano Ronaldo, Saudi Pro League 2025/26 | 28 | 161 | 17.4% |
-| Ronaldo, Euro 2024 | 0 | 23 | 0.0% |
+- Does Ronaldo increase the probability Portugal generate a shot?
+- Does he increase the quality of that shot?
+- Does his movement create shots for others?
+- Does his box gravity open space for Bruno, Bernardo, Leao, or Neto?
+- Are possessions being over-funneled into him?
+- Does his shot selection create transition risk after failed attacks?
 
-The gap is the point.
+This is where the pressing debate and the attacking debate meet.
 
-Ronaldo is not always inefficient.
+A lower-pressing striker can be worth it if he creates enough attacking value.
 
-But when he is inefficient, the cost is large because he takes a lot of shots.
-
-That is the shot-volume risk.
-
-For Portugal, the tactical question becomes:
-
-> Is Ronaldo taking shots that would otherwise fall to Bruno, Bernardo, Leão, Ramos, Jota, Neto, or arriving midfielders in better contexts?
-
-This is where a possession-level model would help.
-
-Standard xG only evaluates shots that happen. It does not fully answer whether Portugal’s possession would have created a better shot with a different forward movement pattern. Recent work on xG+ argues for modeling shot occurrence and shot quality together at the possession level, which is exactly the kind of framework needed here. [[10]](#sources-and-further-reading)
-
-A better Ronaldo evaluation would measure:
-
-- probability Portugal generates a shot with Ronaldo on the pitch
-- expected quality of that shot
-- who receives the shot
-- whether his movement creates shots for others
-- whether possessions are being over-funneled into him
-- defensive transition cost after failed attacks
-
-That is the real analysis.
-
-Not “0 goals, finished.”
-
-Not “143 Portugal goals, immune.”
+But if he presses less and absorbs inefficient shots, the tradeoff breaks.
 
 ---
 
@@ -378,35 +425,27 @@ Not “143 Portugal goals, immune.”
 
 The argument that Ronaldo constantly loses possession is weaker than the pressing argument.
 
-Older forwards who receive high-pressure final-third passes will naturally lose the ball more than midfielders recycling possession. The question is not raw possession lost. The question is:
+Older forwards who receive high-pressure final-third passes will naturally lose the ball more than midfielders recycling possession. The question is not raw possession lost.
+
+The question is:
 
 > Did the loss happen in a valuable attacking context, and was the risk worth the expected reward?
 
 A failed first-time shot from a cross is not the same as a careless midfield turnover.
 
-A mistimed layoff in the box is not the same as losing the ball while Portugal’s fullbacks are both advanced.
+A mistimed layoff in the box is not the same as losing the ball while both fullbacks are advanced.
 
-For Ronaldo, the better criticism is not “he loses the ball too much.”
-
-The better criticism is:
-
-> His low-touch, high-shot profile means Portugal must get enough value from his final actions to justify the reduced pressing and reduced open-play involvement.
-
-That is a much stronger argument.
+Ronaldo's low-touch, high-shot profile means Portugal must get enough value from his final actions to justify the reduced pressing and reduced open-play involvement.
 
 ---
 
 ## 11. The Culture Question: Did Ronaldo Help Produce a Better Portugal?
 
-This is the hardest part to prove causally.
+Ronaldo was not the sole cause of Portugal's talent boom.
 
-A bad argument would say:
+That would be too simplistic.
 
-> Ronaldo inspired João Neves, therefore Ronaldo caused Portugal’s new generation.
-
-That is not serious.
-
-Portugal’s talent pipeline is driven by many factors:
+Portugal's rise also reflects:
 
 - Benfica, Sporting, and Porto academies
 - domestic scouting networks
@@ -417,249 +456,268 @@ Portugal’s talent pipeline is driven by many factors:
 - immigration and diaspora talent flows
 - the global commercialization of Portuguese football
 
-But Ronaldo’s cultural effect is still real.
+But Ronaldo became the global proof-of-concept that a Portuguese player could become the face of world football.
 
-UEFA reported that the Portuguese Football Federation had aimed to grow football participation to 300,000 players by 2024, almost double the 2012 figure. [[11]](#sources-and-further-reading)
+That matters.
 
-That does not prove Ronaldo alone caused participation growth.
+Not as a causal monoculture. Not as a single-variable explanation.
 
-But it supports the idea that Portuguese football culture grew significantly during the modern era in which Ronaldo was the country’s global sporting symbol.
+But as part of the national football identity that helped normalize elite ambition.
 
-The fair version of the claim is:
-
-> Ronaldo was not the sole cause of Portugal’s talent boom. But he became the global proof-of-concept that a Portuguese player could become the face of world football. That matters for aspiration, commercial attention, academy credibility, and national football identity.
-
-The direct causal link is messy.
-
-The ecosystem link is credible.
+The modern Portugal player pool cannot be credited to Ronaldo alone. It also should not be discussed as if his era was incidental.
 
 ---
 
 ## 12. A Simple Impact Framework
 
-To evaluate Ronaldo now, I would not use one metric.
-
-I would use a role-adjusted impact score.
+The cleanest way to evaluate current Ronaldo is role-adjusted, not nostalgia-adjusted.
 
 ### Ronaldo Role-Adjusted Impact Index
 
-```text
-Ronaldo Impact =
-  Box Threat
-+ Shot Quality Generated
-+ Gravity Created for Teammates
-+ Set-Piece / Penalty Value
-+ Leadership / Tournament Experience Proxy
-- Pressing Cost
-- Transition Defense Cost
-- Possession Funnel Risk
-- Opportunity Cost for Other Forwards
-```
+| Dimension | Current Ronaldo Value | Tactical Cost |
+|---|---:|---:|
+| Box occupation | High | Can crowd better shot options |
+| Shot generation | High | Can become shot sink |
+| Aerial threat | High | Cross-heavy attack can become predictable |
+| Pressing | Low | Weakens high-press plans |
+| Repeated mobility | Low-medium | Limits transition and defensive coverage |
+| Link play | Medium-low | Less useful against compact blocks needing rotations |
+| Culture/leadership | High | Can distort hierarchy if role is not managed |
 
-More formally:
+This is the main point:
 
-```text
-RAI = β1(Box_xG)
-    + β2(Shot_Volume_Adjusted_xG)
-    + β3(Gravity_Assist_Proxy)
-    + β4(SetPiece_Value)
-    + β5(LateGame_Composure_Proxy)
-    - β6(Pressing_Deficit)
-    - β7(Transition_Exposure)
-    - β8(Shot_Funnel_Inefficiency)
-    - β9(Replacement_Opportunity_Cost)
-```
-
-Where:
-
-- `Box_xG` measures shot quality received inside the box.
-- `Shot_Volume_Adjusted_xG` penalizes low-quality shot inflation.
-- `Gravity_Assist_Proxy` estimates how often defenders collapse toward Ronaldo and open space elsewhere.
-- `Pressing_Deficit` compares him against alternatives like Jota, Ramos, Neto, or Leão.
-- `Transition_Exposure` measures how exposed Portugal become after failed attacks.
-- `Replacement_Opportunity_Cost` asks what Portugal lose by not using a more mobile forward.
-
-This is the right structure because Ronaldo’s value is not one-dimensional.
+> Ronaldo should be evaluated as a role-specific, high-tradeoff forward, not as a full-pitch superstar and not as a useless passenger.
 
 ---
 
 ## 13. Tactical Recommendation: Conditional Deployment
 
-Portugal should not make Ronaldo the default full-game solution.
+Ronaldo should not be treated as an automatic 90-minute starter in every major match.
 
-They also should not discard him for ideological reasons.
-
-The role should be conditional.
-
-![Conditional Ronaldo deployment model](/assets/blog/conditional-deployment-model.png)
+He also should not be treated as automatically harmful.
 
 ### Start Ronaldo When:
 
 - Portugal expect territorial dominance
-- the opponent defends in a low or mid block
-- Portugal can create wide service
-- Bruno and Bernardo can control possession
-- Nuno Mendes / Cancelo-style fullback delivery is available
-- Portugal need penalty-box occupation
+- the opponent defends deep
+- Portugal need box occupation
+- crossing volume will be high
 - set pieces are likely to matter
-- game state rewards composure and box finishing
+- the opponent centre-backs struggle aerially
+- Portugal can defend without needing constant striker pressure
 
 ### Rotate or Limit Ronaldo When:
 
-- Portugal need intense first-line pressing
-- the opponent builds cleanly from the back
-- Portugal need constant channel running
-- defensive transition risk is high
-- the game requires repeated sprint recovery
-- Portugal’s attack becomes too predictable through him
-- Ramos/Jota/Neto/Leão profiles better match the opponent
+- Portugal need a high press
+- the opponent builds cleanly through the first line
+- Portugal need repeated channel running
+- the match requires transition speed
+- Portugal need more combination play between the lines
+- Ronaldo's shot volume starts reducing better team shots
 
-This is the serious football answer.
+This is the practical answer:
 
-Ronaldo should be treated like a tactical weapon, not a sacred object.
+> Ronaldo should be a conditional weapon, not a tactical default.
 
 ---
 
-## 14. Final Verdict
+## 14. What Google DeepMind's TacticAI Says About The Future
 
-Cristiano Ronaldo is no longer Portugal’s entire tactical engine.
+Google DeepMind's TacticAI is useful because it points toward the next stage of football analytics.
 
-That era is over.
+TacticAI was developed with Liverpool FC and published in Nature Communications in 2024. It focuses on corner kicks, not open-play pressing. That is important. Corners are structured, repeatable, and easier to model than open play.
 
-But the claim that Portugal are simply better without him is not proven by the data. The recent with-vs-without sample is too small, opponent-adjustment matters, and goals-per-game inflation without him is vulnerable to outlier blowouts.
+But the underlying idea is directly relevant to this debate.
 
-The valid criticism is narrower and stronger:
+TacticAI asks practical tactical questions:
 
-- Ronaldo presses less than Portugal’s younger alternatives.
-- His repeat channel-running is lower.
-- His transition carrying is lower.
-- His defensive workload is lower.
-- His shot volume can become inefficient if Portugal over-service him.
-- Euro 2024 was a poor finishing tournament.
+1. What is likely to happen from this setup?
+2. What similar situations have happened before?
+3. How can the setup be adjusted to improve the desired outcome?
 
-But the pro-Ronaldo case is also real:
+That is a better analytics philosophy than simply counting events.
 
-- He remains an elite box-occupation player.
-- He still generates high shot and xG volume.
-- He creates defensive gravity.
-- He carries set-piece and penalty threat.
-- He has historical tournament authority.
-- Portugal’s most successful national-team era happened with him as the defining figure.
+TacticAI represents football situations as relationships between players. Players are nodes. Their positions and attributes are features. The model reasons about the tactical structure as a graph.
 
-The best one-line conclusion is this:
+That is exactly the direction pressing analytics needs.
 
-> Ronaldo is no longer Portugal’s system. He is a high-leverage attacking module with real defensive and mobility costs. Portugal’s job is not to worship him or discard him. It is to price the tradeoff correctly.
+For pressing, the next question should not be:
 
-That is where most football discourse fails.
+```text
+How many pressures did the forward make?
+```
 
-It wants a binary.
+It should be:
 
-The data gives a role optimization problem.
+```text
+Given the opponent shape, ball location, teammate positions, player roles, score state, and tactical instruction, did this pressure improve the team's defensive state?
+```
+
+That requires richer data:
+
+- event data
+- tracking data
+- player speed and orientation
+- distance to ball
+- opponent passing options
+- teammate compactness
+- line height
+- cover shadows
+- fatigue and game state
+- tactical role labels
+- counterfactual simulations
+
+TacticAI is promising because it treats football as a multi-agent system. The value of one movement depends on nearby movements. A forward's press matters because of the midfielder behind him. A corner routine matters because of blocks, decoy runs, delivery angle, goalkeeper position, and defensive marking assignments.
+
+The best use of AI in football is not replacing the coach.
+
+It is making the analyst and coach faster at:
+
+- retrieving similar situations
+- finding repeated tactical patterns
+- testing counterfactual setups
+- estimating uncertainty
+- showing which player relationships drive the prediction
+- turning vague arguments into inspectable evidence
+
+But TacticAI should not be oversold.
+
+It is a set-piece system. Open play is harder. Pressing is harder still. Corners begin from a fixed restart. Pressing happens in a live game with moving defenders, score effects, fatigue, opponent adaptations, and tactical compromises.
+
+There is also a data-access problem. Clubs with high-quality tracking data, cleaned event data, and strong analyst teams will gain more from tactical AI than clubs relying on public data. The edge may move from "who has a model" to "who has better data, better tactical questions, and better human integration."
+
+The future is not an AI manager.
+
+The future is coach-in-the-loop tactical modeling.
+
+And the Ronaldo pressing debate shows why that matters.
+
+Raw event counts are not enough. We need tactical state models.
+
+---
+
+## 15. Final Verdict
+
+The Ronaldo debate is not useless. It is just usually framed badly.
+
+Ronaldo's lower pressing is real.
+
+His reduced repeated mobility is real.
+
+His Euro 2024 finishing was poor.
+
+Portugal can look more fluid with higher-mobility forwards in some matchups.
+
+All of that is true.
+
+But the claim that Portugal are simply better without him is still statistically weak and tactically incomplete.
+
+The better conclusion is:
+
+> Ronaldo is no longer Portugal's whole attacking system. He is a high-value, high-tradeoff box forward. His role should depend on opponent, game state, pressing requirements, and whether his shot value outweighs his defensive cost.
+
+The updated pressing study sharpens that conclusion.
+
+Raw forward pressing volume did not explain team outcomes well on its own. Adding attacking output and team-context proxies improved model fit. The pressure coefficient remained unstable and not statistically meaningful.
+
+That means the winning line is still:
+
+> Low pressing is a cost. The question is whether the system can afford it and whether the player pays it back elsewhere.
+
+That is analysis.
+
+Everything else is just a number pretending to be an argument.
 
 ---
 
 ## Dashboard Concept
 
-A good dashboard for this analysis should not be a Ronaldo propaganda board.
-
-It should be a balanced decision dashboard with five panels:
+An updated dashboard for this post should have five panels.
 
 ### 1. Historical Portugal Impact
 
-Metrics:
-
-- Portugal major trophies before/during Ronaldo
-- tournament qualification consistency
-- Ronaldo caps and goals
-- Portugal Elo/FIFA ranking trend
-- major tournament knockout-stage frequency
+- tournament stage by year
+- Ronaldo goals by tournament
+- Portugal trophies
+- player-pool depth by era
 
 ### 2. Recent With-vs-Without Ronaldo
 
-Metrics:
-
-- win rate
 - goals per game
 - xG per game
-- goals conceded per game
-- opponent strength adjustment
-- match state adjustment
-- sample size warning
+- opponent strength
+- shot distribution
+- sample-size warning
 
 ### 3. Player Role Comparison
 
-Compare Ronaldo, Ramos, Jota, Leão, Neto, Félix.
+- Ronaldo
+- Ramos
+- Felix
+- Leao
+- Neto
+- Jota-style profile
 
 Metrics:
 
-- goals/90
-- npxG/90
-- shots/90
-- touches in box/90
-- pressures/90
-- defensive actions/90
-- progressive carries/90
-- runs in behind/90 if tracking data is available
+- box touches
+- shots
+- npxG
+- pressures
+- progressive receptions
+- channel runs
+- aerial value
 
 ### 4. Tactical Tradeoff Panel
 
-Show:
-
-- box threat score
-- pressing score
-- transition score
-- possession fluidity score
-- set-piece threat
-- replacement opportunity cost
+- pressure volume
+- attacking output
+- team PPDA-style context
+- possession proxy
+- xG difference
+- role group
 
 ### 5. Matchup Recommendation
 
-For each opponent type:
+Output:
 
-| Opponent Type | Ronaldo Role |
-|---|---|
-| Low block | Start / high value |
-| Mid block | Conditional start |
-| High press elite team | Reduced minutes |
-| Portugal chasing late goal | High-value substitute or focal point |
-| Portugal defending lead | Lower value unless set-piece threat needed |
+```text
+Start / Rotate / Bench / Late-game weapon
+```
+
+Inputs:
+
+- opponent block height
+- opponent centre-back aerial weakness
+- Portugal expected possession
+- pressing requirement
+- transition requirement
+- set-piece importance
+- Ronaldo recent shot quality
 
 ---
 
-## Visual Reproduction Script
+## Visuals To Use
 
-The visuals in this post were generated using the included `generate_visuals.py` script.
+From the `football-pressing-context/` artifact:
 
-To regenerate the visuals locally:
+1. `pressing_naive_relationship.png`
+2. `pressing_attacking_tradeoff.png`
+3. `team_style_interaction.png`
+4. `ronaldo_timeline.png`
+5. `context_ladder.png`
 
-```bash
-python generate_visuals.py
-```
-
-The script writes images to:
-
-```text
-assets/images/ronaldo-portugal-impact/
-```
+These should replace any simplistic pressure leaderboard visual. The argument is about context, not ranking forwards by effort.
 
 ---
 
 ## Sources and Further Reading
 
-1. UEFA — Portugal meet the Nations League winners. <https://www.uefa.com/uefanationsleague/news/0297-1d5ccb0b6747-d10a8fc4eb86-1000--portugal-meet-the-nations-league-winners/>
-2. UEFA — Cristiano Ronaldo: all-time leading scorer in men’s international football. <https://www.uefa.com/european-qualifiers/news/026a-1297500e1b34-a17bbbcad258-1000--cristiano-ronaldo-all-time-leading-scorer-in-men-s-interna/>
-3. Flashscore — Are Portugal better off without Cristiano Ronaldo? <https://www.flashscore.com/news/soccer-world-cup-are-portugal-better-off-without-cristiano-ronaldo-here-s-what-the-numbers-say/dOPVrBqK/>
-4. Reuters — Jota provided blueprint for modern football forward. <https://www.reuters.com/sports/soccer/jota-provided-blueprint-modern-football-forward-2025-07-03/>
-5. FotMob — World Cup player defensive contributions. <https://www.fotmob.com/leagues/77/stats/season/24254/players/defensive_contributions/world-cup-players>
-6. Reported UEFA Euro 2024 top speed discussion. <https://www.facebook.com/mahifromsideline/posts/according-to-uefa-cristiano-ronaldo-recorded-his-fastest-top-speed-in-the-euros-/493239413229656/>
-7. FootyStats — Cristiano Ronaldo player statistics. <https://footystats.org/players/portugal/cristiano-ronaldo>
-8. ESPN — Euro 2024 statistics note on Ronaldo’s scoreless group stage. <https://www.espn.com/soccer/story/_/id/40441540/euro-2024-stats-cristiano-ronaldo-zero-group-stage-goals-romelu-lukaku-missed-chances-record>
-9. Davis & Robberechts — Biases in Expected Goals Models Confound Finishing Ability. <https://arxiv.org/abs/2401.09940>
-10. Pipping, Feng & Sabin — Beyond Expected Goals: A Probabilistic Framework for Shot Occurrences in Soccer. <https://arxiv.org/abs/2512.00203>
-11. UEFA — Developing football in Portugal. <https://www.uefa.com/news-media/news/0283-187b3ed7424c-ae2149ccb61a-1000--developing-football-in-portugal/>
+- Original post: https://app.chinmayarora.com/blog/ronaldo-impact/
+- Study artifact: `football-pressing-context/` in `ChinmayA301/blog-artifacts`
+- StatsBomb open data: https://github.com/statsbomb/open-data
+- Google DeepMind, "TacticAI: an AI assistant for football tactics": https://deepmind.google/discover/blog/tacticai-ai-assistant-for-football-tactics/
+- Wang, Z., Velickovic, P., Hennes, D. et al. "TacticAI: an AI assistant for football tactics." Nature Communications 15, 1906 (2024): https://www.nature.com/articles/s41467-024-45965-x
+- UEFA Portugal and Ronaldo records pages, for historical tournament context and international scoring records
+- Public tournament and player data sources such as FBref, FotMob, Flashscore, ESPN, and UEFA match reports for with-vs-without samples, tournament usage, and player-role context
 
-## Related Portfolio Directions
-
-- Successful Key Moment Metric: a role-adjusted football metric for judging player impact beyond goals and assists.
-- Football Transfer Rumor Tracker: probability-weighted transfer intelligence with tactical-fit simulation.
-- Portugal/Ronaldo Dashboard: with-vs-without impact, tactical tradeoff scoring, and role recommendation engine.
