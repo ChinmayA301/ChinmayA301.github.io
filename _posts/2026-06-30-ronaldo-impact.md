@@ -1,18 +1,16 @@
 ---
+layout: post
 title: "Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data"
-date: "2026-07-07"
+date: 2026-07-07
+author: "Chinmay Arora"
+
 description: "An updated Ronaldo-Portugal football analytics note using public StatsBomb event data to test why raw pressing numbers are incomplete without role, system, and attacking context."
-tags:
-  - football analytics
-  - Cristiano Ronaldo
-  - Portugal
-  - pressing
-  - TacticAI
+summary: "Cristiano Ronaldo is no longer Portugal's entire tactical system. But the claim that Portugal are simply better without him is statistically weak. This updated analysis uses public StatsBomb event data, the original Ronaldo-Portugal role study, and the TacticAI direction of travel to evaluate pressing as a tactical cost rather than a morality stat."
+tags: [football-analytics, sports-data-science, portugal, cristiano-ronaldo, expected-goals, tactical-analysis, data-science, tacticai]
+categories: [Sports Analytics, Data Science, Football]
 ---
 
 # Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data
-
-## BLUF
 
 Cristiano Ronaldo is no longer Portugal's entire tactical system. But the claim that Portugal are simply better without him is still too lazy.
 
@@ -129,7 +127,7 @@ A lazy anti-Ronaldo read says:
 
 That is not rigorous.
 
-Small international samples are volatile. A few blowout wins can distort goals per game. Opponent quality varies. Game state matters. Lineups change. Tournament incentives change. And the replacement profile matters: Portugal without Ronaldo can mean Goncalo Ramos, Diogo Jota-style pressing, Joao Felix as a false nine, Leao as a transition outlet, or a different midfield structure entirely.
+Small international samples are volatile. A few blowout wins can distort goals per game. Opponent quality varies. Game state matters. Lineups change. Tournament incentives change. And the replacement profile matters: Portugal without Ronaldo can mean Goncalo Ramos, a higher-pressing forward profile, Joao Felix as a false nine, Leao as a transition outlet, or a different midfield structure entirely.
 
 The right interpretation is:
 
@@ -178,7 +176,7 @@ But he also brings:
 - more risk of becoming a shot sink
 - lower off-ball value outside the box
 
-He is not a modern all-phase forward in the style of a high-pressing Jota-type forward, Gabriel Jesus, Julian Alvarez, or a younger connective striker.
+He is not a modern all-phase forward in the style of a high-pressing, high-mobility forward, Gabriel Jesus, Julian Alvarez, or a younger connective striker.
 
 He is now a box-value forward.
 
@@ -186,7 +184,7 @@ That can still be useful. It just has to be priced correctly.
 
 ![Ronaldo tactical tradeoff profile](/assets/blog/ronaldo-tradeoff-profile.png)
 
-![Ronaldo pressing and attacking tradeoff timeline](/assets/blog/ronaldo-timeline.png)
+![Ronaldo pressing and attacking tradeoff timeline](/assets/blog/ronaldo_timeline.png)
 
 ---
 
@@ -276,7 +274,7 @@ p = 0.403
 
 Raw forward pressure volume barely explained team points in the sample.
 
-![Raw forward pressing vs team outcomes](/assets/blog/pressing_naive_relationship.png)
+![Raw forward pressing vs team outcomes](/assets/blog/pressing-naive-relationship.png)
 
 ### Model 2: Add Attacking Tradeoff
 
@@ -302,7 +300,7 @@ Once attacking value entered the model, the pressure coefficient effectively dis
 
 That does not mean pressing is irrelevant. It means raw pressure volume was not carrying a clean standalone signal once attacking output was included.
 
-![Pressing volume vs attacking tradeoff](/assets/blog/pressing_attacking_tradeoff.png)
+![Pressing volume vs attacking tradeoff](/assets/blog/pressing-attacking-tradeoff.png)
 
 ### Model 3: Add Team Context
 
@@ -327,7 +325,7 @@ p = 0.523
 
 Model fit improved, but the individual pressure coefficient still was not statistically meaningful.
 
-![Forward pressing in team style context](/assets/blog/team_style_interaction.png)
+![Forward pressing in team style context](/assets/blog/team-style-interaction.png)
 
 ### Model 4: Pressure x Team Style
 
@@ -391,7 +389,7 @@ That difference matters.
 
 Portugal can still benefit from his box occupation, weak-side movement, penalty-area instincts, and ability to occupy centre-backs. But if the game requires repeated open-field carrying, defensive sprint recovery, or constant channel running, other profiles may fit better.
 
-Rafael Leao, Pedro Neto, Joao Felix, Goncalo Ramos, and Jota-like profiles offer different forms of dynamism.
+Rafael Leao, Pedro Neto, Joao Felix, Goncalo Ramos, and other higher-mobility forward profiles offer different forms of dynamism.
 
 Ronaldo offers more box occupation and finishing gravity.
 
@@ -702,46 +700,6 @@ That means the winning line is still:
 That is analysis.
 
 Everything else is just a number pretending to be an argument.
-
----
-
-## Study Results and Visual Assets
-
-This updated post now combines two layers of evidence.
-
-The original Ronaldo-impact study stays in the article:
-
-| Original Asset | Where It Appears | What It Supports |
-|---|---|---|
-| `/assets/blog/forward-role-quadrant.png` | Opening frame | Ronaldo as a role-tradeoff problem, not a binary good/bad debate |
-| `/assets/blog/with-vs-without-ronaldo.png` | Section 3 | The with-vs-without sample is useful but small and outlier-sensitive |
-| `/assets/blog/ronaldo-tradeoff-profile.png` | Section 4 | Ronaldo's current profile is box value with defensive/mobility costs |
-| `/assets/blog/shot-conversion-comparison.png` | Section 8 | Euro 2024 was a real finishing failure, but not a full career model |
-| `/assets/blog/impact_scorecard_tiles.png` | Section 12 | The role-adjusted scorecard behind the impact framework |
-| `/assets/blog/conditional-deployment-model.png` | Section 13 | Ronaldo should be deployed conditionally by opponent and game state |
-
-The new pressing-context study adds four more visuals:
-
-| New Asset | Where It Appears | What It Supports |
-|---|---|---|
-| `/assets/blog/ronaldo-timeline.png` | Section 4 | Ronaldo's pressing/attacking tradeoff is recurring, not a sudden collapse |
-| `/assets/blog/pressing-naive-relationship.png` | Section 5, Model 1 | Raw forward pressure volume is weak as a standalone outcome predictor |
-| `/assets/blog/pressing-attacking-tradeoff.png` | Section 5, Model 2 | Pressing volume must be interpreted against attacking output |
-| `/assets/blog/team-style-interaction.png` | Section 5, Model 3 | Individual pressure volume belongs inside team tactical context |
-
-The old study result and the new study result point in the same direction.
-
-The original study said Ronaldo should be evaluated as a conditional tactical weapon, not as a sacred object or a useless passenger.
-
-The new public-data pressing study sharpens the reason: raw pressure volume alone is too incomplete to settle the argument. It is one cost term inside a larger role-adjusted impact model.
-
-If you add one optional extra visual near the TacticAI section, use:
-
-```text
-/assets/blog/context-ladder-pressing.png
-```
-
-That image should only be added if you want a bridge from event-count analytics to future tactical-state modeling. The core post now has the original study visuals and the first four new pressing visuals already embedded.
 
 ---
 
