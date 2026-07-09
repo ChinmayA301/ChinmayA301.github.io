@@ -83,6 +83,66 @@
         ]
     },
     {
+        "title": "Multi-Agent AI-Native ERP for Compliance Mapping",
+        "description": "Active private build for an AI-native operating layer that maps company workflows, obligations, controls, owners, evidence, and readiness gaps across compliance-heavy functions. The focus is company-running ability: turning policies and process knowledge into monitorable execution.",
+        "status": "Active private build",
+        "privacy": "Concept and capability shared; implementation details, schemas, and private code withheld.",
+        "tags": [
+            "Multi-Agent Systems",
+            "AI ERP",
+            "Compliance Mapping",
+            "Operations"
+        ]
+    },
+    {
+        "title": "AI Survey & Interviewing Tool",
+        "description": "Active product workstream for adaptive AI interviewing, survey design, response synthesis, and evidence extraction. Built around better stakeholder research, readiness assessment, and qualitative-to-quantitative analysis for teams that need structured insight from messy conversations.",
+        "status": "Active private build",
+        "privacy": "Public description only; no private respondent data, prompts, or implementation details exposed.",
+        "tags": [
+            "AI Interviews",
+            "Survey Intelligence",
+            "Research Ops",
+            "Insight Synthesis"
+        ]
+    },
+    {
+        "title": "AI Football Intelligence & Tracking System",
+        "description": "Active football intelligence workstream spanning transfer signals, source reliability, player/team tracking, tactical context, and editorial-grade dashboards. TransferSignal is one product surface inside the broader sports intelligence direction.",
+        "status": "Active private build",
+        "privacy": "No private repo linked; public-facing deployment links can be added when each surface is ready.",
+        "tags": [
+            "Sports Analytics",
+            "Football Intelligence",
+            "Tracking Systems",
+            "Editorial Product"
+        ]
+    },
+    {
+        "title": "AI Lead Discovery & CRM Improvement",
+        "description": "Private consulting-demo workstream for agentic lead discovery, enrichment, scoring, account research, personalized outreach support, and CRM hygiene. Focused on improving pipeline quality and reducing manual prospecting work with auditable agent steps.",
+        "status": "Private consulting demo",
+        "privacy": "Capability described without exposing customer lists, prompts, workflows, or private code.",
+        "tags": [
+            "Agentic CRM",
+            "Lead Discovery",
+            "Sales Intelligence",
+            "Workflow Automation"
+        ]
+    },
+    {
+        "title": "AI Governance Setup for Regulated Teams",
+        "description": "Governance advisory and implementation work for HIPAA, finance, public-sector, and school contexts: AI readiness, policy mapping, risk registers, acceptable-use boundaries, vendor review, human oversight, evidence trails, and pilot evaluation.",
+        "status": "Advisory + implementation workstream",
+        "privacy": "Sector-level framing only; no client-specific controls, data, or confidential policies exposed.",
+        "tags": [
+            "AI Governance",
+            "HIPAA",
+            "Finance",
+            "Public Sector"
+        ]
+    },
+    {
         "title": "Operations Control Tower",
         "description": "Operations-analytics control tower on 98k real Olist orders: SQL star schema, data-quality checks, supplier risk score, executive KPIs, and a Looker Studio-ready decision dashboard for logistics intervention planning.",
         "status": "Public case study",

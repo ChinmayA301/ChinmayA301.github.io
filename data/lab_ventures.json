@@ -54,5 +54,75 @@
         "business_hook": "Maps the commercial opportunity and responsibility risks of platform-led attention infrastructure.",
         "url": "https://chinmayarora.com/ideas/ad-delivery-systems/",
         "tags": ["Media Systems", "Platform Strategy", "Recommendation Systems", "Advertising", "Venture Exploration"]
+    },
+    {
+        "title": "Career Simulation and Pathway Exploration Platform",
+        "summary": "Immersive career-path simulation that helps people experience realistic workflows, pressures, skill expectations, and tradeoffs before committing to education or career moves.",
+        "business_hook": "Supports education, reskilling, workforce readiness, and enterprise talent pipelines by making career decisions experiential instead of brochure-driven.",
+        "url": "https://app.chinmayarora.com/ideas/",
+        "tags": ["Career Tech", "Simulation", "Workforce Readiness", "AI Personalization"]
+    },
+    {
+        "title": "Experience-Based Entertainment and Media Worlds",
+        "summary": "Participatory media environments that extend movies, shows, creator ecosystems, and digital formats into interactive worlds with choices, tensions, and structured user involvement.",
+        "business_hook": "Creates premium engagement, platform retention, creator-economy, and branded-entertainment opportunities beyond passive viewing.",
+        "url": "https://app.chinmayarora.com/ideas/",
+        "tags": ["Media Systems", "Interactive Entertainment", "Recommendation Systems", "Simulation"]
+    },
+    {
+        "title": "Text-to-AR Utility Systems",
+        "summary": "Converts ordinary text-based information into contextual spatial interfaces for restaurants, venues, training, games, and guided real-world environments.",
+        "business_hook": "Treats AR as a workflow and content-layer opportunity rather than a hardware-only bet.",
+        "url": "https://app.chinmayarora.com/blog/text-to-ar-human-centered-standard/",
+        "tags": ["AR", "Interfaces", "Contextual AI", "Computer Vision"]
+    },
+    {
+        "title": "Senior-Focused AI Phone Co-Pilot",
+        "summary": "Accessible AI assistance layer for older adults navigating smartphones and digital tasks through patient, contextual, step-by-step guidance.",
+        "business_hook": "Addresses a persistent high-friction consumer and accessibility problem that generic help documentation does not solve well.",
+        "url": "https://app.chinmayarora.com/ideas/",
+        "tags": ["Accessibility", "Agentic Interfaces", "Consumer AI", "Older Adults"]
+    },
+    {
+        "title": "Conversational Survey and Interview Intelligence Platform",
+        "summary": "AI-led survey and interview system for adaptive questioning, multilingual understanding, response quality scoring, and conversation-to-structured-data pipelines.",
+        "business_hook": "Improves research, customer feedback, public-sector engagement, and operational insight where static surveys produce shallow responses.",
+        "url": "https://app.chinmayarora.com/ideas/",
+        "tags": ["Survey Intelligence", "Interviews", "Research Ops", "Structured Extraction"]
+    },
+    {
+        "title": "Freight and Logistics Tracking Intelligence",
+        "summary": "Practical intelligence layer for shipment visibility, exception detection, reporting automation, performance analytics, and predictive risk flags in freight workflows.",
+        "business_hook": "Targets expensive operational pain around missed deadlines, poor reporting, fragmented coordination, and margin risk.",
+        "url": "https://app.chinmayarora.com/ideas/",
+        "tags": ["Logistics", "Freight Intelligence", "BI", "Exception Detection"]
+    },
+    {
+        "title": "AI-Native Enterprise Operating Systems",
+        "summary": "Business operating layers where specialized AI agents support recurring workflows, coordination, documentation, review chains, and decision tracing.",
+        "business_hook": "Compounds execution quality by making repeated company workflows more structured, monitorable, and easier to hand off.",
+        "url": "https://app.chinmayarora.com/ideas/",
+        "tags": ["AI ERP", "Multi-Agent Systems", "Workflow Orchestration", "Decision Tracing"]
+    },
+    {
+        "title": "High-Friction Data Access and Proxied Information Systems",
+        "summary": "Products that make fragmented, expensive, permission-dependent, or hard-to-observe information more decision-ready through proxies, inference, confidence levels, and validation loops.",
+        "business_hook": "Creates value where perfect data is unrealistic but better approximation and uncertainty communication can still improve decisions.",
+        "url": "https://app.chinmayarora.com/blog/simulation-engineering-ai/",
+        "tags": ["Proxy Data", "Market Intelligence", "Simulation", "Decision Systems"]
+    },
+    {
+        "title": "Sports Intelligence and Transfer Market Media Products",
+        "summary": "Structured sports intelligence products that organize rumor ecosystems, tactical analysis, player tracking, and confidence scoring into repeatable fan-facing experiences.",
+        "business_hook": "Productizes analysis rather than commentary by turning noisy sports information into trackable, trustable systems.",
+        "url": "https://app.chinmayarora.com/blog/successful-key-moment-metric/",
+        "tags": ["Sports Analytics", "Football Intelligence", "Source Weighting", "Media Product"]
+    },
+    {
+        "title": "Nutrition, Satiation, and Consumption System Redesign",
+        "summary": "Consumer and public-health exploration around serving-size logic, satiation-adjusted food framing, meal-pattern analysis, and more realistic nutrition communication.",
+        "business_hook": "Identifies a market mismatch between how food is labeled and how people actually eat, decide, and feel full.",
+        "url": "https://app.chinmayarora.com/blog/satiation-adjusted/",
+        "tags": ["Nutrition", "Consumer Behavior", "Optimization", "Public Health"]
     }
 ]

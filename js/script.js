@@ -1045,10 +1045,9 @@ function setupHeroGlobe() {
     const locationName = document.getElementById("heroGlobeLocationName");
     const locationNote = document.getElementById("heroGlobeLocationNote");
     const locationChips = document.getElementById("heroGlobeLocationChips");
-    const inlineCanvas = document.getElementById("heroGlobeCanvas");
     const previewCanvas = document.getElementById("heroGlobePreviewCanvas");
     const modalCanvas = document.getElementById("heroGlobeModalCanvas");
-    if (!trigger || !modal || !inlineCanvas || !previewCanvas || !modalCanvas) return;
+    if (!trigger || !modal || !previewCanvas || !modalCanvas) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const locations = [
@@ -1505,12 +1504,6 @@ function setupHeroGlobe() {
         };
     }
 
-    const inlineGlobe = createGlobe(inlineCanvas, {
-        autorotate: true,
-        interactive: false,
-        radiusFactor: 0.4,
-        glow: 1
-    });
     const previewGlobe = createGlobe(previewCanvas, {
         autorotate: true,
         interactive: false,
@@ -1543,8 +1536,6 @@ function setupHeroGlobe() {
             modal.setAttribute("aria-hidden", "false");
             document.body.style.overflow = "hidden";
             window.requestAnimationFrame(() => {
-                inlineGlobe.resize();
-                inlineGlobe.draw();
                 previewGlobe.resize();
                 previewGlobe.draw();
                 modalGlobe.resize();

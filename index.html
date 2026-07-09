@@ -14,12 +14,12 @@
     <meta property="og:description"
         content="Explore AI engineering, responsible ML, governance, analytics engineering, BI, RAG, and product strategy work by Chinmay Arora." />
     <meta property="og:url" content="https://app.chinmayarora.com/" />
-    <meta property="og:image" content="https://app.chinmayarora.com/assets/images/profile1.png" />
+    <meta property="og:image" content="https://app.chinmayarora.com/assets/images/profile-graduation.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Chinmay Arora | AI Engineer, Data Scientist, and AI Governance Builder" />
     <meta name="twitter:description"
         content="Portfolio of AI engineering, responsible data science, governance, analytics, RAG systems, and technical writing by Chinmay Arora." />
-    <meta name="twitter:image" content="https://app.chinmayarora.com/assets/images/profile1.png" />
+    <meta name="twitter:image" content="https://app.chinmayarora.com/assets/images/profile-graduation.png" />
 
     <!-- Styles -->
     <link rel="stylesheet" href="/css/style.css?v=20260403c" />
@@ -53,7 +53,7 @@
                     "name": "Chinmay Arora",
                     "jobTitle": "AI Engineer, Data Scientist, AI Governance Builder, and Analytics Engineer",
                     "url": "https://app.chinmayarora.com/",
-                    "image": "https://app.chinmayarora.com/assets/images/profile1.png",
+                    "image": "https://app.chinmayarora.com/assets/images/profile-graduation.png",
                     "sameAs": [
                         "https://www.linkedin.com/in/chinmay-arora-27682211b/",
                         "https://github.com/ChinmayA301"
@@ -217,6 +217,68 @@
 
         .hero-media-face-back {
             transform: rotateY(180deg);
+        }
+
+        .hero-portrait-stage {
+            position: relative;
+            width: min(80vw, 430px);
+            height: min(80vw, 430px);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background:
+                radial-gradient(circle at 50% 18%, rgba(255, 216, 159, 0.22), transparent 30%),
+                radial-gradient(circle at 50% 54%, rgba(46, 130, 255, 0.16), transparent 58%),
+                linear-gradient(180deg, rgba(15, 18, 26, 0.92), rgba(4, 6, 10, 0.98));
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.36);
+        }
+
+        .hero-portrait-backdrop {
+            position: absolute;
+            inset: 10%;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.1), transparent 54%),
+                radial-gradient(circle at 50% 64%, rgba(138, 209, 255, 0.16), transparent 64%);
+            filter: blur(4px);
+        }
+
+        .hero-portrait-stage .hero-img {
+            position: relative;
+            z-index: 1;
+            width: min(76vw, 410px);
+            height: auto;
+            max-height: 96%;
+            border: 0;
+            border-radius: 0;
+            object-fit: contain;
+            object-position: center bottom;
+            background: transparent;
+            box-shadow: none;
+            filter: saturate(1.03) contrast(1.03);
+        }
+
+        .hero-globe-hint {
+            position: absolute;
+            right: 1.35rem;
+            bottom: 1.35rem;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.85rem;
+            height: 2.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 50%;
+            background: rgba(8, 10, 14, 0.68);
+            color: #fff3de;
+            font-size: 1rem;
+            line-height: 1;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
         }
 
         .hero-globe-stage {
@@ -433,6 +495,11 @@
                 height: min(82vw, 360px);
             }
 
+            .hero-portrait-stage {
+                width: min(82vw, 360px);
+                height: min(82vw, 360px);
+            }
+
             .hero-globe-modal-grid {
                 grid-template-columns: 1fr;
             }
@@ -451,6 +518,19 @@
             .hero-globe-stage {
                 width: min(86vw, 320px);
                 height: min(86vw, 320px);
+            }
+
+            .hero-portrait-stage {
+                width: min(86vw, 320px);
+                height: min(86vw, 320px);
+            }
+
+            .hero-globe-hint {
+                right: 1rem;
+                bottom: 1rem;
+                width: 2.35rem;
+                height: 2.35rem;
+                font-size: 0.86rem;
             }
 
             .hero-globe-modal {
@@ -507,11 +587,13 @@
                     aria-label="Open interactive globe">
                     <div class="hero-media-flip">
                         <div class="hero-media-face">
-                            <div class="hero-globe-stage">
-                                <div class="hero-globe-halo"></div>
-                                <canvas id="heroGlobeCanvas" class="hero-globe-canvas" aria-hidden="true"></canvas>
-                                <img src="assets/images/profile1.png" alt="Profile Picture"
-                                    class="rounded-4 shadow-lg hero-img">
+                            <div class="hero-portrait-stage">
+                                <div class="hero-portrait-backdrop"></div>
+                                <img src="assets/images/profile-graduation.png" alt="Chinmay Arora in graduation regalia"
+                                    class="hero-img">
+                                <span class="hero-globe-hint" aria-hidden="true">
+                                    <i class="fas fa-globe-americas"></i>
+                                </span>
                             </div>
                         </div>
                         <div class="hero-media-face hero-media-face-back">

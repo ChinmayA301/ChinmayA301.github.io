@@ -20,11 +20,28 @@
 - [FinBizInfo](https://www.finbizinfo.com): Financial document intelligence deployment for OCR/RAG-style extraction, risk flags, and structured analysis.
 - TransferSignal: Private football transfer-rumour intelligence board with deterministic scoring, source reliability ledger, AI-assisted claim extraction, protected admin workflows, and newsroom-style UX. No private repo is public-linked.
 - Stock Analyzer: Coming-soon investment research and market analytics project reserved for a future GitHub upload. Expected public framing: data ingestion, factor/technical analysis, model evaluation, explainable signals, and investor-readable reporting.
+- Multi-Agent AI-Native ERP for Compliance Mapping: Active private build for mapping company workflows, obligations, controls, evidence, owners, readiness gaps, and recurring execution across compliance-heavy functions. Capability is public; implementation details and schemas are private.
+- AI Survey & Interviewing Tool: Active product workstream for adaptive interviews, survey design, multilingual response capture, quality scoring, structured extraction, and insight synthesis for stakeholder research and readiness assessment.
+- AI Football Intelligence & Tracking System: Active sports-intelligence direction spanning TransferSignal, source reliability, player/team tracking, tactical context, confidence scoring, and editorial-grade dashboards.
+- AI Lead Discovery & CRM Improvement: Private consulting-demo workstream for agentic lead discovery, enrichment, scoring, account research, outreach support, and CRM hygiene with auditable agent steps.
+- AI Governance Setup for Regulated Teams: Advisory and implementation work for HIPAA, finance, public-sector, and school contexts, including AI readiness, policy mapping, risk registers, acceptable-use boundaries, vendor review, human oversight, evidence trails, and pilot evaluation.
 - Freight Forwarding Finance BI: CargoWise-shaped Power BI/SQL analytics for job margin variance, AR aging, DSO, branch performance, and source reconciliation. Client/private details are not exposed.
 - [SignalGraph](https://github.com/ChinmayA301/Signal-Graph): Credibility-adjusted signal layer for detecting fake-star and open-source metric manipulation.
 - [Wax Seal](https://github.com/ChinmayA301/wax-seal): Trust-provenance framework for visible tamper evidence and digital-artifact authenticity.
 - [Geo Visualizer](https://geo-visualizer-mu.vercel.app): Interactive geographic visualization for the Indian subcontinent.
 - [Severance-Style Segmentation Interface](https://severance-style-visualizer.vercel.app): Product-style segmentation visualization interface.
+
+## The Lab Venture Exploration
+
+The Lab is Chinmay Arora's venture and product exploration surface. It highlights Aegis without making it the only focus and also includes career simulation, AI survey/interview intelligence, AI-native enterprise operating systems, freight/logistics intelligence, senior-focused AI phone assistance, experience-based media worlds, text-to-AR utility systems, high-friction data access products, sports intelligence, and nutrition/satiation system redesign.
+
+Relevant public writing and surfaces:
+
+- [Aegis AI Strategy](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): AI governance and readiness workstream.
+- [Text-to-AR Utility Systems](https://app.chinmayarora.com/blog/text-to-ar-human-centered-standard/): Human-centered AR and spatial interface framing.
+- [Simulation Engineering for AI](https://app.chinmayarora.com/blog/simulation-engineering-ai/): Proxy data, simulation, and decision systems under imperfect information.
+- [Successful Key Moment Metric](https://app.chinmayarora.com/blog/successful-key-moment-metric/): Football intelligence and sports analytics framing.
+- [Satiation-Adjusted Nutrition](https://app.chinmayarora.com/blog/satiation-adjusted/): Food, serving-size, and consumer behavior systems.
 
 ## Technical Writing
 
