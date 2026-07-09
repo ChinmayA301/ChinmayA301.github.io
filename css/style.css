@@ -424,16 +424,56 @@ header p.lead {
 
 .project-cta {
     display: inline-flex;
+    align-items: center;
     margin-top: 12px;
+    border: 1px solid rgba(157, 194, 255, 0.26);
+    border-radius: 999px;
     color: #9dc2ff;
     font-size: 0.85rem;
     font-weight: 600;
+    line-height: 1.2;
+    padding: 0.45rem 0.7rem;
     text-decoration: none;
 }
 
 .project-cta:hover {
     color: #eaf0ff;
+    border-color: rgba(157, 194, 255, 0.55);
     text-decoration: underline;
+}
+
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.project-actions .project-cta {
+    margin-top: 0;
+}
+
+.project-status {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    border: 1px solid rgba(138, 209, 255, 0.24);
+    border-radius: 999px;
+    background: rgba(138, 209, 255, 0.08);
+    color: #bfe6ff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.2;
+    padding: 0.32rem 0.58rem;
+}
+
+.project-privacy {
+    margin-top: 0.8rem;
+    border-left: 2px solid rgba(255, 216, 159, 0.42);
+    color: #b8beca;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    padding-left: 0.7rem;
 }
 
 /* Optional: brighten project titles slightly for hierarchy */

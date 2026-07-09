@@ -309,14 +309,23 @@ function resolveJsonUrls(path) {
 function renderProjects(projects) {
     const grid = document.getElementById("projectsGrid");
     if (!grid) return;
-    const githubProfile = "https://github.com/ChinmayA301";
     if (!projects.length) {
         grid.innerHTML = `<p class="text-muted small">No projects found yet.</p>`;
         return;
     }
     grid.innerHTML = projects.map(p => {
-        const link = p.link || p.tweetUrl || githubProfile;
+        const link = p.link || p.tweetUrl || "";
         const tags = (p.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${escapeHtml(t)}</span>`).join("");
+        const actions = (p.links || []).filter(item => item && item.url && item.label);
+        const actionLinks = actions.length ? `
+            <div class="project-actions mt-3">
+                ${actions.map(item => `
+                    <a class="project-cta" href="${escapeHtml(item.url)}" ${/^https?:\/\//i.test(item.url) ? 'target="_blank" rel="noopener"' : ""}>${escapeHtml(item.label)}</a>
+                `).join("")}
+            </div>
+        ` : "";
+        const status = p.status ? `<p class="project-status mb-2">${escapeHtml(p.status)}</p>` : "";
+        const privacy = p.privacy ? `<p class="project-privacy mb-0">${escapeHtml(p.privacy)}</p>` : "";
         const tweetEmbed = p.tweetUrl ? `
             <div class="project-embed mt-3">
                 <blockquote class="twitter-tweet" data-media-max-width="560">
@@ -326,23 +335,29 @@ function renderProjects(projects) {
                 </blockquote>
             </div>
         ` : "";
-        const cta = p.tweetUrl ? `
+        const tweetCta = p.tweetUrl ? `
             <a class="project-cta" href="${escapeHtml(link)}" target="_blank" rel="noopener">Open video post</a>
         ` : "";
         const cardBody = `
             <div class="card-body">
                 <h3 class="h5">${escapeHtml(p.title)}</h3>
+                ${status}
                 <p class="mb-2 small text-muted">${escapeHtml(p.description)}</p>
                 <div class="project-tags">${tags}</div>
                 ${tweetEmbed}
-                ${cta}
+                ${actionLinks || tweetCta}
+                ${privacy}
             </div>
         `;
         return `
           <div class="col-md-6">
             ${p.tweetUrl
                 ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
-                : `<a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">${cardBody}</a>`}
+                : actions.length
+                    ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
+                    : link
+                        ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">${cardBody}</a>`
+                        : `<article class="project-box card shadow-sm h-100">${cardBody}</article>`}
           </div>
         `;
     }).join("");

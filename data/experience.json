@@ -1,63 +1,95 @@
 [
     {
-        "title": "Graduate Research Assistant",
-        "org": "UMN • BPIC & Hennepin County DX/IDA",
-        "time": "Sep 2024 – Present",
+        "title": "AI Research Consultant",
+        "org": "CURA / Hennepin County Digital Experience",
+        "time": "May 2025 - Jan 2026",
         "location": "Minneapolis, MN",
         "bullets": [
-            "ML-driven resident segmentation & automated ETL pipelines; Power BI reporting for digital accessibility.",
-            "Responsible AI evaluation: fairness metrics, human-in-loop review, bias mitigation in county operations.",
-            "Geo/stat analysis using ArcGIS/GeoPandas/PySAL; integrated ADI/SVI & cohort data."
+            "Authored public-sector AI implementation guidance: readiness criteria, risk registers, success metrics, and human-review gates for county service teams supporting 1.2M+ residents.",
+            "Built resident segmentation research linking accessibility, digital literacy, language access, privacy concerns, and service barriers to AI-evaluation and digital-service priorities.",
+            "Translated stakeholder research and survey evidence into leadership-ready reporting, Power BI artifacts, and responsible-AI implementation recommendations."
         ]
     },
     {
-        "title": "Data Science Intern",
-        "org": "MarketMaker CRE",
-        "time": "Jul 2024 – Sep 2024",
+        "title": "Founder / Builder",
+        "org": "Aegis AI",
+        "time": "2025 - Present",
+        "location": "Minneapolis, MN / Remote",
+        "bullets": [
+            "Designed an AI governance and audit-readiness platform spanning readiness scorecards, risk registers, pilot gates, ROI logic, monitoring, and post-deployment evidence trails.",
+            "Connected governance requirements to implementation patterns across OCR, RAG, LLM orchestration, dashboard reporting, and human-in-the-loop control design.",
+            "Built public assessment and prototype surfaces while keeping private implementation details and regulated-workflow assumptions separated from public portfolio material."
+        ]
+    },
+    {
+        "title": "Graduate Research Volunteer",
+        "org": "Data Analysis & Management Group, University of Minnesota",
+        "time": "Spring 2025",
+        "location": "Minneapolis, MN",
+        "bullets": [
+            "Benchmarked small-language-model and RAG-chain behavior across Tree-of-Thought, Graph-of-Thought, direct retrieval, and similarity-search strategies.",
+            "Compared ChromaDB, FAISS, Pinecone, LangChain orchestration, and lightweight inference strategies for practical GenAI system design."
+        ]
+    },
+    {
+        "title": "Data Science / ML Intern",
+        "org": "MarketMakerCRE",
+        "time": "Jul 2024 - Sep 2024",
         "location": "Remote, USA",
         "bullets": [
-            "Python async scraping → ETL (dbt) → ML (XGBoost/RF) with SHAP/LIME explainability.",
-            "Deployed containerized FastAPI services; Azure SQL/Mongo integrations."
+            "Built scalable Python scraping and ETL pipelines with BeautifulSoup, Selenium, aiohttp, MongoDB, and Azure SQL, improving commercial-real-estate data acquisition speed 4x.",
+            "Applied XGBoost, Random Forest, KMeans, PCA, SHAP, and LIME for property valuation, segmentation, and explainable investor analysis.",
+            "Deployed containerized FastAPI services and Azure-backed workflows for production-facing data acquisition and ML experimentation."
         ]
     },
     {
-        "title": "Data Analyst (Marketing) Intern",
+        "title": "Data Analyst / Marketing Analytics Intern",
         "org": "Confetti AI",
-        "time": "May 2024 – Jul 2024",
+        "time": "May 2024 - Jul 2024",
         "location": "Remote, USA",
         "bullets": [
-            "A/B testing & funnel analytics (+25% conversion, +30% segmentation accuracy).",
-            "Built Tableau/Power BI dashboards for growth KPIs."
+            "Ran A/B tests, engagement analysis, and campaign reporting that improved targeted conversion by about 25%.",
+            "Built KPI dashboards and partnered with product and DevOps teams on data-backed personalization and feature-performance analysis."
         ]
     },
     {
-        "title": "IT Support Engineer / Data Analyst",
-        "org": "Luthra Corporate Advisors",
-        "time": "Nov 2021 – Jul 2023",
-        "location": "Remote / New Delhi, India",
+        "title": "Business Analytics / IT Solutions Intern",
+        "org": "Daikin India",
+        "time": "Jun 2022 - Jul 2022",
+        "location": "Gurugram, India",
         "bullets": [
-            "Financial analytics for US freight forwarding clients (Power BI, SQL, Excel VBA) – automated reporting & forecasting.",
-            "Deployed an LLM chatbot (LangChain/HuggingFace/Supabase/Chroma) to reduce support queries."
+            "Built QlikSense sales dashboards and reporting automation to improve sales visibility and decision speed.",
+            "Developed Python/Flask NLP support tooling with semantic-search concepts and explainability cues for internal knowledge access."
+        ]
+    },
+    {
+        "title": "Financial Analytics & BI Consultant",
+        "org": "Freight Forwarding Clients",
+        "time": "Project-based",
+        "location": "US / UAE / Turkiye",
+        "bullets": [
+            "Built CargoWise-shaped finance dashboards in Power BI, SQL, and Excel/VBA for job margin variance, AR aging, DSO, revenue mix, branch performance, and P&L reconciliation.",
+            "Improved reporting speed by about 40% and reduced manual reconciliation errors by about 20% through cleaner ETL, agreed KPI definitions, and source-tied validation."
         ]
     },
     {
         "title": "M.S. in Data Science",
-        "org": "University of Minnesota",
-        "time": "2023 – 2025",
-        "location": "Twin Cities, MN",
+        "org": "University of Minnesota - Twin Cities",
+        "time": "Sep 2023 - May 2026",
+        "location": "Minneapolis, MN",
         "bullets": [
-            "Courses: Data Mining, ML, Spatial DS, Viz w/ AI, Categorical & Multivariate Stats, DB Systems, AI for Sequential Decisions.",
-            "Projects: RAG systems, OCR+NLP, Sports Analytics, Manufacturing Optimizer."
+            "Coursework: Machine Learning, Data Mining, Spatial Data Science, Visualization with AI, Database Systems, Categorical and Multivariate Analysis, Bayesian Optimization, and Reinforcement Learning.",
+            "Portfolio emphasis: RAG systems, responsible-AI evaluation, geospatial analytics, BI decision systems, ML benchmarking, and AI governance."
         ]
     },
     {
-        "title": "B.Tech. in Computer Science",
-        "org": "SRM Institute of Science & Technology",
-        "time": "2019 – 2023",
+        "title": "B.Tech. in Computer Science & Engineering",
+        "org": "SRM Institute of Science and Technology",
+        "time": "2019 - 2023",
         "location": "Chennai, India",
         "bullets": [
-            "Research: Face Mask Detection, Medical Image Segmentation; 2 papers (IJSER).",
-            "Leadership: Enactus SRM – product & ops for e-commerce initiative."
+            "Graduated with GPA 8.98/10; research and project work included face-mask detection, medical image segmentation, and university payment-system design.",
+            "Led product and operations work through Enactus SRM, building early experience in venture execution and cross-functional delivery."
         ]
     }
 ]

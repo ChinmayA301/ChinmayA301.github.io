@@ -80,4 +80,28 @@
     <loc>https://app.chinmayarora.com/blog/context-passport/</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://app.chinmayarora.com/blog/AI-Governance-and-Privacy/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://app.chinmayarora.com/blog/fake-star/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://app.chinmayarora.com/blog/waxseal-cybersec/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://app.chinmayarora.com/blog/data-science-career-audit/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://app.chinmayarora.com/blog/New_InternetIP_War/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://app.chinmayarora.com/blog/decision-intelligence/</loc>
+    <priority>0.7</priority>
+  </url>
 </urlset>

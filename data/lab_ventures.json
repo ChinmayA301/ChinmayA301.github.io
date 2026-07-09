@@ -1,10 +1,10 @@
 [
     {
-        "title": "Aegis AI Strategy",
-        "summary": "AI compliance infrastructure for audit preparation, policy cross-referencing, and governance-ready enterprise controls.",
-        "business_hook": "Aegis shortens audit cycles and reduces regulatory risk by surfacing policy conflicts before they become operational failures.",
-        "url": "https://chinmayarora.com/ideas/aegis-ai-strategy/",
-        "tags": ["AI Compliance", "Auditing", "NLP", "B2B SaaS"]
+        "title": "Aegis AI Governance & Readiness",
+        "summary": "AI readiness and governance workstream for assessment, risk registers, human-review gates, audit evidence, monitoring, and deployable AI adoption controls.",
+        "business_hook": "Aegis helps compliance-sensitive teams move from vague AI ambition to measurable readiness, controlled pilots, and evidence-backed governance.",
+        "url": "https://app.chinmayarora.com/ideas/aegis-ai-strategy/",
+        "tags": ["AI Governance", "Auditing", "Responsible AI", "B2B SaaS"]
     },
     {
         "title": "Public Infrastructure Copilot",

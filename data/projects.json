@@ -1,141 +1,271 @@
 [
     {
+        "title": "Aegis AI Governance & Readiness Platform",
+        "description": "Governance and audit-readiness workstream for AI adoption: readiness scorecards, risk registers, human-review gates, monitoring logic, and executive-facing assessment flows for compliance-sensitive teams.",
+        "status": "Highlighted workstream",
+        "privacy": "Product and deployment shared; private implementation details withheld.",
+        "tags": [
+            "AI Governance",
+            "Responsible AI",
+            "Strategy",
+            "Audit"
+        ],
+        "link": "https://aegis-ai.pages.dev",
+        "links": [
+            {
+                "label": "Live App",
+                "url": "https://aegis-ai.pages.dev"
+            },
+            {
+                "label": "Readiness Survey",
+                "url": "https://aegis-survey.vercel.app"
+            },
+            {
+                "label": "Strategy Page",
+                "url": "/ideas/aegis-ai-strategy/"
+            },
+            {
+                "label": "Related Writing",
+                "url": "/blog/the-impact-of-ai-on-local-government-digital-experience/"
+            }
+        ]
+    },
+    {
+        "title": "PolyRAG: Multi-Model Governance RAG",
+        "description": "Citation-grounded RAG over real AI-governance documents with one retrieval pass and side-by-side answers from multiple OpenAI-compatible models; includes ingestion, FAISS indexing, OCR fallback, evaluation, FastAPI, Docker, and hosted demo.",
+        "status": "Public repo + demo",
+        "tags": [
+            "RAG",
+            "LLM Evaluation",
+            "AI Governance",
+            "FastAPI"
+        ],
+        "link": "https://chinmaya301-polyrag.hf.space",
+        "links": [
+            {
+                "label": "Live Demo",
+                "url": "https://chinmaya301-polyrag.hf.space"
+            },
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/PolyRAG"
+            }
+        ]
+    },
+    {
+        "title": "TransferSignal",
+        "description": "Private product build for a source-weighted football transfer-rumour ledger: deterministic scoring, source reliability tracking, AI-assisted claim extraction, protected admin workflows, and an editorial newsroom-style board.",
+        "status": "Private product build",
+        "privacy": "No private repo or internal code linked; deployment link can be added once the final public URL is confirmed.",
+        "tags": [
+            "Product Engineering",
+            "AI Extraction",
+            "Source Reliability",
+            "Sports Analytics"
+        ],
+        "links": [
+            {
+                "label": "Product Notes",
+                "url": "/projects/"
+            }
+        ]
+    },
+    {
+        "title": "Stock Analyzer",
+        "description": "Coming-soon investment research and market analytics project. Reserved for a GitHub release that will highlight data ingestion, factor/technical analysis, model evaluation, explainable signals, and investor-readable reporting without overstating predictive certainty.",
+        "status": "Coming soon",
+        "privacy": "GitHub and deployment links will be added after the public repo is uploaded.",
+        "tags": [
+            "Financial Analytics",
+            "Market Data",
+            "Time Series",
+            "Explainable Signals"
+        ]
+    },
+    {
+        "title": "Operations Control Tower",
+        "description": "Operations-analytics control tower on 98k real Olist orders: SQL star schema, data-quality checks, supplier risk score, executive KPIs, and a Looker Studio-ready decision dashboard for logistics intervention planning.",
+        "status": "Public case study",
+        "tags": [
+            "Analytics Engineering",
+            "Looker Studio",
+            "SQL",
+            "Data Quality"
+        ],
+        "link": "https://github.com/ChinmayA301/Operations-Control-Tower",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Operations-Control-Tower"
+            }
+        ]
+    },
+    {
+        "title": "Healthcare Readmission Risk with Fairness & Calibration",
+        "description": "Responsible-AI risk-modeling prototype on real UCI hospital data with leakage-controlled cohort design, calibration, subgroup fairness, SHAP, Fairlearn checks, and an honest model-card recommendation not to deploy as-is.",
+        "status": "Public case study",
+        "tags": [
+            "Responsible AI",
+            "Healthcare ML",
+            "Fairness",
+            "Calibration"
+        ],
+        "link": "https://github.com/ChinmayA301/Risk-Prediction-with-Fairness-Geography",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Risk-Prediction-with-Fairness-Geography"
+            }
+        ]
+    },
+    {
+        "title": "Tabular ML Benchmark: Human FE vs AutoML",
+        "description": "Config-driven benchmark across healthcare, operations, and labor-market datasets measuring AUC, calibration, runtime, and robustness under shift; shows preprocessing and validation design matter more than model shopping.",
+        "status": "Public benchmark",
+        "tags": [
+            "ML Evaluation",
+            "MLOps",
+            "Drift",
+            "Benchmarking"
+        ],
+        "link": "https://github.com/ChinmayA301/Tabular-ML-Benchmark-Human-Feature-Engineering-vs-AutoML-Agentic-Baselines",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Tabular-ML-Benchmark-Human-Feature-Engineering-vs-AutoML-Agentic-Baselines"
+            }
+        ]
+    },
+    {
+        "title": "Financial Document Intelligence (FinBizInfo)",
+        "description": "Financial-statement OCR/RAG workflow for extracting ratios, risk flags, auditor remarks, and compliance gaps from noisy documents with citation-backed review and structured analytics.",
+        "status": "Live deployment",
+        "tags": [
+            "Financial NLP",
+            "RAG",
+            "OCR",
+            "Text-to-SQL"
+        ],
+        "link": "https://www.finbizinfo.com",
+        "links": [
+            {
+                "label": "Live Site",
+                "url": "https://www.finbizinfo.com"
+            }
+        ]
+    },
+    {
+        "title": "Freight Forwarding Finance BI",
+        "description": "CargoWise-shaped Power BI and SQL analytics for freight forwarding finance: job margin variance, AR aging, DSO, revenue by mode/lane/branch, and reconciliation back to source reports.",
+        "status": "Client-style/private work",
+        "privacy": "Described at outcome level only; no client data, private repo, or internal dashboards exposed.",
+        "tags": [
+            "Power BI",
+            "CargoWise",
+            "Logistics",
+            "Finance Analytics"
+        ]
+    },
+    {
+        "title": "Data Science Career Audit",
+        "description": "Source-backed labor-market analysis combining BLS/Stanford HAI/McKinsey/WEF signals with public job-posting NLP to explain how AI pressure changes the data-science role bundle.",
+        "status": "Public analysis + essay",
+        "tags": [
+            "Labor Analytics",
+            "NLP",
+            "Technical Writing",
+            "Strategy"
+        ],
+        "link": "https://github.com/ChinmayA301/data-science-career-audit",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/data-science-career-audit"
+            },
+            {
+                "label": "Essay",
+                "url": "/blog/data-science-career-audit/"
+            }
+        ]
+    },
+    {
+        "title": "SignalGraph",
+        "description": "Credibility-adjusted signal layer for detecting fake-star and metric manipulation in open-source projects, framed for technical diligence and investor-style evidence review.",
+        "status": "Public repo",
+        "tags": [
+            "Trust & Safety",
+            "Graph Signals",
+            "Due Diligence",
+            "Open Source"
+        ],
+        "link": "https://github.com/ChinmayA301/Signal-Graph",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Signal-Graph"
+            }
+        ]
+    },
+    {
+        "title": "Wax Seal Trust Provenance",
+        "description": "Human-legible trust-provenance framework for digital artifacts, focused on visible tamper evidence, source lineage, and operational trust signals rather than opaque trust scores.",
+        "status": "Public repo",
+        "tags": [
+            "Trust Provenance",
+            "Governance",
+            "TypeScript",
+            "Security"
+        ],
+        "link": "https://github.com/ChinmayA301/wax-seal",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/wax-seal"
+            }
+        ]
+    },
+    {
         "title": "Geo Visualizer for the Indian Subcontinent",
-        "description": "Portfolio-grade historical flat-map visualization for culture, trade, religion, migration, political power, and ideas across the subcontinent, with a time slider, animated routes, filters, clickable nodes, and an explanatory legacy panel.",
+        "description": "Interactive historical flat-map visualization for culture, trade, migration, religion, political power, and ideas across the subcontinent with filters, routes, nodes, and explanatory context.",
+        "status": "Live deployment",
         "tags": [
             "React",
             "TypeScript",
             "Geo Visualization",
             "Interactive Data Product"
         ],
-        "link": "https://twitter.com/Ch_Aurora3/status/2041647175566807496",
-        "tweetUrl": "https://twitter.com/Ch_Aurora3/status/2041647175566807496?ref_src=twsrc%5Etfw",
-        "tweetText": "Geo Visualizer for culture movement in subcontinent_p1 pic.twitter.com/IX9NMmKooI",
-        "tweetDate": "April 7, 2026"
+        "link": "https://geo-visualizer-mu.vercel.app",
+        "links": [
+            {
+                "label": "Live Demo",
+                "url": "https://geo-visualizer-mu.vercel.app"
+            },
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Geo-Visualizer"
+            }
+        ]
     },
     {
-        "title": "Severance-Style User Segmentation Interface",
-        "description": "High-concept segmentation product that presents user, resident, or customer segments as sterile identity modules and rooms, with strong transitions, comparison views, deliberate reveal, and mocked React + TypeScript data architecture.",
+        "title": "Severance-Style Segmentation Interface",
+        "description": "High-concept segmentation interface that turns customer, resident, or user segments into memorable identity modules with deliberate reveal, comparison views, and product-grade interaction design.",
+        "status": "Live deployment",
         "tags": [
             "React",
             "TypeScript",
             "Segmentation",
             "Product Design"
         ],
-        "link": "https://twitter.com/Ch_Aurora3/status/2041646983270576282",
-        "tweetUrl": "https://twitter.com/Ch_Aurora3/status/2041646983270576282?ref_src=twsrc%5Etfw",
-        "tweetText": "Severance style data viz for user segmentation pic.twitter.com/HSUDU2DLIQ",
-        "tweetDate": "April 7, 2026"
-    },
-    {
-        "title": "Financial Balance-Sheet RAG System (FinBizInfo)",
-        "description": "RAG system that extracts ratios, flags risks, and supports forecasting from noisy PDFs with citation-backed answers and tabular validation.",
-        "tags": [
-            "GenAI",
-            "RAG",
-            "Text-to-SQL",
-            "MLOps"
-        ],
-        "link": "https://www.finbizinfo.com"
-    },
-    {
-        "title": "Distributed RAG Microservices (MLOps-Ready)",
-        "description": "Modular microservice architecture with CI/CD to deploy retrieval and inference components as reusable templates.",
-        "tags": [
-            "MLOps",
-            "Microservices",
-            "RAG"
-        ],
-        "link": ""
-    },
-    {
-        "title": "County-Wide Digital Access Segmentation",
-        "description": "Resident personas built from ADI/SVI, tech-access proxies, and behavioral segmentation to inform equitable digital service redesign.",
-        "tags": [
-            "Responsible AI",
-            "Public Sector",
-            "Segmentation"
-        ]
-    },
-    {
-        "title": "Diabetes Outcomes & Neighborhood Deprivation Study",
-        "description": "Spatial modeling and correlation analysis linking diabetes outcomes with neighborhood deprivation indices to guide intervention planning.",
-        "tags": [
-            "Health Analytics",
-            "Spatial Stats",
-            "SDOH"
-        ]
-    },
-    {
-        "title": "Trend Forecasting & Influence Optimization",
-        "description": "NLP + Bayesian optimization + RL to predict campaign virality and recommend actions to improve marketing ROI.",
-        "tags": [
-            "NLP",
-            "Bayesian Opt",
-            "RL"
-        ]
-    },
-    {
-        "title": "Commercial Real Estate Data Pipeline on Azure",
-        "description": "Automated multi-source property ingestion and dbt modeling; accelerated data acquisition 4× for ML workflows.",
-        "tags": [
-            "ETL",
-            "Azure",
-            "dbt"
-        ]
-    },
-    {
-        "title": "Customer Service Experience Dashboard",
-        "description": "Power BI KPI automation and executive reporting for service performance transparency.",
-        "tags": [
-            "Power BI",
-            "DAX",
-            "Analytics"
-        ]
-    },
-    {
-        "title": "Sales Analytics Automation (KPMG Collaboration)",
-        "description": "QlikSense dashboards and SQL automation that improved reporting efficiency by ~35%.",
-        "tags": [
-            "QlikSense",
-            "SQL",
-            "Automation"
-        ]
-    },
-    {
-        "title": "Interactive PAC-MAN using MobileNet",
-        "description": "Gesture-controlled PAC-MAN game using real-time MobileNet inference for interactive gameplay.",
-        "tags": [
-            "Computer Vision",
-            "MobileNet",
-            "TensorFlow"
-        ]
-    },
-    {
-        "title": "GeoAI for Environmental Analysis",
-        "description": "Geospatial AI with spatial statistics to analyze and predict environmental changes.",
-        "tags": [
-            "GeoAI",
-            "Spatial Stats",
-            "Sustainability"
-        ]
-    },
-    {
-        "title": "Health Informatics: Diabetes & SDOH",
-        "description": "Analyzed diabetes prevalence against ADI/SVI neighborhood indices using spatial visualization.",
-        "tags": [
-            "Health Data",
-            "SDOH",
-            "GeoAI"
-        ]
-    },
-    {
-        "title": "Business Optimization via Social Data",
-        "description": "NLP + RL + Bayesian optimization for virality detection, ad optimization, and trend forecasting.",
-        "tags": [
-            "NLP",
-            "RL",
-            "Bayesian Opt"
+        "link": "https://severance-style-visualizer.vercel.app",
+        "links": [
+            {
+                "label": "Live Demo",
+                "url": "https://severance-style-visualizer.vercel.app"
+            },
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Severance-style-Visualizer"
+            }
         ]
     }
 ]
