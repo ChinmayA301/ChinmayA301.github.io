@@ -24,9 +24,9 @@ SUMMARY_MODEL = "models/gemini-2.5-flash"
 CHUNK_WORDS = 220
 EMBED_BATCH_SIZE = 20
 API_CALL_DELAY_SECONDS = 20
-RATE_LIMIT_RETRY_SECONDS = 90
-MAX_RETRIES = 6
-DEFAULT_MAX_INGEST_DOCUMENTS = 160
+RATE_LIMIT_RETRY_SECONDS = 45
+MAX_RETRIES = 2
+DEFAULT_MAX_INGEST_DOCUMENTS = 80
 PORTFOLIO_HOSTS = {
     "app.chinmayarora.com",
     "chinmayarora.com",
@@ -629,6 +629,39 @@ def build_data_documents(data_dir: Path) -> list[dict[str, Any]]:
     return documents
 
 
+def build_context_file_documents(context_file: Path) -> list[dict[str, Any]]:
+    payload = json.loads(context_file.read_text(encoding="utf-8"))
+    if not isinstance(payload, list):
+        raise RuntimeError(f"Manual context file must contain a JSON list: {context_file}")
+
+    documents = []
+    for idx, item in enumerate(payload):
+        if not isinstance(item, dict):
+            continue
+
+        title = item.get("title") or f"{context_file.stem}-{idx}"
+        url = normalize_public_url(item.get("url") or item.get("link"), "/")
+        source_text = text_from_json_item(item)
+        if not source_text.strip():
+            continue
+
+        for chunk_index, chunk in enumerate(chunk_text(source_text)):
+            documents.append(
+                {
+                    "id": f"{context_file.stem}-{slugify(title)}-{chunk_index}",
+                    "title": title,
+                    "url": url,
+                    "type": item.get("type") or "manual_context",
+                    "date": str(item.get("date", "")).strip(),
+                    "tags": item.get("tags", []),
+                    "summary": item.get("summary") or item.get("description") or summarize_chunk(chunk),
+                    "chunk_text": chunk,
+                    "fulltext": f"{title}\n{chunk}",
+                }
+            )
+    return documents
+
+
 def document_priority(document: dict[str, Any]) -> int:
     searchable = " ".join(
         str(document.get(key, ""))
@@ -673,6 +706,10 @@ def prioritize_documents(documents: list[dict[str, Any]], max_documents: int) ->
     return ranked[:max_documents]
 
 
+def quota_skip_enabled() -> bool:
+    return parse_bool(os.getenv("ALLOW_INGEST_QUOTA_SKIP", "true"))
+
+
 def main() -> None:
     load_dotenv(Path(__file__).resolve().parent / ".env")
 
@@ -686,8 +723,12 @@ def main() -> None:
     embed_model = os.getenv("GEMINI_EMBED_MODEL", DEFAULT_EMBED_MODEL)
     embed_dimensions = parse_optional_int(os.getenv("GEMINI_EMBED_DIMENSIONS"))
     max_documents = parse_optional_int(os.getenv("MAX_INGEST_DOCUMENTS")) or DEFAULT_MAX_INGEST_DOCUMENTS
+    manual_context_file = os.getenv("MANUAL_CONTEXT_FILE")
 
-    documents = build_page_documents() + build_blog_documents() + build_data_documents(data_dir)
+    if manual_context_file:
+        documents = build_context_file_documents(Path(manual_context_file).resolve())
+    else:
+        documents = build_page_documents() + build_blog_documents() + build_data_documents(data_dir)
     if not documents:
         raise RuntimeError("No documents were generated for ingestion.")
     original_document_count = len(documents)
@@ -699,34 +740,43 @@ def main() -> None:
 
     vectors = []
     with httpx.Client(timeout=30.0) as gemini_client:
-        for start in range(0, len(documents), EMBED_BATCH_SIZE):
-            batch_docs = documents[start:start + EMBED_BATCH_SIZE]
-            dense_vectors = embed_documents(
-                gemini_client,
-                gemini_api_key,
-                embed_model,
-                batch_docs,
-                embed_dimensions,
-            )
-            for document, dense_vector in zip(batch_docs, dense_vectors):
-                sparse_vector = sanitize_sparse_vector(bm25.encode_documents(document["chunk_text"]))
-                vectors.append(
-                    {
-                        "id": document["id"],
-                        "values": dense_vector,
-                        "sparse_values": sparse_vector,
-                        "metadata": {
-                            "title": document["title"],
-                            "url": document["url"],
-                            "type": document["type"],
-                            "source": document["type"],
-                            "date": document.get("date", ""),
-                            "tags": document.get("tags", []),
-                            "summary": document.get("summary", ""),
-                            "chunk_text": document["chunk_text"],
-                        },
-                    }
+        try:
+            for start in range(0, len(documents), EMBED_BATCH_SIZE):
+                batch_docs = documents[start:start + EMBED_BATCH_SIZE]
+                dense_vectors = embed_documents(
+                    gemini_client,
+                    gemini_api_key,
+                    embed_model,
+                    batch_docs,
+                    embed_dimensions,
                 )
+                for document, dense_vector in zip(batch_docs, dense_vectors):
+                    sparse_vector = sanitize_sparse_vector(bm25.encode_documents(document["chunk_text"]))
+                    vectors.append(
+                        {
+                            "id": document["id"],
+                            "values": dense_vector,
+                            "sparse_values": sparse_vector,
+                            "metadata": {
+                                "title": document["title"],
+                                "url": document["url"],
+                                "type": document["type"],
+                                "source": document["type"],
+                                "date": document.get("date", ""),
+                                "tags": document.get("tags", []),
+                                "summary": document.get("summary", ""),
+                                "chunk_text": document["chunk_text"],
+                            },
+                        }
+                    )
+        except Exception as exc:
+            if is_rate_limit_error(exc) and quota_skip_enabled():
+                print(
+                    "::warning::Gemini embedding quota is currently rate-limited. "
+                    "Skipped Pinecone update and left the existing portfolio index intact."
+                )
+                return
+            raise
 
         client = Pinecone(api_key=pinecone_api_key)
         index = client.Index(host=pinecone_host)

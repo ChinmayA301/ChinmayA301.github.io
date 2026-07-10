@@ -50,6 +50,8 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_EMBED_MODEL: models/gemini-embedding-001
           GEMINI_EMBED_DIMENSIONS: 1024
-          MAX_INGEST_DOCUMENTS: 160
+          MAX_INGEST_DOCUMENTS: 80
+          ALLOW_INGEST_QUOTA_SKIP: true
+          MANUAL_CONTEXT_FILE: ../data/aegis_rag_context.json
           DATA_DIR: ../data
         run: python ingest.py
