@@ -15,6 +15,10 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+exclude:
+  - Readme.md
+  - VISIBILITY.md
+
 defaults:
   - scope:
       path: ""
