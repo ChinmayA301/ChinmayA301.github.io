@@ -49,6 +49,56 @@ GENERATE_MODEL_ALIASES = {
     "models/gemini-2.5-flash": "models/gemini-2.5-flash",
     "gemini-2.5-flash": "models/gemini-2.5-flash",
 }
+CURATED_CONTEXT_MATCHES = [
+    {
+        "id": "manual-aegis-platform",
+        "score": 1.0,
+        "source": "manual_context",
+        "title": "Aegis AI Governance & Readiness Platform",
+        "url": AEGIS_LIVE_URL,
+        "summary": (
+            "Aegis is Chinmay Arora's highlighted AI governance and readiness workstream for "
+            "compliance-sensitive teams."
+        ),
+        "tags": ["Aegis", "AI Governance", "Compliance", "Audit Readiness", "Responsible AI", "Strategy"],
+    },
+    {
+        "id": "manual-aegis-strategy",
+        "score": 0.94,
+        "source": "manual_context",
+        "title": "Aegis Strategy Page",
+        "url": f"{APP_SITE_URL}/ideas/aegis-ai-strategy/",
+        "summary": (
+            "A practical operating layer for regulated AI adoption: policy-to-control mapping, readiness "
+            "scoring, risk ownership, review gates, evidence trails, and deployment-readiness artifacts."
+        ),
+        "tags": ["Aegis", "AI Strategy", "Governance", "Risk", "Readiness"],
+    },
+    {
+        "id": "manual-aegis-survey",
+        "score": 0.9,
+        "source": "manual_context",
+        "title": "Aegis Readiness Survey",
+        "url": "https://aegis-survey.vercel.app",
+        "summary": (
+            "Survey surface for organizational AI posture, risk controls, human review, data exposure, "
+            "compliance expectations, and operating readiness."
+        ),
+        "tags": ["Aegis", "Survey", "AI Readiness", "Compliance Mapping"],
+    },
+    {
+        "id": "manual-profile-fit",
+        "score": 0.84,
+        "source": "manual_context",
+        "title": "Chinmay Arora Role Fit: AI Engineering, Data Science, Analytics, and Governance",
+        "url": APP_SITE_URL,
+        "summary": (
+            "Chinmay works across AI engineering, data science, data analysis, analytics engineering, and "
+            "AI governance strategy with privacy-safe presentation of private product work."
+        ),
+        "tags": ["Data Scientist", "Data Analyst", "AI Engineer", "AI Governance", "Analytics Engineering"],
+    },
+]
 
 
 def build_cors_headers(origin: str | None) -> dict[str, str]:
@@ -84,6 +134,10 @@ def normalize_match_url(title: str | None, url: str | None) -> str:
             suffix += f"#{parsed.fragment}"
         return f"{APP_SITE_URL}{path}{suffix}"
     return raw_url
+
+
+def curated_context_matches() -> list[dict[str, Any]]:
+    return [dict(match) for match in CURATED_CONTEXT_MATCHES]
 
 
 def tokenize(text: str) -> list[str]:
@@ -321,11 +375,13 @@ class Default(WorkerEntrypoint):
             except Exception as exc:
                 if is_gemini_quota_error(str(exc)):
                     retrieval_degraded = True
-                    matches = []
+                    matches = curated_context_matches()
                 else:
                     raise RuntimeError(f"retrieval_phase failed: {type(exc).__name__}: {exc}") from exc
 
-            if matches:
+            if matches and retrieval_degraded:
+                pitch = build_grounded_fallback_pitch(visitor_name, company_name, job_title, research_packet, matches)
+            elif matches:
                 try:
                     pitch = await self.generate_pitch(visitor_name, company_name, job_title, research_packet, matches)
                 except Exception as exc:
@@ -348,7 +404,9 @@ class Default(WorkerEntrypoint):
             "pitch": pitch,
         }
         if retrieval_degraded:
-            payload["notice"] = "Portfolio retrieval is temporarily rate-limited. Returning a research-based pitch."
+            payload["notice"] = (
+                "Portfolio retrieval is temporarily rate-limited. Returning manually curated Aegis context."
+            )
         if debug_enabled(self.env):
             payload["retrieval_debug"] = {
                 "namespace": self.env.PINECONE_NAMESPACE,
