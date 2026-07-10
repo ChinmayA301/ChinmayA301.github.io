@@ -13,6 +13,8 @@ ALLOWED_ORIGINS = {
     "https://app.chinmayarora.com",
     "https://chinmayarora.com",
 }
+APP_SITE_URL = "https://app.chinmayarora.com"
+AEGIS_LIVE_URL = "https://aegisai-5wz.pages.dev"
 CORS_HEADERS = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
@@ -62,6 +64,26 @@ def json_response(payload: dict[str, Any], status: int = 200, origin: str | None
     headers = build_cors_headers(origin)
     headers["Content-Type"] = "application/json; charset=utf-8"
     return Response(json.dumps(payload), status=status, headers=headers)
+
+
+def normalize_match_url(title: str | None, url: str | None) -> str:
+    title_text = (title or "").lower()
+    raw_url = (url or "").strip()
+    if "aegis" in title_text:
+        return AEGIS_LIVE_URL
+    if not raw_url:
+        return APP_SITE_URL
+
+    parsed = urlparse(raw_url)
+    if parsed.netloc in {"chinmayarora.com", "www.chinmayarora.com"}:
+        path = parsed.path or "/"
+        suffix = ""
+        if parsed.query:
+            suffix += f"?{parsed.query}"
+        if parsed.fragment:
+            suffix += f"#{parsed.fragment}"
+        return f"{APP_SITE_URL}{path}{suffix}"
+    return raw_url
 
 
 def tokenize(text: str) -> list[str]:
@@ -469,7 +491,7 @@ class Default(WorkerEntrypoint):
                     "score": match.get("score"),
                     "source": metadata.get("source"),
                     "title": metadata.get("title"),
-                    "url": metadata.get("url"),
+                    "url": normalize_match_url(metadata.get("title"), metadata.get("url")),
                     "summary": metadata.get("summary") or metadata.get("description"),
                     "tags": metadata.get("tags", []),
                 }
