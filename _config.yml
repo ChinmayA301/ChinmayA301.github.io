@@ -1,7 +1,7 @@
 title: Chinmay Arora
 email: chinmayarora2001@gmail.com
 description: >-
-  Chinmay Arora's blog on data science, machine learning, GenAI, and analytics engineering.
+  Chinmay Arora's portfolio and research notes on AI engineering, data science, AI governance, RAG systems, analytics engineering, and concept-stage AI products.
 baseurl: ""
 url: "https://app.chinmayarora.com"
 lang: en_US
@@ -24,11 +24,13 @@ defaults:
       author: Chinmay Arora
 
 seo:
-  type: Blog
-  name: Chinmay Arora Blog
+  type: Person
+  name: Chinmay Arora
   links:
     - https://www.linkedin.com/in/chinmay-arora-27682211b/
     - https://github.com/ChinmayA301
+    - https://app.chinmayarora.com/
+    - https://aegis-ai.pages.dev
 
 social:
   name: Chinmay Arora

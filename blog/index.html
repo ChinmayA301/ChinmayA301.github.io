@@ -1,14 +1,14 @@
 ---
 layout: blog
-title: AI Systems Blog
-description: BLUF-first notes on data science, machine learning engineering, retrieval systems, evaluation, and AI product design.
+title: AI Research Notes and Concept Essays
+description: Research notes, concept essays, and evidence-backed analysis on AI governance, data science, RAG systems, analytics, media systems, and product strategy.
 permalink: /blog/
 ---
 <section class="blog-mini-hero" aria-labelledby="blog-overview">
-  <p class="eyebrow mb-2">Technical Notes</p>
-  <h2 id="blog-overview" class="h2 mb-2">Practical notes on building AI systems that survive contact with reality</h2>
-  <p class="blog-quick-notes mb-2">A focused blog for building practical AI systems</p>
-  <p class="section-text mb-4">BLUF-first writing on model deployment, retrieval pipelines, evaluation, and real-world product tradeoffs.</p>
+  <p class="eyebrow mb-2">Research and Concept Notes</p>
+  <h2 id="blog-overview" class="h2 mb-2">Concept sharing, evidence audits, and AI systems research notes</h2>
+  <p class="blog-quick-notes mb-2">A portfolio of theses, frameworks, and source-backed analysis</p>
+  <p class="section-text mb-4">Research-style writing on AI governance, data science, retrieval systems, product strategy, media systems, sports intelligence, and decision design.</p>
   <div class="d-flex flex-wrap gap-2">
     {% assign latest_post = site.posts.first %}
     {% if latest_post %}
@@ -25,14 +25,40 @@ permalink: /blog/
     <p class="blog-stat-label mb-0">Published posts</p>
   </article>
   <article class="blog-stat">
-    <p class="blog-stat-value">BLUF + TL;DR</p>
-    <p class="blog-stat-label mb-0">Fast skim format</p>
+    <p class="blog-stat-value">{{ site.posts | where: "content_type", "research_concept" | size }}</p>
+    <p class="blog-stat-label mb-0">Research / concept notes</p>
   </article>
   <article class="blog-stat">
-    <p class="blog-stat-value">SEO Ready</p>
-    <p class="blog-stat-label mb-0">Structured data enabled</p>
+    <p class="blog-stat-value">Schema + Sitemap</p>
+    <p class="blog-stat-label mb-0">Search visibility enabled</p>
   </article>
 </section>
+
+{% assign concept_posts = site.posts | where: "content_type", "research_concept" %}
+{% if concept_posts.size > 0 %}
+<section aria-labelledby="concept-notes" class="mt-5">
+  <h2 id="concept-notes" class="h3 mb-3">Flagged Research / Concept Notes</h2>
+  <p class="section-text">These posts are framed as research concepts, product theses, or speculative system designs rather than implementation guides.</p>
+  <ol class="blog-list" itemscope itemtype="https://schema.org/ItemList">
+    {% for post in concept_posts %}
+    <li class="blog-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="position" content="{{ forloop.index }}">
+      <article itemscope itemtype="https://schema.org/BlogPosting">
+        <h3 class="h5 mb-1"><a href="{{ post.url | relative_url }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a></h3>
+        <div class="blog-card-meta">
+          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: "Research / Concept Note" }}</span>
+          {% if post.search_phrase %}
+          <span class="blog-search-phrase">{{ post.search_phrase }}</span>
+          {% endif %}
+        </div>
+        <p class="small text-muted mb-2"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %-d, %Y" }}</time></p>
+        <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p>
+      </article>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
 
 <section aria-labelledby="latest-posts" class="mt-5">
   <h2 id="latest-posts" class="h3 mb-3">All Posts</h2>
@@ -42,6 +68,14 @@ permalink: /blog/
       <meta itemprop="position" content="{{ forloop.index }}">
       <article itemscope itemtype="https://schema.org/BlogPosting">
         <h3 class="h5 mb-1"><a href="{{ post.url | relative_url }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a></h3>
+        {% if post.content_type %}
+        <div class="blog-card-meta">
+          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: post.content_type | replace: "_", " " }}</span>
+          {% if post.search_phrase %}
+          <span class="blog-search-phrase">{{ post.search_phrase }}</span>
+          {% endif %}
+        </div>
+        {% endif %}
         <p class="small text-muted mb-2"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %-d, %Y" }}</time></p>
         <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p>
       </article>
@@ -68,7 +102,8 @@ permalink: /blog/
       "headline": {{ post.title | jsonify }},
       "url": {{ post.url | absolute_url | jsonify }},
       "datePublished": "{{ post.date | date_to_xmlschema }}",
-      "description": {{ post.description | default: post.excerpt | strip_html | strip_newlines | jsonify }}
+      "description": {{ post.description | default: post.excerpt | strip_html | strip_newlines | jsonify }}{% if post.content_type %},
+      "genre": {{ post.content_label | default: post.content_type | jsonify }}{% endif %}
     }{% unless forloop.last %},{% endunless %}
     {% endfor %}
   ]

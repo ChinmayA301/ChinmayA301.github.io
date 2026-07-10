@@ -23,6 +23,10 @@ draft: false
 schema_type: "Article"
 keywords: "AI content detection, AI watermarking, content provenance, metadata tracking, AI generated text, AI generated images, code integrity, AI safety"
 last_modified_at: 2026-05-19
+content_type: "research_concept"
+content_label: "Research / Concept Note"
+search_phrase: "AI-generated content provenance tracking"
+positioning_note: "This is a layered provenance and accountability concept, not a claim that AI content can be perfectly detected."
 ---
 
 ## Key takeaways

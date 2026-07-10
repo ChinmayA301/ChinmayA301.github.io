@@ -1474,6 +1474,51 @@ footer {
     font-size: 0.86rem;
 }
 
+.post-meta-row,
+.blog-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.blog-type-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    border: 1px solid rgba(157, 194, 255, 0.26);
+    border-radius: 999px;
+    background: rgba(46, 130, 255, 0.11);
+    color: #dce8ff;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 0.34rem 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.blog-type-research-concept {
+    border-color: rgba(255, 185, 92, 0.34);
+    background: rgba(255, 185, 92, 0.12);
+    color: #ffe0af;
+}
+
+.blog-search-phrase {
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.research-note-box {
+    border: 1px solid rgba(255, 185, 92, 0.28);
+    border-radius: 12px;
+    background: rgba(255, 185, 92, 0.08);
+    color: #f4e8d5;
+    margin-bottom: 18px;
+    padding: 14px 16px;
+}
+
 .blog-route-card {
     display: block;
     background: var(--panel);

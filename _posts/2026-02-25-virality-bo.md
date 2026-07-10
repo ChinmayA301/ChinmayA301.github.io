@@ -16,6 +16,10 @@ tags:
 # SEO: Meta Tags
 og_image: "/assets/images/bo-virality.png"
 canonical_url: "https://app.chinmayarora.com/blog/virality-bo/"
+content_type: "research_concept"
+content_label: "Research / Concept Note"
+search_phrase: "Bayesian optimization for virality and influence systems"
+positioning_note: "This is a speculative modeling concept for influence systems, not a growth-hacking playbook."
 ---
 
 ## The Core Question

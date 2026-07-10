@@ -43,6 +43,18 @@ Relevant public writing and surfaces:
 - [Successful Key Moment Metric](https://app.chinmayarora.com/blog/successful-key-moment-metric/): Football intelligence and sports analytics framing.
 - [Satiation-Adjusted Nutrition](https://app.chinmayarora.com/blog/satiation-adjusted/): Food, serving-size, and consumer behavior systems.
 
+## Blog Positioning
+
+The blog is best described as research notes, concept essays, and evidence-backed analysis, not a collection of project tutorials. Posts marked as "Research / Concept Note" present product theses, system frameworks, proposed metrics, governance models, or research directions for discussion. They should not be interpreted as claims that a product is fully launched or that a method is production-validated unless the post explicitly says so.
+
+High-signal research/concept clusters:
+
+- AI governance and public-sector AI: local government AI, segmentation, AI governance/privacy, Aegis.
+- RAG, memory, and AI infrastructure: Context Passport, PolyRAG, agent protocol layers.
+- Trust, provenance, and platform integrity: Wax Seal, SignalGraph, AI-generated content tracking.
+- Sports and media intelligence: Successful Key Moment, Ronaldo context analysis, media cultural impact, AI localization, Indian media strategy.
+- Simulation and decision systems: Simulation Engineering AI, Decision Intelligence, proxy data, forecast discipline.
+
 ## Technical Writing
 
 Selected essays that support the project claims:

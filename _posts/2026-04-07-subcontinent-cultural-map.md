@@ -24,6 +24,10 @@ draft: false
 schema_type: "Article"
 keywords: "interactive cultural timeline map, history visualization, civilization map, cultural diffusion, educational mapping"
 last_modified_at: 2026-04-03
+content_type: "research_concept"
+content_label: "Research / Concept Note"
+search_phrase: "interactive cultural timeline map"
+positioning_note: "This is a geospatial visualization concept, not a finished product guide."
 ---
 
 > **Key takeaways**

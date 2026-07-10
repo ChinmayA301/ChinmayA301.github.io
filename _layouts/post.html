@@ -62,7 +62,13 @@
     "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
     "author": {
       "@type": "Person",
-      "name": {{ page.author | default: site.social.name | jsonify }}
+      "@id": "{{ '/' | absolute_url }}#person",
+      "name": {{ page.author | default: site.social.name | jsonify }},
+      "url": "{{ '/' | absolute_url }}",
+      "sameAs": [
+        "https://www.linkedin.com/in/chinmay-arora-27682211b/",
+        "https://github.com/ChinmayA301"
+      ]
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
@@ -70,9 +76,13 @@
     },
     "publisher": {
       "@type": "Person",
+      "@id": "{{ '/' | absolute_url }}#person",
       "name": {{ site.social.name | jsonify }}
     },
-    "url": "{{ page.canonical_url | default: page.url | absolute_url }}"{% if page.og_image %},
+    "url": "{{ page.canonical_url | default: page.url | absolute_url }}"{% if page.categories %},
+    "articleSection": {{ page.categories | jsonify }}{% endif %}{% if page.tags %},
+    "keywords": {{ page.tags | join: ", " | jsonify }}{% endif %}{% if page.content_type %},
+    "genre": {{ page.content_label | default: page.content_type | jsonify }}{% endif %}{% if page.og_image %},
     "image": "{{ page.og_image | absolute_url }}"{% endif %}
   }
   </script>
@@ -90,6 +100,14 @@
       </div>
       <h1 class="section-title">{{ page.title }}</h1>
       <p class="section-text">Published on <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
+      {% if page.content_type %}
+      <div class="post-meta-row" aria-label="Post positioning">
+        <span class="blog-type-badge blog-type-{{ page.content_type | slugify }}">{{ page.content_label | default: page.content_type | replace: "_", " " }}</span>
+        {% if page.search_phrase %}
+        <span class="blog-search-phrase">{{ page.search_phrase }}</span>
+        {% endif %}
+      </div>
+      {% endif %}
     </div>
   </header>
 
@@ -99,6 +117,13 @@
       <section class="bluf-box" aria-labelledby="bluf-heading">
         <h2 id="bluf-heading" class="h4">BLUF</h2>
         <p>{{ page.summary | default: page.bluf }}</p>
+      </section>
+      {% endif %}
+
+      {% if page.content_type == 'research_concept' %}
+      <section class="research-note-box" aria-label="Research concept positioning">
+        <strong>Research / concept note.</strong>
+        {{ page.positioning_note | default: "This essay shares a thesis, framework, or product concept for discussion. It is not written as a step-by-step implementation guide." }}
       </section>
       {% endif %}
 

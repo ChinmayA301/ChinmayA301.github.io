@@ -23,6 +23,10 @@ draft: false
 schema_type: "Article"
 keywords: "simulation engineering AI, synthetic data, proxy data, AI simulation, digital twin, decision intelligence, high friction data, agent based modeling"
 last_modified_at: 2026-05-19
+content_type: "research_concept"
+content_label: "Research / Concept Note"
+search_phrase: "simulation engineering AI and proxy data"
+positioning_note: "This is a research framework for proxy environments and simulation loops, not a promise of perfect pre-deployment prediction."
 ---
 
 ## Key takeaways

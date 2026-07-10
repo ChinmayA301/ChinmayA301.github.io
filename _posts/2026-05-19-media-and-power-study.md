@@ -23,6 +23,10 @@ draft: false
 schema_type: "Article"
 keywords: "American media, global power, soft power, cultural influence, media globalization, superpower rise, geopolitics, correlation study"
 last_modified_at: 2026-05-19
+content_type: "research_concept"
+content_label: "Research / Concept Note"
+search_phrase: "media dominance and soft power correlation"
+positioning_note: "This is a correlational research framework, not a causal claim about media and geopolitical power."
 ---
 
 ## Key takeaways

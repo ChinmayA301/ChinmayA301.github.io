@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /upload/
+Disallow: /aegis-backend/
 
 Sitemap: https://app.chinmayarora.com/sitemap.xml

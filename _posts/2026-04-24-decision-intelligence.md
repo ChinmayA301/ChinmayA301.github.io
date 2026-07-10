@@ -23,6 +23,10 @@ draft: false
 schema_type: "Article"
 keywords: "decision intelligence, decision-as-a-service, reference class forecasting, inverse reinforcement learning, CATE, causal AI, expert heuristics, LLM applications, strategy tool"
 last_modified_at: 2026-04-24
+content_type: "research_concept"
+content_label: "Research / Concept Note"
+search_phrase: "decision intelligence framework"
+positioning_note: "This is a decision-intelligence concept and reasoning framework, not a deployed Decision-as-a-Service product."
 ---
 
 ## Key takeaways
