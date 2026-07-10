@@ -7,6 +7,7 @@ import time
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
 import yaml
@@ -17,7 +18,6 @@ from pinecone_text.sparse import BM25Encoder
 ROOT = Path(__file__).resolve().parent.parent
 POSTS_DIR = ROOT / "_posts"
 DEFAULT_DATA_DIR = ROOT / "data"
-SITE_URL = "https://chinmayarora.com"
 APP_SITE_URL = "https://app.chinmayarora.com"
 DEFAULT_EMBED_MODEL = "models/gemini-embedding-001"
 SUMMARY_MODEL = "models/gemini-2.5-flash"
@@ -26,6 +26,11 @@ EMBED_BATCH_SIZE = 20
 API_CALL_DELAY_SECONDS = 5
 RATE_LIMIT_RETRY_SECONDS = 20
 MAX_RETRIES = 4
+PORTFOLIO_HOSTS = {
+    "app.chinmayarora.com",
+    "chinmayarora.com",
+    "www.chinmayarora.com",
+}
 PAGE_PATHS = [
     Path("index.html"),
     Path("experience/index.html"),
@@ -126,6 +131,69 @@ def parse_optional_int(value: str | None) -> int | None:
     return parsed if parsed > 0 else None
 
 
+def parse_bool(value: str | None) -> bool:
+    return (value or "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def normalize_public_url(value: Any, fallback_path: str = "/") -> str:
+    raw_value = str(value or "").strip()
+    if not raw_value:
+        raw_value = fallback_path
+
+    if raw_value.startswith("/"):
+        path = raw_value
+    else:
+        parsed = urlparse(raw_value)
+        if parsed.scheme and parsed.netloc:
+            host = parsed.netloc.lower()
+            if host in PORTFOLIO_HOSTS:
+                path = parsed.path or "/"
+                if parsed.query:
+                    path = f"{path}?{parsed.query}"
+                if parsed.fragment:
+                    path = f"{path}#{parsed.fragment}"
+            else:
+                return raw_value
+        else:
+            path = f"/{raw_value.lstrip('/')}"
+
+    if not path.startswith("/"):
+        path = f"/{path}"
+    return f"{APP_SITE_URL}{path}"
+
+
+def post_url_from_front_matter(front_matter: dict[str, Any], slug: str) -> str:
+    canonical_url = front_matter.get("canonical_url")
+    if canonical_url:
+        return normalize_public_url(canonical_url, f"/blog/{slug}/")
+
+    permalink = front_matter.get("permalink")
+    if permalink:
+        return normalize_public_url(permalink, f"/blog/{slug}/")
+
+    return normalize_public_url(f"/blog/{slug}/")
+
+
+def sanitize_dense_vector(values: list[Any]) -> list[float]:
+    return [float(value) for value in values]
+
+
+def sanitize_sparse_vector(vector: Any) -> dict[str, list[float] | list[int]]:
+    indices = vector.get("indices", []) if isinstance(vector, dict) else []
+    values = vector.get("values", []) if isinstance(vector, dict) else []
+    sanitized_pairs = []
+    for index, value in zip(indices, values):
+        numeric_value = float(value)
+        if numeric_value == 0:
+            continue
+        sanitized_pairs.append((int(index), numeric_value))
+    sanitized_pairs.sort(key=lambda item: item[0])
+    return {
+        "indices": [index for index, _ in sanitized_pairs],
+        "values": [value for _, value in sanitized_pairs],
+    }
+
+
 def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
 
@@ -218,7 +286,40 @@ def embed_batch(
         values = embedding.get("values")
         if not values:
             raise RuntimeError("Gemini batch embedding returned no values.")
-        vectors.append(values)
+        vectors.append(sanitize_dense_vector(values))
+    return vectors
+
+
+def embed_documents(
+    client: httpx.Client,
+    api_key: str,
+    model: str,
+    documents: list[dict[str, Any]],
+    output_dimensionality: int | None,
+) -> list[list[float]]:
+    try:
+        return embed_batch(
+            client,
+            api_key,
+            model,
+            [{"title": doc["title"], "text": doc["fulltext"]} for doc in documents],
+            output_dimensionality,
+        )
+    except Exception:
+        if len(documents) == 1:
+            raise
+
+    vectors: list[list[float]] = []
+    for document in documents:
+        vectors.extend(
+            embed_batch(
+                client,
+                api_key,
+                model,
+                [{"title": document["title"], "text": document["fulltext"]}],
+                output_dimensionality,
+            )
+        )
     return vectors
 
 
@@ -289,9 +390,9 @@ def page_url_for_path(path: Path) -> str:
     if relative_path.name == "index.html":
         parent = relative_path.parent.as_posix()
         if not parent or parent == ".":
-            return f"{APP_SITE_URL}/"
-        return f"{APP_SITE_URL}/{parent}/"
-    return f"{APP_SITE_URL}/{relative_path.as_posix()}"
+            return normalize_public_url("/")
+        return normalize_public_url(f"/{parent}/")
+    return normalize_public_url(f"/{relative_path.as_posix()}")
 
 
 def build_page_documents() -> list[dict[str, Any]]:
@@ -315,7 +416,7 @@ def build_page_documents() -> list[dict[str, Any]]:
 
         title = extractor.title or path.parent.name.replace("-", " ").title() or "Page"
         summary = extractor.meta_description or summarize_chunk(extractor.text)
-        url = extractor.canonical_url or page_url_for_path(path)
+        url = normalize_public_url(extractor.canonical_url or page_url_for_path(path), page_url_for_path(path))
         source_text = " ".join(part for part in [title, summary, extractor.text] if part)
         chunks = chunk_text(source_text)
         if not chunks:
@@ -344,7 +445,7 @@ def build_blog_documents() -> list[dict[str, Any]]:
         front_matter, body = parse_front_matter(path.read_text(encoding="utf-8"))
         slug = path.stem.split("-", 3)[-1]
         title = front_matter.get("title") or slug.replace("-", " ").title()
-        url = front_matter.get("canonical_url") or f"{SITE_URL}/blog/{slug}/"
+        url = post_url_from_front_matter(front_matter, slug)
         date = str(front_matter.get("date", "")).strip()
         description = str(front_matter.get("description", "")).strip()
         summary = str(front_matter.get("summary", "")).strip()
@@ -389,7 +490,7 @@ def build_lab_documents(lab_path: Path) -> list[dict[str, Any]]:
     documents = []
     for item in payload:
         title = item["title"]
-        url = item["url"]
+        url = normalize_public_url(item.get("url"), "/ideas/")
         source_text = " ".join(
             [
                 title,
@@ -487,7 +588,7 @@ def build_data_documents(data_dir: Path) -> list[dict[str, Any]]:
                 continue
 
             title = item.get("title") or item.get("role") or f"{path.stem}-{idx}"
-            url = item.get("url") or item.get("link") or f"{SITE_URL}/{path.stem.replace('_', '-')}/"
+            url = normalize_public_url(item.get("url") or item.get("link"), f"/{path.stem.replace('_', '-')}/")
             dedupe_key = (title, url)
             if dedupe_key in seen_urls:
                 continue
@@ -531,8 +632,9 @@ def main() -> None:
     gemini_api_key = require_env("GEMINI_API_KEY")
     pinecone_api_key = require_env("PINECONE_API_KEY")
     pinecone_host = require_env("PINECONE_HOST")
-    pinecone_index_name = require_env("PINECONE_INDEX")
-    pinecone_namespace = os.getenv("PINECONE_NAMESPACE", "portfolio")
+    pinecone_index_name = os.getenv("PINECONE_INDEX") or "portfolio-index"
+    pinecone_namespace = os.getenv("PINECONE_NAMESPACE") or "portfolio"
+    reset_namespace = parse_bool(os.getenv("PINECONE_RESET_NAMESPACE"))
     data_dir = Path(os.getenv("DATA_DIR", str(DEFAULT_DATA_DIR))).resolve()
     embed_model = os.getenv("GEMINI_EMBED_MODEL", DEFAULT_EMBED_MODEL)
     embed_dimensions = parse_optional_int(os.getenv("GEMINI_EMBED_DIMENSIONS"))
@@ -547,15 +649,15 @@ def main() -> None:
     with httpx.Client(timeout=30.0) as gemini_client:
         for start in range(0, len(documents), EMBED_BATCH_SIZE):
             batch_docs = documents[start:start + EMBED_BATCH_SIZE]
-            dense_vectors = embed_batch(
+            dense_vectors = embed_documents(
                 gemini_client,
                 gemini_api_key,
                 embed_model,
-                [{"title": doc["title"], "text": doc["fulltext"]} for doc in batch_docs],
+                batch_docs,
                 embed_dimensions,
             )
             for document, dense_vector in zip(batch_docs, dense_vectors):
-                sparse_vector = bm25.encode_documents(document["chunk_text"])
+                sparse_vector = sanitize_sparse_vector(bm25.encode_documents(document["chunk_text"]))
                 vectors.append(
                     {
                         "id": document["id"],
@@ -576,6 +678,9 @@ def main() -> None:
 
         client = Pinecone(api_key=pinecone_api_key)
         index = client.Index(host=pinecone_host)
+        if reset_namespace:
+            index.delete(delete_all=True, namespace=pinecone_namespace)
+            print(f"Cleared existing vectors in namespace '{pinecone_namespace}'.")
 
         batch_size = 50
         for idx in range(0, len(vectors), batch_size):
