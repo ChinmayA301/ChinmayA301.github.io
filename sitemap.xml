@@ -4,16 +4,15 @@ permalink: /sitemap.xml
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{%- assign visible_pages = site.pages | where_exp: "page", "page.url != nil" | where_exp: "page", "page.sitemap != false" -%}
-{%- for page in visible_pages %}
-  {%- unless page.url contains '/assets/' or page.url contains '/aegis-backend/' or page.url contains '/upload/' or page.url contains '/404.html' or page.url == '/sitemap.xml' %}
+{%- assign core_pages = "/|1.0|weekly,/blog/|0.9|weekly,/experience/|0.9|monthly,/projects/|0.9|monthly,/ideas/|0.9|monthly,/coursework/|0.8|monthly,/reports/|0.8|monthly,/resumes/|0.8|monthly,/ideas/aegis-ai-strategy/|0.8|monthly,/ideas/public-infrastructure-copilot/|0.8|monthly,/ideas/compliance-twin/|0.8|monthly,/ideas/operator-memory-cloud/|0.8|monthly,/ideas/civic-procurement-graph/|0.8|monthly,/ideas/research-commercialization-studio/|0.8|monthly,/ideas/visual-overlay-ai/|0.8|monthly,/ideas/ad-delivery-systems/|0.8|monthly" | split: "," -%}
+{%- for item in core_pages %}
+  {%- assign page_parts = item | split: "|" %}
   <url>
-    <loc>{{ page.url | absolute_url }}</loc>
-    <lastmod>{{ page.last_modified_at | default: site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>{% if page.url == '/' %}weekly{% elsif page.url contains '/blog/' %}weekly{% else %}monthly{% endif %}</changefreq>
-    <priority>{% if page.url == '/' %}1.0{% elsif page.url == '/blog/' or page.url == '/projects/' or page.url == '/ideas/' or page.url == '/experience/' %}0.9{% else %}0.7{% endif %}</priority>
+    <loc>{{ page_parts[0] | absolute_url }}</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>{{ page_parts[2] }}</changefreq>
+    <priority>{{ page_parts[1] }}</priority>
   </url>
-  {%- endunless %}
 {%- endfor %}
 {%- for post in site.posts %}
   <url>
