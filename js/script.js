@@ -237,6 +237,102 @@ const GITHUB_DEFAULTS = {
     branch: "main"
 };
 
+const PORTFOLIO_SIGNAL_MODEL = {
+    skills: [
+        { key: "rag", label: "RAG / Retrieval", color: "#8ad1ff" },
+        { key: "evaluation", label: "Evaluation", color: "#ffc46f" },
+        { key: "governance", label: "Governance", color: "#9df2d0" },
+        { key: "analytics", label: "Analytics Engineering", color: "#9dc2ff" },
+        { key: "product", label: "Product Systems", color: "#f3a6ff" },
+        { key: "trust", label: "Trust Signals", color: "#ff9c8a" }
+    ],
+    projects: {
+        "Aegis AI Governance & Readiness Platform": {
+            skills: ["governance", "evaluation", "product"],
+            roles: { dataScientist: 2, aiEngineer: 3, strategy: 5, governance: 5 }
+        },
+        "PolyRAG: Multi-Model Governance RAG": {
+            skills: ["rag", "evaluation", "governance"],
+            roles: { dataScientist: 3, aiEngineer: 5, strategy: 3, governance: 5 }
+        },
+        "TransferSignal": {
+            skills: ["product", "trust", "evaluation"],
+            roles: { dataScientist: 3, aiEngineer: 4, strategy: 3, governance: 2 }
+        },
+        "Operations Control Tower": {
+            skills: ["analytics", "evaluation", "product"],
+            roles: { dataScientist: 4, aiEngineer: 2, strategy: 4, governance: 2 }
+        },
+        "Healthcare Readmission Risk with Fairness & Calibration": {
+            skills: ["evaluation", "governance", "analytics"],
+            roles: { dataScientist: 5, aiEngineer: 3, strategy: 3, governance: 5 }
+        },
+        "Tabular ML Benchmark: Human FE vs AutoML": {
+            skills: ["evaluation", "analytics", "product"],
+            roles: { dataScientist: 5, aiEngineer: 4, strategy: 3, governance: 3 }
+        },
+        "Financial Document Intelligence (FinBizInfo)": {
+            skills: ["rag", "analytics", "governance"],
+            roles: { dataScientist: 3, aiEngineer: 4, strategy: 3, governance: 4 }
+        },
+        "Data Science Career Audit": {
+            skills: ["analytics", "evaluation", "trust"],
+            roles: { dataScientist: 4, aiEngineer: 2, strategy: 5, governance: 2 }
+        },
+        "SignalGraph": {
+            skills: ["trust", "analytics", "evaluation"],
+            roles: { dataScientist: 4, aiEngineer: 3, strategy: 4, governance: 3 }
+        },
+        "Wax Seal Trust Provenance": {
+            skills: ["trust", "governance", "product"],
+            roles: { dataScientist: 2, aiEngineer: 4, strategy: 4, governance: 5 }
+        }
+    },
+    governanceRadar: [
+        { label: "Policy & controls", value: 88 },
+        { label: "Risk registers", value: 84 },
+        { label: "Human review", value: 80 },
+        { label: "Evidence trails", value: 86 },
+        { label: "Evaluation", value: 90 },
+        { label: "Monitoring", value: 76 }
+    ],
+    roleLabels: [
+        { key: "dataScientist", label: "Data Scientist" },
+        { key: "aiEngineer", label: "AI Engineer" },
+        { key: "strategy", label: "Strategy" },
+        { key: "governance", label: "Governance" }
+    ]
+};
+
+const AI_BENCHMARK_PULSE_SEARCHES = [
+    {
+        key: "llm",
+        label: "LLM evaluation",
+        query: "llm evaluation benchmark language:Python stars:>50",
+        color: "#8ad1ff"
+    },
+    {
+        key: "rag",
+        label: "RAG evaluation",
+        query: "rag evaluation benchmark language:Python stars:>20",
+        color: "#9df2d0"
+    },
+    {
+        key: "agent",
+        label: "Agent evaluation",
+        query: "agent evaluation benchmark language:Python stars:>10",
+        color: "#ffc46f"
+    },
+    {
+        key: "ml",
+        label: "ML benchmarking",
+        query: "machine learning benchmark evaluation language:Python stars:>50",
+        color: "#f3a6ff"
+    }
+];
+
+let aiPulseChartState = null;
+
 function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
         "&": "&amp;",
@@ -390,6 +486,486 @@ function buildProjectFilters(projects) {
     });
 }
 
+function getPortfolioProfiles(projects) {
+    const model = PORTFOLIO_SIGNAL_MODEL.projects;
+    return Object.keys(model)
+        .map(title => {
+            const project = projects.find(item => item.title === title);
+            if (!project) return null;
+            return {
+                ...model[title],
+                title,
+                description: project.description,
+                status: project.status,
+                link: project.link || (project.links || [])[0]?.url || "",
+                tags: project.tags || []
+            };
+        })
+        .filter(Boolean);
+}
+
+function getSkillByKey(key) {
+    return PORTFOLIO_SIGNAL_MODEL.skills.find(skill => skill.key === key);
+}
+
+function renderSkillProjectGraph(profiles) {
+    const skills = PORTFOLIO_SIGNAL_MODEL.skills.filter(skill =>
+        profiles.some(profile => profile.skills.includes(skill.key))
+    );
+    const height = Math.max(360, Math.max(skills.length, profiles.length) * 54 + 70);
+    const skillStep = skills.length > 1 ? (height - 90) / (skills.length - 1) : 1;
+    const projectStep = profiles.length > 1 ? (height - 90) / (profiles.length - 1) : 1;
+    const skillPositions = new Map(skills.map((skill, idx) => [skill.key, 45 + idx * skillStep]));
+    const projectPositions = new Map(profiles.map((profile, idx) => [profile.title, 45 + idx * projectStep]));
+    const edges = profiles.flatMap(profile => profile.skills.map(skillKey => {
+        const skill = getSkillByKey(skillKey);
+        const y1 = skillPositions.get(skillKey);
+        const y2 = projectPositions.get(profile.title);
+        return `<path class="skill-edge" d="M 130 ${y1} C 250 ${y1}, 355 ${y2}, 480 ${y2}" stroke="${skill?.color || "#8ad1ff"}" />`;
+    }));
+    const skillNodes = skills.map(skill => `
+        <g class="skill-node" transform="translate(24 ${skillPositions.get(skill.key)})">
+            <circle r="8" fill="${skill.color}" />
+            <text x="18" y="5">${escapeHtml(skill.label)}</text>
+        </g>
+    `).join("");
+    const projectNodes = profiles.map(profile => `
+        <g class="project-node" transform="translate(496 ${projectPositions.get(profile.title)})">
+            <circle r="6" />
+            <text x="16" y="-2">${escapeHtml(profile.title)}</text>
+            <text x="16" y="15" class="project-node-meta">${escapeHtml(profile.status || "Portfolio project")}</text>
+        </g>
+    `).join("");
+    return `
+        <article class="portfolio-panel portfolio-panel-wide">
+            <div class="portfolio-panel-header">
+                <div>
+                    <p class="eyebrow">Skill-to-project graph</p>
+                    <h3>Bipartite evidence map</h3>
+                </div>
+                <span>${profiles.length} projects</span>
+            </div>
+            <div class="skill-graph-wrap" role="img" aria-label="Bipartite graph connecting portfolio skills to selected projects">
+                <svg class="skill-graph" viewBox="0 0 760 ${height}" preserveAspectRatio="xMinYMin meet">
+                    <line class="graph-rail" x1="130" y1="24" x2="130" y2="${height - 24}" />
+                    <line class="graph-rail" x1="480" y1="24" x2="480" y2="${height - 24}" />
+                    ${edges.join("")}
+                    ${skillNodes}
+                    ${projectNodes}
+                </svg>
+            </div>
+            <div class="graph-legend">
+                ${skills.map(skill => `<span style="--legend-color:${skill.color}">${escapeHtml(skill.label)}</span>`).join("")}
+            </div>
+        </article>
+    `;
+}
+
+function getRadarPoint(index, total, value, radius, center) {
+    const angle = (Math.PI * 2 * index / total) - Math.PI / 2;
+    const scaledRadius = radius * (value / 100);
+    return {
+        x: center + Math.cos(angle) * scaledRadius,
+        y: center + Math.sin(angle) * scaledRadius,
+        labelX: center + Math.cos(angle) * (radius + 34),
+        labelY: center + Math.sin(angle) * (radius + 34)
+    };
+}
+
+function renderGovernanceRadar() {
+    const dimensions = PORTFOLIO_SIGNAL_MODEL.governanceRadar;
+    const center = 170;
+    const radius = 104;
+    const total = dimensions.length;
+    const rings = [25, 50, 75, 100].map(value => {
+        const points = dimensions.map((_, idx) => {
+            const point = getRadarPoint(idx, total, value, radius, center);
+            return `${point.x},${point.y}`;
+        }).join(" ");
+        return `<polygon class="radar-ring" points="${points}" />`;
+    }).join("");
+    const axes = dimensions.map((dimension, idx) => {
+        const outer = getRadarPoint(idx, total, 100, radius, center);
+        return `
+            <line class="radar-axis" x1="${center}" y1="${center}" x2="${outer.x}" y2="${outer.y}" />
+            <text class="radar-label" x="${outer.labelX}" y="${outer.labelY}">${escapeHtml(dimension.label)}</text>
+        `;
+    }).join("");
+    const valuePoints = dimensions.map((dimension, idx) => {
+        const point = getRadarPoint(idx, total, dimension.value, radius, center);
+        return `${point.x},${point.y}`;
+    }).join(" ");
+    const average = Math.round(dimensions.reduce((sum, item) => sum + item.value, 0) / dimensions.length);
+    return `
+        <article class="portfolio-panel">
+            <div class="portfolio-panel-header">
+                <div>
+                    <p class="eyebrow">Governance maturity radar</p>
+                    <h3>Controls readiness</h3>
+                </div>
+                <span>${average}/100</span>
+            </div>
+            <div class="radar-wrap" role="img" aria-label="Governance maturity radar across policy, risk, review, evidence, evaluation, and monitoring">
+                <svg class="radar-chart" viewBox="0 0 340 340">
+                    ${rings}
+                    ${axes}
+                    <polygon class="radar-area" points="${valuePoints}" />
+                    ${dimensions.map((dimension, idx) => {
+                        const point = getRadarPoint(idx, total, dimension.value, radius, center);
+                        return `<circle class="radar-dot" cx="${point.x}" cy="${point.y}" r="4"><title>${escapeHtml(dimension.label)}: ${dimension.value}/100</title></circle>`;
+                    }).join("")}
+                </svg>
+            </div>
+            <div class="radar-dimensions">
+                ${dimensions.map(item => `
+                    <div>
+                        <span>${escapeHtml(item.label)}</span>
+                        <strong>${item.value}</strong>
+                    </div>
+                `).join("")}
+            </div>
+        </article>
+    `;
+}
+
+function getRoleClass(score) {
+    if (score >= 5) return "role-score-strong";
+    if (score >= 4) return "role-score-good";
+    if (score >= 3) return "role-score-medium";
+    return "role-score-light";
+}
+
+function renderRoleFitMatrix(profiles) {
+    const roleLabels = PORTFOLIO_SIGNAL_MODEL.roleLabels;
+    return `
+        <article class="portfolio-panel portfolio-panel-wide">
+            <div class="portfolio-panel-header">
+                <div>
+                    <p class="eyebrow">Role fit matrix</p>
+                    <h3>Projects mapped to target signals</h3>
+                </div>
+                <span>1-5 fit</span>
+            </div>
+            <div class="role-matrix-wrap">
+                <table class="role-matrix">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project</th>
+                            ${roleLabels.map(role => `<th scope="col">${escapeHtml(role.label)}</th>`).join("")}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${profiles.map(profile => `
+                            <tr>
+                                <th scope="row">
+                                    ${profile.link
+                                        ? `<a href="${escapeHtml(profile.link)}" target="_blank" rel="noopener">${escapeHtml(profile.title)}</a>`
+                                        : escapeHtml(profile.title)}
+                                </th>
+                                ${roleLabels.map(role => {
+                                    const score = profile.roles[role.key] || 0;
+                                    return `
+                                        <td>
+                                            <span class="role-score ${getRoleClass(score)}" aria-label="${escapeHtml(role.label)} fit ${score} out of 5">
+                                                <span style="width:${score * 20}%"></span>
+                                            </span>
+                                            <strong>${score}</strong>
+                                        </td>
+                                    `;
+                                }).join("")}
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    `;
+}
+
+function renderPortfolioIntelligence(projects) {
+    const wrap = document.getElementById("portfolioIntelligence");
+    if (!wrap) return;
+    const profiles = getPortfolioProfiles(projects);
+    if (!profiles.length) {
+        wrap.innerHTML = `<p class="text-muted small">Portfolio signal map will appear after projects load.</p>`;
+        return;
+    }
+    wrap.innerHTML = `
+        ${renderSkillProjectGraph(profiles)}
+        <div class="portfolio-split">
+            ${renderGovernanceRadar()}
+            ${renderRoleFitMatrix(profiles)}
+        </div>
+    `;
+    applyStagger(wrap.querySelectorAll(".portfolio-panel"));
+}
+
+function getQuarterKey(dateValue) {
+    const date = new Date(dateValue);
+    if (Number.isNaN(date.getTime())) return "Unknown";
+    const quarter = Math.floor(date.getUTCMonth() / 3) + 1;
+    return `${date.getUTCFullYear()} Q${quarter}`;
+}
+
+function getQuarterIndex(key) {
+    const match = String(key).match(/^(\d{4}) Q([1-4])$/);
+    if (!match) return 0;
+    return Number(match[1]) * 4 + Number(match[2]);
+}
+
+function formatCompactNumber(value) {
+    return new Intl.NumberFormat("en", {
+        notation: "compact",
+        maximumFractionDigits: value >= 1000 ? 1 : 0
+    }).format(value || 0);
+}
+
+function formatDateShort(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "Unknown";
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+}
+
+async function fetchAiPulseLane(lane) {
+    const url = new URL("https://api.github.com/search/repositories");
+    url.searchParams.set("q", lane.query);
+    url.searchParams.set("sort", "updated");
+    url.searchParams.set("order", "desc");
+    url.searchParams.set("per_page", "20");
+    const response = await fetch(url.toString(), {
+        headers: { Accept: "application/vnd.github+json" },
+        cache: "no-store"
+    });
+    if (!response.ok) {
+        throw new Error(`GitHub API returned ${response.status} for ${lane.label}`);
+    }
+    const payload = await response.json();
+    return (payload.items || []).map(item => ({
+        lane: lane.key,
+        laneLabel: lane.label,
+        laneColor: lane.color,
+        name: item.full_name,
+        description: item.description || "",
+        url: item.html_url,
+        stars: item.stargazers_count || 0,
+        forks: item.forks_count || 0,
+        openIssues: item.open_issues_count || 0,
+        language: item.language || "Unknown",
+        createdAt: item.created_at,
+        updatedAt: item.updated_at
+    }));
+}
+
+function buildAiPulseDataset(items) {
+    const deduped = Array.from(
+        items.reduce((map, item) => {
+            const existing = map.get(item.name);
+            if (!existing || item.stars > existing.stars) {
+                map.set(item.name, item);
+            }
+            return map;
+        }, new Map()).values()
+    ).sort((a, b) => b.stars - a.stars);
+
+    const quarterKeys = Array.from(new Set(deduped.map(item => getQuarterKey(item.createdAt))))
+        .filter(key => key !== "Unknown")
+        .sort((a, b) => getQuarterIndex(a) - getQuarterIndex(b));
+    const labels = quarterKeys.slice(-12);
+    const firstVisibleIndex = labels.length ? getQuarterIndex(labels[0]) : 0;
+    const lanes = AI_BENCHMARK_PULSE_SEARCHES.map(lane => {
+        const laneItems = deduped.filter(item => item.lane === lane.key);
+        let carry = laneItems
+            .filter(item => getQuarterIndex(getQuarterKey(item.createdAt)) < firstVisibleIndex)
+            .reduce((sum, item) => sum + item.stars, 0);
+        const points = labels.map(label => {
+            const quarterStars = laneItems
+                .filter(item => getQuarterKey(item.createdAt) === label)
+                .reduce((sum, item) => sum + item.stars, 0);
+            carry += quarterStars;
+            return carry;
+        });
+        return { ...lane, points, totalStars: laneItems.reduce((sum, item) => sum + item.stars, 0), count: laneItems.length };
+    });
+
+    return {
+        labels,
+        lanes,
+        repos: deduped.slice(0, 10),
+        totalStars: deduped.reduce((sum, item) => sum + item.stars, 0),
+        repoCount: deduped.length,
+        updatedAt: new Date()
+    };
+}
+
+function drawAiPulseChart(canvas, dataset) {
+    if (!canvas || !dataset?.labels?.length) return;
+    const parent = canvas.parentElement;
+    const width = Math.max(620, parent?.clientWidth || 720);
+    const height = 330;
+    const ratio = window.devicePixelRatio || 1;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const pad = { top: 26, right: 28, bottom: 52, left: 68 };
+    const chartWidth = width - pad.left - pad.right;
+    const chartHeight = height - pad.top - pad.bottom;
+    const allValues = dataset.lanes.flatMap(lane => lane.points);
+    const maxValue = Math.max(...allValues, 1);
+    const xFor = idx => pad.left + (dataset.labels.length === 1 ? 0 : (idx / (dataset.labels.length - 1)) * chartWidth);
+    const yFor = value => pad.top + chartHeight - (value / maxValue) * chartHeight;
+
+    ctx.font = "12px Space Grotesk, sans-serif";
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+    ctx.fillStyle = "rgba(208, 216, 230, 0.7)";
+    for (let i = 0; i <= 4; i += 1) {
+        const value = (maxValue / 4) * i;
+        const y = yFor(value);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(width - pad.right, y);
+        ctx.stroke();
+        ctx.fillText(formatCompactNumber(Math.round(value)), 12, y + 4);
+    }
+
+    const labelInterval = Math.max(1, Math.ceil(dataset.labels.length / 5));
+    dataset.labels.forEach((label, idx) => {
+        const lastIndex = dataset.labels.length - 1;
+        if (idx !== 0 && idx !== lastIndex && idx % labelInterval !== 0) return;
+        if (idx !== lastIndex && lastIndex - idx < labelInterval) return;
+        const x = xFor(idx);
+        ctx.fillStyle = "rgba(208, 216, 230, 0.68)";
+        const offset = idx === dataset.labels.length - 1 ? 48 : 22;
+        ctx.fillText(label, x - offset, height - 20);
+    });
+
+    dataset.lanes.forEach(lane => {
+        if (!lane.points.some(Boolean)) return;
+        ctx.beginPath();
+        lane.points.forEach((value, idx) => {
+            const x = xFor(idx);
+            const y = yFor(value);
+            if (idx === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        });
+        ctx.lineWidth = 2.4;
+        ctx.strokeStyle = lane.color;
+        ctx.stroke();
+
+        lane.points.forEach((value, idx) => {
+            if (idx !== lane.points.length - 1 && idx % 3 !== 0) return;
+            ctx.beginPath();
+            ctx.arc(xFor(idx), yFor(value), 3.2, 0, Math.PI * 2);
+            ctx.fillStyle = lane.color;
+            ctx.fill();
+        });
+    });
+}
+
+function renderAiPulse(dataset) {
+    const wrap = document.getElementById("aiBenchmarkPulse");
+    if (!wrap) return;
+    const topRepo = dataset.repos[0];
+    wrap.innerHTML = `
+        <article class="ai-pulse-panel">
+            <div class="ai-pulse-chart-head">
+                <div>
+                    <p class="eyebrow">Current traction index</p>
+                    <h3>Evaluation and benchmarking repo cohorts</h3>
+                </div>
+                <span>Updated ${escapeHtml(dataset.updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</span>
+            </div>
+            <div class="ai-pulse-grid">
+                <div class="ai-pulse-chart-card">
+                    <div class="ai-pulse-chart-scroll">
+                        <canvas id="aiPulseCanvas" aria-label="Live AI evaluation benchmark tracking graph"></canvas>
+                    </div>
+                    <div class="ai-pulse-legend">
+                        ${dataset.lanes.map(lane => `<span style="--legend-color:${lane.color}">${escapeHtml(lane.label)}</span>`).join("")}
+                    </div>
+                    <p class="ai-pulse-note">Source: live GitHub repository search. Values are current stars accumulated by repository creation cohort, not historical star counts.</p>
+                </div>
+                <aside class="ai-pulse-side">
+                    <div class="ai-pulse-stats">
+                        <div><span>Tracked repos</span><strong>${dataset.repoCount}</strong></div>
+                        <div><span>Total stars</span><strong>${formatCompactNumber(dataset.totalStars)}</strong></div>
+                        <div><span>Top signal</span><strong>${escapeHtml(topRepo?.name || "n/a")}</strong></div>
+                    </div>
+                    <div class="ai-pulse-table-wrap">
+                        <table class="ai-pulse-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Repository</th>
+                                    <th scope="col">Lane</th>
+                                    <th scope="col">Stars</th>
+                                    <th scope="col">Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${dataset.repos.map(repo => `
+                                    <tr>
+                                        <th scope="row"><a href="${escapeHtml(repo.url)}" target="_blank" rel="noopener">${escapeHtml(repo.name)}</a></th>
+                                        <td>${escapeHtml(repo.laneLabel)}</td>
+                                        <td>${formatCompactNumber(repo.stars)}</td>
+                                        <td>${formatDateShort(repo.updatedAt)}</td>
+                                    </tr>
+                                `).join("")}
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    `;
+    aiPulseChartState = dataset;
+    drawAiPulseChart(document.getElementById("aiPulseCanvas"), dataset);
+    applyStagger(wrap.querySelectorAll(".ai-pulse-panel"));
+}
+
+function renderAiPulseError(message) {
+    const wrap = document.getElementById("aiBenchmarkPulse");
+    if (!wrap) return;
+    wrap.innerHTML = `
+        <article class="ai-pulse-panel ai-pulse-error">
+            <p class="eyebrow">Live ingest unavailable</p>
+            <h3>GitHub signals could not be loaded</h3>
+            <p>${escapeHtml(message)} Refresh again in a moment, or check the browser/network rate limit.</p>
+        </article>
+    `;
+}
+
+async function loadAiBenchmarkPulse() {
+    const wrap = document.getElementById("aiBenchmarkPulse");
+    if (!wrap) return;
+    const refresh = document.getElementById("refreshAiPulse");
+    if (refresh) {
+        refresh.disabled = true;
+        refresh.textContent = "Loading";
+    }
+    wrap.innerHTML = `<p class="text-muted small mb-0">Loading live AI evaluation signals...</p>`;
+    try {
+        const results = await Promise.all(AI_BENCHMARK_PULSE_SEARCHES.map(fetchAiPulseLane));
+        const dataset = buildAiPulseDataset(results.flat());
+        renderAiPulse(dataset);
+    } catch (error) {
+        console.error("AI benchmark pulse load error:", error);
+        renderAiPulseError(error.message || "The live data request failed.");
+    } finally {
+        if (refresh) {
+            refresh.disabled = false;
+            refresh.textContent = "Refresh";
+        }
+    }
+}
+
 // Render Projects from JSON
 async function loadProjects() {
     const grid = document.getElementById("projectsGrid");
@@ -399,6 +975,7 @@ async function loadProjects() {
         projectCache = Array.isArray(projects) ? projects : [];
         renderProjects(projectCache);
         buildProjectFilters(projectCache);
+        renderPortfolioIntelligence(projectCache);
     } catch (e) {
         grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
         console.error("Projects load error:", e);
@@ -699,6 +1276,20 @@ loadFutureIdeas();
 loadCaseStudy();
 loadResumes();
 loadHighlights();
+loadAiBenchmarkPulse();
+
+const refreshAiPulse = document.getElementById("refreshAiPulse");
+if (refreshAiPulse) {
+    refreshAiPulse.addEventListener("click", loadAiBenchmarkPulse);
+}
+
+window.addEventListener("resize", () => {
+    if (!aiPulseChartState) return;
+    window.clearTimeout(window.aiPulseResizeTimer);
+    window.aiPulseResizeTimer = window.setTimeout(() => {
+        drawAiPulseChart(document.getElementById("aiPulseCanvas"), aiPulseChartState);
+    }, 150);
+});
 
 function applyStagger(elements) {
     elements.forEach((el, idx) => {

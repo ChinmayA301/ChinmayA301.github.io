@@ -36,9 +36,11 @@
 
 - [MS Projects](https://github.com/ChinmayA301/MS-projectss): Coursework and academic builds across machine learning systems, PostgreSQL/data workflows, social-data optimization, computer vision, and geospatial/public-health analytics.
 - [B.Tech Projects](https://github.com/ChinmayA301/BTech): Undergraduate project archive including financial modeling, sports analytics, OCR/NLP document parsing, and optimization work.
-- [Face Mask Detection Minor Project](https://github.com/ChinmayA301/Face-Mask-Detection-Minor-Project): CNN-based computer-vision minor project tied to the Face Mask Detection publication.
-- Publications: Face Mask Detection using CNNs; Payment System for University, IJSER.
-- Certifications and credential signals: CargoWise One Professional Certification, Claude / AI coding tooling, IBM Data Science, Google IoT for Google Cloud, analytics and BI tooling.
+- [Face Mask Detection using Deep Learning CNN Architecture, IJSER](https://www.ijser.in/archives/v10i12/SE221206135738.pdf): CNN-based computer-vision publication and minor project signal.
+- [Payment System for University, IJSER](https://www.ijser.in/archives/v11i8/SE23822002659.pdf): undergraduate payment-system publication covering university ID-card payment architecture.
+- Publications: Face Mask Detection using Deep Learning CNN Architecture; Payment System for University; 17+ public technical essays on analytics, AI systems, RAG, and governance.
+- Certifications and credential signals: CargoWise One Professional Certification, Microsoft Azure, Web Applications and Databases using PHP, Claude / AI coding tooling, IBM Data Science, Google IoT for Google Cloud, analytics and BI tooling.
+- Live tracking graph: the Projects page includes an AI Evaluation Benchmark Pulse that ingests live GitHub repository search data for LLM evaluation, RAG evaluation, agent evaluation, and ML benchmarking repositories, then renders a cohort-based traction chart and top-repository table.
 
 ## The Lab Venture Exploration
 
