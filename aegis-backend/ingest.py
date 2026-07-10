@@ -21,12 +21,12 @@ DEFAULT_DATA_DIR = ROOT / "data"
 APP_SITE_URL = "https://app.chinmayarora.com"
 DEFAULT_EMBED_MODEL = "models/gemini-embedding-001"
 SUMMARY_MODEL = "models/gemini-2.5-flash"
-CHUNK_WORDS = 140
+CHUNK_WORDS = 220
 EMBED_BATCH_SIZE = 20
-API_CALL_DELAY_SECONDS = 12
-RATE_LIMIT_RETRY_SECONDS = 60
+API_CALL_DELAY_SECONDS = 20
+RATE_LIMIT_RETRY_SECONDS = 90
 MAX_RETRIES = 6
-DEFAULT_MAX_INGEST_DOCUMENTS = 420
+DEFAULT_MAX_INGEST_DOCUMENTS = 160
 PORTFOLIO_HOSTS = {
     "app.chinmayarora.com",
     "chinmayarora.com",
@@ -306,7 +306,9 @@ def embed_documents(
             [{"title": doc["title"], "text": doc["fulltext"]} for doc in documents],
             output_dimensionality,
         )
-    except Exception:
+    except Exception as exc:
+        if is_rate_limit_error(exc):
+            raise
         if len(documents) == 1:
             raise
 

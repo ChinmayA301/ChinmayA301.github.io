@@ -50,6 +50,6 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_EMBED_MODEL: models/gemini-embedding-001
           GEMINI_EMBED_DIMENSIONS: 1024
-          MAX_INGEST_DOCUMENTS: 420
+          MAX_INGEST_DOCUMENTS: 160
           DATA_DIR: ../data
         run: python ingest.py
