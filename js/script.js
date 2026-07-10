@@ -335,8 +335,9 @@ function renderProjects(projects) {
             </div>
         ` : "";
         const tweetCta = p.tweetUrl ? `
-            <a class="project-cta" href="${escapeHtml(link)}" target="_blank" rel="noopener">Open video post</a>
+            <a class="project-cta" href="${escapeHtml(p.tweetUrl)}" target="_blank" rel="noopener">Open video post</a>
         ` : "";
+        const projectActions = [actionLinks, tweetCta].filter(Boolean).join("");
         const cardBody = `
             <div class="card-body">
                 <h3 class="h5">${escapeHtml(p.title)}</h3>
@@ -344,7 +345,7 @@ function renderProjects(projects) {
                 <p class="mb-2 small text-muted">${escapeHtml(p.description)}</p>
                 <div class="project-tags">${tags}</div>
                 ${tweetEmbed}
-                ${actionLinks || tweetCta}
+                ${projectActions}
             </div>
         `;
         return `
