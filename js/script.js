@@ -325,7 +325,6 @@ function renderProjects(projects) {
             </div>
         ` : "";
         const status = p.status ? `<p class="project-status mb-2">${escapeHtml(p.status)}</p>` : "";
-        const privacy = p.privacy ? `<p class="project-privacy mb-0">${escapeHtml(p.privacy)}</p>` : "";
         const tweetEmbed = p.tweetUrl ? `
             <div class="project-embed mt-3">
                 <blockquote class="twitter-tweet" data-media-max-width="560">
@@ -346,7 +345,6 @@ function renderProjects(projects) {
                 <div class="project-tags">${tags}</div>
                 ${tweetEmbed}
                 ${actionLinks || tweetCta}
-                ${privacy}
             </div>
         `;
         return `

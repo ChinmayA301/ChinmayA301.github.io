@@ -56,7 +56,8 @@
         "title": "TransferSignal",
         "description": "Private product build for a source-weighted football transfer-rumour ledger: deterministic scoring, source reliability tracking, AI-assisted claim extraction, protected admin workflows, and an editorial newsroom-style board.",
         "status": "Private product build",
-        "privacy": "No private repo or internal code linked; deployment link can be added once the final public URL is confirmed.",
+        "privacy": "No private repo or internal code linked; public deployment shared.",
+        "link": "https://transfer-signal.vercel.app/",
         "tags": [
             "Product Engineering",
             "AI Extraction",
@@ -65,8 +66,8 @@
         ],
         "links": [
             {
-                "label": "Product Notes",
-                "url": "/projects/"
+                "label": "Live Site",
+                "url": "https://transfer-signal.vercel.app/"
             }
         ]
     },
