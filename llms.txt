@@ -9,6 +9,7 @@
 - [Experience](https://app.chinmayarora.com/experience/): Work and education timeline.
 - [The Lab](https://app.chinmayarora.com/ideas/): Venture and product concept showcase.
 - [Blog](https://app.chinmayarora.com/blog/): Technical essays on AI systems, governance, retrieval, evaluation, and strategy.
+- [Coursework](https://app.chinmayarora.com/coursework/): MS and B.Tech academic project work linked to public repositories where available.
 
 ## Highlighted Work
 
@@ -30,6 +31,14 @@
 - [Wax Seal](https://github.com/ChinmayA301/wax-seal): Trust-provenance framework for visible tamper evidence and digital-artifact authenticity.
 - [Geo Visualizer](https://geo-visualizer-mu.vercel.app): Interactive geographic visualization for the Indian subcontinent.
 - [Severance-Style Segmentation Interface](https://severance-style-visualizer.vercel.app): Product-style segmentation visualization interface.
+
+## Coursework, Publications, and Credentials
+
+- [MS Projects](https://github.com/ChinmayA301/MS-projectss): Coursework and academic builds across machine learning systems, PostgreSQL/data workflows, social-data optimization, computer vision, and geospatial/public-health analytics.
+- [B.Tech Projects](https://github.com/ChinmayA301/BTech): Undergraduate project archive including financial modeling, sports analytics, OCR/NLP document parsing, and optimization work.
+- [Face Mask Detection Minor Project](https://github.com/ChinmayA301/Face-Mask-Detection-Minor-Project): CNN-based computer-vision minor project tied to the Face Mask Detection publication.
+- Publications: Face Mask Detection using CNNs; Payment System for University, IJSER.
+- Certifications and credential signals: CargoWise One Professional Certification, Claude / AI coding tooling, IBM Data Science, Google IoT for Google Cloud, analytics and BI tooling.
 
 ## The Lab Venture Exploration
 

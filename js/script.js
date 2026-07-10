@@ -1616,7 +1616,9 @@ const TILE_SECTIONS = [
         metric: "New posts",
         tone: "accent",
         x: 16,
-        y: 16
+        y: 20,
+        z: 34,
+        cluster: "Research"
     },
     {
         title: "Experience",
@@ -1625,7 +1627,9 @@ const TILE_SECTIONS = [
         metric: "Industry + Research",
         tone: "primary",
         x: 48,
-        y: 16
+        y: 14,
+        z: 56,
+        cluster: "Evidence"
     },
     {
         title: "Projects",
@@ -1634,7 +1638,9 @@ const TILE_SECTIONS = [
         metric: "12+ builds",
         tone: "primary",
         x: 78,
-        y: 20
+        y: 24,
+        z: 82,
+        cluster: "Builds"
     },
     {
         title: "The Lab",
@@ -1643,7 +1649,9 @@ const TILE_SECTIONS = [
         metric: "Idea backlog",
         tone: "accent",
         x: 28,
-        y: 54
+        y: 58,
+        z: 72,
+        cluster: "Venture"
     },
     {
         title: "Coursework",
@@ -1652,7 +1660,9 @@ const TILE_SECTIONS = [
         metric: "MS + B.Tech",
         tone: "neutral",
         x: 58,
-        y: 52
+        y: 52,
+        z: 44,
+        cluster: "Academic"
     },
     {
         title: "Project Reports",
@@ -1661,7 +1671,9 @@ const TILE_SECTIONS = [
         metric: "Deep dives",
         tone: "accent",
         x: 78,
-        y: 58
+        y: 66,
+        z: 62,
+        cluster: "Evidence"
     },
     {
         title: "Resume",
@@ -1670,24 +1682,35 @@ const TILE_SECTIONS = [
         metric: "6 roles",
         tone: "neutral",
         x: 10,
-        y: 74
+        y: 78,
+        z: 26,
+        cluster: "Profile"
     }
 ];
 
 function renderTiles() {
     const grid = document.getElementById("tilesGrid");
     if (!grid) return;
-    grid.innerHTML = TILE_SECTIONS.map((tile, idx) => `
-      <a class="scatter-node scatter-${tile.tone}" href="${tile.href}"
-        style="left:${tile.x}%; top:${tile.y}%; --node-delay:${idx * 40}ms;">
-        <span class="scatter-blob" aria-hidden="true"></span>
-        <span class="scatter-label">
-          <span class="tile-metric">${tile.metric}</span>
-          <span class="tile-title">${tile.title}</span>
-          <span class="tile-desc">${tile.description}</span>
-        </span>
-      </a>
-    `).join("");
+    const nodes = TILE_SECTIONS.map((tile, idx) => `
+        <a class="scatter-node scatter-${tile.tone}" href="${tile.href}"
+          style="left:${tile.x}%; top:${tile.y}%; --z:${tile.z}; --node-scale:${0.88 + tile.z / 420}; --node-delay:${idx * 40}ms;">
+          <span class="scatter-depth-line" aria-hidden="true"></span>
+          <span class="scatter-blob" aria-hidden="true"></span>
+          <span class="scatter-label">
+            <span class="tile-metric">${tile.cluster} · ${tile.metric}</span>
+            <span class="tile-title">${tile.title}</span>
+            <span class="tile-desc">${tile.description}</span>
+          </span>
+        </a>
+      `).join("");
+    grid.innerHTML = `
+      <div class="scatter-plane" aria-hidden="true">
+        <span class="scatter-axis axis-x">Build depth</span>
+        <span class="scatter-axis axis-y">Public evidence</span>
+        <span class="scatter-axis axis-z">Career signal</span>
+      </div>
+      ${nodes}
+    `;
     applyStagger(grid.querySelectorAll(".scatter-node"));
     bindScatterMotion(grid);
 }
@@ -1711,13 +1734,15 @@ function bindScatterMotion(container) {
             const strength = Math.max(0, 140 - dist) / 140;
             const offsetX = (dx / dist) * strength * 10;
             const offsetY = (dy / dist) * strength * 10;
-            node.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            node.style.setProperty("--mx", `${offsetX}px`);
+            node.style.setProperty("--my", `${offsetY}px`);
         });
     };
 
     const reset = () => {
         nodes.forEach(node => {
-            node.style.transform = "";
+            node.style.setProperty("--mx", "0px");
+            node.style.setProperty("--my", "0px");
         });
     };
 

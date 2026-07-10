@@ -21,8 +21,8 @@
         ],
         "links": [
             {
-                "label": "Project Brief",
-                "url": ""
+                "label": "MS Projects Repo",
+                "url": "https://github.com/ChinmayA301/MS-projectss"
             }
         ]
     },
@@ -48,12 +48,8 @@
         ],
         "links": [
             {
-                "label": "Report",
-                "url": ""
-            },
-            {
-                "label": "Notebook",
-                "url": ""
+                "label": "B.Tech Projects Repo",
+                "url": "https://github.com/ChinmayA301/BTech"
             }
         ]
     },
@@ -78,8 +74,8 @@
         ],
         "links": [
             {
-                "label": "Report",
-                "url": ""
+                "label": "B.Tech Projects Repo",
+                "url": "https://github.com/ChinmayA301/BTech"
             }
         ]
     },
@@ -105,8 +101,8 @@
         ],
         "links": [
             {
-                "label": "Writeup",
-                "url": ""
+                "label": "B.Tech Projects Repo",
+                "url": "https://github.com/ChinmayA301/BTech"
             }
         ]
     },
@@ -130,8 +126,35 @@
         ],
         "links": [
             {
-                "label": "Report",
-                "url": ""
+                "label": "B.Tech Projects Repo",
+                "url": "https://github.com/ChinmayA301/BTech"
+            }
+        ]
+    },
+    {
+        "title": "Face Mask Detection using CNNs",
+        "course": "Minor Project",
+        "term": "B.Tech",
+        "summary": "Computer-vision minor project using convolutional neural networks for face-mask detection, with model training, evaluation, and publication-oriented technical documentation.",
+        "focus": [
+            "CNN-based image classification",
+            "Dataset preprocessing and augmentation",
+            "Model evaluation for real-world detection behavior"
+        ],
+        "deliverables": [
+            "Working detection prototype",
+            "Project report",
+            "Publication writeup"
+        ],
+        "tools": [
+            "Python",
+            "TensorFlow",
+            "Computer Vision"
+        ],
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Face-Mask-Detection-Minor-Project"
             }
         ]
     },
@@ -156,8 +179,8 @@
         ],
         "links": [
             {
-                "label": "Project Brief",
-                "url": ""
+                "label": "MS Projects Repo",
+                "url": "https://github.com/ChinmayA301/MS-projectss"
             }
         ]
     },
@@ -183,8 +206,8 @@
         ],
         "links": [
             {
-                "label": "Report",
-                "url": ""
+                "label": "MS Projects Repo",
+                "url": "https://github.com/ChinmayA301/MS-projectss"
             }
         ]
     },
@@ -209,8 +232,8 @@
         ],
         "links": [
             {
-                "label": "Demo",
-                "url": ""
+                "label": "MS Projects Repo",
+                "url": "https://github.com/ChinmayA301/MS-projectss"
             }
         ]
     },
@@ -236,8 +259,8 @@
         ],
         "links": [
             {
-                "label": "Capstone Report",
-                "url": ""
+                "label": "MS Projects Repo",
+                "url": "https://github.com/ChinmayA301/MS-projectss"
             }
         ]
     }

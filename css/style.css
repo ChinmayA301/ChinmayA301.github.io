@@ -330,18 +330,21 @@ header p.lead {
 }
 
 .skill-box {
-    background: var(--panel);
-    border: 1px solid var(--stroke);
-    padding: 16px;
-    border-radius: 14px;
     position: relative;
-    transition: transform .2s ease, border-color .2s ease;
+    min-height: 164px;
     color: var(--text);
+    perspective: 900px;
+    transform-style: preserve-3d;
+    transition: transform .2s ease;
 }
 
 .skill-box:hover {
     transform: translateY(-4px);
-    border-color: rgba(46, 130, 255, .4);
+}
+
+.skill-box:focus-visible {
+    outline: 2px solid rgba(138, 209, 255, 0.72);
+    outline-offset: 4px;
 }
 
 .skill-box i {
@@ -350,33 +353,80 @@ header p.lead {
     display: block;
 }
 
-.skill-box::after {
-    content: attr(data-skill);
+.skill-face {
     position: absolute;
-    left: 50%;
-    bottom: -36px;
-    transform: translateX(-50%) translateY(6px);
-    background: #0f1115;
-    color: #cfd6df;
-    white-space: nowrap;
-    font-size: 12px;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 164px;
+    background: linear-gradient(145deg, rgba(17, 19, 23, 0.96), rgba(13, 15, 20, 0.98));
     border: 1px solid var(--stroke);
-    padding: 6px 8px;
-    border-radius: 10px;
-    opacity: 0;
-    transition: all .2s ease;
+    padding: 16px;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: transform .42s ease, border-color .2s ease, box-shadow .2s ease;
 }
 
-.skill-box:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+.skill-front {
+    transform: rotateY(0deg);
 }
 
+.skill-back {
+    transform: rotateY(180deg);
+    align-items: stretch;
+    text-align: left;
+    background: linear-gradient(145deg, rgba(11, 18, 31, 0.98), rgba(18, 20, 24, 0.98));
+}
+
+.skill-box:hover .skill-front,
+.skill-box:focus-within .skill-front {
+    transform: rotateY(-180deg);
+}
+
+.skill-box:hover .skill-back,
+.skill-box:focus-within .skill-back {
+    transform: rotateY(0deg);
+    border-color: rgba(46, 130, 255, .48);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+}
+
+.skill-detail {
+    min-height: 54px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.skill-meter {
+    height: 10px;
+    width: 100%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.skill-meter span {
+    display: block;
+    height: 100%;
+    width: var(--skill-level);
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--brand), var(--accent), var(--brand-2));
+}
+
+.skill-back strong {
+    color: var(--text);
+    font-size: 0.82rem;
+}
 
 /* More vertical spacing between skill rows */
 #skills .row {
-    row-gap: 28px;
-    /* adds space between wrapped rows */
+    row-gap: 34px;
 }
 
 @media (min-width: 768px) {
@@ -385,10 +435,46 @@ header p.lead {
     }
 }
 
-/* Optional: extra room for hover tooltip under boxes */
-.skill-box {
+.credential-card {
+    border: 1px solid var(--stroke);
+    background: linear-gradient(150deg, rgba(17, 19, 23, 0.95), rgba(12, 13, 17, 0.98));
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.26);
+}
+
+.credential-kicker {
+    color: var(--accent);
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     margin-bottom: 8px;
-    /* ensures tooltip has breathing room */
+}
+
+.credential-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 14px;
+}
+
+.credential-card ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+}
+
+.credential-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.credential-cloud span {
+    border: 1px solid rgba(138, 209, 255, 0.24);
+    background: rgba(46, 130, 255, 0.08);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 8px 11px;
+    font-size: 0.9rem;
 }
 
 /* Project cards */
@@ -1114,12 +1200,62 @@ header p.lead {
     min-height: 460px;
     border-radius: 28px;
     padding: 18px;
+    perspective: 900px;
     background-image:
+        linear-gradient(115deg, rgba(46, 130, 255, 0.10), transparent 34%, rgba(255, 185, 92, 0.08)),
         radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
         radial-gradient(rgba(46, 130, 255, 0.12) 1px, transparent 1px);
-    background-size: 20px 20px, 80px 80px;
-    background-position: 0 0, 10px 10px;
+    background-size: auto, 20px 20px, 80px 80px;
+    background-position: center, 0 0, 10px 10px;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scatter-field::before {
+    content: "";
+    position: absolute;
+    inset: 44px 36px 42px;
+    border-left: 1px solid rgba(138, 209, 255, 0.34);
+    border-bottom: 1px solid rgba(138, 209, 255, 0.34);
+    transform: rotateX(58deg) rotateZ(-9deg);
+    transform-origin: bottom left;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity: 0.74;
+}
+
+.scatter-plane {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform-style: preserve-3d;
+}
+
+.scatter-axis {
+    position: absolute;
+    color: rgba(208, 216, 230, 0.72);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+}
+
+.axis-x {
+    right: 38px;
+    bottom: 30px;
+}
+
+.axis-y {
+    left: 28px;
+    top: 34px;
+    writing-mode: vertical-rl;
+}
+
+.axis-z {
+    right: 82px;
+    top: 44px;
+    transform: rotate(-26deg);
 }
 
 .scatter-node {
@@ -1129,7 +1265,12 @@ header p.lead {
     gap: 12px;
     text-decoration: none;
     color: var(--text);
+    --mx: 0px;
+    --my: 0px;
+    transform: translate3d(var(--mx), var(--my), calc(var(--z) * 1px)) scale(var(--node-scale));
+    transform-style: preserve-3d;
     transition: transform .2s ease, box-shadow .2s ease;
+    z-index: 2;
 }
 
 .scatter-blob {
@@ -1141,6 +1282,7 @@ header p.lead {
     animation: blobPulse 6s ease-in-out infinite;
     position: relative;
     flex-shrink: 0;
+    transform: translateZ(calc(var(--z) * 0.8px));
 }
 
 .scatter-blob::after {
@@ -1161,6 +1303,19 @@ header p.lead {
     transform: scale(0.96) translateY(3px);
     opacity: 0.78;
     transition: transform .22s ease, opacity .22s ease, border-color .22s ease, box-shadow .22s ease;
+    backdrop-filter: blur(10px);
+}
+
+.scatter-depth-line {
+    position: absolute;
+    left: 30px;
+    top: 44px;
+    width: calc(var(--z) * 0.8px);
+    height: 1px;
+    background: linear-gradient(90deg, rgba(138, 209, 255, 0.5), transparent);
+    transform: rotate(128deg);
+    transform-origin: left center;
+    opacity: 0.62;
 }
 
 .scatter-label .tile-metric {
@@ -1194,7 +1349,7 @@ header p.lead {
 }
 
 .scatter-node:hover {
-    transform: translateY(-4px);
+    transform: translate3d(var(--mx), calc(var(--my) - 4px), calc((var(--z) + 24) * 1px)) scale(calc(var(--node-scale) + 0.04));
 }
 
 .scatter-node:hover .scatter-label {
@@ -1235,6 +1390,13 @@ header p.lead {
         padding: 12px;
         display: grid;
         gap: 12px;
+        perspective: none;
+    }
+
+    .scatter-field::before,
+    .scatter-plane,
+    .scatter-depth-line {
+        display: none;
     }
 
     .scatter-node {
