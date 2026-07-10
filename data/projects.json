@@ -120,6 +120,24 @@
         ]
     },
     {
+        "title": "IPL Dash",
+        "description": "Interactive cricket analytics dashboard for IPL exploration, built to make match, team, player, and performance signals easier to scan through a public web interface.",
+        "status": "Live deployment",
+        "tags": [
+            "Sports Analytics",
+            "Cricket Analytics",
+            "Dashboard",
+            "Data Visualization"
+        ],
+        "link": "https://app.chinmayarora.com/ipl-dash/",
+        "links": [
+            {
+                "label": "Live Dashboard",
+                "url": "https://app.chinmayarora.com/ipl-dash/"
+            }
+        ]
+    },
+    {
         "title": "AI Lead Discovery & CRM Improvement",
         "description": "Private consulting-demo workstream for agentic lead discovery, enrichment, scoring, account research, personalized outreach support, and CRM hygiene. Focused on improving pipeline quality and reducing manual prospecting work with auditable agent steps.",
         "status": "Private consulting demo",
@@ -141,6 +159,17 @@
             "HIPAA",
             "Finance",
             "Public Sector"
+        ]
+    },
+    {
+        "title": "Decision Intelligence",
+        "description": "Decision-intelligence workstream connecting business questions, KPI definitions, scenario analysis, risk tradeoffs, and AI-assisted recommendation flows into decision-ready operating views for leaders and analysts.",
+        "status": "Project workstream",
+        "tags": [
+            "Decision Intelligence",
+            "AI Strategy",
+            "Analytics Engineering",
+            "Executive Dashboards"
         ]
     },
     {
@@ -270,18 +299,44 @@
     {
         "title": "Wax Seal Trust Provenance",
         "description": "Human-legible trust-provenance framework for digital artifacts, focused on visible tamper evidence, source lineage, and operational trust signals rather than opaque trust scores.",
-        "status": "Public repo",
+        "status": "Live deployment + public repo",
         "tags": [
             "Trust Provenance",
             "Governance",
             "TypeScript",
             "Security"
         ],
-        "link": "https://github.com/ChinmayA301/wax-seal",
+        "link": "https://wax-seal.vercel.app/",
         "links": [
+            {
+                "label": "Live Demo",
+                "url": "https://wax-seal.vercel.app/"
+            },
             {
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/wax-seal"
+            }
+        ]
+    },
+    {
+        "title": "Group of Death",
+        "description": "Daily World Cup-themed draft-and-simulate game: pull player cards under constraints, build an XI, run a deterministic SKM match engine, and share the reveal card. Built as a React/Vite product with pure TypeScript game logic, Vercel functions, Upstash-backed daily seed/leaderboard support, and mobile-first interaction design.",
+        "status": "Live deployment + public repo",
+        "tags": [
+            "React",
+            "TypeScript",
+            "Game Simulation",
+            "Sports Analytics"
+        ],
+        "link": "https://group-of-death.vercel.app/",
+        "links": [
+            {
+                "label": "Live Demo",
+                "url": "https://group-of-death.vercel.app/"
+            },
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/group-of-death"
             }
         ]
     },
