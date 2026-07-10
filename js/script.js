@@ -1102,45 +1102,6 @@ function setupHeroGlobe() {
         [[72, 23], [84, 20], [96, 20], [108, 18], [120, 17]],
         [[113, -22], [128, -25], [141, -31]]
     ];
-    const landSamples = buildLandSamples(landPolygons, 4);
-
-    function buildLandSamples(polygons, step) {
-        const samples = [];
-        polygons.forEach((polygon) => {
-            let minLon = Infinity;
-            let maxLon = -Infinity;
-            let minLat = Infinity;
-            let maxLat = -Infinity;
-            polygon.forEach(([lon, lat]) => {
-                minLon = Math.min(minLon, lon);
-                maxLon = Math.max(maxLon, lon);
-                minLat = Math.min(minLat, lat);
-                maxLat = Math.max(maxLat, lat);
-            });
-            for (let lat = minLat; lat <= maxLat; lat += step) {
-                for (let lon = minLon; lon <= maxLon; lon += step) {
-                    if (pointInPolygon([lon, lat], polygon)) {
-                        samples.push({ lat, lon });
-                    }
-                }
-            }
-        });
-        return samples;
-    }
-
-    function pointInPolygon(point, polygon) {
-        const [x, y] = point;
-        let inside = false;
-        for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i, i += 1) {
-            const [xi, yi] = polygon[i];
-            const [xj, yj] = polygon[j];
-            const intersects = ((yi > y) !== (yj > y))
-                && (x < ((xj - xi) * (y - yi)) / ((yj - yi) || Number.EPSILON) + xi);
-            if (intersects) inside = !inside;
-        }
-        return inside;
-    }
-
     function updateLocationDetails(location) {
         if (!locationName || !locationNote || !location) return;
         locationName.textContent = location.name;
@@ -1251,16 +1212,64 @@ function setupHeroGlobe() {
             });
         }
 
+        function drawProjectedLandPolygon(polygon, radius) {
+            ctx.beginPath();
+            let started = false;
+            let visiblePoints = 0;
+            for (let i = 0; i < polygon.length; i += 1) {
+                const current = polygon[i % polygon.length];
+                const next = polygon[(i + 1) % polygon.length];
+                const steps = Math.max(
+                    2,
+                    Math.ceil(Math.max(Math.abs(next[0] - current[0]), Math.abs(next[1] - current[1])) / 3)
+                );
+                for (let step = 0; step < steps; step += 1) {
+                    const t = step / steps;
+                    const lon = current[0] + (next[0] - current[0]) * t;
+                    const lat = current[1] + (next[1] - current[1]) * t;
+                    const point = project(lat, lon, radius);
+                    if (point.depth <= 0.015) {
+                        if (visiblePoints > 2) {
+                            ctx.closePath();
+                        }
+                        started = false;
+                        continue;
+                    }
+                    if (!started) {
+                        ctx.moveTo(point.x, point.y);
+                        started = true;
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                    visiblePoints += 1;
+                }
+            }
+            if (visiblePoints < 3) return;
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
         function drawLand(radius) {
-            landSamples.forEach((sample) => {
-                const point = project(sample.lat, sample.lon, radius);
-                if (point.depth <= 0) return;
-                const size = 2.1 + point.depth * 1.25;
-                ctx.beginPath();
-                ctx.fillStyle = `rgba(104, 180, 142, ${0.16 + point.depth * 0.22})`;
-                ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
-                ctx.fill();
-            });
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(state.width / 2, state.height / 2, radius * 0.995, 0, Math.PI * 2);
+            ctx.clip();
+
+            ctx.fillStyle = "rgba(91, 169, 122, 0.58)";
+            ctx.strokeStyle = "rgba(226, 247, 229, 0.28)";
+            ctx.lineWidth = 1.2;
+            landPolygons.forEach((polygon) => drawProjectedLandPolygon(polygon, radius));
+
+            ctx.fillStyle = "rgba(185, 221, 153, 0.34)";
+            [
+                [[-6, 55], [-2, 58], [1, 55], [-2, 51]],
+                [[72, 8], [79, 10], [82, 6], [78, 1], [73, 4]],
+                [[45, -13], [50, -16], [49, -24], [44, -25], [43, -18]],
+                [[96, 5], [103, 2], [106, -4], [101, -8], [96, -3]],
+                [[138, 36], [143, 40], [146, 35], [142, 31], [138, 33]],
+                [[170, -34], [178, -39], [173, -45], [166, -42], [165, -37]]
+            ].forEach((polygon) => drawProjectedLandPolygon(polygon, radius));
 
             boundaryLines.forEach((line) => {
                 ctx.beginPath();
@@ -1282,6 +1291,7 @@ function setupHeroGlobe() {
                 ctx.lineWidth = 1;
                 ctx.stroke();
             });
+            ctx.restore();
         }
 
         function drawPins(radius) {

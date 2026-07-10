@@ -21,11 +21,12 @@ DEFAULT_DATA_DIR = ROOT / "data"
 APP_SITE_URL = "https://app.chinmayarora.com"
 DEFAULT_EMBED_MODEL = "models/gemini-embedding-001"
 SUMMARY_MODEL = "models/gemini-2.5-flash"
-CHUNK_WORDS = 50
+CHUNK_WORDS = 140
 EMBED_BATCH_SIZE = 20
-API_CALL_DELAY_SECONDS = 5
-RATE_LIMIT_RETRY_SECONDS = 20
-MAX_RETRIES = 4
+API_CALL_DELAY_SECONDS = 12
+RATE_LIMIT_RETRY_SECONDS = 60
+MAX_RETRIES = 6
+DEFAULT_MAX_INGEST_DOCUMENTS = 420
 PORTFOLIO_HOSTS = {
     "app.chinmayarora.com",
     "chinmayarora.com",
@@ -626,6 +627,50 @@ def build_data_documents(data_dir: Path) -> list[dict[str, Any]]:
     return documents
 
 
+def document_priority(document: dict[str, Any]) -> int:
+    searchable = " ".join(
+        str(document.get(key, ""))
+        for key in ("title", "summary", "url", "type", "chunk_text")
+    ).lower()
+    score = {
+        "page": 70,
+        "project": 62,
+        "lab": 58,
+        "experience": 54,
+        "resume": 48,
+        "blog": 42,
+        "report": 40,
+        "coursework": 32,
+        "data": 24,
+    }.get(str(document.get("type", "")).lower(), 20)
+    if "aegis" in searchable:
+        score += 120
+    if "governance" in searchable or "compliance" in searchable or "audit" in searchable:
+        score += 45
+    if "data scientist" in searchable or "data analyst" in searchable or "analytics" in searchable:
+        score += 34
+    if "stock analyzer" in searchable:
+        score += 28
+    if "app.chinmayarora.com" in searchable:
+        score += 8
+    return score
+
+
+def prioritize_documents(documents: list[dict[str, Any]], max_documents: int) -> list[dict[str, Any]]:
+    if len(documents) <= max_documents:
+        return documents
+    ranked = sorted(
+        documents,
+        key=lambda document: (
+            -document_priority(document),
+            str(document.get("type", "")),
+            str(document.get("title", "")),
+            str(document.get("id", "")),
+        ),
+    )
+    return ranked[:max_documents]
+
+
 def main() -> None:
     load_dotenv(Path(__file__).resolve().parent / ".env")
 
@@ -638,10 +683,15 @@ def main() -> None:
     data_dir = Path(os.getenv("DATA_DIR", str(DEFAULT_DATA_DIR))).resolve()
     embed_model = os.getenv("GEMINI_EMBED_MODEL", DEFAULT_EMBED_MODEL)
     embed_dimensions = parse_optional_int(os.getenv("GEMINI_EMBED_DIMENSIONS"))
+    max_documents = parse_optional_int(os.getenv("MAX_INGEST_DOCUMENTS")) or DEFAULT_MAX_INGEST_DOCUMENTS
 
     documents = build_page_documents() + build_blog_documents() + build_data_documents(data_dir)
     if not documents:
         raise RuntimeError("No documents were generated for ingestion.")
+    original_document_count = len(documents)
+    documents = prioritize_documents(documents, max_documents)
+    if len(documents) != original_document_count:
+        print(f"Prioritized {len(documents)} of {original_document_count} generated documents for ingestion.")
     corpus = [doc["chunk_text"] for doc in documents]
     bm25 = BM25Encoder().fit(corpus)
 

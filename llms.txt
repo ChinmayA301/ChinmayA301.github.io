@@ -12,7 +12,7 @@
 
 ## Highlighted Work
 
-- [Aegis AI Governance & Readiness](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): Highlighted governance workstream covering readiness scorecards, risk registers, human-review gates, audit evidence, monitoring, and executive-ready AI adoption artifacts. Live surfaces: [Aegis app](https://aegis-ai.pages.dev) and [readiness survey](https://aegis-survey.vercel.app).
+- [Aegis AI Governance & Readiness](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): Highlighted governance workstream covering readiness scorecards, risk registers, human-review gates, audit evidence, monitoring, and executive-ready AI adoption artifacts. Live surfaces: [Aegis app](https://aegisai-5wz.pages.dev) and [readiness survey](https://aegis-survey.vercel.app).
 - [PolyRAG](https://github.com/ChinmayA301/PolyRAG): Multi-model RAG over public AI-governance documents with citation-grounded answers, FAISS retrieval, OCR fallback, FastAPI, Docker, and a hosted Hugging Face demo at https://chinmaya301-polyrag.hf.space.
 - [Operations Control Tower](https://github.com/ChinmayA301/Operations-Control-Tower): Operations analytics on real Olist data with SQL star schema, supplier risk score, Great Expectations checks, and Looker Studio-ready marts.
 - [Healthcare Readmission Risk with Fairness & Calibration](https://github.com/ChinmayA301/Risk-Prediction-with-Fairness-Geography): Responsible-AI risk-modeling prototype with leakage control, calibration, Fairlearn subgroup checks, SHAP, and model-card limitations.

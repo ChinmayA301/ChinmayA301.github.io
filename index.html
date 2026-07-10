@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chinmay Arora | AI Engineer, Data Scientist, and AI Governance Builder</title>
+    <title>Chinmay Arora | AI Engineer, Data Scientist, Data Analyst, and AI Governance Builder</title>
     <meta name="description"
-        content="Portfolio of Chinmay Arora covering AI engineering, responsible data science, AI governance, analytics engineering, RAG systems, BI products, and technical writing." />
+        content="Portfolio of Chinmay Arora covering AI engineering, data science, data analysis, responsible AI governance, analytics engineering, BI products, and technical writing." />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://app.chinmayarora.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Chinmay Arora | AI Engineer, Data Scientist, and AI Governance Builder" />
+    <meta property="og:title" content="Chinmay Arora | AI Engineer, Data Scientist, Data Analyst, and AI Governance Builder" />
     <meta property="og:description"
-        content="Explore AI engineering, responsible ML, governance, analytics engineering, BI, RAG, and product strategy work by Chinmay Arora." />
+        content="Explore AI engineering, data science, data analysis, responsible ML, governance, analytics engineering, BI, and product strategy work by Chinmay Arora." />
     <meta property="og:url" content="https://app.chinmayarora.com/" />
     <meta property="og:image" content="https://app.chinmayarora.com/assets/images/profile-graduation.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Chinmay Arora | AI Engineer, Data Scientist, and AI Governance Builder" />
+    <meta name="twitter:title" content="Chinmay Arora | AI Engineer, Data Scientist, Data Analyst, and AI Governance Builder" />
     <meta name="twitter:description"
-        content="Portfolio of AI engineering, responsible data science, governance, analytics, RAG systems, and technical writing by Chinmay Arora." />
+        content="Portfolio of AI engineering, data science, data analysis, governance, analytics, and technical writing by Chinmay Arora." />
     <meta name="twitter:image" content="https://app.chinmayarora.com/assets/images/profile-graduation.png" />
 
     <!-- Styles -->
@@ -56,13 +56,13 @@
                     "alternateName": [
                         "ChinmayA301"
                     ],
-                    "jobTitle": "AI Engineer, Data Scientist, AI Governance Builder, and Analytics Engineer",
+                    "jobTitle": "AI Engineer, Data Scientist, Data Analyst, AI Governance Builder, and Analytics Engineer",
                     "url": "https://app.chinmayarora.com/",
                     "image": "https://app.chinmayarora.com/assets/images/profile-graduation.png",
                     "sameAs": [
                         "https://www.linkedin.com/in/chinmay-arora-27682211b/",
                         "https://github.com/ChinmayA301",
-                        "https://aegis-ai.pages.dev",
+                        "https://aegisai-5wz.pages.dev",
                         "https://aegis-survey.vercel.app",
                         "https://chinmaya301-polyrag.hf.space"
                     ],
@@ -106,8 +106,8 @@
                     "@type": "WebPage",
                     "@id": "https://app.chinmayarora.com/#webpage",
                     "url": "https://app.chinmayarora.com/",
-                    "name": "Chinmay Arora | AI Engineer, Data Scientist, and AI Governance Builder",
-                    "description": "Portfolio of Chinmay Arora covering AI engineering, responsible data science, governance, analytics engineering, RAG systems, and technical writing.",
+                    "name": "Chinmay Arora | AI Engineer, Data Scientist, Data Analyst, and AI Governance Builder",
+                    "description": "Portfolio of Chinmay Arora covering AI engineering, data science, data analysis, governance, analytics engineering, and technical writing.",
                     "isPartOf": {
                         "@id": "https://app.chinmayarora.com/#website"
                     },
@@ -230,6 +230,11 @@
             transform: rotateY(180deg);
         }
 
+        .hero-media-shell:hover .hero-media-flip,
+        .hero-media-shell:focus-visible .hero-media-flip {
+            transform: rotateY(180deg);
+        }
+
         .hero-media-face {
             position: absolute;
             inset: 0;
@@ -288,22 +293,31 @@
 
         .hero-globe-hint {
             position: absolute;
-            right: 1.35rem;
-            bottom: 1.35rem;
+            left: 50%;
+            bottom: 2rem;
             z-index: 2;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 2.85rem;
-            height: 2.85rem;
+            gap: 0.34rem;
+            min-width: 2.65rem;
+            height: 2.35rem;
+            padding: 0 0.66rem;
             border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 50%;
+            border-radius: 999px;
             background: rgba(8, 10, 14, 0.68);
             color: #fff3de;
-            font-size: 1rem;
+            font-size: 0.68rem;
+            font-weight: 800;
             line-height: 1;
+            text-transform: uppercase;
+            transform: translateX(-50%);
             backdrop-filter: blur(10px);
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+        }
+
+        .hero-globe-hint i {
+            font-size: 0.86rem;
         }
 
         .hero-globe-stage {
@@ -551,11 +565,11 @@
             }
 
             .hero-globe-hint {
-                right: 1rem;
-                bottom: 1rem;
-                width: 2.35rem;
-                height: 2.35rem;
-                font-size: 0.86rem;
+                bottom: 1.45rem;
+                min-width: 2.35rem;
+                height: 2.1rem;
+                padding: 0 0.54rem;
+                font-size: 0.62rem;
             }
 
             .hero-globe-modal {
@@ -618,6 +632,7 @@
                                     class="hero-img">
                                 <span class="hero-globe-hint" aria-hidden="true">
                                     <i class="fas fa-globe-americas"></i>
+                                    <span>Flip here</span>
                                 </span>
                             </div>
                         </div>
@@ -630,10 +645,10 @@
                     </div>
                 </button>
             </div>
-            <h1 class="mt-3 text-gradient">AI Engineer, Data Scientist, and Governance Builder</h1>
+            <h1 class="mt-3 text-gradient">AI Engineer, Data Scientist, Data Analyst, and Governance Builder</h1>
             <p class="mb-1 text-uppercase small text-muted"><span id="typed" aria-hidden="true"></span></p>
             <h2 class="fw-bold hero-name">Chinmay Arora</h2>
-            <p class="lead text-muted">RAG Systems • Responsible ML • Analytics Engineering • AI Strategy</p>
+            <p class="lead text-muted">Data Scientist • Data Analyst • Responsible ML • Analytics Engineering • AI Strategy</p>
             <div class="mt-2 d-flex justify-content-center flex-wrap gap-2">
                 <a href="https://www.linkedin.com/in/chinmay-arora-27682211b/" target="_blank"
                     class="btn btn-primary">LinkedIn</a>
@@ -771,7 +786,7 @@
             <h2 class="section-title">Building AI and analytics systems that can be trusted in the real world</h2>
             <p class="section-text mx-auto">
                 M.S. Data Science candidate at the University of Minnesota working across AI engineering, responsible
-                ML, governance strategy, and decision-ready analytics. I build RAG systems, evaluation harnesses,
+                ML, governance strategy, and decision-ready analytics. I build AI systems, evaluation harnesses,
                 dashboards, segmentation workflows, and AI-readiness artifacts that make technical systems legible to
                 operators, executives, and reviewers.
             </p>
