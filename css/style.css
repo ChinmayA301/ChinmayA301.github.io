@@ -1662,6 +1662,26 @@ header p.lead {
     line-height: 1.65;
 }
 
+.market-signal {
+    margin: 0;
+    border-left: 3px solid rgba(255, 185, 92, 0.58);
+    border-radius: 0 12px 12px 0;
+    background: rgba(255, 185, 92, 0.08);
+    color: #f1e1c6;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    padding: 0.72rem 0.85rem;
+}
+
+.market-signal strong {
+    color: #ffd89f;
+}
+
+.market-signal.compact {
+    margin-top: 1rem;
+    font-size: 0.82rem;
+}
+
 .tech-specs {
     margin: 0;
     padding-left: 18px;
