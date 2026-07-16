@@ -641,6 +641,34 @@ header p.lead {
     padding-left: 0.7rem;
 }
 
+.project-result,
+.project-why,
+.project-stack {
+    display: grid;
+    gap: 0.18rem;
+    margin: 0.72rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.project-result strong,
+.project-why strong,
+.project-stack strong {
+    color: #9dc2ff;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.project-result {
+    border-left: 2px solid rgba(157, 242, 208, 0.52);
+    padding-left: 0.7rem;
+}
+
+.project-result strong {
+    color: #9df2d0;
+}
+
 /* Optional: brighten project titles slightly for hierarchy */
 .project-box.card h3 {
     color: #eaf0ff !important;

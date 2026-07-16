@@ -227,6 +227,54 @@
         ]
     },
     {
+        "title": "Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation",
+        "description": "Built a longitudinal healthcare ML pipeline that converted sparse encounter records into patient-level cohorts and tested whether neighborhood deprivation improved prediction of uncontrolled HbA1c at 6-, 12-, and 24-month horizons.",
+        "result": "The best observed ROC AUC was 0.612; matched ADI-ablation experiments showed no consistent lift, while follow-up coverage fell from 56.8% at 6 months to 40.8% at 24 months—making observation bias and target quality central findings.",
+        "why": "A rigorous negative result showing cohort design, calibration, leakage control, and honest interpretation of social-risk variables—not a deployable clinical model.",
+        "stack": "Python, pandas, scikit-learn, XGBoost, SHAP, longitudinal validation",
+        "status": "Supporting applied work",
+        "privacy": "Only aggregate outputs, figures, and deidentified methodology are public; no patient-level or institution-restricted data is shared.",
+        "tags": [
+            "Healthcare ML",
+            "Longitudinal Data",
+            "Calibration",
+            "Feature Ablation"
+        ],
+        "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/capstone",
+        "links": [
+            {
+                "label": "Explore implementation",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/capstone"
+            }
+        ]
+    },
+    {
+        "title": "Public-Sector AI Readiness & Efficiency Evaluation",
+        "description": "Designed a four-stage decision framework for evaluating county AI opportunities before procurement or sensitive-data access, combining workflow baselines, public-data proxy studies, responsible-AI gates, resident-segment analysis, and controlled-pilot planning.",
+        "result": "Turned open-ended AI adoption questions into ranked use cases, measurable pilot criteria, governance artifacts, and testable ROI hypotheses across document intake, policy retrieval, and service-request triage; simulated estimates are labeled as hypotheses, not production outcomes.",
+        "why": "Shows the bridge from data science and AI evaluation to privacy, equity, accessibility, human review, and operational decision-making in a high-stakes public context.",
+        "stack": "Python, scikit-learn, SHAP, public 311 data, document AI benchmarks, Power BI",
+        "status": "Supporting applied work",
+        "privacy": "Public evidence uses open or synthetic proxies; county and resident data, internal workflows, and confidential implementation details are not exposed.",
+        "tags": [
+            "Responsible AI",
+            "Public Sector",
+            "AI Evaluation",
+            "Decision Support"
+        ],
+        "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/public-sector-ai-efficiency",
+        "links": [
+            {
+                "label": "Explore implementation",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/public-sector-ai-efficiency"
+            },
+            {
+                "label": "Related writing",
+                "url": "/blog/the-impact-of-ai-on-local-government-digital-experience/"
+            }
+        ]
+    },
+    {
         "title": "Financial Document Intelligence (FinBizInfo)",
         "description": "Financial-statement OCR/RAG workflow for extracting ratios, risk flags, auditor remarks, and compliance gaps from noisy documents with citation-backed review and structured analytics.",
         "status": "Live deployment",

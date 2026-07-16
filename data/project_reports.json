@@ -1,43 +1,44 @@
 [
     {
-        "title": "Diabetes Outcomes & Neighborhood Deprivation Study",
-        "subtitle": "Spatial modeling of SDOH signals to surface community-level risk patterns",
-        "timeframe": "Jan 2025 - Present",
+        "title": "Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation",
+        "subtitle": "Temporal cohort design and controlled ADI feature ablation across three follow-up horizons",
+        "timeframe": "2025",
         "role": "Researcher",
-        "status": "In progress",
-        "summary": "A spatial analytics study linking diabetes outcomes with neighborhood deprivation indices to inform public health interventions and resource allocation strategies.",
+        "status": "Completed study",
+        "summary": "A longitudinal EHR study testing whether neighborhood deprivation improves prediction of future uncontrolled HbA1c beyond available clinical and demographic variables.",
         "sections": [
             {
                 "title": "Context",
-                "text": "Public health stakeholders need actionable, location-specific insight into how social determinants of health influence chronic disease outcomes."
+                "text": "Repeated encounter records, irregular lab timing, and incomplete follow-up make future diabetes outcomes difficult to define and evaluate reliably."
             },
             {
                 "title": "Problem",
-                "text": "Quantify and visualize the relationship between diabetes outcomes and deprivation indices to identify high-risk clusters and underserved areas."
+                "text": "Test whether the Area Deprivation Index adds incremental predictive information at 6, 12, and 24 months without conflating population-level social importance with patient-level model utility."
             },
             {
                 "title": "Approach",
-                "text": "Built a spatial modeling workflow using neighborhood indices, outcome rates, and geographic covariates. Applied correlation analysis, spatial autocorrelation checks, and risk surface mapping."
+                "text": "Constructed patient-level temporal cohorts with ±90-day outcome windows, then compared logistic regression, random forest, and XGBoost under matched ADI and NoADI specifications."
             },
             {
                 "title": "Evaluation",
-                "text": "Validated spatial signal stability with sensitivity checks and cross-comparisons across multiple index definitions."
+                "text": "Measured ROC AUC, AUPRC, Brier score, calibration, SHAP effects, outcome coverage, and follow-up-window quality. Coverage declined from 56.8% at 6 months to 40.8% at 24 months."
             },
             {
-                "title": "Impact",
-                "text": "Informed community-level intervention thinking and prioritization frameworks for public health planning."
+                "title": "Finding",
+                "text": "The best observed AUC was 0.612 and ADI produced no consistent lift. The result is methodological evidence about weak incremental utility and observation bias—not a deployable clinical model or a causal claim."
             }
         ],
         "stack": [
-            "R",
-            "Spatial Statistics",
-            "Power BI",
-            "Python"
+            "Python",
+            "scikit-learn",
+            "XGBoost",
+            "SHAP",
+            "Calibration"
         ],
         "tags": [
-            "Health Analytics",
-            "SDOH",
-            "GeoAI"
+            "Healthcare ML",
+            "Longitudinal Data",
+            "Responsible AI"
         ],
         "artifacts": [
             {
@@ -52,6 +53,7 @@
     },
     {
         "title": "Financial Balance-Sheet RAG System (FinBizInfo)",
+        "featured": true,
         "subtitle": "Internal AI analyst for ratio extraction, risk flags, and forecasting",
         "timeframe": "Oct 2024 - Present",
         "role": "ML Engineer",

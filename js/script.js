@@ -271,6 +271,14 @@ const PORTFOLIO_SIGNAL_MODEL = {
             skills: ["evaluation", "analytics", "product"],
             roles: { dataScientist: 5, aiEngineer: 4, strategy: 3, governance: 3 }
         },
+        "Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation": {
+            skills: ["evaluation", "analytics", "governance"],
+            roles: { dataScientist: 5, aiEngineer: 3, strategy: 2, governance: 4 }
+        },
+        "Public-Sector AI Readiness & Efficiency Evaluation": {
+            skills: ["governance", "evaluation", "product"],
+            roles: { dataScientist: 4, aiEngineer: 4, strategy: 5, governance: 5 }
+        },
         "Financial Document Intelligence (FinBizInfo)": {
             skills: ["rag", "analytics", "governance"],
             roles: { dataScientist: 3, aiEngineer: 4, strategy: 3, governance: 4 }
@@ -416,11 +424,15 @@ function renderProjects(projects) {
         const actionLinks = actions.length ? `
             <div class="project-actions mt-3">
                 ${actions.map(item => `
-                    <a class="project-cta" href="${escapeHtml(item.url)}" ${/^https?:\/\//i.test(item.url) ? 'target="_blank" rel="noopener"' : ""}>${escapeHtml(item.label)}</a>
+                    <a class="project-cta" href="${escapeHtml(item.url)}" ${/^https?:\/\//i.test(item.url) ? 'target="_blank" rel="noopener"' : ""}>${escapeHtml(item.label === "GitHub" ? "Explore implementation" : item.label)}</a>
                 `).join("")}
             </div>
         ` : "";
         const status = p.status ? `<p class="project-status mb-2">${escapeHtml(p.status)}</p>` : "";
+        const result = p.result ? `<p class="project-result"><strong>Result</strong>${escapeHtml(p.result)}</p>` : "";
+        const why = p.why ? `<p class="project-why"><strong>Why it matters</strong>${escapeHtml(p.why)}</p>` : "";
+        const stack = p.stack ? `<p class="project-stack"><strong>Stack</strong>${escapeHtml(p.stack)}</p>` : "";
+        const privacy = p.privacy ? `<p class="project-privacy">${escapeHtml(p.privacy)}</p>` : "";
         const tweetEmbed = p.tweetUrl ? `
             <div class="project-embed mt-3">
                 <blockquote class="twitter-tweet" data-media-max-width="560">
@@ -439,6 +451,10 @@ function renderProjects(projects) {
                 <h3 class="h5">${escapeHtml(p.title)}</h3>
                 ${status}
                 <p class="mb-2 small text-muted">${escapeHtml(p.description)}</p>
+                ${result}
+                ${why}
+                ${stack}
+                ${privacy}
                 <div class="project-tags">${tags}</div>
                 ${tweetEmbed}
                 ${projectActions}
@@ -1304,7 +1320,9 @@ async function loadCaseStudy() {
     if (!wrap) return;
     try {
         const reports = await loadJsonWithOverrides("project_reports", "data/project_reports.json");
-        const featured = Array.isArray(reports) ? reports[0] : null;
+        const featured = Array.isArray(reports)
+            ? reports.find(report => report.featured === true) || reports[0]
+            : null;
         if (!featured) return;
         const bulletSource = (featured.sections || []).find(s => (s.bullets || []).length) || {};
         wrap.innerHTML = `
