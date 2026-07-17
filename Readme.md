@@ -2,7 +2,7 @@
 
 Canonical site: https://app.chinmayarora.com/
 
-This repository powers Chinmay Arora's recruiter-first technical portfolio, research writing, and separately staged Product and Venture Lab. The primary positioning is **Data Scientist and Applied AI Engineer focused on reliable decision systems**.
+This repository powers Chinmay Arora's technical portfolio, research writing, project case studies, and Product and Venture Lab. The primary focus is reliable data science, analytics, and applied AI systems.
 
 ## Key Pages
 
