@@ -6,7 +6,8 @@
         "result": "Created a repeatable decision layer that turns vague AI-adoption interest into scored readiness gaps, named risks, review gates, evidence requirements, and pilot decisions.",
         "why": "Helps regulated teams decide where AI is safe and worthwhile before procurement or sensitive-data exposure.",
         "stack": "AI readiness scoring, risk registers, human-in-the-loop controls, audit evidence, Cloudflare",
-        "status": "Highlighted workstream",
+        "status": "Research prototype",
+        "paths": ["responsible-ai", "applied-ai"],
         "privacy": "Product and deployment shared; private implementation details withheld.",
         "tags": [
             "AI Governance",
@@ -36,12 +37,17 @@
     },
     {
         "title": "PolyRAG: Multi-Model Governance RAG",
+        "featured": true,
+        "featured_order": 4,
+        "problem": "Policy-heavy teams need grounded answers they can compare against the same retrieved evidence instead of trusting unsupported model fluency.",
+        "contribution": "Designed and built the ingestion, shared-retrieval, multi-model comparison, citation, evaluation, API, and deployment workflow.",
         "description": "Citation-grounded RAG over real AI-governance documents with one retrieval pass and side-by-side answers from multiple OpenAI-compatible models; includes ingestion, FAISS indexing, OCR fallback, evaluation, FastAPI, Docker, and hosted demo.",
         "role": "AI Engineer",
         "result": "Delivered a shared-retrieval comparison workflow so model answers can be evaluated against the same evidence, citations, and governance corpus instead of incomparable prompts or contexts.",
         "why": "Makes LLM comparison more auditable and useful for policy-heavy questions where unsupported fluency is a real risk.",
-        "stack": "Python, FAISS, FastAPI, Docker, OCR, multi-provider LLM APIs, retrieval evaluation",
-        "status": "Public repo + demo",
+        "stack": "Python, FAISS, FastAPI, Docker, OCR, LLM APIs",
+        "status": "Deployed demo",
+        "paths": ["applied-ai", "responsible-ai"],
         "tags": [
             "RAG",
             "LLM Evaluation",
@@ -67,7 +73,8 @@
         "result": "Unified competing destinations, source grades, supersession, confidence, and editorial context into one traceable transfer ledger rather than a feed of disconnected rumours.",
         "why": "Turns noisy sports reporting into an explainable evidence product where readers can inspect why a claim is trusted.",
         "stack": "TypeScript, React, PostgreSQL, deterministic scoring, AI extraction, source-reliability analytics",
-        "status": "Private product build",
+        "status": "Deployed demo",
+        "paths": ["applied-ai", "analytics"],
         "privacy": "No private repo or internal code linked; public deployment shared.",
         "link": "https://transfer-signal.vercel.app/",
         "tags": [
@@ -90,7 +97,8 @@
         "result": "Delivered a working research surface that consolidates investment tracking and analysis into a decision-support workflow instead of a collection of disconnected market screens.",
         "why": "Reduces the friction between monitoring a position, investigating a signal, and deciding what deserves deeper research.",
         "stack": "Market data, portfolio analytics, time-series signals, financial visualization, explainable decision support",
-        "status": "Live deployment",
+        "status": "Deployed demo",
+        "paths": ["analytics", "data-science"],
         "privacy": "Live product shared; no brokerage credentials, private holdings, or user financial data are exposed through the portfolio.",
         "tags": [
             "Financial Analytics",
@@ -113,7 +121,8 @@
         "result": "Designed one operating model that connects obligations to workflows, controls, evidence, owners, gaps, and recurring execution instead of leaving compliance knowledge across disconnected documents.",
         "why": "Makes compliance operational: teams can see what must happen, who owns it, and what evidence proves it happened.",
         "stack": "Multi-agent workflows, compliance knowledge graphs, evidence mapping, orchestration, audit trails",
-        "status": "Active private build",
+        "status": "In development",
+        "paths": ["applied-ai", "responsible-ai"],
         "privacy": "Concept and capability shared; implementation details, schemas, and private code withheld.",
         "tags": [
             "Multi-Agent Systems",
@@ -129,7 +138,8 @@
         "result": "Converted open-ended stakeholder conversations into structured evidence, quality-scored responses, comparable themes, and follow-up signals for readiness and discovery work.",
         "why": "Preserves qualitative nuance while making stakeholder research usable for prioritization and decision-making.",
         "stack": "Adaptive interviewing, structured extraction, multilingual capture, response quality scoring, insight synthesis",
-        "status": "Active private build",
+        "status": "In development",
+        "paths": ["applied-ai", "analytics"],
         "privacy": "Public description only; no private respondent data, prompts, or implementation details exposed.",
         "tags": [
             "AI Interviews",
@@ -145,7 +155,8 @@
         "result": "Connected source reliability, player and team tracking, tactical context, and editorial presentation into a shared intelligence direction with TransferSignal as a live product surface.",
         "why": "Football data becomes more useful when events, sources, roles, and tactical context are evaluated together rather than as isolated metrics.",
         "stack": "Sports data pipelines, confidence scoring, source ledgers, tactical analytics, editorial dashboards",
-        "status": "Active private build",
+        "status": "In development",
+        "paths": ["data-science", "analytics"],
         "privacy": "No private repo linked; public-facing deployment links can be added when each surface is ready.",
         "tags": [
             "Sports Analytics",
@@ -157,7 +168,8 @@
     {
         "title": "IPL Dash",
         "description": "Interactive cricket analytics dashboard for IPL exploration, built to make match, team, player, and performance signals easier to scan through a public web interface.",
-        "status": "Live deployment",
+        "status": "Deployed demo",
+        "paths": ["analytics", "data-science"],
         "tags": [
             "Sports Analytics",
             "Cricket Analytics",
@@ -179,7 +191,8 @@
         "result": "Structured prospecting into auditable stages for discovery, enrichment, scoring, research, outreach support, and CRM cleanup instead of an opaque end-to-end agent action.",
         "why": "Improves sales-research throughput while keeping evidence and human approval visible at each consequential step.",
         "stack": "Agentic workflows, enrichment, lead scoring, CRM automation, evidence logging, human approval",
-        "status": "Private consulting demo",
+        "status": "Research prototype",
+        "paths": ["applied-ai", "analytics"],
         "privacy": "Capability described without exposing customer lists, prompts, workflows, or private code.",
         "tags": [
             "Agentic CRM",
@@ -195,7 +208,8 @@
         "result": "Defined a reusable governance package spanning acceptable use, vendor review, risk ownership, human oversight, evidence trails, pilot criteria, and monitoring expectations.",
         "why": "Gives regulated teams an actionable path from policy language to controlled AI experimentation and accountable deployment.",
         "stack": "NIST AI RMF, policy mapping, model cards, vendor risk, impact assessment, monitoring design",
-        "status": "Advisory + implementation workstream",
+        "status": "In development",
+        "paths": ["responsible-ai", "applied-ai"],
         "privacy": "Sector-level framing only; no client-specific controls, data, or confidential policies exposed.",
         "tags": [
             "AI Governance",
@@ -211,7 +225,8 @@
         "result": "Built a structured brief workflow that combines reference cases, strategic lenses, tradeoffs, and pre-mortems instead of returning a single unexamined recommendation.",
         "why": "Helps decision-makers pressure-test ambiguous choices while keeping uncertainty and competing interpretations visible.",
         "stack": "FastAPI, Next.js, pgvector, retrieval, LLM orchestration, scenario analysis",
-        "status": "Project workstream",
+        "status": "Research prototype",
+        "paths": ["applied-ai", "analytics"],
         "tags": [
             "Decision Intelligence",
             "AI Strategy",
@@ -221,12 +236,17 @@
     },
     {
         "title": "Operations Control Tower",
+        "featured": true,
+        "featured_order": 3,
+        "problem": "Operations teams need consistent table grain, KPI definitions, data-quality checks, and supplier-risk views before a dashboard can guide intervention.",
+        "contribution": "Built the DuckDB star schema, validation checks, KPI layer, supplier-risk logic, and Looker Studio-ready executive views.",
         "description": "Operations-analytics control tower on 98k real Olist orders: SQL star schema, data-quality checks, supplier risk score, executive KPIs, and a Looker Studio-ready decision dashboard for logistics intervention planning.",
         "role": "Analytics Engineer / Data Analyst",
         "result": "Converted 98k real orders into a validated star schema, executive KPI layer, supplier-risk score, and Looker Studio-ready intervention views.",
         "why": "Moves operations reporting from descriptive totals toward a repeatable way to identify where logistics attention is needed.",
         "stack": "Python, DuckDB SQL, dimensional modeling, Great Expectations, Looker Studio",
-        "status": "Public case study",
+        "status": "Completed analysis",
+        "paths": ["analytics", "data-science"],
         "tags": [
             "Analytics Engineering",
             "Looker Studio",
@@ -243,12 +263,17 @@
     },
     {
         "title": "Healthcare Readmission Risk with Fairness & Calibration",
+        "featured": true,
+        "featured_order": 1,
+        "problem": "A readmission model can look strong in aggregate while remaining poorly calibrated or producing materially different errors across patient groups.",
+        "contribution": "Designed the leakage-controlled cohort and evaluation, trained the models, analyzed calibration and subgroup errors, and wrote the model card.",
         "description": "Responsible-AI risk-modeling prototype on real UCI hospital data with leakage-controlled cohort design, calibration, subgroup fairness, SHAP, Fairlearn checks, and an honest model-card recommendation not to deploy as-is.",
         "role": "Data Scientist / Responsible ML Engineer",
         "result": "Produced a leakage-controlled benchmark with calibration, subgroup error analysis, SHAP, and a model-card recommendation not to deploy the model as-is.",
         "why": "Demonstrates that responsible healthcare ML includes knowing when performance and subgroup behavior do not justify deployment.",
-        "stack": "Python, scikit-learn, XGBoost, Fairlearn, SHAP, calibration, model cards",
-        "status": "Public case study",
+        "stack": "Python, scikit-learn, XGBoost, Fairlearn, SHAP, MLflow",
+        "status": "Completed analysis",
+        "paths": ["data-science", "responsible-ai"],
         "tags": [
             "Responsible AI",
             "Healthcare ML",
@@ -265,12 +290,17 @@
     },
     {
         "title": "Tabular ML Benchmark: Human FE vs AutoML",
+        "featured": true,
+        "featured_order": 2,
+        "problem": "Teams often compare model families without isolating the effects of preprocessing, split design, calibration, runtime, and distribution shift.",
+        "contribution": "Designed the config-driven benchmark, fixed the evaluation protocol, ran the cross-domain experiments, and interpreted performance, calibration, runtime, and shift robustness.",
         "description": "Config-driven benchmark across healthcare, operations, and labor-market datasets measuring AUC, calibration, runtime, and robustness under shift; shows preprocessing and validation design matter more than model shopping.",
         "role": "ML Engineer / Evaluation Designer",
         "result": "Across three domains and five pipelines, disciplined preprocessing improved AUC by up to 0.19 while hyperparameter tuning added almost no mean lift.",
         "why": "Shows why reproducible preprocessing, calibration, and validation under shift matter more than model shopping.",
         "stack": "Python, scikit-learn, MLflow, Evidently, config-driven experiments",
-        "status": "Public benchmark",
+        "status": "Completed analysis",
+        "paths": ["data-science", "responsible-ai"],
         "tags": [
             "ML Evaluation",
             "MLOps",
@@ -286,13 +316,45 @@
         ]
     },
     {
+        "title": "SKM Football Analytics",
+        "featured": true,
+        "featured_order": 5,
+        "problem": "Isolated football event totals miss role, game state, and the process that makes decisive moments possible.",
+        "contribution": "Developed and tested an original key-moment framework on StatsBomb open data, documented assumptions and role effects, and published reproducible analysis and writing.",
+        "description": "Original football analytics research connecting event value, key moments, tactical context, and role-aware interpretation without presenting descriptive results as causal effects.",
+        "role": "Sports Data Scientist / Researcher",
+        "result": "Produced a reproducible analysis and public methodology that makes the metric, its context, and its failure cases inspectable.",
+        "why": "Relevant to sports analytics, media products, fan intelligence, player evaluation, and transfer analysis.",
+        "stack": "Python, StatsBomb, pandas, probabilistic modeling, validation, Streamlit",
+        "status": "Research prototype",
+        "paths": ["data-science", "analytics"],
+        "tags": [
+            "Sports Analytics",
+            "Event Data",
+            "Probabilistic Modeling",
+            "Research"
+        ],
+        "link": "https://github.com/ChinmayA301/skm-football",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/skm-football"
+            },
+            {
+                "label": "Article",
+                "url": "/blog/successful-key-moment-metric/"
+            }
+        ]
+    },
+    {
         "title": "Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation",
         "description": "Built a longitudinal healthcare ML pipeline that converted sparse encounter records into patient-level cohorts and tested whether neighborhood deprivation improved prediction of uncontrolled HbA1c at 6-, 12-, and 24-month horizons.",
         "role": "Data Scientist / Healthcare ML Researcher",
         "result": "The best observed ROC AUC was 0.612; matched ADI-ablation experiments showed no consistent lift, while follow-up coverage fell from 56.8% at 6 months to 40.8% at 24 months—making observation bias and target quality central findings.",
         "why": "A rigorous negative result showing cohort design, calibration, leakage control, and honest interpretation of social-risk variables—not a deployable clinical model.",
         "stack": "Python, pandas, scikit-learn, XGBoost, SHAP, longitudinal validation",
-        "status": "Supporting applied work",
+        "status": "Completed analysis",
+        "paths": ["data-science", "responsible-ai"],
         "privacy": "Only aggregate outputs, figures, and deidentified methodology are public; no patient-level or institution-restricted data is shared.",
         "tags": [
             "Healthcare ML",
@@ -315,7 +377,8 @@
         "result": "Turned open-ended AI adoption questions into ranked use cases, measurable pilot criteria, governance artifacts, and testable ROI hypotheses across document intake, policy retrieval, and service-request triage; simulated estimates are labeled as hypotheses, not production outcomes.",
         "why": "Shows the bridge from data science and AI evaluation to privacy, equity, accessibility, human review, and operational decision-making in a high-stakes public context.",
         "stack": "Python, scikit-learn, SHAP, public 311 data, document AI benchmarks, Power BI",
-        "status": "Supporting applied work",
+        "status": "Completed analysis",
+        "paths": ["responsible-ai", "analytics"],
         "privacy": "Public evidence uses open or synthetic proxies; county and resident data, internal workflows, and confidential implementation details are not exposed.",
         "tags": [
             "Responsible AI",
@@ -342,7 +405,8 @@
         "result": "Combined OCR, retrieval, structured extraction, risk flags, and citation-backed review in one live financial-analysis surface for noisy source documents.",
         "why": "Reduces manual document parsing while keeping analysts connected to the source evidence behind extracted financial claims.",
         "stack": "Python, OCR, RAG, LangChain, FastAPI, structured extraction, citation review",
-        "status": "Live deployment",
+        "status": "Deployed demo",
+        "paths": ["applied-ai", "analytics"],
         "tags": [
             "Financial NLP",
             "RAG",
@@ -364,7 +428,8 @@
         "result": "Defined a reconciled KPI layer for job margin, AR aging, DSO, and revenue across mode, lane, and branch views using CargoWise-shaped reporting logic.",
         "why": "Gives freight-finance teams a consistent way to trace performance questions back to operational source reports.",
         "stack": "Power BI, DAX, SQL, CargoWise reporting, finance KPI design, reconciliation",
-        "status": "Client-style/private work",
+        "status": "Completed analysis",
+        "paths": ["analytics"],
         "privacy": "Described at outcome level only; no client data, private repo, or internal dashboards exposed.",
         "tags": [
             "Power BI",
@@ -380,7 +445,8 @@
         "result": "Analyzed 728k public 2023 job postings plus a 2026 snapshot; GenAI/LLM language rose from roughly 0.1% of the 2023 corpus to about 27% of the later snapshot, reported descriptively rather than causally.",
         "why": "Separates durable data-science judgment from the job-title bundle and shows how hiring language is changing under AI pressure.",
         "stack": "Python, pandas, NLP, public job-posting data, descriptive statistics, reproducible reporting",
-        "status": "Public analysis + essay",
+        "status": "Completed analysis",
+        "paths": ["data-science", "analytics"],
         "tags": [
             "Labor Analytics",
             "NLP",
@@ -406,7 +472,8 @@
         "result": "Reframed repository traction as an explainable combination of adoption, durability, builder quality, and manipulation risk instead of relying on raw star counts.",
         "why": "Provides investors and technical diligence teams with a more defensible signal for open-source credibility.",
         "stack": "FastAPI, PostgreSQL, graph signals, anomaly scoring, explainable risk, Recharts",
-        "status": "Public repo",
+        "status": "Research prototype",
+        "paths": ["analytics", "applied-ai"],
         "tags": [
             "Trust & Safety",
             "Graph Signals",
@@ -428,7 +495,8 @@
         "result": "Delivered cryptographic seal envelopes, lifecycle state machines, CLI signing and verification, and reusable React components for visible provenance states.",
         "why": "Makes authenticity and tamper evidence understandable to people instead of hiding trust entirely inside backend cryptography.",
         "stack": "TypeScript, React, XState, Ed25519 signatures, CLI tooling, provenance schemas",
-        "status": "Live deployment + public repo",
+        "status": "Deployed demo",
+        "paths": ["applied-ai", "responsible-ai"],
         "tags": [
             "Trust Provenance",
             "Governance",
@@ -450,7 +518,8 @@
     {
         "title": "Group of Death",
         "description": "Daily World Cup-themed draft-and-simulate game: pull player cards under constraints, build an XI, run a deterministic SKM match engine, and share the reveal card. Built as a React/Vite product with pure TypeScript game logic, Vercel functions, Upstash-backed daily seed/leaderboard support, and mobile-first interaction design.",
-        "status": "Live deployment + public repo",
+        "status": "Deployed demo",
+        "paths": ["data-science", "analytics"],
         "tags": [
             "React",
             "TypeScript",
@@ -472,7 +541,8 @@
     {
         "title": "Geo Visualizer for the Indian Subcontinent",
         "description": "Interactive historical flat-map visualization for culture, trade, migration, religion, political power, and ideas across the subcontinent with filters, routes, nodes, and explanatory context.",
-        "status": "Live deployment",
+        "status": "Interactive experiment",
+        "paths": ["analytics", "data-science"],
         "tags": [
             "React",
             "TypeScript",
@@ -497,7 +567,8 @@
     {
         "title": "Severance-Style Segmentation Interface",
         "description": "High-concept segmentation interface that turns customer, resident, or user segments into memorable identity modules with deliberate reveal, comparison views, and product-grade interaction design.",
-        "status": "Live deployment",
+        "status": "Interactive experiment",
+        "paths": ["analytics"],
         "tags": [
             "React",
             "TypeScript",

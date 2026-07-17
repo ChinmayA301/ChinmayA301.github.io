@@ -410,8 +410,10 @@ function resolveJsonUrls(path) {
     return Array.from(new Set(candidates));
 }
 
-function renderProjects(projects) {
-    const grid = document.getElementById("projectsGrid");
+function renderProjects(projects, options = {}) {
+    const gridId = options.gridId || "projectsGrid";
+    const columnClass = options.columnClass || "col-md-6";
+    const grid = document.getElementById(gridId);
     if (!grid) return;
     if (!projects.length) {
         grid.innerHTML = `<p class="text-muted small">No projects found yet.</p>`;
@@ -429,10 +431,12 @@ function renderProjects(projects) {
             </div>
         ` : "";
         const status = p.status ? `<p class="project-status mb-2">${escapeHtml(p.status)}</p>` : "";
-        const role = p.role ? `<p class="project-role"><strong>Role</strong>${escapeHtml(p.role)}</p>` : "";
+        const contributionText = p.contribution || p.role || "";
+        const contributionLabel = p.contribution ? "Contribution" : "Role";
+        const role = contributionText ? `<p class="project-role"><strong>${contributionLabel}</strong>${escapeHtml(contributionText)}</p>` : "";
         const result = p.result ? `<p class="project-result"><strong>Result</strong>${escapeHtml(p.result)}</p>` : "";
-        const why = p.why ? `<p class="project-why"><strong>Why it matters</strong>${escapeHtml(p.why)}</p>` : "";
-        const stack = p.stack ? `<p class="project-stack"><strong>Stack</strong>${escapeHtml(p.stack)}</p>` : "";
+        const why = p.why ? `<p class="project-why"><strong>Operational relevance</strong>${escapeHtml(p.why)}</p>` : "";
+        const stack = p.stack ? `<p class="project-stack"><strong>Tools</strong>${escapeHtml(p.stack)}</p>` : "";
         const projectMeta = role || stack ? `<div class="project-signal-meta">${role}${stack}</div>` : "";
         const privacy = p.privacy ? `<p class="project-privacy">${escapeHtml(p.privacy)}</p>` : "";
         const tweetEmbed = p.tweetUrl ? `
@@ -452,7 +456,7 @@ function renderProjects(projects) {
             <div class="card-body">
                 <h3 class="h5">${escapeHtml(p.title)}</h3>
                 ${status}
-                <p class="mb-2 small text-muted">${escapeHtml(p.description)}</p>
+                <p class="mb-2 small text-muted">${escapeHtml(p.problem || p.description)}</p>
                 ${projectMeta}
                 ${result}
                 ${why}
@@ -463,7 +467,7 @@ function renderProjects(projects) {
             </div>
         `;
         return `
-          <div class="col-md-6">
+          <div class="${columnClass}">
             ${p.tweetUrl
                 ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
                 : actions.length
@@ -481,25 +485,40 @@ function renderProjects(projects) {
 function buildProjectFilters(projects) {
     const filterWrap = document.getElementById("projectsFilter");
     if (!filterWrap) return;
-    const tags = new Set();
-    projects.forEach(p => (p.tags || []).forEach(t => tags.add(t)));
-    const tagList = ["All", ...Array.from(tags).sort()];
-    filterWrap.innerHTML = tagList.map(tag => `
-      <button class="filter-pill ${tag === "All" ? "active" : ""}" data-filter="${tag}">${tag}</button>
+    const paths = [
+        { key: "all", label: "All work" },
+        { key: "data-science", label: "Data Science" },
+        { key: "analytics", label: "Analytics" },
+        { key: "applied-ai", label: "Applied AI" },
+        { key: "responsible-ai", label: "Responsible AI" }
+    ];
+    const params = new URLSearchParams(window.location.search);
+    const requestedPath = params.get("path");
+    const activePath = paths.some(path => path.key === requestedPath) ? requestedPath : "all";
+    filterWrap.innerHTML = paths.map(path => `
+      <button class="filter-pill ${path.key === activePath ? "active" : ""}" data-path="${path.key}">${path.label}</button>
     `).join("");
     applyStagger(filterWrap.querySelectorAll(".filter-pill"));
+
+    const renderPath = path => {
+        const filtered = path === "all"
+            ? projectCache
+            : projectCache.filter(project => (project.paths || []).includes(path));
+        renderProjects(filtered);
+    };
+
+    renderPath(activePath);
 
     filterWrap.querySelectorAll(".filter-pill").forEach(btn => {
         btn.addEventListener("click", () => {
             filterWrap.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            const filter = btn.getAttribute("data-filter");
-            if (filter === "All") {
-                renderProjects(projectCache);
-                return;
-            }
-            const filtered = projectCache.filter(p => (p.tags || []).includes(filter));
-            renderProjects(filtered);
+            const path = btn.getAttribute("data-path") || "all";
+            const nextUrl = new URL(window.location.href);
+            if (path === "all") nextUrl.searchParams.delete("path");
+            else nextUrl.searchParams.set("path", path);
+            window.history.replaceState({}, "", nextUrl);
+            renderPath(path);
         });
     });
 }
@@ -987,15 +1006,31 @@ async function loadAiBenchmarkPulse() {
 // Render Projects from JSON
 async function loadProjects() {
     const grid = document.getElementById("projectsGrid");
-    if (!grid) return;
+    const featuredGrid = document.getElementById("featuredProjectsGrid");
+    if (!grid && !featuredGrid) return;
     try {
         const projects = await loadJsonWithOverrides("projects", "data/projects.json");
-        projectCache = Array.isArray(projects) ? projects : [];
-        renderProjects(projectCache);
-        buildProjectFilters(projectCache);
-        renderPortfolioIntelligence(projectCache);
+        projectCache = Array.isArray(projects) ? [...projects].sort((a, b) => {
+            if (Boolean(a.featured) !== Boolean(b.featured)) return a.featured ? -1 : 1;
+            return (a.featured_order || 99) - (b.featured_order || 99);
+        }) : [];
+        if (grid) {
+            renderProjects(projectCache);
+            buildProjectFilters(projectCache);
+            renderPortfolioIntelligence(projectCache);
+        }
+        if (featuredGrid) {
+            const featuredProjects = projectCache
+                .filter(project => project.featured)
+                .sort((a, b) => (a.featured_order || 99) - (b.featured_order || 99));
+            renderProjects(featuredProjects, {
+                gridId: "featuredProjectsGrid",
+                columnClass: "col-md-6 col-xl-4"
+            });
+        }
     } catch (e) {
-        grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
+        if (grid) grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
+        if (featuredGrid) featuredGrid.innerHTML = `<p class="text-danger small">Could not load selected work.</p>`;
         console.error("Projects load error:", e);
     }
 }
@@ -1051,9 +1086,8 @@ function splitExperience(items) {
     const workItems = [];
     items.forEach(item => {
         const title = (item.title || "").toLowerCase();
-        const org = (item.org || "").toLowerCase();
         const isEdu = title.includes("m.s.") || title.includes("b.tech") || title.includes("b.tech.")
-            || org.includes("university") || org.includes("institute");
+            || title.includes("master") || title.includes("bachelor");
         if (isEdu) {
             eduItems.push(item);
         } else {
@@ -1070,11 +1104,11 @@ async function loadHighlights() {
     try {
         const items = await fetchJsonStrict("data/experience.json");
         const { workItems, eduItems } = splitExperience(items);
-        const current = workItems.find(item => (item.time || "").toLowerCase().includes("present")) || workItems[0];
-        const latestEdu = eduItems[0];
+        const current = workItems.find(item => (item.org || "").toLowerCase().includes("hennepin")) || workItems[0];
+        const latestEdu = eduItems.find(item => (item.title || "").toLowerCase().includes("m.s.")) || eduItems[0];
         if (currentRoleEl && current) {
             currentRoleEl.innerHTML = `
-        <p class="eyebrow">Current Position</p>
+        <p class="eyebrow">Selected Experience</p>
         <h3 class="h5 mb-1">${current.title}</h3>
         <p class="mb-1"><strong>${current.org}</strong> | ${current.time}</p>
         ${current.location ? `<p class="small text-muted mb-2">${current.location}</p>` : ""}
@@ -2255,10 +2289,10 @@ const TILE_SECTIONS = [
         cluster: "Builds"
     },
     {
-        title: "The Lab",
-        description: "A space to explore and visibilize future ideas pre-implementation.",
+        title: "Product and Venture Lab",
+        description: "Theses, problem explorations, prototypes, and archived directions labeled by maturity.",
         href: "/ideas/",
-        metric: "Idea backlog",
+        metric: "Staged exploration",
         tone: "accent",
         x: 28,
         y: 58,
@@ -2291,7 +2325,7 @@ const TILE_SECTIONS = [
         title: "Resume",
         description: "Role-specific resume downloads for targeted applications.",
         href: "/resumes/",
-        metric: "6 roles",
+        metric: "Role-specific",
         tone: "neutral",
         x: 10,
         y: 78,

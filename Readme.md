@@ -2,7 +2,7 @@
 
 Canonical site: https://app.chinmayarora.com/
 
-This repository powers Chinmay Arora's portfolio, blog, project index, and venture Lab. The site emphasizes AI engineering, responsible data science, AI governance, RAG systems, analytics engineering, BI, and research/concept writing.
+This repository powers Chinmay Arora's recruiter-first technical portfolio, research writing, and separately staged Product and Venture Lab. The primary positioning is **Data Scientist and Applied AI Engineer focused on reliable decision systems**.
 
 ## Key Pages
 
@@ -20,3 +20,7 @@ This repository powers Chinmay Arora's portfolio, blog, project index, and ventu
 - `sitemap.xml` is generated from Jekyll pages and posts so new posts are included automatically.
 - Homepage JSON-LD identifies Chinmay Arora as the same entity across portfolio, GitHub, LinkedIn, Aegis, and PolyRAG surfaces.
 - Blog posts use structured `BlogPosting` metadata and flagged research/concept posts use explicit `content_type` front matter.
+
+## AI assistance and verification
+
+AI tools are used for selected scaffolding, syntax assistance, documentation structure, and presentation review. Content, project maturity, evaluation logic, links, and final code changes are manually reviewed; public claims are written to distinguish completed analysis, deployed demos, prototypes, and in-development work.
