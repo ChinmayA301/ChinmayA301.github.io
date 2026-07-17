@@ -22,7 +22,7 @@
     <meta name="twitter:image" content="https://app.chinmayarora.com/assets/images/profile-graduation.png" />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/style.css?v=20260716f" />
+    <link rel="stylesheet" href="/css/style.css?v=20260717d" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -832,6 +832,53 @@
         </div>
     </section>
 
+    <section id="evidence-pulse" class="metrics-story" aria-labelledby="metrics-story-title">
+        <div class="metrics-story-sticky">
+            <div class="container metrics-story-layout">
+                <div class="metrics-story-copy">
+                    <p class="eyebrow">Portfolio evidence · in motion</p>
+                    <h2 id="metrics-story-title" class="metrics-story-title">The work leaves a measurable trail.</h2>
+                    <p class="metrics-story-deck">
+                        Three durable signals from the portfolio, animated as you move through the evidence.
+                    </p>
+                    <div class="metrics-story-list" aria-label="Selected portfolio metrics">
+                        <article class="metrics-story-item" data-metric-item>
+                            <span class="metrics-story-index">01</span>
+                            <strong class="metrics-story-value" data-metric-value="98000" data-metric-suffix="+">0</strong>
+                            <span class="metrics-story-label" data-metric-label="orders modeled">orders modeled</span>
+                        </article>
+                        <article class="metrics-story-item" data-metric-item>
+                            <span class="metrics-story-index">02</span>
+                            <strong class="metrics-story-value" data-metric-value="5">0</strong>
+                            <span class="metrics-story-label" data-metric-label="pipelines benchmarked">pipelines benchmarked</span>
+                        </article>
+                        <article class="metrics-story-item" data-metric-item>
+                            <span class="metrics-story-index">03</span>
+                            <strong class="metrics-story-value" data-metric-value="17" data-metric-suffix="+">0</strong>
+                            <span class="metrics-story-label" data-metric-label="technical essays published">technical essays published</span>
+                        </article>
+                    </div>
+                </div>
+
+                <figure class="metrics-chart-card">
+                    <div class="metrics-chart-heading">
+                        <div>
+                            <span class="metrics-chart-kicker">Evidence accumulation</span>
+                            <h3>Build → test → document</h3>
+                        </div>
+                        <span class="metrics-chart-state" aria-hidden="true"><i></i> Sequence</span>
+                    </div>
+                    <canvas id="metricsChartCanvas" aria-label="Animated chart showing portfolio evidence accumulating across build, test, and document phases"></canvas>
+                    <figcaption>
+                        <span>BUILD</span><span>TEST</span><span>DOCUMENT</span>
+                    </figcaption>
+                    <p class="metrics-chart-note">Portfolio snapshot · scroll-driven illustration, not a live feed.</p>
+                </figure>
+            </div>
+            <div class="metrics-story-rail" aria-hidden="true"><span></span></div>
+        </div>
+    </section>
+
     <section id="about" class="section alt-bg home-flow-section">
         <div class="container text-center">
             <p class="eyebrow">How I work</p>
@@ -986,8 +1033,37 @@
         </div>
     </aside>
 
+    <section id="world-story" class="world-story" aria-labelledby="world-story-title">
+        <div class="world-story-sticky">
+            <canvas id="storyGlobeCanvas" aria-label="Rotating globe built from geographically accurate country polygons"></canvas>
+            <div class="world-story-vignette" aria-hidden="true"></div>
+            <div class="world-story-grid" aria-hidden="true"></div>
+            <div class="container world-story-copy">
+                <article class="world-story-beat world-story-beat--one" data-world-beat>
+                    <p class="world-story-kicker">One connected practice</p>
+                    <h2 id="world-story-title">Ideas move.<br />Evidence travels.</h2>
+                </article>
+                <article class="world-story-beat world-story-beat--two" data-world-beat>
+                    <p class="world-story-kicker">Across contexts</p>
+                    <h2>Delhi · Chennai<br />Minneapolis · Miami</h2>
+                    <p>Different operating environments sharpen the same instinct: understand the system before proposing the solution.</p>
+                </article>
+                <article class="world-story-beat world-story-beat--three" data-world-beat>
+                    <p class="world-story-kicker">The constant</p>
+                    <h2>Real builds.<br />Real proof.</h2>
+                    <p>Data, decisions, and products designed for the world people actually work in.</p>
+                </article>
+            </div>
+            <div class="world-story-caption" aria-hidden="true">
+                <span>SCROLL TO ORBIT</span>
+                <i></i>
+                <span>EARTH · 110M</span>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
-    <section id="contact" class="section">
+    <section id="contact" class="section contact-after-world">
         <div class="container text-center">
             <h2 class="section-title">Let’s talk</h2>
             <p class="mb-1">Email: <a href="mailto:chinmayarora2001@gmail.com">chinmayarora2001@gmail.com</a></p>
@@ -1021,7 +1097,9 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/script.js?v=20260717a"></script>
+    <script src="/assets/vendor/d3.v7.min.js"></script>
+    <script src="/assets/vendor/topojson-client.min.js"></script>
+    <script src="/js/script.js?v=20260717e"></script>
 </body>
 
 </html>

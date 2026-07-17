@@ -2286,6 +2286,332 @@ function setupHeroGlobe() {
     });
 }
 
+function setupMetricsStory() {
+    const section = document.getElementById("evidence-pulse");
+    const sticky = section?.querySelector(".metrics-story-sticky");
+    const canvas = document.getElementById("metricsChartCanvas");
+    const metricItems = Array.from(section?.querySelectorAll("[data-metric-item]") || []);
+    if (!section || !sticky || !canvas || !metricItems.length) return;
+
+    document.body.classList.add("scroll-stories-ready");
+    const context = canvas.getContext("2d");
+    const clamp01 = value => Math.max(0, Math.min(1, value));
+    const easeOut = value => 1 - Math.pow(1 - clamp01(value), 3);
+    let progress = prefersReducedMotion ? 1 : 0;
+    let frameRequested = false;
+
+    function drawChart() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = Math.max(1, Math.round(rect.width));
+        const height = Math.max(1, Math.round(rect.height));
+        const pixelWidth = Math.round(width * dpr);
+        const pixelHeight = Math.round(height * dpr);
+        if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+            canvas.width = pixelWidth;
+            canvas.height = pixelHeight;
+        }
+
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.clearRect(0, 0, width, height);
+
+        const pad = { top: 18, right: 22, bottom: 18, left: 12 };
+        const chartWidth = width - pad.left - pad.right;
+        const chartHeight = height - pad.top - pad.bottom;
+
+        context.lineWidth = 1;
+        context.strokeStyle = "rgba(231,232,234,0.075)";
+        for (let row = 0; row <= 4; row += 1) {
+            const y = pad.top + (chartHeight * row / 4);
+            context.beginPath();
+            context.moveTo(pad.left, y);
+            context.lineTo(width - pad.right, y);
+            context.stroke();
+        }
+        for (let column = 0; column <= 6; column += 1) {
+            const x = pad.left + (chartWidth * column / 6);
+            context.beginPath();
+            context.moveTo(x, pad.top);
+            context.lineTo(x, height - pad.bottom);
+            context.stroke();
+        }
+
+        const series = [
+            { values: [0.08, 0.14, 0.29, 0.36, 0.57, 0.72, 0.94], color: "#d1a67d", width: 2.4 },
+            { values: [0.12, 0.2, 0.24, 0.43, 0.49, 0.68, 0.81], color: "#c0c4c9", width: 1.6 },
+            { values: [0.05, 0.1, 0.18, 0.26, 0.39, 0.51, 0.66], color: "#717981", width: 1.35 }
+        ];
+        const chartProgress = easeOut(clamp01((progress - 0.08) / 0.82));
+
+        series.forEach((line, lineIndex) => {
+            const maxSegment = (line.values.length - 1) * clamp01((chartProgress - lineIndex * 0.06) / (1 - lineIndex * 0.06));
+            context.beginPath();
+            line.values.forEach((value, index) => {
+                if (index > Math.ceil(maxSegment)) return;
+                let plottedValue = value;
+                if (index === Math.ceil(maxSegment) && index > maxSegment && index > 0) {
+                    const fraction = maxSegment - Math.floor(maxSegment);
+                    plottedValue = line.values[index - 1] + (value - line.values[index - 1]) * fraction;
+                }
+                const plottedIndex = Math.min(index, maxSegment);
+                const x = pad.left + chartWidth * (plottedIndex / (line.values.length - 1));
+                const y = pad.top + chartHeight * (1 - plottedValue);
+                if (index === 0) context.moveTo(x, y);
+                else context.lineTo(x, y);
+            });
+            context.strokeStyle = line.color;
+            context.lineWidth = line.width;
+            context.lineCap = "round";
+            context.lineJoin = "round";
+            context.stroke();
+
+            if (maxSegment > 0.02) {
+                const baseIndex = Math.min(Math.floor(maxSegment), line.values.length - 2);
+                const fraction = maxSegment - baseIndex;
+                const value = line.values[baseIndex] + (line.values[baseIndex + 1] - line.values[baseIndex]) * fraction;
+                const x = pad.left + chartWidth * (Math.min(maxSegment, line.values.length - 1) / (line.values.length - 1));
+                const y = pad.top + chartHeight * (1 - value);
+                context.beginPath();
+                context.arc(x, y, lineIndex === 0 ? 4 : 3, 0, Math.PI * 2);
+                context.fillStyle = line.color;
+                context.fill();
+            }
+        });
+    }
+
+    function render() {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
+        progress = prefersReducedMotion ? 1 : clamp01(-rect.top / distance);
+        if (!prefersReducedMotion) {
+            sticky.classList.toggle("is-scroll-pinned", rect.top <= 0 && rect.bottom >= window.innerHeight);
+            sticky.classList.toggle("is-scroll-complete", rect.bottom < window.innerHeight);
+        }
+        sticky.style.setProperty("--metrics-progress", progress.toFixed(4));
+
+        metricItems.forEach((item, index) => {
+            const localProgress = easeOut((progress - (0.09 + index * 0.13)) / 0.2);
+            const valueNode = item.querySelector("[data-metric-value]");
+            const labelNode = item.querySelector("[data-metric-label]");
+            const target = Number(valueNode?.dataset.metricValue || 0);
+            const suffix = valueNode?.dataset.metricSuffix || "";
+            const visibleValue = Math.round(target * localProgress);
+            if (valueNode) {
+                valueNode.textContent = `${new Intl.NumberFormat("en-US").format(visibleValue)}${suffix}`;
+            }
+            if (labelNode) {
+                const fullLabel = labelNode.dataset.metricLabel || "";
+                const typedProgress = easeOut((localProgress - 0.28) / 0.72);
+                const visibleCharacters = Math.round(fullLabel.length * typedProgress);
+                labelNode.textContent = visibleCharacters ? fullLabel.slice(0, visibleCharacters) : "\u00a0";
+            }
+            item.style.setProperty("--metric-progress", localProgress.toFixed(4));
+        });
+        drawChart();
+        frameRequested = false;
+    }
+
+    function requestRender() {
+        if (frameRequested) return;
+        frameRequested = true;
+        window.requestAnimationFrame(render);
+    }
+
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender);
+    requestRender();
+}
+
+async function setupWorldStory() {
+    const section = document.getElementById("world-story");
+    const sticky = section?.querySelector(".world-story-sticky");
+    const canvas = document.getElementById("storyGlobeCanvas");
+    const beats = Array.from(section?.querySelectorAll("[data-world-beat]") || []);
+    if (!section || !sticky || !canvas || !beats.length || typeof d3 === "undefined" || typeof topojson === "undefined") return;
+
+    document.body.classList.add("scroll-stories-ready");
+    const context = canvas.getContext("2d");
+    const clamp01 = value => Math.max(0, Math.min(1, value));
+    const smoothstep = value => {
+        const t = clamp01(value);
+        return t * t * (3 - 2 * t);
+    };
+    let progress = prefersReducedMotion ? 0.72 : 0;
+    let worldData = null;
+    let land = null;
+    let borders = null;
+    let landDots = null;
+    let isVisible = true;
+    let lastFrame = 0;
+    let rotationClock = 0;
+
+    try {
+        worldData = await fetch("/assets/data/countries-110m.json").then(response => {
+            if (!response.ok) throw new Error(`World geometry failed to load (${response.status})`);
+            return response.json();
+        });
+        land = topojson.feature(worldData, worldData.objects.land || worldData.objects.countries);
+        borders = topojson.mesh(worldData, worldData.objects.countries, (a, b) => a !== b);
+
+        const points = [];
+        for (let latitude = -84; latitude <= 84; latitude += 3.2) {
+            for (let longitude = -178; longitude <= 178; longitude += 3.2) {
+                const jittered = [longitude + Math.sin(latitude * 1.9) * 0.65, latitude + Math.cos(longitude * 1.7) * 0.45];
+                if (d3.geoContains(land, jittered)) points.push(jittered);
+            }
+        }
+        landDots = { type: "MultiPoint", coordinates: points };
+    } catch (error) {
+        console.warn(error);
+    }
+
+    const projection = d3.geoOrthographic().clipAngle(90).precision(0.3);
+    const path = d3.geoPath(projection, context);
+    const graticule = d3.geoGraticule10();
+    const sphere = { type: "Sphere" };
+
+    function beatProgress(value, enterStart, enterEnd, exitStart, exitEnd) {
+        const enter = smoothstep((value - enterStart) / (enterEnd - enterStart));
+        const exit = smoothstep((value - exitStart) / (exitEnd - exitStart));
+        return { opacity: clamp01(enter * (1 - exit)), enter, exit };
+    }
+
+    function updateProgress() {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
+        progress = prefersReducedMotion ? 0.72 : clamp01(-rect.top / distance);
+        if (!prefersReducedMotion) {
+            sticky.classList.toggle("is-scroll-pinned", rect.top <= 0 && rect.bottom >= window.innerHeight);
+            sticky.classList.toggle("is-scroll-complete", rect.bottom < window.innerHeight);
+        }
+        sticky.style.setProperty("--world-progress", progress.toFixed(4));
+
+        const timing = [
+            beatProgress(progress, 0.015, 0.12, 0.30, 0.43),
+            beatProgress(progress, 0.31, 0.42, 0.60, 0.71),
+            beatProgress(progress, 0.62, 0.74, 0.94, 1)
+        ];
+        beats.forEach((beat, index) => {
+            const state = timing[index];
+            const y = (1 - state.enter) * 68 - state.exit * 54;
+            beat.style.setProperty("--beat-opacity", (prefersReducedMotion ? 1 : state.opacity).toFixed(4));
+            beat.style.setProperty("--beat-y", `${y.toFixed(2)}px`);
+            beat.style.setProperty("--beat-scale", (0.975 + state.opacity * 0.025).toFixed(4));
+        });
+    }
+
+    function drawGlobe(timestamp = 0) {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = Math.max(1, Math.round(rect.width));
+        const height = Math.max(1, Math.round(rect.height));
+        const pixelWidth = Math.round(width * dpr);
+        const pixelHeight = Math.round(height * dpr);
+        if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+            canvas.width = pixelWidth;
+            canvas.height = pixelHeight;
+        }
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.clearRect(0, 0, width, height);
+
+        if (!prefersReducedMotion && isVisible) {
+            const delta = Math.min(timestamp - lastFrame, 32);
+            rotationClock += Math.max(0, delta) * 0.006;
+        }
+        lastFrame = timestamp;
+
+        const narrow = width < 768;
+        const moveLeft = smoothstep((progress - 0.24) / 0.28);
+        const returnCenter = smoothstep((progress - 0.62) / 0.25);
+        const centerRatio = narrow
+            ? 0.52
+            : 0.64 - moveLeft * 0.24 + returnCenter * 0.11;
+        const centerX = width * centerRatio;
+        const centerY = height * (narrow ? 0.52 : 0.51);
+        const radius = Math.min(width, height) * (narrow ? 0.43 : 0.39) * (0.92 + smoothstep(progress / 0.2) * 0.08);
+        const rotation = [-18 + rotationClock + progress * 170, -13 + Math.sin(progress * Math.PI) * 7, 0];
+        projection.translate([centerX, centerY]).scale(radius).rotate(rotation);
+
+        const halo = context.createRadialGradient(centerX, centerY, radius * 0.55, centerX, centerY, radius * 1.45);
+        halo.addColorStop(0, "rgba(184,137,98,0.075)");
+        halo.addColorStop(0.62, "rgba(184,137,98,0.025)");
+        halo.addColorStop(1, "rgba(16,18,20,0)");
+        context.fillStyle = halo;
+        context.fillRect(0, 0, width, height);
+
+        context.beginPath();
+        path(sphere);
+        context.fillStyle = "#171a1e";
+        context.fill();
+        context.strokeStyle = "rgba(231,232,234,0.19)";
+        context.lineWidth = 1;
+        context.stroke();
+
+        context.beginPath();
+        path(graticule);
+        context.strokeStyle = "rgba(231,232,234,0.075)";
+        context.lineWidth = 0.65;
+        context.stroke();
+
+        if (land) {
+            context.beginPath();
+            path(land);
+            const landGradient = context.createLinearGradient(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+            landGradient.addColorStop(0, "#5d6267");
+            landGradient.addColorStop(0.55, "#85796e");
+            landGradient.addColorStop(1, "#4f555b");
+            context.fillStyle = landGradient;
+            context.fill();
+        }
+
+        if (landDots) {
+            context.beginPath();
+            path.pointRadius(narrow ? 0.72 : 0.82)(landDots);
+            context.fillStyle = "rgba(231,232,234,0.42)";
+            context.fill();
+        }
+
+        if (borders) {
+            context.beginPath();
+            path(borders);
+            context.strokeStyle = "rgba(231,232,234,0.22)";
+            context.lineWidth = 0.45;
+            context.stroke();
+        }
+
+        const fadeIn = smoothstep(progress / 0.07);
+        const fadeOut = 1 - smoothstep((progress - 0.91) / 0.09);
+        canvas.style.opacity = (prefersReducedMotion ? 0.82 : Math.max(0.12, fadeIn * fadeOut)).toFixed(3);
+    }
+
+    function animate(timestamp) {
+        updateProgress();
+        if (isVisible) drawGlobe(timestamp);
+        window.requestAnimationFrame(animate);
+    }
+
+    if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(entries => {
+            isVisible = entries.some(entry => entry.isIntersecting);
+        }, { rootMargin: "100% 0px" });
+        observer.observe(section);
+    }
+
+    const handleResize = () => {
+        updateProgress();
+        drawGlobe(lastFrame);
+    };
+    window.addEventListener("resize", handleResize);
+    if (prefersReducedMotion) {
+        updateProgress();
+        drawGlobe(0);
+    } else {
+        window.requestAnimationFrame(animate);
+    }
+}
+
+setupMetricsStory();
+setupWorldStory();
 setupHeroGlobe();
 
 // Header background + text color shift on scroll
