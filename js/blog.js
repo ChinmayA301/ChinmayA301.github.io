@@ -60,13 +60,27 @@
   copyButton?.addEventListener('click', async () => {
     const status = document.querySelector('.blog-share-status');
     const url = copyButton.dataset.shareUrl || window.location.href;
-    try {
-      await navigator.clipboard.writeText(url);
+    const markCopied = () => {
       copyButton.textContent = 'Copied';
       if (status) status.textContent = 'Post link copied.';
       window.setTimeout(() => { copyButton.textContent = 'Copy link'; }, 1800);
+    };
+
+    try {
+      await navigator.clipboard.writeText(url);
+      markCopied();
     } catch (error) {
-      if (status) status.textContent = url;
+      const fallback = document.createElement('textarea');
+      fallback.value = url;
+      fallback.setAttribute('readonly', '');
+      fallback.style.position = 'fixed';
+      fallback.style.opacity = '0';
+      document.body.appendChild(fallback);
+      fallback.select();
+      const copied = document.execCommand('copy');
+      fallback.remove();
+      if (copied) markCopied();
+      else if (status) status.textContent = url;
     }
   });
 })();
