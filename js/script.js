@@ -1170,14 +1170,23 @@ function setupCapabilityHinges() {
     let animationFrame = null;
 
     cards.forEach((card, index) => {
-        card.style.setProperty("--hinge-direction", index % 2 === 0 ? "1" : "-1");
+        const direction = index % 2 === 0 ? 1 : -1;
+        card.style.setProperty("--hinge-direction", String(direction));
+        card.style.setProperty("--hinge-swing", "0");
+        card.style.setProperty("--hinge-drop", "0");
+        card.style.setProperty("--hinge-opacity", "1");
         card.dataset.hingeOrder = String(index + 1);
         card.classList.add("hinge-ready");
+        card.classList.toggle("hinge-from-right", direction < 0);
     });
 
     if (prefersReducedMotion) {
+        section.classList.add("is-hinge-static");
         cards.forEach(card => {
             card.style.setProperty("--hinge-progress", "1");
+            card.style.setProperty("--hinge-swing", "0");
+            card.style.setProperty("--hinge-drop", "0");
+            card.style.setProperty("--hinge-opacity", "0");
             card.classList.add("is-hinge-static", "is-hinge-revealed");
         });
         return;
@@ -1186,21 +1195,34 @@ function setupCapabilityHinges() {
     const renderHinges = () => {
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
         const sectionRect = section.getBoundingClientRect();
-        const firstCardRect = cards[0].getBoundingClientRect();
-        const releaseLine = viewportHeight * 0.52;
-        const sequenceDistance = Math.max(sectionRect.height * 0.78, viewportHeight * 0.95);
-        const sequenceProgress = Math.max(0, Math.min((releaseLine - firstCardRect.top) / sequenceDistance, 1));
-        const sequencePhase = sequenceProgress * cards.length;
+        const scrollableDistance = Math.max(sectionRect.height - viewportHeight, 1);
+        const sceneProgress = Math.max(0, Math.min(-sectionRect.top / scrollableDistance, 1));
+        const holdBeforeRelease = 0.14;
+        const holdAfterRelease = 0.08;
+        const sequenceSpan = 1 - holdBeforeRelease - holdAfterRelease;
+        const cardSlot = sequenceSpan / cards.length;
+        const motionSpan = cardSlot * 0.8;
 
-        section.style.setProperty("--hinge-sequence", sequenceProgress.toFixed(3));
+        section.style.setProperty("--hinge-sequence", sceneProgress.toFixed(3));
+        section.classList.toggle("is-hinge-pinned", sceneProgress > 0 && sceneProgress < 1);
+        section.classList.toggle("is-hinge-complete", sceneProgress >= 0.99);
 
         cards.forEach((card, index) => {
-            const rawProgress = Math.max(0, Math.min((sequencePhase - index) / 0.78, 1));
+            const cardStart = holdBeforeRelease + (index * cardSlot);
+            const rawProgress = Math.max(0, Math.min((sceneProgress - cardStart) / motionSpan, 1));
             const smoothProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+            const swingRaw = Math.min(rawProgress / 0.52, 1);
+            const swingProgress = 1 + (2.7 * Math.pow(swingRaw - 1, 3)) + (1.7 * Math.pow(swingRaw - 1, 2));
+            const dropRaw = Math.max(0, Math.min((rawProgress - 0.44) / 0.56, 1));
+            const dropProgress = dropRaw * dropRaw;
+            const fadeProgress = Math.max(0, Math.min((dropRaw - 0.48) / 0.52, 1));
             const focused = card.contains(document.activeElement);
             const progress = focused ? 1 : smoothProgress;
 
             card.style.setProperty("--hinge-progress", progress.toFixed(3));
+            card.style.setProperty("--hinge-swing", (focused ? 1 : swingProgress).toFixed(3));
+            card.style.setProperty("--hinge-drop", (focused ? 1 : dropProgress).toFixed(3));
+            card.style.setProperty("--hinge-opacity", (focused ? 0 : 1 - fadeProgress).toFixed(3));
             card.classList.toggle("is-hinge-revealed", progress > 0.82);
         });
 

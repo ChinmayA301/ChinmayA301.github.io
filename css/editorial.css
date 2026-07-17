@@ -4884,16 +4884,47 @@ body.blog-theme .blog-comment-submit p {
 }
 
 /* Homepage capability hinges */
+#skills {
+    --hinge-scene-height: 560svh;
+    position: relative;
+    min-height: var(--hinge-scene-height);
+    padding: 0 !important;
+    overflow: visible;
+}
+
+.capability-sticky-stage {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: grid;
+    min-height: 100svh;
+    padding: clamp(1.25rem, 3vh, 2.5rem) 0;
+    overflow: hidden;
+    place-items: center;
+    background: var(--page);
+}
+
+.capability-stage-content {
+    width: 100%;
+}
+
+#skills .section-title {
+    margin-bottom: clamp(1.15rem, 2.6vh, 2rem);
+}
+
 #skills .row > [class*="col-"] {
     perspective: 1400px;
 }
 
 #skills .capability-card.capability-hinge-card {
     --hinge-progress: 0;
+    --hinge-swing: 0;
+    --hinge-drop: 0;
+    --hinge-opacity: 1;
     position: relative;
-    min-height: 330px;
+    min-height: clamp(225px, 29vh, 285px);
     padding: 0 !important;
-    overflow: hidden;
+    overflow: visible;
     isolation: isolate;
     border: 0 !important;
     border-top: 1px solid var(--rule-strong) !important;
@@ -4902,8 +4933,8 @@ body.blog-theme .blog-comment-submit p {
 
 .capability-hinge-reveal,
 .capability-hinge-plate {
-    min-height: 330px;
-    padding: clamp(2rem, 3.4vw, 3rem);
+    min-height: clamp(225px, 29vh, 285px);
+    padding: clamp(1.35rem, 2.6vw, 2.35rem);
 }
 
 .capability-hinge-reveal {
@@ -4914,7 +4945,7 @@ body.blog-theme .blog-comment-submit p {
     justify-content: flex-end;
     background: transparent;
     opacity: var(--hinge-progress);
-    transform: translateY(calc((1 - var(--hinge-progress)) * 16px));
+    transform: translateY(calc((1 - var(--hinge-progress)) * 12px));
 }
 
 .capability-hinge-reveal::after {
@@ -4957,16 +4988,25 @@ body.blog-theme .blog-comment-submit p {
     display: grid;
     grid-template-rows: auto 1fr auto;
     align-items: end;
-    transform-origin: 50% 16px;
+    transform-origin: 18px 16px;
     transform:
-        perspective(1400px)
-        rotateX(calc(var(--hinge-progress) * 112deg))
-        translateY(calc(var(--hinge-progress) * 118%))
-        rotateZ(calc(var(--hinge-progress) * var(--hinge-direction) * 5deg));
-    opacity: calc(1 - var(--hinge-progress));
+        perspective(1200px)
+        translate3d(calc(var(--hinge-drop) * 42%), calc(var(--hinge-drop) * 128%), 0)
+        rotateZ(calc((var(--hinge-swing) * 34deg) + (var(--hinge-drop) * 58deg)))
+        rotateX(calc(var(--hinge-drop) * 24deg));
+    opacity: var(--hinge-opacity);
     background: transparent;
     box-shadow: none;
     will-change: transform, opacity;
+}
+
+.capability-hinge-card.hinge-from-right .capability-hinge-plate {
+    transform-origin: calc(100% - 18px) 16px;
+    transform:
+        perspective(1200px)
+        translate3d(calc(var(--hinge-drop) * -42%), calc(var(--hinge-drop) * 128%), 0)
+        rotateZ(calc((var(--hinge-swing) * -34deg) + (var(--hinge-drop) * -58deg)))
+        rotateX(calc(var(--hinge-drop) * 24deg));
 }
 
 .capability-hinge-plate::after {
@@ -4979,16 +5019,21 @@ body.blog-theme .blog-comment-submit p {
 
 .capability-hinge-rail {
     position: absolute;
-    top: 7px;
-    left: 10%;
-    width: 80%;
-    height: 17px;
+    top: 6px;
+    left: 7px;
+    width: 68px;
+    height: 18px;
     border: 1px solid rgba(8, 10, 12, 0.86);
     border-radius: 999px;
     background: linear-gradient(180deg, #747a7f 0%, #2a2e32 44%, #15181b 58%, #555b60 100%);
     box-shadow:
         0 2px 5px rgba(0, 0, 0, 0.72),
         inset 0 1px rgba(255, 255, 255, 0.32);
+}
+
+.capability-hinge-card.hinge-from-right .capability-hinge-rail {
+    right: 7px;
+    left: auto;
 }
 
 .capability-hinge-rail i {
@@ -5003,9 +5048,9 @@ body.blog-theme .blog-comment-submit p {
     transform: translateY(-50%);
 }
 
-.capability-hinge-rail i:nth-child(1) { left: 10%; }
-.capability-hinge-rail i:nth-child(2) { left: calc(50% - 4px); }
-.capability-hinge-rail i:nth-child(3) { right: 10%; }
+.capability-hinge-rail i:nth-child(1) { left: 9px; }
+.capability-hinge-rail i:nth-child(2) { right: 9px; }
+.capability-hinge-rail i:nth-child(3) { display: none; }
 
 .capability-hinge-index {
     align-self: start;
@@ -5125,14 +5170,55 @@ body.blog-theme .blog-comment-submit p {
 }
 
 @media (max-width: 767.98px) {
+    #skills {
+        --hinge-scene-height: 600svh;
+    }
+
+    .capability-sticky-stage {
+        padding: 0.85rem 0;
+    }
+
+    #skills .row {
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 0.75rem;
+        row-gap: 0.75rem !important;
+    }
+
     #skills .capability-card.capability-hinge-card,
     .capability-hinge-reveal,
     .capability-hinge-plate {
-        min-height: 300px;
+        min-height: 110px;
+    }
+
+    .capability-hinge-reveal,
+    .capability-hinge-plate {
+        padding: 0.72rem 0.85rem;
     }
 
     #skills .capability-hinge-plate h3 {
-        font-size: clamp(2.6rem, 13vw, 4.1rem) !important;
+        max-width: 15ch;
+        font-size: clamp(1.45rem, 7vw, 2.45rem) !important;
+    }
+
+    #skills .capability-hinge-reveal p {
+        margin: 0.55rem 0 0.35rem;
+        font-size: clamp(0.62rem, 2.6vw, 0.78rem);
+        line-height: 1.35;
+    }
+
+    #skills .capability-hinge-reveal a {
+        font-size: clamp(0.58rem, 2.25vw, 0.72rem);
+        line-height: 1.3;
+    }
+
+    .capability-tool-label,
+    .capability-hinge-index,
+    .capability-hinge-cue {
+        font-size: 0.52rem;
+    }
+
+    .capability-hinge-cue {
+        display: none;
     }
 
     #highlights .highlight-card {
@@ -5144,7 +5230,38 @@ body.blog-theme .blog-comment-submit p {
     }
 }
 
+@media (min-width: 520px) and (max-width: 767.98px) {
+    #skills .row > [class*="col-"] {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+
+    #skills .capability-card.capability-hinge-card,
+    .capability-hinge-reveal,
+    .capability-hinge-plate {
+        min-height: clamp(166px, 20vh, 190px);
+    }
+
+    #skills .capability-hinge-reveal p {
+        font-size: 0.76rem;
+    }
+
+    #skills .capability-hinge-reveal a {
+        font-size: 0.69rem;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
+    #skills {
+        min-height: auto;
+    }
+
+    .capability-sticky-stage {
+        position: relative;
+        min-height: auto;
+        overflow: visible;
+    }
+
     #skills .capability-card.capability-hinge-card {
         display: flex;
         flex-direction: column;
