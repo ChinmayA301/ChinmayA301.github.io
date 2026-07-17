@@ -2610,6 +2610,75 @@ async function setupWorldStory() {
     }
 }
 
+function setupVentureCapitalBills() {
+    const ventureCards = Array.from(document.querySelectorAll(".venture-grid > .venture-card"));
+    const backlogCards = Array.from(document.querySelectorAll(".venture-backlog .project-box.card"));
+    if (!ventureCards.length && !backlogCards.length) return;
+
+    ventureCards.forEach((card, index) => {
+        const visual = card.querySelector(".venture-visual");
+        if (!visual || visual.querySelector(".venture-money-stage")) return;
+
+        const category = card.querySelector(".venture-tag")?.textContent?.trim() || "Venture thesis";
+        const stage = document.createElement("div");
+        stage.className = "venture-money-stage";
+        stage.setAttribute("aria-hidden", "true");
+        stage.style.setProperty("--capital-index", String(index));
+
+        ["back", "middle", "front"].forEach(layer => {
+            const bill = document.createElement("span");
+            bill.className = `venture-money-bill venture-money-bill--${layer}`;
+            if (layer === "front") {
+                const topLine = document.createElement("span");
+                topLine.className = "venture-money-topline";
+                topLine.innerHTML = `<b>CA</b><span>IDEA CAPITAL</span><b>$</b>`;
+
+                const seal = document.createElement("span");
+                seal.className = "venture-money-seal";
+                seal.textContent = "CA";
+
+                const categoryLine = document.createElement("span");
+                categoryLine.className = "venture-money-category";
+                categoryLine.textContent = category;
+
+                const serial = document.createElement("span");
+                serial.className = "venture-money-serial";
+                serial.textContent = `LAB ${String(index + 1).padStart(2, "0")} · NOT LEGAL TENDER`;
+
+                bill.append(topLine, seal, categoryLine, serial);
+            }
+            stage.appendChild(bill);
+        });
+        visual.appendChild(stage);
+    });
+
+    backlogCards.forEach((card, index) => {
+        const body = card.querySelector(".card-body");
+        if (!body || body.querySelector(".venture-note-strip")) return;
+        const strip = document.createElement("div");
+        strip.className = "venture-note-strip";
+        strip.setAttribute("aria-hidden", "true");
+        strip.innerHTML = `<span>CA</span><b>WATCHLIST NOTE</b><small>LAB ${String(ventureCards.length + index + 1).padStart(2, "0")}</small>`;
+        body.prepend(strip);
+    });
+
+    const allCards = [...ventureCards, ...backlogCards];
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        allCards.forEach(card => card.classList.add("is-capital-visible"));
+        return;
+    }
+
+    const capitalObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-capital-visible");
+            capitalObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.18, rootMargin: "0px 0px -7% 0px" });
+    allCards.forEach(card => capitalObserver.observe(card));
+}
+
+setupVentureCapitalBills();
 setupMetricsStory();
 setupWorldStory();
 setupHeroGlobe();

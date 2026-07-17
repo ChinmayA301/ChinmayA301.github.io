@@ -1994,6 +1994,458 @@ body.blog-theme.theme-light {
     }
 }
 
+/* Lab capital-note motion: layered like testimonial cards, honest as a visual metaphor */
+.venture-visual {
+    isolation: isolate;
+}
+
+.venture-visual > img {
+    position: relative;
+    z-index: 1;
+}
+
+.venture-overlay {
+    z-index: 5;
+}
+
+.venture-money-stage {
+    position: absolute;
+    right: clamp(1rem, 5%, 2rem);
+    bottom: clamp(1rem, 8%, 2.25rem);
+    z-index: 3;
+    width: min(72%, 360px);
+    aspect-ratio: 1.92 / 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) rotate(1.5deg);
+    transform-origin: center bottom;
+    transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.venture-card.is-capital-visible .venture-money-stage {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    transition-delay: calc(min(var(--capital-index, 0), 3) * 55ms);
+}
+
+.venture-money-stage::before {
+    content: "";
+    position: absolute;
+    top: -0.62rem;
+    left: 50%;
+    z-index: 8;
+    width: 3.3rem;
+    height: 1.05rem;
+    border: 1px solid rgba(231, 232, 234, 0.2);
+    border-radius: 0 0 8px 8px;
+    background: linear-gradient(180deg, #555d65, #2e353d 58%, #1d2126);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.32), inset 0 1px rgba(255, 255, 255, 0.14);
+    transform: translateX(-50%);
+}
+
+.venture-money-bill {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+    border: 1px solid rgba(209, 166, 125, 0.34);
+    border-radius: 13px;
+    background:
+        radial-gradient(circle at 50% 48%, rgba(209, 166, 125, 0.1), transparent 28%),
+        repeating-linear-gradient(128deg, rgba(231, 232, 234, 0.028) 0 1px, transparent 1px 8px),
+        #252a30;
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34), inset 0 1px rgba(255, 255, 255, 0.06);
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.venture-money-bill::before {
+    content: "";
+    position: absolute;
+    inset: 0.58rem;
+    border: 1px solid rgba(231, 232, 234, 0.11);
+    border-radius: 8px;
+    background:
+        radial-gradient(circle at 9% 16%, transparent 0 7px, rgba(209, 166, 125, 0.2) 7.5px 8.5px, transparent 9px),
+        radial-gradient(circle at 91% 84%, transparent 0 7px, rgba(209, 166, 125, 0.2) 7.5px 8.5px, transparent 9px);
+}
+
+.venture-money-bill--back {
+    background-color: #1d2126;
+    transform: translate3d(-0.8rem, 0.5rem, 0) rotate(-3.5deg);
+}
+
+.venture-money-bill--middle {
+    background-color: #2e353d;
+    transform: translate3d(0.8rem, 0.25rem, 0) rotate(3deg);
+}
+
+.venture-money-bill--front {
+    z-index: 3;
+}
+
+.venture-money-topline {
+    position: absolute;
+    top: 1rem;
+    right: 1.1rem;
+    left: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--quiet);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(0.44rem, 0.8vw, 0.6rem);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+}
+
+.venture-money-topline b {
+    color: var(--rust-bright);
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+.venture-money-seal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: clamp(3.2rem, 7vw, 4.6rem);
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid rgba(209, 166, 125, 0.38);
+    border-radius: 50%;
+    color: var(--rust-bright);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    line-height: 1;
+    transform: translate(-50%, -50%);
+}
+
+.venture-money-seal::before,
+.venture-money-seal::after {
+    content: "";
+    position: absolute;
+    inset: 0.35rem;
+    border: 1px dashed rgba(231, 232, 234, 0.13);
+    border-radius: 50%;
+}
+
+.venture-money-seal::after {
+    inset: -0.7rem;
+    border-style: solid;
+    border-color: rgba(231, 232, 234, 0.05);
+}
+
+.venture-money-category,
+.venture-money-serial {
+    position: absolute;
+    bottom: 0.95rem;
+    color: var(--quiet);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(0.4rem, 0.7vw, 0.54rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.venture-money-category {
+    left: 1.1rem;
+    max-width: 42%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.venture-money-serial {
+    right: 1.1rem;
+    color: var(--faint);
+    text-align: right;
+}
+
+.venture-card:hover .venture-money-bill--back,
+.venture-card:focus-within .venture-money-bill--back {
+    transform: translate3d(-1.45rem, -0.55rem, 0) rotate(-6deg);
+}
+
+.venture-card:hover .venture-money-bill--middle,
+.venture-card:focus-within .venture-money-bill--middle {
+    transform: translate3d(1.45rem, -0.3rem, 0) rotate(5deg);
+}
+
+.venture-card:hover .venture-money-bill--front,
+.venture-card:focus-within .venture-money-bill--front {
+    transform: translate3d(0, -0.8rem, 0);
+}
+
+.venture-card:hover .venture-money-stage,
+.venture-card:focus-within .venture-money-stage {
+    opacity: 0.34;
+    transform: translate3d(0, -0.2rem, 0) scale(0.98);
+}
+
+.venture-note-strip {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.7rem;
+    align-items: center;
+    margin-bottom: 1.3rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px dashed rgba(209, 166, 125, 0.24);
+    color: var(--faint);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.11em;
+}
+
+.venture-note-strip span {
+    display: grid;
+    width: 1.75rem;
+    height: 1.75rem;
+    place-items: center;
+    border: 1px solid rgba(209, 166, 125, 0.28);
+    border-radius: 50%;
+    color: var(--rust-bright);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 0.78rem;
+}
+
+.venture-note-strip b {
+    color: var(--quiet);
+    font-weight: 500;
+}
+
+.venture-note-strip small {
+    color: var(--rust-bright);
+    font-size: inherit;
+}
+
+.venture-backlog .project-box.card {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.venture-backlog .project-box.card.is-capital-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Frameless portrait: the transparent cutout dissolves into the hero canvas */
+.hero-media-shell,
+.hero-media-flip {
+    min-height: clamp(500px, 40vw, 570px) !important;
+}
+
+.hero-portrait-stage {
+    width: clamp(400px, 36vw, 520px) !important;
+    height: clamp(500px, 40vw, 570px) !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.hero-portrait-backdrop {
+    inset: 5% 2% 0 !important;
+    z-index: 0;
+    border-radius: 0 !important;
+    background:
+        radial-gradient(ellipse 50% 46% at 52% 37%, rgba(209, 166, 125, 0.12), transparent 70%),
+        radial-gradient(ellipse 62% 55% at 52% 60%, rgba(192, 196, 201, 0.08), transparent 73%),
+        radial-gradient(circle at 50% 50%, rgba(231, 232, 234, 0.055) 0 1px, transparent 1.5px) !important;
+    background-size: auto, auto, 12px 12px !important;
+    filter: none !important;
+    mask-image: radial-gradient(ellipse 72% 82% at 52% 49%, #000 24%, transparent 78%);
+}
+
+.hero-portrait-stage .hero-img {
+    position: absolute !important;
+    right: 3%;
+    bottom: -1%;
+    left: auto;
+    z-index: 2;
+    width: min(88%, 455px) !important;
+    max-height: 95% !important;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: saturate(0.96) contrast(1.04) drop-shadow(0 28px 28px rgba(0, 0, 0, 0.32)) !important;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 88%, rgba(0, 0, 0, 0.92) 93%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 88%, rgba(0, 0, 0, 0.92) 93%, transparent 100%);
+}
+
+.hero-portrait-doodles {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.hero-doodle-stroke,
+.hero-doodle-icon {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.hero-doodle-stroke {
+    stroke-width: 2.2;
+}
+
+.hero-doodle-stroke--quiet {
+    stroke: rgba(231, 232, 234, 0.44);
+}
+
+.hero-doodle-stroke--warm,
+.hero-doodle-icon {
+    stroke: rgba(209, 166, 125, 0.84);
+}
+
+.hero-doodle-icon {
+    stroke-width: 1.8;
+}
+
+.hero-doodle-copy,
+.hero-doodle-micro {
+    fill: var(--rust-bright);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+}
+
+.hero-doodle-micro {
+    fill: var(--faint);
+    font-size: 7px;
+    letter-spacing: 1px;
+}
+
+.hero-doodle-stroke path,
+.hero-doodle-icon path,
+.hero-doodle-icon ellipse {
+    stroke-dasharray: 720;
+    stroke-dashoffset: 720;
+    animation: hero-doodle-draw 1.35s 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-doodle-icon--database path,
+.hero-doodle-icon--database ellipse {
+    animation-delay: 0.72s;
+}
+
+.hero-doodle-icon--chart path {
+    animation-delay: 0.9s;
+}
+
+.hero-doodle-tag {
+    position: absolute;
+    z-index: 4;
+    color: var(--quiet);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+}
+
+.hero-doodle-tag::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -0.35rem;
+    left: 0;
+    height: 1px;
+    background: var(--rust);
+    transform: rotate(-1.5deg);
+}
+
+.hero-doodle-tag--one {
+    top: 10%;
+    right: 5%;
+}
+
+.hero-doodle-tag--two {
+    bottom: 13%;
+    left: 1%;
+    transform: rotate(-4deg);
+}
+
+.hero-portrait-stage .hero-globe-hint {
+    right: 3.5rem !important;
+    bottom: 4% !important;
+    z-index: 5;
+}
+
+@keyframes hero-doodle-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .hero-media-shell,
+    .hero-media-flip {
+        min-height: 500px !important;
+    }
+
+    .hero-portrait-stage {
+        width: min(92vw, 470px) !important;
+        height: min(108vw, 520px) !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .venture-visual .venture-overlay {
+        display: none !important;
+    }
+
+    .venture-money-stage {
+        right: 1rem;
+        bottom: 1rem;
+        width: min(74%, 310px);
+    }
+
+    .venture-money-serial {
+        display: none;
+    }
+
+    .venture-money-category {
+        max-width: 74%;
+    }
+
+    .hero-media-shell,
+    .hero-media-flip {
+        min-height: 430px !important;
+    }
+
+    .hero-portrait-stage {
+        width: min(96vw, 390px) !important;
+        height: min(112vw, 450px) !important;
+    }
+
+    .hero-portrait-stage .hero-img {
+        right: 1%;
+        width: min(88%, 365px) !important;
+    }
+
+    .hero-portrait-stage .hero-globe-hint {
+        right: 2.5rem !important;
+    }
+
+    .hero-doodle-copy,
+    .hero-doodle-micro,
+    .hero-doodle-tag--two {
+        display: none;
+    }
+
+    .hero-doodle-stroke {
+        stroke-width: 2.6;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -2002,5 +2454,17 @@ body.blog-theme.theme-light {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+
+    .hero-doodle-stroke path,
+    .hero-doodle-icon path,
+    .hero-doodle-icon ellipse {
+        stroke-dashoffset: 0 !important;
+    }
+
+    .venture-money-stage,
+    .venture-backlog .project-box.card {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
