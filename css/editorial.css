@@ -2468,3 +2468,493 @@ body.blog-theme.theme-light {
         transform: none !important;
     }
 }
+
+/* Static hero portrait: city exploration now belongs to the full-page globe */
+.hero-media-shell-static {
+    --globe-reveal: 0 !important;
+    position: relative;
+    display: block;
+    cursor: default !important;
+    perspective: none !important;
+}
+
+.hero-media-shell-static:hover,
+.hero-media-shell-static:focus-within {
+    transform: none !important;
+}
+
+.hero-media-shell-static .hero-globe-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--rust-bright) !important;
+    text-decoration: none;
+    pointer-events: auto;
+}
+
+.hero-media-shell-static .hero-globe-hint:hover,
+.hero-media-shell-static .hero-globe-hint:focus-visible {
+    background: var(--rust) !important;
+    color: var(--ink) !important;
+    outline: 2px solid rgba(209, 166, 125, 0.3);
+    outline-offset: 3px;
+}
+
+/* The globe is also its own scroll-controlled city index */
+.world-city-nav {
+    position: absolute;
+    top: 50%;
+    left: clamp(1rem, 3vw, 3rem);
+    z-index: 6;
+    display: grid;
+    width: min(240px, 21vw);
+    transform: translateY(-50%);
+}
+
+.world-city-nav button {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    gap: 0.6rem;
+    align-items: center;
+    width: 100%;
+    padding: 0.72rem 0;
+    border: 0;
+    border-bottom: 1px solid rgba(231, 232, 234, 0.12);
+    background: transparent;
+    color: #aeb3b9;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.22s ease, padding-left 0.22s ease, border-color 0.22s ease;
+}
+
+.world-city-nav button span {
+    color: #777e86;
+    font-size: 0.56rem;
+}
+
+.world-city-nav button:hover,
+.world-city-nav button:focus-visible,
+.world-city-nav button.is-active {
+    padding-left: 0.5rem;
+    border-color: rgba(209, 166, 125, 0.48);
+    color: #e7e8ea;
+}
+
+.world-city-nav button.is-active span {
+    color: #d1a67d;
+}
+
+.world-city-nav button:focus-visible {
+    outline: 1px solid #d1a67d;
+    outline-offset: 3px;
+}
+
+.world-city-status {
+    position: absolute;
+    top: clamp(5.5rem, 10vh, 7rem);
+    right: clamp(1rem, 4vw, 4rem);
+    z-index: 6;
+    display: grid;
+    justify-items: end;
+    margin: 0;
+    color: #e7e8ea;
+    font-family: "IBM Plex Mono", monospace;
+    text-align: right;
+    pointer-events: none;
+}
+
+.world-city-status strong {
+    font-size: clamp(0.78rem, 1vw, 0.92rem);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.world-city-status span {
+    margin-top: 0.25rem;
+    color: #aeb3b9;
+    font-size: 0.61rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Venture scroll deck: the capital bill is the front, the evidence is the reverse */
+.venture-grid.venture-scroll-deck {
+    display: block !important;
+    max-width: 1180px;
+    margin-inline: auto;
+    border: 0 !important;
+}
+
+.venture-scroll-deck .venture-flip-step,
+.venture-scroll-deck .venture-card-featured,
+.venture-scroll-deck .venture-card-wide,
+.venture-scroll-deck .venture-card-tall {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: 1040px;
+    height: 148svh !important;
+    margin: 0 0 clamp(2rem, 7vh, 5rem) !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    perspective: 1800px;
+    transform: none !important;
+}
+
+.venture-scroll-deck .venture-flip-step::before {
+    display: none !important;
+}
+
+.venture-flip-inner {
+    position: sticky;
+    top: 88px;
+    width: 100%;
+    height: calc(100svh - 112px);
+    min-height: 620px;
+    transform: rotateY(calc(var(--venture-flip, 0) * 180deg));
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.venture-flip-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border: 1px solid rgba(231, 232, 234, 0.13);
+    border-radius: 16px;
+    background: #202429;
+    box-shadow: 0 34px 90px rgba(0, 0, 0, 0.38), inset 0 1px rgba(255, 255, 255, 0.05);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.venture-flip-front {
+    isolation: isolate;
+}
+
+.venture-flip-front::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(16, 18, 20, 0.92) 0%, rgba(16, 18, 20, 0.5) 38%, rgba(16, 18, 20, 0.12) 74%),
+        linear-gradient(180deg, transparent 58%, rgba(16, 18, 20, 0.72));
+}
+
+.venture-flip-front .venture-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100% !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+}
+
+.venture-flip-front .venture-visual > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.28) brightness(0.54) saturate(0.72) !important;
+    transform: scale(1.01) !important;
+}
+
+.venture-flip-front .venture-overlay {
+    display: none !important;
+}
+
+.venture-flip-front-meta {
+    position: absolute;
+    top: clamp(1.5rem, 5vw, 4rem);
+    left: clamp(1.5rem, 5vw, 4rem);
+    z-index: 4;
+    width: min(520px, 52%);
+}
+
+.venture-flip-front-meta > span,
+.venture-flip-front-meta > p,
+.venture-flip-front-meta > small {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    text-transform: uppercase;
+}
+
+.venture-flip-front-meta > span {
+    color: #d1a67d;
+    font-size: 0.64rem;
+    letter-spacing: 0.17em;
+}
+
+.venture-flip-front-meta h2 {
+    max-width: 680px;
+    margin: clamp(1.2rem, 3vh, 2rem) 0 0;
+    color: #e7e8ea;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(3rem, 6vw, 6.4rem);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-wrap: balance;
+}
+
+.venture-flip-front-meta > p {
+    margin: 1.25rem 0 0;
+    color: #c0c4c9;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+}
+
+.venture-flip-front-meta > small {
+    margin-top: clamp(2rem, 7vh, 5rem);
+    color: #9ba1a8;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+}
+
+.venture-flip-front-meta > small::before {
+    content: "";
+    display: inline-block;
+    width: 2.5rem;
+    height: 1px;
+    margin-right: 0.7rem;
+    background: #d1a67d;
+    vertical-align: middle;
+}
+
+.venture-flip-front .venture-money-stage {
+    right: clamp(2rem, 6vw, 5rem) !important;
+    bottom: clamp(2.5rem, 8vh, 5.5rem) !important;
+    z-index: 3;
+    width: min(46%, 520px) !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.venture-flip-step:hover .venture-money-stage,
+.venture-flip-step:focus-within .venture-money-stage {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.venture-flip-back {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    padding: 0;
+    background:
+        linear-gradient(135deg, rgba(209, 166, 125, 0.045), transparent 36%),
+        #202429;
+    transform: rotateY(180deg);
+    pointer-events: none;
+}
+
+.venture-flip-step.is-venture-back .venture-flip-back {
+    pointer-events: auto;
+}
+
+.venture-flip-step.is-venture-back .venture-flip-front {
+    pointer-events: none;
+}
+
+.venture-flip-back-rail {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.9rem clamp(1.25rem, 3vw, 2.5rem);
+    border-bottom: 1px solid rgba(231, 232, 234, 0.12);
+    color: #989fa7;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+}
+
+.venture-flip-back-rail b {
+    color: #d1a67d;
+    font-weight: 500;
+}
+
+.venture-flip-back-rail small {
+    font-size: inherit;
+}
+
+.venture-flip-back .venture-body {
+    width: min(100%, 980px);
+    height: 100%;
+    min-height: 0;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 3vw, 2.7rem) clamp(1.25rem, 4vw, 3.75rem) !important;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(209, 166, 125, 0.42) transparent;
+}
+
+.venture-flip-back .venture-header {
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(231, 232, 234, 0.1);
+}
+
+.venture-flip-back .venture-header h3 {
+    font-size: clamp(2rem, 4vw, 4rem) !important;
+}
+
+.venture-flip-back .venture-action {
+    align-self: flex-start;
+}
+
+@media (max-width: 991.98px) {
+    .world-city-nav {
+        top: auto;
+        right: 1rem;
+        bottom: 4.2rem;
+        left: 1rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: auto;
+        transform: none;
+    }
+
+    .world-city-nav button {
+        grid-template-columns: auto 1fr;
+        padding: 0.55rem 0.4rem;
+        background: rgba(16, 18, 20, 0.72);
+        backdrop-filter: blur(10px);
+    }
+
+    .world-city-status {
+        top: 5.25rem;
+        right: 1rem;
+    }
+
+    .venture-flip-front-meta {
+        width: min(620px, 76%);
+    }
+
+    .venture-flip-front .venture-money-stage {
+        width: min(58%, 450px) !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .world-city-nav {
+        grid-template-columns: repeat(2, 1fr);
+        bottom: 3.75rem;
+    }
+
+    .world-city-nav button {
+        font-size: 0.58rem;
+    }
+
+    .world-story-caption {
+        display: none !important;
+    }
+
+    .venture-scroll-deck .venture-flip-step,
+    .venture-scroll-deck .venture-card-featured,
+    .venture-scroll-deck .venture-card-wide,
+    .venture-scroll-deck .venture-card-tall {
+        min-height: 900px;
+        height: 145svh !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .venture-flip-inner {
+        top: 74px;
+        height: calc(100svh - 92px);
+        min-height: 560px;
+    }
+
+    .venture-flip-face {
+        border-radius: 12px;
+    }
+
+    .venture-flip-front::after {
+        background: linear-gradient(180deg, rgba(16, 18, 20, 0.78) 0%, rgba(16, 18, 20, 0.2) 55%, rgba(16, 18, 20, 0.86));
+    }
+
+    .venture-flip-front-meta {
+        top: 1.3rem;
+        left: 1.2rem;
+        width: calc(100% - 2.4rem);
+    }
+
+    .venture-flip-front-meta h2 {
+        max-width: 92%;
+        font-size: clamp(2.55rem, 12vw, 4.2rem);
+    }
+
+    .venture-flip-front-meta > small {
+        margin-top: 1.4rem;
+    }
+
+    .venture-flip-front .venture-money-stage {
+        right: 1.1rem !important;
+        bottom: 2.2rem !important;
+        width: calc(100% - 2.2rem) !important;
+    }
+
+    .venture-flip-back-rail {
+        grid-template-columns: 1fr auto;
+        gap: 0.5rem;
+        padding: 0.72rem 0.9rem;
+    }
+
+    .venture-flip-back-rail b {
+        display: none;
+    }
+
+    .venture-flip-back .venture-body {
+        padding: 1.2rem 1rem 2rem !important;
+    }
+
+    .venture-flip-back .venture-header {
+        gap: 0.75rem;
+    }
+
+    .venture-flip-back .venture-header h3 {
+        font-size: clamp(1.75rem, 9vw, 2.75rem) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .venture-scroll-deck .venture-flip-step,
+    .venture-scroll-deck .venture-card-featured,
+    .venture-scroll-deck .venture-card-wide,
+    .venture-scroll-deck .venture-card-tall {
+        height: auto !important;
+        min-height: 0;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .venture-flip-inner {
+        position: relative;
+        top: auto;
+        height: auto;
+        min-height: 0;
+        transform: none !important;
+    }
+
+    .venture-flip-front {
+        display: none;
+    }
+
+    .venture-flip-back {
+        position: relative;
+        transform: none;
+        pointer-events: auto;
+    }
+
+    .venture-flip-back .venture-body {
+        overflow: visible;
+    }
+}

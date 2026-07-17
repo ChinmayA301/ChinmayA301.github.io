@@ -2427,6 +2427,8 @@ async function setupWorldStory() {
     const sticky = section?.querySelector(".world-story-sticky");
     const canvas = document.getElementById("storyGlobeCanvas");
     const beats = Array.from(section?.querySelectorAll("[data-world-beat]") || []);
+    const cityButtons = Array.from(section?.querySelectorAll("[data-world-city]") || []);
+    const cityStatus = section?.querySelector(".world-city-status");
     if (!section || !sticky || !canvas || !beats.length || typeof d3 === "undefined" || typeof topojson === "undefined") return;
 
     document.body.classList.add("scroll-stories-ready");
@@ -2443,7 +2445,15 @@ async function setupWorldStory() {
     let landDots = null;
     let isVisible = true;
     let lastFrame = 0;
-    let rotationClock = 0;
+    let activeCityIndex = 0;
+    const cities = [
+        { key: "new-delhi", name: "New Delhi", note: "Home", coordinates: [77.2090, 28.6139], stop: 0.06 },
+        { key: "chennai", name: "Chennai", note: "College", coordinates: [80.2707, 13.0827], stop: 0.22 },
+        { key: "minneapolis", name: "Minneapolis", note: "Current home", coordinates: [-93.2650, 44.9778], stop: 0.38 },
+        { key: "dubai", name: "Dubai", note: "Second home", coordinates: [55.2708, 25.2048], stop: 0.54 },
+        { key: "miami", name: "Miami", note: "Internship location", coordinates: [-80.1918, 25.7617], stop: 0.70 },
+        { key: "nyc", name: "NYC", note: "Future home", coordinates: [-74.0060, 40.7128], stop: 0.86 }
+    ];
 
     try {
         worldData = await fetch("/assets/data/countries-110m.json").then(response => {
@@ -2476,6 +2486,42 @@ async function setupWorldStory() {
         return { opacity: clamp01(enter * (1 - exit)), enter, exit };
     }
 
+    function cityRotation(value) {
+        let start = cities[0];
+        let end = cities[cities.length - 1];
+        for (let index = 0; index < cities.length - 1; index += 1) {
+            if (value <= cities[index + 1].stop) {
+                start = cities[index];
+                end = cities[index + 1];
+                break;
+            }
+        }
+        const local = smoothstep((value - start.stop) / Math.max(end.stop - start.stop, 0.001));
+        const startLon = -start.coordinates[0];
+        const endLon = -end.coordinates[0];
+        const lonDistance = ((endLon - startLon + 540) % 360) - 180;
+        return [
+            startLon + lonDistance * local,
+            -start.coordinates[1] + (-end.coordinates[1] + start.coordinates[1]) * local,
+            0
+        ];
+    }
+
+    function setActiveCity(index) {
+        if (index === activeCityIndex && cityStatus?.dataset.cityReady === "true") return;
+        activeCityIndex = index;
+        const city = cities[index];
+        cityButtons.forEach(button => {
+            const isActive = button.dataset.worldCity === city.key;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-current", isActive ? "location" : "false");
+        });
+        if (cityStatus) {
+            cityStatus.dataset.cityReady = "true";
+            cityStatus.innerHTML = `<strong>${city.name}</strong><span>${city.note}</span>`;
+        }
+    }
+
     function updateProgress() {
         const rect = section.getBoundingClientRect();
         const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
@@ -2485,6 +2531,10 @@ async function setupWorldStory() {
             sticky.classList.toggle("is-scroll-complete", rect.bottom < window.innerHeight);
         }
         sticky.style.setProperty("--world-progress", progress.toFixed(4));
+        const nearestCityIndex = cities.reduce((bestIndex, city, index) => (
+            Math.abs(progress - city.stop) < Math.abs(progress - cities[bestIndex].stop) ? index : bestIndex
+        ), 0);
+        setActiveCity(nearestCityIndex);
 
         const timing = [
             beatProgress(progress, 0.015, 0.12, 0.30, 0.43),
@@ -2514,10 +2564,6 @@ async function setupWorldStory() {
         context.setTransform(dpr, 0, 0, dpr, 0, 0);
         context.clearRect(0, 0, width, height);
 
-        if (!prefersReducedMotion && isVisible) {
-            const delta = Math.min(timestamp - lastFrame, 32);
-            rotationClock += Math.max(0, delta) * 0.006;
-        }
         lastFrame = timestamp;
 
         const narrow = width < 768;
@@ -2529,7 +2575,8 @@ async function setupWorldStory() {
         const centerX = width * centerRatio;
         const centerY = height * (narrow ? 0.52 : 0.51);
         const radius = Math.min(width, height) * (narrow ? 0.43 : 0.39) * (0.92 + smoothstep(progress / 0.2) * 0.08);
-        const rotation = [-18 + rotationClock + progress * 170, -13 + Math.sin(progress * Math.PI) * 7, 0];
+        const rotation = cityRotation(progress);
+        if (!prefersReducedMotion) rotation[0] += Math.sin(timestamp * 0.00018) * 1.15;
         projection.translate([centerX, centerY]).scale(radius).rotate(rotation);
 
         const halo = context.createRadialGradient(centerX, centerY, radius * 0.55, centerX, centerY, radius * 1.45);
@@ -2579,6 +2626,45 @@ async function setupWorldStory() {
             context.stroke();
         }
 
+        context.save();
+        context.beginPath();
+        path({ type: "LineString", coordinates: cities.map(city => city.coordinates) });
+        context.strokeStyle = "rgba(209,166,125,0.58)";
+        context.lineWidth = narrow ? 1.25 : 1.55;
+        context.setLineDash([4, 7]);
+        context.stroke();
+        context.setLineDash([]);
+
+        const globeCenter = [-rotation[0], -rotation[1]];
+        cities.forEach((city, index) => {
+            if (d3.geoDistance(city.coordinates, globeCenter) > Math.PI / 2) return;
+            const point = projection(city.coordinates);
+            if (!point) return;
+            const isActive = index === activeCityIndex;
+            if (isActive) {
+                context.beginPath();
+                context.arc(point[0], point[1], 11 + Math.sin(timestamp * 0.004) * 1.5, 0, Math.PI * 2);
+                context.strokeStyle = "rgba(209,166,125,0.42)";
+                context.lineWidth = 1.2;
+                context.stroke();
+            }
+            context.beginPath();
+            context.arc(point[0], point[1], isActive ? 4.8 : 2.7, 0, Math.PI * 2);
+            context.fillStyle = isActive ? "#d1a67d" : "rgba(231,232,234,0.72)";
+            context.fill();
+            if (isActive && !narrow) {
+                context.font = '500 11px "IBM Plex Mono", monospace';
+                const labelWidth = context.measureText(city.name.toUpperCase()).width + 20;
+                const labelX = Math.min(width - labelWidth - 12, point[0] + 14);
+                const labelY = Math.max(22, point[1] - 15);
+                context.fillStyle = "rgba(20,22,25,0.9)";
+                context.fillRect(labelX, labelY - 15, labelWidth, 24);
+                context.fillStyle = "#e7e8ea";
+                context.fillText(city.name.toUpperCase(), labelX + 10, labelY + 1);
+            }
+        });
+        context.restore();
+
         const fadeIn = smoothstep(progress / 0.07);
         const fadeOut = 1 - smoothstep((progress - 0.91) / 0.09);
         canvas.style.opacity = (prefersReducedMotion ? 0.82 : Math.max(0.12, fadeIn * fadeOut)).toFixed(3);
@@ -2601,6 +2687,18 @@ async function setupWorldStory() {
         updateProgress();
         drawGlobe(lastFrame);
     };
+    cityButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const cityIndex = cities.findIndex(city => city.key === button.dataset.worldCity);
+            if (cityIndex < 0) return;
+            const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
+            const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+            window.scrollTo({
+                top: sectionTop + distance * cities[cityIndex].stop,
+                behavior: prefersReducedMotion ? "auto" : "smooth"
+            });
+        });
+    });
     window.addEventListener("resize", handleResize);
     if (prefersReducedMotion) {
         updateProgress();
@@ -2617,9 +2715,11 @@ function setupVentureCapitalBills() {
 
     ventureCards.forEach((card, index) => {
         const visual = card.querySelector(".venture-visual");
-        if (!visual || visual.querySelector(".venture-money-stage")) return;
+        const body = card.querySelector(".venture-body");
+        if (!visual || !body || visual.querySelector(".venture-money-stage")) return;
 
-        const category = card.querySelector(".venture-tag")?.textContent?.trim() || "Venture thesis";
+        const title = card.querySelector(".venture-header h3")?.textContent?.trim() || "Venture thesis";
+        const stageLabel = card.querySelector(".venture-badge")?.textContent?.trim() || "Venture exploration";
         const stage = document.createElement("div");
         stage.className = "venture-money-stage";
         stage.setAttribute("aria-hidden", "true");
@@ -2639,7 +2739,7 @@ function setupVentureCapitalBills() {
 
                 const categoryLine = document.createElement("span");
                 categoryLine.className = "venture-money-category";
-                categoryLine.textContent = category;
+                categoryLine.textContent = title;
 
                 const serial = document.createElement("span");
                 serial.className = "venture-money-serial";
@@ -2650,7 +2750,35 @@ function setupVentureCapitalBills() {
             stage.appendChild(bill);
         });
         visual.appendChild(stage);
+
+        const overlay = visual.querySelector(".venture-overlay");
+        overlay?.setAttribute("aria-hidden", "true");
+        overlay?.querySelectorAll("a").forEach(link => link.setAttribute("tabindex", "-1"));
+
+        const flipInner = document.createElement("div");
+        flipInner.className = "venture-flip-inner";
+        const front = document.createElement("div");
+        front.className = "venture-flip-face venture-flip-front";
+        const frontMeta = document.createElement("div");
+        frontMeta.className = "venture-flip-front-meta";
+        frontMeta.innerHTML = `<span>${String(index + 1).padStart(2, "0")} / ${String(ventureCards.length).padStart(2, "0")}</span><h2>${title}</h2><p>${stageLabel}</p><small>Scroll to turn the venture over</small>`;
+        front.append(visual, frontMeta);
+
+        const back = document.createElement("div");
+        back.className = "venture-flip-face venture-flip-back";
+        const backRail = document.createElement("div");
+        backRail.className = "venture-flip-back-rail";
+        backRail.innerHTML = `<span>VENTURE ${String(index + 1).padStart(2, "0")}</span><b>THESIS / EVIDENCE</b><small>SCROLL TO CONTINUE</small>`;
+        back.append(backRail, body);
+        back.inert = true;
+        flipInner.append(front, back);
+        card.appendChild(flipInner);
+        card.classList.add("venture-flip-step");
+        card.dataset.ventureIndex = String(index);
     });
+
+    const ventureGrid = ventureCards[0]?.parentElement;
+    ventureGrid?.classList.add("venture-scroll-deck");
 
     backlogCards.forEach((card, index) => {
         const body = card.querySelector(".card-body");
@@ -2665,17 +2793,47 @@ function setupVentureCapitalBills() {
     const allCards = [...ventureCards, ...backlogCards];
     if (prefersReducedMotion || !("IntersectionObserver" in window)) {
         allCards.forEach(card => card.classList.add("is-capital-visible"));
-        return;
+    } else {
+        const capitalObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-capital-visible");
+                capitalObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.18, rootMargin: "0px 0px -7% 0px" });
+        allCards.forEach(card => capitalObserver.observe(card));
     }
 
-    const capitalObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-capital-visible");
-            capitalObserver.unobserve(entry.target);
+    if (!ventureCards.length) return;
+    let ventureFrameRequested = false;
+    const renderVentureFlips = () => {
+        ventureCards.forEach(card => {
+            const inner = card.querySelector(".venture-flip-inner");
+            if (!inner) return;
+            const rect = card.getBoundingClientRect();
+            const stickyTop = window.innerWidth < 768 ? 74 : 88;
+            const travel = Math.max(card.offsetHeight - inner.offsetHeight - stickyTop, 1);
+            const cardProgress = prefersReducedMotion ? 1 : Math.max(0, Math.min(1, (stickyTop - rect.top) / travel));
+            const normalized = Math.max(0, Math.min(1, (cardProgress - 0.1) / 0.62));
+            const flipProgress = normalized * normalized * (3 - 2 * normalized);
+            const isBack = flipProgress >= 0.5;
+            card.style.setProperty("--venture-flip", flipProgress.toFixed(4));
+            card.classList.toggle("is-venture-back", isBack);
+            const front = card.querySelector(".venture-flip-front");
+            const back = card.querySelector(".venture-flip-back");
+            if (front) front.inert = isBack;
+            if (back) back.inert = !isBack;
         });
-    }, { threshold: 0.18, rootMargin: "0px 0px -7% 0px" });
-    allCards.forEach(card => capitalObserver.observe(card));
+        ventureFrameRequested = false;
+    };
+    const requestVentureRender = () => {
+        if (ventureFrameRequested) return;
+        ventureFrameRequested = true;
+        window.requestAnimationFrame(renderVentureFlips);
+    };
+    window.addEventListener("scroll", requestVentureRender, { passive: true });
+    window.addEventListener("resize", requestVentureRender);
+    requestVentureRender();
 }
 
 setupVentureCapitalBills();

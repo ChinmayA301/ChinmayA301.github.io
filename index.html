@@ -591,7 +591,7 @@
             }
         }
     </style>
-    <link rel="stylesheet" href="/css/editorial.css?v=20260717h" />
+    <link rel="stylesheet" href="/css/editorial.css?v=20260717i" />
 </head>
 
 <body>
@@ -662,11 +662,8 @@
                     </nav>
                 </div>
                 <div class="col-lg-5 d-flex justify-content-center">
-                    <button id="heroGlobeToggle" type="button" class="hero-media-shell border-0 bg-transparent p-0"
-                        aria-label="Open interactive globe">
-                        <div class="hero-media-flip">
-                            <div class="hero-media-face">
-                                <div class="hero-portrait-stage">
+                    <div class="hero-media-shell hero-media-shell-static" aria-label="Portrait of Chinmay Arora">
+                        <div class="hero-portrait-stage">
                                     <div class="hero-portrait-backdrop"></div>
                                     <svg class="hero-portrait-doodles" viewBox="0 0 520 560" aria-hidden="true">
                                         <g class="hero-doodle-stroke hero-doodle-stroke--quiet">
@@ -699,66 +696,16 @@
                                         class="hero-img">
                                     <span class="hero-doodle-tag hero-doodle-tag--one" aria-hidden="true">01 · EVIDENCE</span>
                                     <span class="hero-doodle-tag hero-doodle-tag--two" aria-hidden="true">CA / SYSTEMS</span>
-                                    <span class="hero-globe-hint" aria-hidden="true">
+                                    <a class="hero-globe-hint" href="#world-story" aria-label="Explore cities on the interactive globe">
                                         <i class="fas fa-globe-americas"></i>
-                                        <span>Scroll · explore</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="hero-media-face hero-media-face-back">
-                                <div class="hero-globe-stage">
-                                    <div class="hero-globe-halo"></div>
-                                    <canvas id="heroGlobePreviewCanvas" class="hero-globe-canvas" aria-hidden="true"></canvas>
-                                </div>
-                            </div>
+                                        <span>Cities · scroll</span>
+                                    </a>
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
-
-    <div id="heroGlobeModal" class="hero-globe-modal" hidden aria-hidden="true">
-        <button id="heroGlobeModalOverlay" type="button" class="hero-globe-modal-overlay"
-            aria-label="Close interactive globe"></button>
-        <div class="hero-globe-modal-panel" role="dialog" aria-modal="true" aria-labelledby="heroGlobeTitle">
-            <div class="hero-globe-modal-topbar">
-                <div>
-                    <p class="hero-globe-modal-kicker">Interactive geography</p>
-                    <h2 id="heroGlobeTitle" class="hero-globe-modal-title">Cities that map my work and context</h2>
-                    <p class="hero-globe-modal-subtitle">
-                        Rotate the globe and explore the pinned cities. Drag on desktop or swipe on mobile to move
-                        around the sphere.
-                    </p>
-                </div>
-                <button id="heroGlobeClose" type="button" class="hero-globe-close">Close</button>
-            </div>
-            <div class="hero-globe-modal-grid">
-                <div class="hero-globe-modal-stage">
-                    <canvas id="heroGlobeModalCanvas" class="hero-globe-modal-canvas"></canvas>
-                </div>
-                <aside class="hero-globe-modal-sidebar">
-                    <h3 class="hero-globe-sidebar-title">Pinned cities</h3>
-                    <div class="hero-globe-location-card">
-                        <p class="hero-globe-location-eyebrow">Active pin</p>
-                        <p id="heroGlobeLocationName" class="hero-globe-location-name">Minneapolis</p>
-                        <p id="heroGlobeLocationNote" class="hero-globe-location-note">Current home</p>
-                        <p class="hero-globe-location-hint">
-                            Hover a visible pin or tap it on mobile to inspect the city context directly from the globe.
-                        </p>
-                    </div>
-                    <div id="heroGlobeLocationChips" class="hero-globe-location-chips" aria-label="Pinned cities">
-                        <span class="hero-globe-location-chip">New Delhi</span>
-                        <span class="hero-globe-location-chip">Chennai</span>
-                        <span class="hero-globe-location-chip">Minneapolis</span>
-                        <span class="hero-globe-location-chip">Dubai</span>
-                        <span class="hero-globe-location-chip">Miami</span>
-                        <span class="hero-globe-location-chip">NYC</span>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </div>
 
     <div id="consultativeAiModal"
         class="hidden fixed inset-0 z-[1200] items-center justify-center overflow-y-auto px-4 py-8 text-white consultative-modal"
@@ -873,13 +820,13 @@
                     <div class="metrics-story-list" aria-label="Selected portfolio metrics">
                         <article class="metrics-story-item" data-metric-item>
                             <span class="metrics-story-index">01</span>
-                            <strong class="metrics-story-value" data-metric-value="98000" data-metric-suffix="+">0</strong>
-                            <span class="metrics-story-label" data-metric-label="orders modeled">orders modeled</span>
+                            <strong class="metrics-story-value" data-metric-value="98000">0</strong>
+                            <span class="metrics-story-label" data-metric-label="hours since looking for a relevant position">hours since looking for a relevant position</span>
                         </article>
                         <article class="metrics-story-item" data-metric-item>
                             <span class="metrics-story-index">02</span>
-                            <strong class="metrics-story-value" data-metric-value="5">0</strong>
-                            <span class="metrics-story-label" data-metric-label="pipelines benchmarked">pipelines benchmarked</span>
+                            <strong class="metrics-story-value" data-metric-value="0" data-metric-suffix=" hrs">0 hrs</strong>
+                            <span class="metrics-story-label" data-metric-label="since last rejection (humor)">since last rejection (humor)</span>
                         </article>
                         <article class="metrics-story-item" data-metric-item>
                             <span class="metrics-story-index">03</span>
@@ -1067,6 +1014,15 @@
             <canvas id="storyGlobeCanvas" aria-label="Rotating globe built from geographically accurate country polygons"></canvas>
             <div class="world-story-vignette" aria-hidden="true"></div>
             <div class="world-story-grid" aria-hidden="true"></div>
+            <nav class="world-city-nav" aria-label="Explore cities on the globe">
+                <button type="button" data-world-city="new-delhi"><span>01</span>New Delhi</button>
+                <button type="button" data-world-city="chennai"><span>02</span>Chennai</button>
+                <button type="button" data-world-city="minneapolis"><span>03</span>Minneapolis</button>
+                <button type="button" data-world-city="dubai"><span>04</span>Dubai</button>
+                <button type="button" data-world-city="miami"><span>05</span>Miami</button>
+                <button type="button" data-world-city="nyc"><span>06</span>NYC</button>
+            </nav>
+            <p class="world-city-status" aria-live="polite"><strong>New Delhi</strong><span>Home</span></p>
             <div class="container world-story-copy">
                 <article class="world-story-beat world-story-beat--one" data-world-beat>
                     <p class="world-story-kicker">One connected practice</p>
@@ -1074,7 +1030,7 @@
                 </article>
                 <article class="world-story-beat world-story-beat--two" data-world-beat>
                     <p class="world-story-kicker">Across contexts</p>
-                    <h2>Delhi · Chennai<br />Minneapolis · Miami</h2>
+                    <h2>Delhi · Chennai<br />Minneapolis · Dubai · Miami · NYC</h2>
                     <p>Different operating environments sharpen the same instinct: understand the system before proposing the solution.</p>
                 </article>
                 <article class="world-story-beat world-story-beat--three" data-world-beat>
@@ -1084,7 +1040,7 @@
                 </article>
             </div>
             <div class="world-story-caption" aria-hidden="true">
-                <span>SCROLL TO ORBIT</span>
+                <span>SCROLL OR SELECT</span>
                 <i></i>
                 <span>EARTH · 110M</span>
             </div>
@@ -1128,7 +1084,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/vendor/d3.v7.min.js"></script>
     <script src="/assets/vendor/topojson-client.min.js"></script>
-    <script src="/js/script.js?v=20260717g"></script>
+    <script src="/js/script.js?v=20260717h"></script>
 </body>
 
 </html>
