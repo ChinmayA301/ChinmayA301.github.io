@@ -1354,8 +1354,8 @@ async function loadResumes() {
                 ${(r.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
               </div>` : ""}
             ${r.file ? `
-              <a class="btn btn-outline-light btn-sm" href="${r.file}" target="_blank" rel="noopener" download>
-                Download PDF
+              <a class="btn btn-outline-light btn-sm" href="${r.file}" target="_blank" rel="noopener">
+                Open Resume
               </a>` : ""}
           </div>
         </div>
@@ -2371,9 +2371,10 @@ const TILE_SECTIONS = [
     },
     {
         title: "Resume",
-        description: "Role-specific resume downloads for targeted applications.",
-        href: "/resumes/",
-        metric: "Role-specific",
+        description: "Current master resume across data science, analytics, applied AI, and responsible AI.",
+        href: "/assets/Chinmay_Arora_Master_Resume.pdf",
+        newTab: true,
+        metric: "Current PDF",
         tone: "neutral",
         x: 10,
         y: 78,
@@ -2386,7 +2387,7 @@ function renderTiles() {
     const grid = document.getElementById("tilesGrid");
     if (!grid) return;
     const nodes = TILE_SECTIONS.map((tile, idx) => `
-        <a class="scatter-node scatter-${tile.tone}" href="${tile.href}"
+        <a class="scatter-node scatter-${tile.tone}" href="${tile.href}" ${tile.newTab ? 'target="_blank" rel="noopener"' : ""}
           style="left:${tile.x}%; top:${tile.y}%; --z:${tile.z}; --node-scale:${0.88 + tile.z / 420}; --node-delay:${idx * 40}ms;">
           <span class="scatter-depth-line" aria-hidden="true"></span>
           <span class="scatter-blob" aria-hidden="true"></span>
