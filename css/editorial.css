@@ -2958,3 +2958,627 @@ body.blog-theme.theme-light {
         overflow: visible;
     }
 }
+
+/* Reference-mapped venture deck: clipped notes, shallow stack, lateral handoff */
+.venture-grid.venture-scroll-deck {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: var(--venture-deck-height) !important;
+    margin: clamp(2.25rem, 6vw, 5rem) 0 0 !important;
+    overflow: visible !important;
+}
+
+.venture-deck-stage {
+    position: sticky;
+    top: 72px;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    width: 100%;
+    height: calc(100svh - 72px);
+    min-height: 650px;
+    overflow: hidden;
+    border: 1px solid rgba(231, 232, 234, 0.08);
+    border-radius: 16px;
+    background:
+        radial-gradient(circle at 50% 42%, rgba(209, 166, 125, 0.055), transparent 35%),
+        #16191d;
+    isolation: isolate;
+}
+
+.venture-deck-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.38;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(231, 232, 234, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(231, 232, 234, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(circle at 50% 52%, #000, transparent 78%);
+}
+
+.venture-deck-heading {
+    position: relative;
+    z-index: 40;
+    padding: clamp(1.2rem, 3vh, 2.2rem) 1rem 0;
+    text-align: center;
+    pointer-events: none;
+}
+
+.venture-deck-heading > span {
+    color: var(--rust-bright);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.56rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+}
+
+.venture-deck-heading h2 {
+    margin: 0.55rem 0 0;
+    color: var(--paper);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+}
+
+.venture-deck-heading p {
+    margin: 0.65rem auto 0;
+    color: var(--faint);
+    font-size: 0.76rem;
+}
+
+.venture-deck-stack {
+    position: relative;
+    z-index: 2;
+    min-height: 0;
+    perspective: 1800px;
+}
+
+.venture-scroll-deck .venture-flip-step,
+.venture-scroll-deck .venture-card-featured,
+.venture-scroll-deck .venture-card-wide,
+.venture-scroll-deck .venture-card-tall {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    display: block !important;
+    width: min(860px, 78vw) !important;
+    height: clamp(410px, 55vh, 540px) !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: var(--deck-opacity, 1) !important;
+    transform:
+        translate(-50%, -50%)
+        translate3d(var(--deck-x, 0%), var(--deck-y, 0px), 0)
+        rotate(var(--deck-rotate, 0deg))
+        scale(var(--deck-scale, 1)) !important;
+    transform-origin: center 82%;
+    transition: none !important;
+    z-index: var(--deck-z, 1) !important;
+    will-change: transform, opacity;
+}
+
+.venture-scroll-deck .venture-flip-step::before {
+    display: none !important;
+}
+
+.venture-scroll-deck .venture-flip-inner {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    transform: rotateY(calc(var(--venture-flip, 0) * 180deg)) !important;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.venture-scroll-deck .venture-flip-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border: 1px solid rgba(209, 166, 125, 0.28) !important;
+    border-radius: 11px !important;
+    background:
+        radial-gradient(circle at 50% 48%, rgba(209, 166, 125, 0.09), transparent 27%),
+        repeating-linear-gradient(128deg, rgba(231, 232, 234, 0.022) 0 1px, transparent 1px 9px),
+        #252a30 !important;
+    box-shadow:
+        0 24px 42px rgba(0, 0, 0, 0.42),
+        0 5px 10px rgba(0, 0, 0, 0.28),
+        inset 0 1px rgba(255, 255, 255, 0.065) !important;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.venture-scroll-deck .venture-flip-face::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    z-index: 12;
+    width: clamp(58px, 8vw, 82px);
+    height: 22px;
+    border: 1px solid rgba(231, 232, 234, 0.19);
+    border-top: 0;
+    border-radius: 0 0 9px 9px;
+    background: linear-gradient(180deg, #747b82, #434a52 54%, #292e34);
+    box-shadow: 0 7px 12px rgba(0, 0, 0, 0.34), inset 0 1px rgba(255, 255, 255, 0.17);
+    transform: translateX(-50%);
+}
+
+.venture-scroll-deck .venture-flip-face::after {
+    content: "";
+    position: absolute;
+    inset: 13px;
+    z-index: 2;
+    border: 1px solid rgba(231, 232, 234, 0.09);
+    border-radius: 7px;
+    pointer-events: none;
+}
+
+.venture-scroll-deck .venture-flip-front {
+    isolation: isolate;
+}
+
+.venture-scroll-deck .venture-flip-front .venture-visual {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border: 0 !important;
+    aspect-ratio: auto !important;
+    background: transparent !important;
+}
+
+.venture-scroll-deck .venture-flip-front .venture-visual > img {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    width: 46% !important;
+    height: 100% !important;
+    object-fit: cover;
+    opacity: 0.16 !important;
+    filter: grayscale(1) contrast(1.28) brightness(0.8) !important;
+    transform: none !important;
+    mix-blend-mode: luminosity;
+    mask-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.72) 42%, #000);
+}
+
+.venture-scroll-deck .venture-overlay,
+.venture-scroll-deck .venture-money-stage {
+    display: none !important;
+}
+
+.venture-scroll-deck .venture-flip-front-meta {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 4;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    width: auto !important;
+    padding: clamp(1.35rem, 3vw, 2.25rem) clamp(1.4rem, 3.5vw, 3rem) !important;
+}
+
+.venture-bill-masthead {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    color: var(--quiet);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+}
+
+.venture-bill-masthead span:nth-child(2) {
+    color: var(--rust-bright);
+}
+
+.venture-bill-masthead span:last-child {
+    justify-self: end;
+    color: var(--rust-bright);
+}
+
+.venture-bill-content {
+    display: grid;
+    grid-template-columns: clamp(92px, 12vw, 132px) minmax(0, 1fr);
+    gap: clamp(1.4rem, 4vw, 3.4rem);
+    align-items: center;
+    min-height: 0;
+    padding: 1rem 0;
+}
+
+.venture-bill-seal {
+    position: relative;
+    display: grid;
+    width: 100%;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid rgba(209, 166, 125, 0.42);
+    border-radius: 50%;
+    color: var(--rust-bright);
+    text-align: center;
+}
+
+.venture-bill-seal::before,
+.venture-bill-seal::after {
+    content: "";
+    position: absolute;
+    inset: 0.55rem;
+    border: 1px dashed rgba(231, 232, 234, 0.15);
+    border-radius: 50%;
+}
+
+.venture-bill-seal::after {
+    inset: -0.65rem;
+    border-style: solid;
+    border-color: rgba(231, 232, 234, 0.055);
+}
+
+.venture-bill-seal b {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.7rem);
+    font-weight: 400;
+    line-height: 0.8;
+}
+
+.venture-bill-seal small {
+    position: absolute;
+    right: 0;
+    bottom: 20%;
+    left: 0;
+    color: var(--faint);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.42rem;
+    letter-spacing: 0.1em;
+}
+
+.venture-bill-copy {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+}
+
+.venture-bill-stage {
+    color: var(--rust-bright);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.venture-bill-copy h2 {
+    max-width: 630px;
+    margin: 0.65rem 0 0 !important;
+    color: var(--paper) !important;
+    font-family: "Instrument Serif", Georgia, serif !important;
+    font-size: clamp(2.25rem, 4.7vw, 4.65rem) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 0.91 !important;
+    text-wrap: balance;
+}
+
+.venture-bill-copy p {
+    display: -webkit-box;
+    max-width: 590px;
+    margin: 1rem 0 0 !important;
+    overflow: hidden;
+    color: var(--quiet) !important;
+    font-size: clamp(0.72rem, 1vw, 0.86rem) !important;
+    line-height: 1.55 !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.venture-bill-footer {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: end;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(231, 232, 234, 0.1);
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.venture-bill-footer span,
+.venture-bill-footer small {
+    color: var(--rust-bright);
+    font-size: 0.49rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+}
+
+.venture-bill-footer strong {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--faint);
+    font-size: 0.58rem;
+    font-weight: 400;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.venture-bill-footer small {
+    color: var(--quiet);
+    white-space: nowrap;
+}
+
+.venture-scroll-deck .venture-flip-back {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr);
+    padding: 0 !important;
+    background:
+        radial-gradient(circle at 88% 20%, rgba(209, 166, 125, 0.08), transparent 27%),
+        repeating-linear-gradient(128deg, rgba(231, 232, 234, 0.022) 0 1px, transparent 1px 9px),
+        #252a30 !important;
+    transform: rotateY(180deg) !important;
+    pointer-events: none;
+}
+
+.venture-scroll-deck .venture-flip-back-rail {
+    position: relative;
+    z-index: 4;
+    padding: 1rem clamp(1.35rem, 3vw, 2.5rem) !important;
+    border-bottom: 1px solid rgba(231, 232, 234, 0.1) !important;
+}
+
+.venture-scroll-deck .venture-flip-back .venture-body {
+    position: relative;
+    z-index: 4;
+    width: min(100%, 790px);
+    height: 100%;
+    min-height: 0;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 2.4vw, 2.1rem) clamp(1.3rem, 3.3vw, 2.8rem) !important;
+    overflow: hidden;
+}
+
+.venture-scroll-deck .venture-flip-back .venture-header h3 {
+    font-size: clamp(1.8rem, 3.4vw, 3.2rem) !important;
+}
+
+.venture-scroll-deck .venture-flip-back .venture-body {
+    gap: 0.72rem !important;
+}
+
+.venture-scroll-deck .venture-flip-back .venture-header {
+    padding-bottom: 0.75rem;
+}
+
+.venture-scroll-deck .venture-flip-back .llm-summary,
+.venture-scroll-deck .venture-flip-back .market-signal,
+.venture-scroll-deck .venture-flip-back .tech-specs {
+    margin: 0 !important;
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+}
+
+.venture-scroll-deck .venture-flip-back .venture-tags {
+    gap: 0.35rem !important;
+}
+
+.venture-scroll-deck .venture-flip-back .venture-tag {
+    padding: 0.34rem 0.48rem !important;
+    font-size: 0.56rem !important;
+}
+
+.venture-scroll-deck .venture-flip-back .tech-specs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem 1.4rem;
+    max-height: 82px;
+    overflow: hidden;
+}
+
+.venture-scroll-deck .venture-flip-back .tech-specs li:nth-child(n+4),
+.venture-scroll-deck .venture-flip-back .venture-summary {
+    display: none;
+}
+
+.venture-scroll-deck .venture-flip-back .venture-action {
+    margin-top: auto;
+    padding: 0.52rem 0.7rem !important;
+    font-size: 0.58rem !important;
+}
+
+.venture-deck-footer {
+    position: relative;
+    z-index: 40;
+    display: grid;
+    grid-template-columns: auto minmax(120px, 1fr) auto minmax(0, 0.8fr);
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0 1.5rem 1.25rem;
+    color: var(--quiet);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+}
+
+.venture-deck-footer i {
+    position: relative;
+    display: block;
+    height: 1px;
+    overflow: hidden;
+    background: rgba(231, 232, 234, 0.13);
+}
+
+.venture-deck-footer i b {
+    position: absolute;
+    inset: 0;
+    background: var(--rust-bright);
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.venture-deck-active-title {
+    overflow: hidden;
+    color: var(--faint);
+    font-size: 0.55rem;
+    font-weight: 400;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+    .venture-grid.venture-scroll-deck {
+        margin-top: 2rem !important;
+    }
+
+    .venture-deck-stage {
+        top: 64px;
+        height: calc(100svh - 64px);
+        min-height: 620px;
+        border-radius: 12px;
+    }
+
+    .venture-deck-heading {
+        padding-top: 1rem;
+    }
+
+    .venture-deck-heading h2 {
+        font-size: clamp(1.8rem, 9vw, 2.5rem);
+    }
+
+    .venture-deck-heading p {
+        max-width: 300px;
+        font-size: 0.66rem;
+        line-height: 1.45;
+    }
+
+    .venture-scroll-deck .venture-flip-step,
+    .venture-scroll-deck .venture-card-featured,
+    .venture-scroll-deck .venture-card-wide,
+    .venture-scroll-deck .venture-card-tall {
+        width: calc(100% - 1.4rem) !important;
+        height: min(500px, 60svh) !important;
+        min-height: 410px !important;
+    }
+
+    .venture-scroll-deck .venture-flip-front-meta {
+        padding: 1.15rem 1.1rem !important;
+    }
+
+    .venture-bill-masthead {
+        font-size: 0.45rem;
+        letter-spacing: 0.1em;
+    }
+
+    .venture-bill-content {
+        grid-template-columns: 60px minmax(0, 1fr);
+        gap: 1rem;
+    }
+
+    .venture-bill-seal small {
+        display: none;
+    }
+
+    .venture-bill-copy h2 {
+        font-size: clamp(1.85rem, 8.8vw, 2.9rem) !important;
+    }
+
+    .venture-bill-copy p {
+        font-size: 0.68rem !important;
+        -webkit-line-clamp: 4;
+    }
+
+    .venture-bill-footer {
+        grid-template-columns: 1fr auto;
+        gap: 0.6rem;
+    }
+
+    .venture-bill-footer strong {
+        display: none;
+    }
+
+    .venture-scroll-deck .venture-flip-back-rail small {
+        display: none;
+    }
+
+    .venture-scroll-deck .venture-flip-back .venture-body {
+        padding: 1rem 0.9rem 1.4rem !important;
+    }
+
+    .venture-scroll-deck .venture-flip-back .tech-specs {
+        display: none;
+    }
+
+    .venture-deck-footer {
+        grid-template-columns: auto 1fr auto;
+        padding: 0 0.9rem 0.9rem;
+    }
+
+    .venture-deck-active-title {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .venture-grid.venture-scroll-deck {
+        height: auto !important;
+    }
+
+    .venture-deck-stage {
+        position: relative;
+        top: auto;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .venture-deck-stack {
+        display: grid;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .venture-scroll-deck .venture-flip-step,
+    .venture-scroll-deck .venture-card-featured,
+    .venture-scroll-deck .venture-card-wide,
+    .venture-scroll-deck .venture-card-tall {
+        position: relative !important;
+        inset: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .venture-scroll-deck .venture-flip-inner {
+        position: relative !important;
+        height: auto !important;
+        transform: none !important;
+    }
+
+    .venture-scroll-deck .venture-flip-front {
+        display: none !important;
+    }
+
+    .venture-scroll-deck .venture-flip-back {
+        position: relative;
+        transform: none !important;
+        pointer-events: auto;
+    }
+
+    .venture-scroll-deck .venture-flip-back .venture-body {
+        overflow: visible;
+    }
+}

@@ -2716,40 +2716,12 @@ function setupVentureCapitalBills() {
     ventureCards.forEach((card, index) => {
         const visual = card.querySelector(".venture-visual");
         const body = card.querySelector(".venture-body");
-        if (!visual || !body || visual.querySelector(".venture-money-stage")) return;
+        if (!visual || !body || card.classList.contains("venture-flip-step")) return;
 
         const title = card.querySelector(".venture-header h3")?.textContent?.trim() || "Venture thesis";
         const stageLabel = card.querySelector(".venture-badge")?.textContent?.trim() || "Venture exploration";
-        const stage = document.createElement("div");
-        stage.className = "venture-money-stage";
-        stage.setAttribute("aria-hidden", "true");
-        stage.style.setProperty("--capital-index", String(index));
-
-        ["back", "middle", "front"].forEach(layer => {
-            const bill = document.createElement("span");
-            bill.className = `venture-money-bill venture-money-bill--${layer}`;
-            if (layer === "front") {
-                const topLine = document.createElement("span");
-                topLine.className = "venture-money-topline";
-                topLine.innerHTML = `<b>CA</b><span>IDEA CAPITAL</span><b>$</b>`;
-
-                const seal = document.createElement("span");
-                seal.className = "venture-money-seal";
-                seal.textContent = "CA";
-
-                const categoryLine = document.createElement("span");
-                categoryLine.className = "venture-money-category";
-                categoryLine.textContent = title;
-
-                const serial = document.createElement("span");
-                serial.className = "venture-money-serial";
-                serial.textContent = `LAB ${String(index + 1).padStart(2, "0")} · NOT LEGAL TENDER`;
-
-                bill.append(topLine, seal, categoryLine, serial);
-            }
-            stage.appendChild(bill);
-        });
-        visual.appendChild(stage);
+        const summary = body.querySelector(".llm-summary")?.textContent?.trim() || "A venture thesis in active exploration.";
+        const marketSignal = body.querySelector(".market-signal")?.textContent?.replace(/^Market signal:\s*/i, "")?.trim() || "A market signal worth testing.";
 
         const overlay = visual.querySelector(".venture-overlay");
         overlay?.setAttribute("aria-hidden", "true");
@@ -2761,7 +2733,25 @@ function setupVentureCapitalBills() {
         front.className = "venture-flip-face venture-flip-front";
         const frontMeta = document.createElement("div");
         frontMeta.className = "venture-flip-front-meta";
-        frontMeta.innerHTML = `<span>${String(index + 1).padStart(2, "0")} / ${String(ventureCards.length).padStart(2, "0")}</span><h2>${title}</h2><p>${stageLabel}</p><small>Scroll to turn the venture over</small>`;
+        frontMeta.innerHTML = `
+            <div class="venture-bill-masthead">
+                <span>CA / IDEA CAPITAL</span>
+                <span>LAB ${String(index + 1).padStart(2, "0")}</span>
+                <span>$</span>
+            </div>
+            <div class="venture-bill-content">
+                <div class="venture-bill-seal" aria-hidden="true"><b>CA</b><small>VENTURE NOTE</small></div>
+                <div class="venture-bill-copy">
+                    <span class="venture-bill-stage">${stageLabel}</span>
+                    <h2>${title}</h2>
+                    <p>${summary}</p>
+                </div>
+            </div>
+            <div class="venture-bill-footer">
+                <span>MARKET SIGNAL</span>
+                <strong>${marketSignal}</strong>
+                <small>SCROLL TO INSPECT</small>
+            </div>`;
         front.append(visual, frontMeta);
 
         const back = document.createElement("div");
@@ -2775,10 +2765,33 @@ function setupVentureCapitalBills() {
         card.appendChild(flipInner);
         card.classList.add("venture-flip-step");
         card.dataset.ventureIndex = String(index);
+        card.dataset.ventureTitle = title;
     });
 
     const ventureGrid = ventureCards[0]?.parentElement;
-    ventureGrid?.classList.add("venture-scroll-deck");
+    if (ventureGrid) {
+        ventureGrid.classList.add("venture-scroll-deck");
+        ventureGrid.style.setProperty("--venture-count", String(ventureCards.length));
+        ventureGrid.style.setProperty("--venture-deck-height", `${Math.max(620, ventureCards.length * 92 + 90)}svh`);
+
+        const deckStage = document.createElement("div");
+        deckStage.className = "venture-deck-stage";
+        const deckHeading = document.createElement("header");
+        deckHeading.className = "venture-deck-heading";
+        deckHeading.innerHTML = `<span>VENTURE NOTES</span><h2>Ideas backed by evidence</h2><p>CA · PRODUCT AND VENTURE LAB</p>`;
+        const deckStack = document.createElement("div");
+        deckStack.className = "venture-deck-stack";
+        ventureCards.forEach(card => deckStack.appendChild(card));
+        const deckFooter = document.createElement("footer");
+        deckFooter.className = "venture-deck-footer";
+        deckFooter.innerHTML = `
+            <span class="venture-deck-current">01</span>
+            <i><b></b></i>
+            <span class="venture-deck-total">${String(ventureCards.length).padStart(2, "0")}</span>
+            <strong class="venture-deck-active-title">${ventureCards[0]?.dataset.ventureTitle || "Venture note"}</strong>`;
+        deckStage.append(deckHeading, deckStack, deckFooter);
+        ventureGrid.appendChild(deckStage);
+    }
 
     backlogCards.forEach((card, index) => {
         const body = card.querySelector(".card-body");
@@ -2804,26 +2817,93 @@ function setupVentureCapitalBills() {
         allCards.forEach(card => capitalObserver.observe(card));
     }
 
-    if (!ventureCards.length) return;
+    if (!ventureCards.length || !ventureGrid) return;
+    const deckCurrent = ventureGrid.querySelector(".venture-deck-current");
+    const deckProgress = ventureGrid.querySelector(".venture-deck-footer i b");
+    const deckActiveTitle = ventureGrid.querySelector(".venture-deck-active-title");
     let ventureFrameRequested = false;
     const renderVentureFlips = () => {
-        ventureCards.forEach(card => {
+        if (prefersReducedMotion) {
+            ventureCards.forEach(card => {
+                card.style.setProperty("--venture-flip", "1");
+                card.classList.add("is-venture-back");
+                card.inert = false;
+                card.setAttribute("aria-hidden", "false");
+                const front = card.querySelector(".venture-flip-front");
+                const back = card.querySelector(".venture-flip-back");
+                if (front) front.inert = true;
+                if (back) back.inert = false;
+            });
+            ventureFrameRequested = false;
+            return;
+        }
+        const rect = ventureGrid.getBoundingClientRect();
+        const travel = Math.max(ventureGrid.offsetHeight - window.innerHeight, 1);
+        const deckProgressValue = Math.max(0, Math.min(1, -rect.top / travel));
+        const rawPosition = deckProgressValue * (ventureCards.length - 0.12);
+        const activeIndex = Math.min(ventureCards.length - 1, Math.floor(rawPosition));
+        const phase = activeIndex === ventureCards.length - 1
+            ? Math.min(0.64, rawPosition - activeIndex)
+            : rawPosition - activeIndex;
+        const smoothstep = value => {
+            const clamped = Math.max(0, Math.min(1, value));
+            return clamped * clamped * (3 - 2 * clamped);
+        };
+        const flipProgress = smoothstep((phase - 0.12) / 0.34);
+        const exitProgress = smoothstep((phase - 0.68) / 0.3);
+
+        ventureCards.forEach((card, index) => {
             const inner = card.querySelector(".venture-flip-inner");
             if (!inner) return;
-            const rect = card.getBoundingClientRect();
-            const stickyTop = window.innerWidth < 768 ? 74 : 88;
-            const travel = Math.max(card.offsetHeight - inner.offsetHeight - stickyTop, 1);
-            const cardProgress = prefersReducedMotion ? 1 : Math.max(0, Math.min(1, (stickyTop - rect.top) / travel));
-            const normalized = Math.max(0, Math.min(1, (cardProgress - 0.1) / 0.62));
-            const flipProgress = normalized * normalized * (3 - 2 * normalized);
-            const isBack = flipProgress >= 0.5;
-            card.style.setProperty("--venture-flip", flipProgress.toFixed(4));
+            const relativeIndex = index - activeIndex;
+            const isActive = index === activeIndex;
+            let x = 0;
+            let y = 0;
+            let rotation = 0;
+            let scale = 1;
+            let opacity = 1;
+
+            if (relativeIndex < 0) {
+                x = -118;
+                y = -8;
+                rotation = -7;
+                opacity = 0;
+            } else if (isActive) {
+                x = -118 * exitProgress;
+                y = -8 * exitProgress;
+                rotation = -7 * exitProgress;
+                opacity = 1 - exitProgress * 0.82;
+            } else {
+                const depth = Math.min(3.2, Math.max(0, relativeIndex - exitProgress));
+                const direction = index % 2 === 0 ? -1 : 1;
+                x = depth * 1.55;
+                y = depth * 11;
+                rotation = direction * depth * 0.9;
+                scale = 1 - depth * 0.018;
+                opacity = 1 - depth * 0.14;
+            }
+
+            const cardFlip = isActive ? flipProgress : 0;
+            const isBack = isActive && cardFlip >= 0.5;
+            card.style.setProperty("--venture-flip", cardFlip.toFixed(4));
+            card.style.setProperty("--deck-x", `${x.toFixed(3)}%`);
+            card.style.setProperty("--deck-y", `${y.toFixed(2)}px`);
+            card.style.setProperty("--deck-rotate", `${rotation.toFixed(3)}deg`);
+            card.style.setProperty("--deck-scale", scale.toFixed(4));
+            card.style.setProperty("--deck-opacity", opacity.toFixed(4));
+            card.style.setProperty("--deck-z", String(ventureCards.length - Math.max(0, relativeIndex)));
             card.classList.toggle("is-venture-back", isBack);
             const front = card.querySelector(".venture-flip-front");
             const back = card.querySelector(".venture-flip-back");
-            if (front) front.inert = isBack;
-            if (back) back.inert = !isBack;
+            card.inert = !isActive;
+            card.setAttribute("aria-hidden", isActive ? "false" : "true");
+            if (front) front.inert = isActive ? isBack : true;
+            if (back) back.inert = isActive ? !isBack : true;
         });
+
+        if (deckCurrent) deckCurrent.textContent = String(activeIndex + 1).padStart(2, "0");
+        if (deckProgress) deckProgress.style.transform = `scaleX(${((activeIndex + Math.min(phase, 0.98)) / ventureCards.length).toFixed(4)})`;
+        if (deckActiveTitle) deckActiveTitle.textContent = ventureCards[activeIndex]?.dataset.ventureTitle || "Venture note";
         ventureFrameRequested = false;
     };
     const requestVentureRender = () => {
