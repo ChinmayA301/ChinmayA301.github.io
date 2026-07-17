@@ -1,15 +1,15 @@
 ---
 layout: blog
-title: Research Studies, Evidence Audits, and Concept Notes
-description: Evidence-bearing studies and clearly labeled concept notes on AI governance, data science, RAG systems, analytics, media systems, and product strategy.
+title: Brain Vomit
+description: blog space
 permalink: /blog/
 ---
 <section class="blog-mini-hero newspaper-front" aria-labelledby="blog-overview">
   <div class="newspaper-front-copy">
   <p class="eyebrow mb-2">Studies and Ideas</p>
   <h2 id="blog-overview" class="h2 mb-2">Results when I have them; concept notes when I do not</h2>
-  <p class="blog-quick-notes mb-2">Research studies are separated from proposals, frameworks, and product theses.</p>
-  <p class="section-text mb-4">A standalone writing space for evidence audits, experiments, research exploration, opinion, and curiosity—without presenting every analytical idea as a completed study.</p>
+  <p class="blog-quick-notes mb-2">Research Studies, Evidence Audits, and Concept Notes.</p>
+  <p class="section-text mb-4">A standalone writing space for evidence audits, experiments, research exploration, opinion, and curiosity—without presenting every analytical idea as a completed study. Also random thoughts and procrastinations.</p>
   <div class="d-flex flex-wrap gap-2">
     {% assign latest_post = site.posts.first %}
     {% if latest_post %}
@@ -20,7 +20,7 @@ permalink: /blog/
   </div>
   </div>
   <aside class="newspaper-front-folio" aria-label="Publication note">
-    <span>Field Notes</span>
+    <span>Brain Vomit</span>
     <strong>{{ site.posts | size }}</strong>
     <span>Published pieces</span>
   </aside>
@@ -40,6 +40,8 @@ permalink: /blog/
     <p class="blog-stat-label mb-0">Concept notes</p>
   </article>
 </section>
+
+{% include blog-newsletter.html %}
 
 {% assign study_posts = site.posts | where: "content_type", "research_study" %}
 {% if study_posts.size > 0 %}

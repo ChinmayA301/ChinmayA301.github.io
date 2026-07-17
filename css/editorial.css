@@ -4554,3 +4554,297 @@ body.blog-theme :focus-visible {
         display: none;
     }
 }
+
+/* Brain Vomit — comments, sharing, and the future newsletter */
+.blog-newsletter {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1.18fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: end;
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+    padding: clamp(2rem, 4vw, 3.5rem);
+    border-top: 4px double var(--news-rule-strong);
+    border-bottom: 1px solid var(--news-rule);
+    background: var(--news-sheet);
+}
+
+.blog-newsletter-copy h2,
+.blog-community-header h2 {
+    margin: 0.55rem 0 0.9rem;
+    color: var(--news-ink) !important;
+    font-family: "Instrument Serif", Georgia, serif !important;
+    font-size: clamp(2.4rem, 5vw, 4.8rem) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 0.92;
+}
+
+body.blog-theme .blog-newsletter-copy > p:last-child,
+body.blog-theme .blog-community-header > p:last-child {
+    max-width: 620px;
+    margin: 0;
+    color: var(--news-muted) !important;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 1.5;
+}
+
+.blog-community-kicker,
+.blog-newsletter-form label,
+.blog-comment-form label > span,
+.blog-share-panel > p {
+    color: var(--news-accent) !important;
+    font-family: "IBM Plex Mono", monospace !important;
+    font-size: 0.6rem !important;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.blog-community-kicker {
+    margin: 0;
+}
+
+.blog-newsletter-form label {
+    display: block;
+    margin-bottom: 0.65rem;
+}
+
+.blog-newsletter-control {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    border-bottom: 1px solid var(--news-rule-strong);
+}
+
+.blog-newsletter-control input,
+.blog-comment-form input,
+.blog-comment-form textarea {
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--news-ink);
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 1.45;
+    outline: 0;
+}
+
+.blog-newsletter-control input {
+    min-width: 0;
+    padding: 0.9rem 0;
+}
+
+.blog-newsletter-control input::placeholder,
+.blog-comment-form input::placeholder,
+.blog-comment-form textarea::placeholder {
+    color: var(--news-faint);
+    opacity: 1;
+}
+
+.blog-newsletter-control:focus-within,
+.blog-comment-form label:focus-within {
+    border-color: var(--news-accent);
+}
+
+.blog-newsletter-control button,
+.blog-comment-form button,
+.blog-share-actions a,
+.blog-share-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--news-rule-strong);
+    border-radius: 0;
+    background: transparent;
+    color: var(--news-ink) !important;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.59rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.blog-newsletter-control button {
+    border-block: 0;
+    border-right: 0;
+}
+
+.blog-newsletter-control button:hover,
+.blog-newsletter-control button:focus-visible,
+.blog-comment-form button:hover,
+.blog-comment-form button:focus-visible,
+.blog-share-actions a:hover,
+.blog-share-actions a:focus-visible,
+.blog-share-actions button:hover,
+.blog-share-actions button:focus-visible {
+    border-color: var(--news-accent);
+    background: var(--news-accent);
+    color: var(--news-page) !important;
+}
+
+.blog-newsletter-control button:disabled,
+.blog-comment-form button:disabled {
+    cursor: wait;
+    opacity: 0.58;
+}
+
+body.blog-theme .blog-form-note,
+body.blog-theme .blog-form-status,
+body.blog-theme .blog-share-status {
+    margin: 0.7rem 0 0;
+    color: var(--news-faint) !important;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.57rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+}
+
+body.blog-theme .blog-form-status,
+body.blog-theme .blog-share-status {
+    min-height: 1.5em;
+    color: var(--news-accent) !important;
+}
+
+.blog-community {
+    margin-top: clamp(4.5rem, 9vw, 8rem);
+    padding-top: clamp(2rem, 4vw, 3.5rem);
+    border-top: 4px double var(--news-rule-strong);
+}
+
+.blog-community-header {
+    max-width: 700px;
+}
+
+.blog-share-panel {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    margin-top: 2.5rem;
+    padding-block: 1rem;
+    border-block: 1px solid var(--news-rule);
+}
+
+.blog-share-panel > p {
+    margin: 0;
+    padding-top: 0.78rem;
+}
+
+.blog-share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.blog-share-status {
+    grid-column: 2;
+}
+
+.blog-comment-form {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.3rem;
+}
+
+.blog-comment-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.blog-comment-form label {
+    display: block;
+    border-bottom: 1px solid var(--news-rule);
+}
+
+.blog-comment-form label > span {
+    display: flex;
+    gap: 0.45rem;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+.blog-comment-form label > span small {
+    color: var(--news-faint);
+    font-size: inherit;
+    font-weight: 400;
+}
+
+.blog-comment-form input,
+.blog-comment-form textarea {
+    padding: 0.75rem 0;
+    resize: vertical;
+}
+
+.blog-comment-submit {
+    display: flex;
+    gap: 1rem 1.5rem;
+    align-items: center;
+}
+
+body.blog-theme .blog-comment-submit p {
+    margin: 0;
+    color: var(--news-faint) !important;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.57rem;
+    line-height: 1.5;
+}
+
+.blog-post-page .blog-newsletter {
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding-inline: 0;
+    background: transparent;
+}
+
+@media (max-width: 767.98px) {
+    .blog-newsletter,
+    .blog-comment-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-newsletter {
+        padding: 1.6rem 1.3rem;
+    }
+
+    .blog-post-page .blog-newsletter {
+        padding-inline: 0;
+    }
+
+    .blog-newsletter-control {
+        grid-template-columns: 1fr;
+        border-bottom: 0;
+    }
+
+    .blog-newsletter-control input {
+        border-bottom: 1px solid var(--news-rule-strong);
+    }
+
+    .blog-newsletter-control button {
+        margin-top: 0.7rem;
+        border: 1px solid var(--news-rule-strong);
+    }
+
+    .blog-share-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-share-panel > p {
+        padding-top: 0;
+    }
+
+    .blog-share-status {
+        grid-column: 1;
+    }
+
+    .blog-comment-submit {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

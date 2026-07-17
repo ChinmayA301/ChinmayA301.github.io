@@ -1,0 +1,20 @@
+<section class="blog-newsletter" aria-labelledby="newsletter-heading">
+  <div class="blog-newsletter-copy">
+    <p class="blog-community-kicker">Newsletter, eventually</p>
+    <h2 id="newsletter-heading">Get the next brain dump.</h2>
+    <p>No fixed cadence yet. Leave your email for the first issue when it exists.</p>
+  </div>
+  <form class="blog-newsletter-form" action="https://formspree.io/f/xrbyalqp" method="POST"
+    data-blog-form data-success-message="You’re on the early list. I’ll write when there is something worth sending.">
+    <input type="hidden" name="_subject" value="Brain Vomit newsletter signup">
+    <input type="hidden" name="source" value="Brain Vomit newsletter">
+    <label for="newsletter-email-{{ page.url | slugify }}">Email address</label>
+    <div class="blog-newsletter-control">
+      <input id="newsletter-email-{{ page.url | slugify }}" type="email" name="email" autocomplete="email"
+        placeholder="you@example.com" required>
+      <button type="submit">Join the future issue</button>
+    </div>
+    <p class="blog-form-note">One list. No schedule. Unsubscribe whenever.</p>
+    <p class="blog-form-status" role="status" aria-live="polite"></p>
+  </form>
+</section>

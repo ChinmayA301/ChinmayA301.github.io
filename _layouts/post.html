@@ -86,7 +86,7 @@
     "image": "{{ page.og_image | absolute_url }}"{% endif %}
   }
   </script>
-  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260717m' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260717p' | relative_url }}">
 </head>
 <body class="blog-theme blog-post-page">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
@@ -99,7 +99,7 @@
     <div class="container">
       <div class="blog-edition-utility">
         <a class="blog-monogram" href="{{ '/' | relative_url }}" aria-label="Back to portfolio home">CA</a>
-        <a class="blog-edition-stamp blog-edition-link" href="{{ '/blog/' | relative_url }}"><span>Field Notes</span><span>Back to index</span></a>
+        <a class="blog-edition-stamp blog-edition-link" href="{{ '/blog/' | relative_url }}"><span>Brain Vomit</span><span>Back to index</span></a>
         <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
       </div>
       <div class="blog-masthead-rule" aria-hidden="true"></div>
@@ -169,6 +169,9 @@
       <div class="newspaper-story" itemprop="articleBody">
         {{ content }}
       </div>
+
+      {% include blog-post-community.html %}
+      {% include blog-newsletter.html %}
 
       <nav aria-label="Post navigation" class="blog-nav mt-5">
         <a href="{{ '/blog/' | relative_url }}">Back to Blog Index</a>
@@ -260,5 +263,6 @@
       }
     });
   </script>
+  <script src="{{ '/js/blog.js?v=20260717a' | relative_url }}"></script>
 </body>
 </html>
