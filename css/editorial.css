@@ -4895,8 +4895,9 @@ body.blog-theme .blog-comment-submit p {
     padding: 0 !important;
     overflow: hidden;
     isolation: isolate;
-    border: 1px solid rgba(231, 232, 234, 0.14) !important;
-    background: #1a1d21 !important;
+    border: 0 !important;
+    border-top: 1px solid var(--rule-strong) !important;
+    background: transparent !important;
 }
 
 .capability-hinge-reveal,
@@ -4911,20 +4912,13 @@ body.blog-theme .blog-comment-submit p {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.032), transparent 44%),
-        repeating-linear-gradient(90deg, transparent 0 39px, rgba(231, 232, 234, 0.027) 40px),
-        #1b1f23;
+    background: transparent;
+    opacity: var(--hinge-progress);
     transform: translateY(calc((1 - var(--hinge-progress)) * 16px));
 }
 
 .capability-hinge-reveal::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: radial-gradient(circle at 82% 15%, rgba(184, 137, 98, 0.13), transparent 36%);
-    pointer-events: none;
+    display: none;
 }
 
 .capability-tool-label,
@@ -4970,14 +4964,8 @@ body.blog-theme .blog-comment-submit p {
         translateY(calc(var(--hinge-progress) * 118%))
         rotateZ(calc(var(--hinge-progress) * var(--hinge-direction) * 5deg));
     opacity: calc(1 - var(--hinge-progress));
-    background:
-        linear-gradient(112deg, rgba(255, 255, 255, 0.12), transparent 22% 69%, rgba(255, 255, 255, 0.06)),
-        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 4px),
-        linear-gradient(145deg, #3b4045 0%, #22262a 44%, #30353a 72%, #1d2024 100%);
-    box-shadow:
-        inset 0 1px rgba(255, 255, 255, 0.18),
-        inset 0 -1px rgba(0, 0, 0, 0.75),
-        0 30px 55px rgba(0, 0, 0, 0.45);
+    background: transparent;
+    box-shadow: none;
     will-change: transform, opacity;
 }
 
@@ -5053,6 +5041,15 @@ body.blog-theme .blog-comment-submit p {
 
 .capability-hinge-card.is-hinge-revealed .capability-hinge-plate {
     pointer-events: none;
+}
+
+.capability-hinge-reveal {
+    pointer-events: none;
+}
+
+.capability-hinge-card.is-hinge-revealed .capability-hinge-reveal,
+.capability-hinge-card:focus-within .capability-hinge-reveal {
+    pointer-events: auto;
 }
 
 /* Monochrome identity layers for the Work & Education cards */

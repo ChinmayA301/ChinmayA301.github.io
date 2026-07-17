@@ -1163,14 +1163,15 @@ function splitExperience(items) {
 }
 
 function setupCapabilityHinges() {
+    const section = document.getElementById("skills");
     const cards = [...document.querySelectorAll("[data-capability-hinge]")];
-    if (!cards.length) return;
+    if (!section || !cards.length) return;
 
-    const desktopLayout = window.matchMedia("(min-width: 768px)");
     let animationFrame = null;
 
     cards.forEach((card, index) => {
         card.style.setProperty("--hinge-direction", index % 2 === 0 ? "1" : "-1");
+        card.dataset.hingeOrder = String(index + 1);
         card.classList.add("hinge-ready");
     });
 
@@ -1184,15 +1185,18 @@ function setupCapabilityHinges() {
 
     const renderHinges = () => {
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-        const revealStart = viewportHeight * 0.84;
-        const revealEnd = viewportHeight * 0.34;
+        const sectionRect = section.getBoundingClientRect();
+        const firstCardRect = cards[0].getBoundingClientRect();
+        const releaseLine = viewportHeight * 0.52;
+        const sequenceDistance = Math.max(sectionRect.height * 0.78, viewportHeight * 0.95);
+        const sequenceProgress = Math.max(0, Math.min((releaseLine - firstCardRect.top) / sequenceDistance, 1));
+        const sequencePhase = sequenceProgress * cards.length;
+
+        section.style.setProperty("--hinge-sequence", sequenceProgress.toFixed(3));
 
         cards.forEach((card, index) => {
-            const rect = card.getBoundingClientRect();
-            const columnDelay = desktopLayout.matches ? (index % 3) * 0.08 : 0;
-            const rawProgress = (revealStart - rect.top) / Math.max(revealStart - revealEnd, 1);
-            const delayedProgress = Math.max(0, Math.min((rawProgress - columnDelay) / (1 - columnDelay), 1));
-            const smoothProgress = delayedProgress * delayedProgress * (3 - 2 * delayedProgress);
+            const rawProgress = Math.max(0, Math.min((sequencePhase - index) / 0.78, 1));
+            const smoothProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
             const focused = card.contains(document.activeElement);
             const progress = focused ? 1 : smoothProgress;
 
@@ -1214,7 +1218,6 @@ function setupCapabilityHinges() {
     });
     window.addEventListener("scroll", requestRender, { passive: true });
     window.addEventListener("resize", requestRender);
-    desktopLayout.addEventListener?.("change", requestRender);
     requestRender();
 }
 
