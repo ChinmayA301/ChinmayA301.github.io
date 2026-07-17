@@ -86,6 +86,7 @@
     "image": "{{ page.og_image | absolute_url }}"{% endif %}
   }
   </script>
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260717b' | relative_url }}">
 </head>
 <body class="blog-theme">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
@@ -179,7 +180,7 @@
     };
 
     const savedTheme = localStorage.getItem(themeKey);
-    setTheme(savedTheme === 'dark' ? 'dark' : 'light');
+    setTheme(savedTheme === 'light' ? 'light' : 'dark');
 
     toggle.addEventListener('click', () => {
       const nextTheme = body.classList.contains('theme-light') ? 'dark' : 'light';

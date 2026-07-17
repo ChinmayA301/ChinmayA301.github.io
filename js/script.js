@@ -45,6 +45,17 @@ const updateScrollProgress = () => {
 
 const sections = document.querySelectorAll(".section");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const heroMediaShell = document.getElementById("heroGlobeToggle");
+const heroSection = document.querySelector(".hero");
+const updateHeroMediaReveal = () => {
+    if (!heroMediaShell || !heroSection) return;
+    const revealDistance = Math.min(window.innerHeight * 0.38, 320);
+    const reveal = prefersReducedMotion
+        ? 1
+        : Math.max(0, Math.min(window.scrollY / Math.max(revealDistance, 1), 1));
+    heroMediaShell.style.setProperty("--globe-reveal", reveal.toFixed(3));
+    heroMediaShell.classList.toggle("is-scroll-revealed", reveal > 0.08);
+};
 const revealVisibleSections = () => {
     const trigger = window.innerHeight * 0.9;
     sections.forEach(section => {
@@ -67,14 +78,20 @@ if (prefersReducedMotion || !("IntersectionObserver" in window)) {
 }
 window.addEventListener("scroll", () => {
     updateScrollProgress();
+    updateHeroMediaReveal();
     revealVisibleSections();
 }, { passive: true });
-window.addEventListener("resize", updateScrollProgress);
+window.addEventListener("resize", () => {
+    updateScrollProgress();
+    updateHeroMediaReveal();
+});
 window.addEventListener("load", () => {
     updateScrollProgress();
+    updateHeroMediaReveal();
     revealVisibleSections();
 });
 updateScrollProgress();
+updateHeroMediaReveal();
 
 // Pointer-responsive light, kept subtle and disabled on touch/reduced motion.
 if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
