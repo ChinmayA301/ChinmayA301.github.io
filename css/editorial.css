@@ -1227,6 +1227,55 @@ body.blog-theme .section-text {
     text-transform: uppercase;
 }
 
+.blog-mini-hero {
+    padding: clamp(2rem, 4vw, 3.5rem) 0 !important;
+    border: 0 !important;
+    border-top: 1px solid var(--rule-strong) !important;
+    border-bottom: 1px solid var(--rule) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.blog-stat-grid {
+    gap: 0 !important;
+    border-top: 1px solid var(--rule) !important;
+    border-left: 1px solid var(--rule) !important;
+}
+
+.blog-stat {
+    padding: 1.25rem !important;
+    border: 0 !important;
+    border-right: 1px solid var(--rule) !important;
+    border-bottom: 1px solid var(--rule) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.blog-stat-value {
+    color: var(--paper) !important;
+    font-family: "Instrument Serif", Georgia, serif !important;
+    font-size: 2.1rem !important;
+    font-weight: 400 !important;
+}
+
+.blog-home-ca,
+.blog-type-badge,
+.blog-search-phrase {
+    border-radius: 0 !important;
+    background: transparent !important;
+    font-family: "IBM Plex Mono", monospace !important;
+}
+
+.blog-type-badge,
+.blog-search-phrase {
+    padding: 0 !important;
+    border: 0 !important;
+    color: var(--rust-bright) !important;
+    font-size: 0.61rem !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
 html.theme-light body.blog-theme,
 body.blog-theme.theme-light {
     --page: #f0ede5;
