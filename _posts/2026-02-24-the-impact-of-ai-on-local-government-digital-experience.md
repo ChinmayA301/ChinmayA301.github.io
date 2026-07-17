@@ -11,8 +11,8 @@ og_image: "/assets/images/ai-audit-viz.png"
 canonical_url: "https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/"
 
 summary: This post proposes a practical operating model for AI in local government digital experience for risk-tiered intake, auditable decision logs, and measurable outcomes across time,quality and equity.
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "AI governance framework for local government"
 positioning_note: "This is a governance and operating-model thesis for local government AI adoption, not a step-by-step procurement guide."
 ---

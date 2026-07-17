@@ -5,8 +5,8 @@ subtitle: "What actually decides whether an optimizer beats a heuristic isn't th
 date: 2026-02-25
 categories: [machine-learning, networks, optimization]
 tags: [bayesian-optimization, influence-maximization, independent-cascade, graph-theory]
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "research_study"
+content_label: "Research Study"
 search_phrase: "Bayesian optimization for influence maximization"
 positioning_note: "This is a research-style optimization note, not a deployable social influence product guide."
 ---

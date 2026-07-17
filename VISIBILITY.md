@@ -7,9 +7,9 @@ This file tracks visibility work that cannot be completed purely from repo code.
 - Dynamic `sitemap.xml` generated from Jekyll pages and posts.
 - `robots.txt` allows public content, blocks `/upload/` and `/aegis-backend/`, and points to the sitemap.
 - Homepage Person schema expanded with `sameAs`, `knowsAbout`, occupation, and University of Minnesota affiliation.
-- BlogPosting schema now includes stronger author identity, keywords, article section, and concept-note genre metadata.
-- Blog index now frames posts as research notes, concept essays, and evidence-backed analysis instead of project guides.
-- Research/concept-style posts are flagged with `content_type: research_concept`.
+- BlogPosting schema now includes stronger author identity, keywords, article section, and explicit study-or-concept genre metadata.
+- Blog index separates evidence-bearing research studies from proposals, frameworks, and product theses.
+- Evidence-bearing posts use `content_type: research_study`; proposal-style writing uses `content_type: concept_note`.
 - Repository README now links canonical pages, `llms.txt`, and sitemap.
 
 ## Manual Indexing Tasks

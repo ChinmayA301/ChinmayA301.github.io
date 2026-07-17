@@ -2,6 +2,10 @@
     {
         "title": "Aegis AI Governance & Readiness Platform",
         "description": "Governance and audit-readiness workstream for AI adoption: readiness scorecards, risk registers, human-review gates, monitoring logic, and executive-facing assessment flows for compliance-sensitive teams.",
+        "role": "Responsible AI Engineer / Product Strategist",
+        "result": "Created a repeatable decision layer that turns vague AI-adoption interest into scored readiness gaps, named risks, review gates, evidence requirements, and pilot decisions.",
+        "why": "Helps regulated teams decide where AI is safe and worthwhile before procurement or sensitive-data exposure.",
+        "stack": "AI readiness scoring, risk registers, human-in-the-loop controls, audit evidence, Cloudflare",
         "status": "Highlighted workstream",
         "privacy": "Product and deployment shared; private implementation details withheld.",
         "tags": [
@@ -33,6 +37,10 @@
     {
         "title": "PolyRAG: Multi-Model Governance RAG",
         "description": "Citation-grounded RAG over real AI-governance documents with one retrieval pass and side-by-side answers from multiple OpenAI-compatible models; includes ingestion, FAISS indexing, OCR fallback, evaluation, FastAPI, Docker, and hosted demo.",
+        "role": "AI Engineer",
+        "result": "Delivered a shared-retrieval comparison workflow so model answers can be evaluated against the same evidence, citations, and governance corpus instead of incomparable prompts or contexts.",
+        "why": "Makes LLM comparison more auditable and useful for policy-heavy questions where unsupported fluency is a real risk.",
+        "stack": "Python, FAISS, FastAPI, Docker, OCR, multi-provider LLM APIs, retrieval evaluation",
         "status": "Public repo + demo",
         "tags": [
             "RAG",
@@ -55,6 +63,10 @@
     {
         "title": "TransferSignal",
         "description": "Private product build for a source-weighted football transfer-rumour ledger: deterministic scoring, source reliability tracking, AI-assisted claim extraction, protected admin workflows, and an editorial newsroom-style board.",
+        "role": "Product Engineer / Sports Data Builder",
+        "result": "Unified competing destinations, source grades, supersession, confidence, and editorial context into one traceable transfer ledger rather than a feed of disconnected rumours.",
+        "why": "Turns noisy sports reporting into an explainable evidence product where readers can inspect why a claim is trusted.",
+        "stack": "TypeScript, React, PostgreSQL, deterministic scoring, AI extraction, source-reliability analytics",
         "status": "Private product build",
         "privacy": "No private repo or internal code linked; public deployment shared.",
         "link": "https://transfer-signal.vercel.app/",
@@ -73,19 +85,34 @@
     },
     {
         "title": "Stock Analyzer",
-        "description": "Coming-soon investment research and market analytics project. Reserved for a GitHub release that will highlight data ingestion, factor/technical analysis, model evaluation, explainable signals, and investor-readable reporting without overstating predictive certainty.",
-        "status": "Coming soon",
-        "privacy": "GitHub and deployment links will be added after the public repo is uploaded.",
+        "description": "Built a live investment-tracking and market-analysis workspace that brings portfolio monitoring, stock research, and explainable signals into one investor-readable interface without presenting forecasts as certainty.",
+        "role": "Data Product Builder / Financial Analyst",
+        "result": "Delivered a working research surface that consolidates investment tracking and analysis into a decision-support workflow instead of a collection of disconnected market screens.",
+        "why": "Reduces the friction between monitoring a position, investigating a signal, and deciding what deserves deeper research.",
+        "stack": "Market data, portfolio analytics, time-series signals, financial visualization, explainable decision support",
+        "status": "Live deployment",
+        "privacy": "Live product shared; no brokerage credentials, private holdings, or user financial data are exposed through the portfolio.",
         "tags": [
             "Financial Analytics",
             "Market Data",
             "Time Series",
             "Explainable Signals"
+        ],
+        "link": "https://www.investtracker.aiautomatedapp.com",
+        "links": [
+            {
+                "label": "Live App",
+                "url": "https://www.investtracker.aiautomatedapp.com"
+            }
         ]
     },
     {
         "title": "Multi-Agent AI-Native ERP for Compliance Mapping",
         "description": "Active private build for an AI-native operating layer that maps company workflows, obligations, controls, owners, evidence, and readiness gaps across compliance-heavy functions. The focus is company-running ability: turning policies and process knowledge into monitorable execution.",
+        "role": "AI Systems Architect / Venture Builder",
+        "result": "Designed one operating model that connects obligations to workflows, controls, evidence, owners, gaps, and recurring execution instead of leaving compliance knowledge across disconnected documents.",
+        "why": "Makes compliance operational: teams can see what must happen, who owns it, and what evidence proves it happened.",
+        "stack": "Multi-agent workflows, compliance knowledge graphs, evidence mapping, orchestration, audit trails",
         "status": "Active private build",
         "privacy": "Concept and capability shared; implementation details, schemas, and private code withheld.",
         "tags": [
@@ -98,6 +125,10 @@
     {
         "title": "AI Survey & Interviewing Tool",
         "description": "Active product workstream for adaptive AI interviewing, survey design, response synthesis, and evidence extraction. Built around better stakeholder research, readiness assessment, and qualitative-to-quantitative analysis for teams that need structured insight from messy conversations.",
+        "role": "AI Product Builder / Research Systems Designer",
+        "result": "Converted open-ended stakeholder conversations into structured evidence, quality-scored responses, comparable themes, and follow-up signals for readiness and discovery work.",
+        "why": "Preserves qualitative nuance while making stakeholder research usable for prioritization and decision-making.",
+        "stack": "Adaptive interviewing, structured extraction, multilingual capture, response quality scoring, insight synthesis",
         "status": "Active private build",
         "privacy": "Public description only; no private respondent data, prompts, or implementation details exposed.",
         "tags": [
@@ -110,6 +141,10 @@
     {
         "title": "AI Football Intelligence & Tracking System",
         "description": "Active football intelligence workstream spanning transfer signals, source reliability, player/team tracking, tactical context, and editorial-grade dashboards. TransferSignal is one product surface inside the broader sports intelligence direction.",
+        "role": "Sports Data Scientist / Product Architect",
+        "result": "Connected source reliability, player and team tracking, tactical context, and editorial presentation into a shared intelligence direction with TransferSignal as a live product surface.",
+        "why": "Football data becomes more useful when events, sources, roles, and tactical context are evaluated together rather than as isolated metrics.",
+        "stack": "Sports data pipelines, confidence scoring, source ledgers, tactical analytics, editorial dashboards",
         "status": "Active private build",
         "privacy": "No private repo linked; public-facing deployment links can be added when each surface is ready.",
         "tags": [
@@ -140,6 +175,10 @@
     {
         "title": "AI Lead Discovery & CRM Improvement",
         "description": "Private consulting-demo workstream for agentic lead discovery, enrichment, scoring, account research, personalized outreach support, and CRM hygiene. Focused on improving pipeline quality and reducing manual prospecting work with auditable agent steps.",
+        "role": "AI Automation Consultant / Product Builder",
+        "result": "Structured prospecting into auditable stages for discovery, enrichment, scoring, research, outreach support, and CRM cleanup instead of an opaque end-to-end agent action.",
+        "why": "Improves sales-research throughput while keeping evidence and human approval visible at each consequential step.",
+        "stack": "Agentic workflows, enrichment, lead scoring, CRM automation, evidence logging, human approval",
         "status": "Private consulting demo",
         "privacy": "Capability described without exposing customer lists, prompts, workflows, or private code.",
         "tags": [
@@ -152,6 +191,10 @@
     {
         "title": "AI Governance Setup for Regulated Teams",
         "description": "Governance advisory and implementation work for HIPAA, finance, public-sector, and school contexts: AI readiness, policy mapping, risk registers, acceptable-use boundaries, vendor review, human oversight, evidence trails, and pilot evaluation.",
+        "role": "Responsible AI Engineer / Governance Advisor",
+        "result": "Defined a reusable governance package spanning acceptable use, vendor review, risk ownership, human oversight, evidence trails, pilot criteria, and monitoring expectations.",
+        "why": "Gives regulated teams an actionable path from policy language to controlled AI experimentation and accountable deployment.",
+        "stack": "NIST AI RMF, policy mapping, model cards, vendor risk, impact assessment, monitoring design",
         "status": "Advisory + implementation workstream",
         "privacy": "Sector-level framing only; no client-specific controls, data, or confidential policies exposed.",
         "tags": [
@@ -164,6 +207,10 @@
     {
         "title": "Decision Intelligence",
         "description": "Decision-intelligence workstream connecting business questions, KPI definitions, scenario analysis, risk tradeoffs, and AI-assisted recommendation flows into decision-ready operating views for leaders and analysts.",
+        "role": "Data Scientist / AI Product Architect",
+        "result": "Built a structured brief workflow that combines reference cases, strategic lenses, tradeoffs, and pre-mortems instead of returning a single unexamined recommendation.",
+        "why": "Helps decision-makers pressure-test ambiguous choices while keeping uncertainty and competing interpretations visible.",
+        "stack": "FastAPI, Next.js, pgvector, retrieval, LLM orchestration, scenario analysis",
         "status": "Project workstream",
         "tags": [
             "Decision Intelligence",
@@ -175,6 +222,10 @@
     {
         "title": "Operations Control Tower",
         "description": "Operations-analytics control tower on 98k real Olist orders: SQL star schema, data-quality checks, supplier risk score, executive KPIs, and a Looker Studio-ready decision dashboard for logistics intervention planning.",
+        "role": "Analytics Engineer / Data Analyst",
+        "result": "Converted 98k real orders into a validated star schema, executive KPI layer, supplier-risk score, and Looker Studio-ready intervention views.",
+        "why": "Moves operations reporting from descriptive totals toward a repeatable way to identify where logistics attention is needed.",
+        "stack": "Python, DuckDB SQL, dimensional modeling, Great Expectations, Looker Studio",
         "status": "Public case study",
         "tags": [
             "Analytics Engineering",
@@ -193,6 +244,10 @@
     {
         "title": "Healthcare Readmission Risk with Fairness & Calibration",
         "description": "Responsible-AI risk-modeling prototype on real UCI hospital data with leakage-controlled cohort design, calibration, subgroup fairness, SHAP, Fairlearn checks, and an honest model-card recommendation not to deploy as-is.",
+        "role": "Data Scientist / Responsible ML Engineer",
+        "result": "Produced a leakage-controlled benchmark with calibration, subgroup error analysis, SHAP, and a model-card recommendation not to deploy the model as-is.",
+        "why": "Demonstrates that responsible healthcare ML includes knowing when performance and subgroup behavior do not justify deployment.",
+        "stack": "Python, scikit-learn, XGBoost, Fairlearn, SHAP, calibration, model cards",
         "status": "Public case study",
         "tags": [
             "Responsible AI",
@@ -211,6 +266,10 @@
     {
         "title": "Tabular ML Benchmark: Human FE vs AutoML",
         "description": "Config-driven benchmark across healthcare, operations, and labor-market datasets measuring AUC, calibration, runtime, and robustness under shift; shows preprocessing and validation design matter more than model shopping.",
+        "role": "ML Engineer / Evaluation Designer",
+        "result": "Across three domains and five pipelines, disciplined preprocessing improved AUC by up to 0.19 while hyperparameter tuning added almost no mean lift.",
+        "why": "Shows why reproducible preprocessing, calibration, and validation under shift matter more than model shopping.",
+        "stack": "Python, scikit-learn, MLflow, Evidently, config-driven experiments",
         "status": "Public benchmark",
         "tags": [
             "ML Evaluation",
@@ -229,6 +288,7 @@
     {
         "title": "Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation",
         "description": "Built a longitudinal healthcare ML pipeline that converted sparse encounter records into patient-level cohorts and tested whether neighborhood deprivation improved prediction of uncontrolled HbA1c at 6-, 12-, and 24-month horizons.",
+        "role": "Data Scientist / Healthcare ML Researcher",
         "result": "The best observed ROC AUC was 0.612; matched ADI-ablation experiments showed no consistent lift, while follow-up coverage fell from 56.8% at 6 months to 40.8% at 24 months—making observation bias and target quality central findings.",
         "why": "A rigorous negative result showing cohort design, calibration, leakage control, and honest interpretation of social-risk variables—not a deployable clinical model.",
         "stack": "Python, pandas, scikit-learn, XGBoost, SHAP, longitudinal validation",
@@ -251,6 +311,7 @@
     {
         "title": "Public-Sector AI Readiness & Efficiency Evaluation",
         "description": "Designed a four-stage decision framework for evaluating county AI opportunities before procurement or sensitive-data access, combining workflow baselines, public-data proxy studies, responsible-AI gates, resident-segment analysis, and controlled-pilot planning.",
+        "role": "Data Scientist / Responsible AI Engineer",
         "result": "Turned open-ended AI adoption questions into ranked use cases, measurable pilot criteria, governance artifacts, and testable ROI hypotheses across document intake, policy retrieval, and service-request triage; simulated estimates are labeled as hypotheses, not production outcomes.",
         "why": "Shows the bridge from data science and AI evaluation to privacy, equity, accessibility, human review, and operational decision-making in a high-stakes public context.",
         "stack": "Python, scikit-learn, SHAP, public 311 data, document AI benchmarks, Power BI",
@@ -277,6 +338,10 @@
     {
         "title": "Financial Document Intelligence (FinBizInfo)",
         "description": "Financial-statement OCR/RAG workflow for extracting ratios, risk flags, auditor remarks, and compliance gaps from noisy documents with citation-backed review and structured analytics.",
+        "role": "AI Engineer / Financial Data Product Builder",
+        "result": "Combined OCR, retrieval, structured extraction, risk flags, and citation-backed review in one live financial-analysis surface for noisy source documents.",
+        "why": "Reduces manual document parsing while keeping analysts connected to the source evidence behind extracted financial claims.",
+        "stack": "Python, OCR, RAG, LangChain, FastAPI, structured extraction, citation review",
         "status": "Live deployment",
         "tags": [
             "Financial NLP",
@@ -295,6 +360,10 @@
     {
         "title": "Freight Forwarding Finance BI",
         "description": "CargoWise-shaped Power BI and SQL analytics for freight forwarding finance: job margin variance, AR aging, DSO, revenue by mode/lane/branch, and reconciliation back to source reports.",
+        "role": "BI Analyst / Analytics Engineer",
+        "result": "Defined a reconciled KPI layer for job margin, AR aging, DSO, and revenue across mode, lane, and branch views using CargoWise-shaped reporting logic.",
+        "why": "Gives freight-finance teams a consistent way to trace performance questions back to operational source reports.",
+        "stack": "Power BI, DAX, SQL, CargoWise reporting, finance KPI design, reconciliation",
         "status": "Client-style/private work",
         "privacy": "Described at outcome level only; no client data, private repo, or internal dashboards exposed.",
         "tags": [
@@ -307,6 +376,10 @@
     {
         "title": "Data Science Career Audit",
         "description": "Source-backed labor-market analysis combining BLS/Stanford HAI/McKinsey/WEF signals with public job-posting NLP to explain how AI pressure changes the data-science role bundle.",
+        "role": "Data Scientist / Research Writer",
+        "result": "Analyzed 728k public 2023 job postings plus a 2026 snapshot; GenAI/LLM language rose from roughly 0.1% of the 2023 corpus to about 27% of the later snapshot, reported descriptively rather than causally.",
+        "why": "Separates durable data-science judgment from the job-title bundle and shows how hiring language is changing under AI pressure.",
+        "stack": "Python, pandas, NLP, public job-posting data, descriptive statistics, reproducible reporting",
         "status": "Public analysis + essay",
         "tags": [
             "Labor Analytics",
@@ -329,6 +402,10 @@
     {
         "title": "SignalGraph",
         "description": "Credibility-adjusted signal layer for detecting fake-star and metric manipulation in open-source projects, framed for technical diligence and investor-style evidence review.",
+        "role": "Data Product Builder / Venture Analyst",
+        "result": "Reframed repository traction as an explainable combination of adoption, durability, builder quality, and manipulation risk instead of relying on raw star counts.",
+        "why": "Provides investors and technical diligence teams with a more defensible signal for open-source credibility.",
+        "stack": "FastAPI, PostgreSQL, graph signals, anomaly scoring, explainable risk, Recharts",
         "status": "Public repo",
         "tags": [
             "Trust & Safety",
@@ -347,6 +424,10 @@
     {
         "title": "Wax Seal Trust Provenance",
         "description": "Human-legible trust-provenance framework for digital artifacts, focused on visible tamper evidence, source lineage, and operational trust signals rather than opaque trust scores.",
+        "role": "Product Architect / TypeScript Engineer",
+        "result": "Delivered cryptographic seal envelopes, lifecycle state machines, CLI signing and verification, and reusable React components for visible provenance states.",
+        "why": "Makes authenticity and tamper evidence understandable to people instead of hiding trust entirely inside backend cryptography.",
+        "stack": "TypeScript, React, XState, Ed25519 signatures, CLI tooling, provenance schemas",
         "status": "Live deployment + public repo",
         "tags": [
             "Trust Provenance",

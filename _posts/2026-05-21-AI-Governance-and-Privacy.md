@@ -23,8 +23,8 @@ draft: false
 schema_type: "Article"
 keywords: "AI governance, AI privacy, responsible AI, third party AI risk, vendor risk management, AI contracts, NIST AI RMF, ISO 42001, public sector AI, healthcare AI governance"
 last_modified_at: 2026-05-19
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "AI governance privacy trust layer"
 positioning_note: "This is a governance and trust-layer concept for high-risk AI adoption, not legal advice or a finished compliance product."
 ---

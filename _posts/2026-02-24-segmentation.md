@@ -11,8 +11,8 @@ og_image: "/assets/images/segmentation-opportunity-matrix.png"
 canonical_url: "https://app.chinmayarora.com/blog/segmentation/"
 
 summary: Segmentation is not just a research artifact—it can become the operational layer that makes AI deployment measurable and safer. When segments reflect lived experience barriers (language, trust, mobile constraints, accessibility), they provide (1) stronger service design targeting and (2) the disaggregation layer required to audit AI outcomes.
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "public sector segmentation for AI governance"
 positioning_note: "This is a research and operating-model concept for safer public-sector AI deployment, not a vendor implementation guide."
 ---

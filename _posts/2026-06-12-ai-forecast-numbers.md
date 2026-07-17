@@ -24,6 +24,10 @@ draft: false
 schema_type: "Article"
 keywords: "AI revenue forecast, SpaceX valuation, DCF terminal value, AI bubble, circular financing, forecast accuracy, model risk"
 last_modified_at: 2026-06-12
+content_type: "research_study"
+content_label: "Research Study"
+search_phrase: "AI revenue forecast stress test"
+positioning_note: "Evidence audit using public filings, forecast arithmetic, historical comparisons, and explicit uncertainty; findings are time-bounded and not investment advice."
 ---
 
 > **A note on timing**

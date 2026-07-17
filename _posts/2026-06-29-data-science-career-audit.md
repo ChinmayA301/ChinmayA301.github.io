@@ -21,6 +21,10 @@ draft: false
 schema_type: "Article"
 keywords: "data science career, data science labor market, is data science dead, BLS data scientist, AI job automation, GenAI job postings, data science skills, job posting NLP, descriptive audit"
 last_modified_at: 2026-06-29
+content_type: "research_study"
+content_label: "Research Study"
+search_phrase: "data science labor market audit"
+positioning_note: "Descriptive study using public labor-market sources, 728k 2023 job postings, and a separate 2026 snapshot; cross-source comparisons are directional and not causal."
 ---
 
 ## Key takeaways

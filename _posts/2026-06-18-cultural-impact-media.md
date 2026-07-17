@@ -7,8 +7,8 @@ author: "Chinmay Arora"
 description: "A concept and research-spec piece for a data science system that measures how films, shows, games, and viral media reshape culture through language, fashion, tourism, food, search behavior, and online discourse."
 summary: "This post lays out a research-scale data science concept for studying the cultural impact of media. Instead of measuring popularity through views alone, it proposes a Cultural Diffusion Index that tracks how media changes what people say, buy, wear, visit, eat, search, and debate."
 tags: [Data Science, Media Analytics, Cultural Analytics, NLP, Social Listening, Causal Inference, Research Concept]
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "measuring cultural impact of media"
 positioning_note: "This is a cultural analytics research concept, not a completed media measurement product."
 ---

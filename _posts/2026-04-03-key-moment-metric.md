@@ -24,8 +24,8 @@ draft: false
 schema_type: "Article"
 keywords: "football analytics, new football metric, successful key moment, sports data science, expected outcome football, player impact model, VAEP, xT, match influence"
 last_modified_at: 2026-04-15
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "football analytics metric for match influence"
 positioning_note: "This is a proposed sports analytics metric and evaluation framing, not a finished commercial model."
 ---

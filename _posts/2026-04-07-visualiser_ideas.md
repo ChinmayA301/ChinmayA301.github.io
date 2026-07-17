@@ -24,8 +24,8 @@ draft: false
 schema_type: "Article"
 keywords: "user segmentation, severance style segmentation, geospatial visualization, subcontinent map, behavior modeling, GeoAI"
 last_modified_at: 2026-04-03
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "segmentation visualization and geospatial intelligence"
 positioning_note: "This is a visualization concept note connecting segmentation and geospatial intelligence, not a dashboard tutorial."
 ---

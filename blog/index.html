@@ -1,14 +1,14 @@
 ---
 layout: blog
-title: AI Research Notes and Concept Essays
-description: Research notes, concept essays, and evidence-backed analysis on AI governance, data science, RAG systems, analytics, media systems, and product strategy.
+title: Research Studies, Evidence Audits, and Concept Notes
+description: Evidence-bearing studies and clearly labeled concept notes on AI governance, data science, RAG systems, analytics, media systems, and product strategy.
 permalink: /blog/
 ---
 <section class="blog-mini-hero" aria-labelledby="blog-overview">
-  <p class="eyebrow mb-2">Research and Concept Notes</p>
-  <h2 id="blog-overview" class="h2 mb-2">Concept sharing, evidence audits, and AI systems research notes</h2>
-  <p class="blog-quick-notes mb-2">A portfolio of theses, frameworks, and source-backed analysis</p>
-  <p class="section-text mb-4">Research-style writing on AI governance, data science, retrieval systems, product strategy, media systems, sports intelligence, and decision design.</p>
+  <p class="eyebrow mb-2">Studies and Ideas</p>
+  <h2 id="blog-overview" class="h2 mb-2">Results when I have them; concept notes when I do not</h2>
+  <p class="blog-quick-notes mb-2">Research studies are separated from proposals, frameworks, and product theses.</p>
+  <p class="section-text mb-4">A standalone writing space for evidence audits, experiments, research exploration, opinion, and curiosity—without presenting every analytical idea as a completed study.</p>
   <div class="d-flex flex-wrap gap-2">
     {% assign latest_post = site.posts.first %}
     {% if latest_post %}
@@ -25,20 +25,46 @@ permalink: /blog/
     <p class="blog-stat-label mb-0">Published posts</p>
   </article>
   <article class="blog-stat">
-    <p class="blog-stat-value">{{ site.posts | where: "content_type", "research_concept" | size }}</p>
-    <p class="blog-stat-label mb-0">Research / concept notes</p>
+    <p class="blog-stat-value">{{ site.posts | where: "content_type", "research_study" | size }}</p>
+    <p class="blog-stat-label mb-0">Research studies</p>
   </article>
   <article class="blog-stat">
-    <p class="blog-stat-value">Schema + Sitemap</p>
-    <p class="blog-stat-label mb-0">Search visibility enabled</p>
+    <p class="blog-stat-value">{{ site.posts | where: "content_type", "concept_note" | size }}</p>
+    <p class="blog-stat-label mb-0">Concept notes</p>
   </article>
 </section>
 
-{% assign concept_posts = site.posts | where: "content_type", "research_concept" %}
+{% assign study_posts = site.posts | where: "content_type", "research_study" %}
+{% if study_posts.size > 0 %}
+<section aria-labelledby="research-studies" class="mt-5 blog-index-group blog-index-studies">
+  <h2 id="research-studies" class="h3 mb-3">Research Studies & Evidence Audits</h2>
+  <p class="section-text">These posts contain an identifiable evidence trail: a dataset or public-source corpus, a method or analytical procedure, reported findings, and explicit limitations.</p>
+  <ol class="blog-list" itemscope itemtype="https://schema.org/ItemList">
+    {% for post in study_posts %}
+    <li class="blog-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <meta itemprop="position" content="{{ forloop.index }}">
+      <article itemscope itemtype="https://schema.org/BlogPosting">
+        <h3 class="h5 mb-1"><a href="{{ post.url | relative_url }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a></h3>
+        <div class="blog-card-meta">
+          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: "Research Study" }}</span>
+          {% if post.search_phrase %}
+          <span class="blog-search-phrase">{{ post.search_phrase }}</span>
+          {% endif %}
+        </div>
+        <p class="small text-muted mb-2"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %-d, %Y" }}</time></p>
+        <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p>
+      </article>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
+
+{% assign concept_posts = site.posts | where: "content_type", "concept_note" %}
 {% if concept_posts.size > 0 %}
-<section aria-labelledby="concept-notes" class="mt-5">
-  <h2 id="concept-notes" class="h3 mb-3">Flagged Research / Concept Notes</h2>
-  <p class="section-text">These posts are framed as research concepts, product theses, or speculative system designs rather than implementation guides.</p>
+<section aria-labelledby="concept-notes" class="mt-5 blog-index-group blog-index-concepts">
+  <h2 id="concept-notes" class="h3 mb-3">Concept Notes & Research Proposals</h2>
+  <p class="section-text">These posts propose a thesis, framework, metric, system, or future research direction. They may use sources or illustrative artifacts, but they do not claim completed empirical results.</p>
   <ol class="blog-list" itemscope itemtype="https://schema.org/ItemList">
     {% for post in concept_posts %}
     <li class="blog-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -46,7 +72,7 @@ permalink: /blog/
       <article itemscope itemtype="https://schema.org/BlogPosting">
         <h3 class="h5 mb-1"><a href="{{ post.url | relative_url }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a></h3>
         <div class="blog-card-meta">
-          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: "Research / Concept Note" }}</span>
+          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: "Concept Note" }}</span>
           {% if post.search_phrase %}
           <span class="blog-search-phrase">{{ post.search_phrase }}</span>
           {% endif %}

@@ -7,8 +7,8 @@ author: "Chinmay Arora"
 description: "A concept and research-spec piece for an AI-human authenticity system that treats imperfection not as noise, but as cultural, linguistic, and creative signal."
 summary: "This research/concept note explores AI detection, human irregularity, and deliberate imperfection. It argues that the future of authenticity tooling should move beyond 'was this AI?' and toward a richer analysis of pattern-breaking, cultural residue, linguistic variation, and meaningful human texture."
 tags: [AI, Human-AI Interaction, Responsible AI, AI Detection, Computational Creativity, Data Science, Research Concept]
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "AI detection and human authenticity signals"
 positioning_note: "This is a research concept about authenticity signals and pattern-breaking, not a claim of reliable universal AI detection."
 ---

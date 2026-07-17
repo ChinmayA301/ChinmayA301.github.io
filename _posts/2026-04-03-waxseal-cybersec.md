@@ -24,8 +24,8 @@ draft: false
 schema_type: "Article"
 keywords: "wax seal cybersecurity, digital provenance, tamper evidence, human centered security, authentication design, trust systems"
 last_modified_at: 2026-04-03
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "digital provenance and tamper evidence"
 positioning_note: "This is a cybersecurity concept and trust-systems framing, not an implementation guide for a security product."
 ---

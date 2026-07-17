@@ -429,9 +429,11 @@ function renderProjects(projects) {
             </div>
         ` : "";
         const status = p.status ? `<p class="project-status mb-2">${escapeHtml(p.status)}</p>` : "";
+        const role = p.role ? `<p class="project-role"><strong>Role</strong>${escapeHtml(p.role)}</p>` : "";
         const result = p.result ? `<p class="project-result"><strong>Result</strong>${escapeHtml(p.result)}</p>` : "";
         const why = p.why ? `<p class="project-why"><strong>Why it matters</strong>${escapeHtml(p.why)}</p>` : "";
         const stack = p.stack ? `<p class="project-stack"><strong>Stack</strong>${escapeHtml(p.stack)}</p>` : "";
+        const projectMeta = role || stack ? `<div class="project-signal-meta">${role}${stack}</div>` : "";
         const privacy = p.privacy ? `<p class="project-privacy">${escapeHtml(p.privacy)}</p>` : "";
         const tweetEmbed = p.tweetUrl ? `
             <div class="project-embed mt-3">
@@ -451,9 +453,9 @@ function renderProjects(projects) {
                 <h3 class="h5">${escapeHtml(p.title)}</h3>
                 ${status}
                 <p class="mb-2 small text-muted">${escapeHtml(p.description)}</p>
+                ${projectMeta}
                 ${result}
                 ${why}
-                ${stack}
                 ${privacy}
                 <div class="project-tags">${tags}</div>
                 ${tweetEmbed}

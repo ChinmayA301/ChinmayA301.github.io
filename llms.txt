@@ -22,7 +22,7 @@
 - [Public-Sector AI Readiness & Efficiency Evaluation](https://github.com/ChinmayA301/MS-projectss/tree/main/public-sector-ai-efficiency): Supporting responsible-AI work connecting workflow baselines, public-data proxy studies, resident-segment analysis, human-review gates, governance artifacts, and controlled-pilot decisions. Simulated outputs are hypotheses rather than county production claims.
 - [FinBizInfo](https://www.finbizinfo.com): Financial document intelligence deployment for OCR/RAG-style extraction, risk flags, and structured analysis.
 - TransferSignal: Private football transfer-rumour intelligence board with deterministic scoring, source reliability ledger, AI-assisted claim extraction, protected admin workflows, and newsroom-style UX. No private repo is public-linked.
-- Stock Analyzer: Coming-soon investment research and market analytics project reserved for a future GitHub upload. Expected public framing: data ingestion, factor/technical analysis, model evaluation, explainable signals, and investor-readable reporting.
+- [Stock Analyzer / InvestTracker](https://www.investtracker.aiautomatedapp.com): Live investment-tracking and market-analysis workspace combining portfolio monitoring, stock research, time-series signals, and investor-readable decision support without presenting forecasts as certainty.
 - Multi-Agent AI-Native ERP for Compliance Mapping: Active private build for mapping company workflows, obligations, controls, evidence, owners, readiness gaps, and recurring execution across compliance-heavy functions. Capability is public; implementation details and schemas are private.
 - AI Survey & Interviewing Tool: Active product workstream for adaptive interviews, survey design, multilingual response capture, quality scoring, structured extraction, and insight synthesis for stakeholder research and readiness assessment.
 - AI Football Intelligence & Tracking System: Active sports-intelligence direction spanning TransferSignal, source reliability, player/team tracking, tactical context, confidence scoring, and editorial-grade dashboards.
@@ -58,7 +58,7 @@ Relevant public writing and surfaces:
 
 ## Blog Positioning
 
-The blog is best described as research notes, concept essays, and evidence-backed analysis, not a collection of project tutorials. Posts marked as "Research / Concept Note" present product theses, system frameworks, proposed metrics, governance models, or research directions for discussion. They should not be interpreted as claims that a product is fully launched or that a method is production-validated unless the post explicitly says so.
+The blog is an independent writing space, not a duplicate project catalog. "Research Study" posts contain an identifiable evidence trail, method, reported findings, and limitations. "Concept Note" posts present theses, frameworks, proposed metrics, system designs, or research directions and do not claim completed empirical validation.
 
 High-signal research/concept clusters:
 

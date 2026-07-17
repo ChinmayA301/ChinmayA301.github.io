@@ -24,8 +24,8 @@ draft: false
 schema_type: "Article"
 keywords: "Indian media strategy, streaming India, youth entertainment India, content strategy, localization, Indian audience behavior"
 last_modified_at: 2026-04-03
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "Indian media strategy and localization"
 positioning_note: "This is a strategic research note on media structure and cultural packaging, not a production plan."
 ---

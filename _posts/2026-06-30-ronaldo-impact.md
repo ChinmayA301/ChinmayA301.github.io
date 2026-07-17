@@ -8,6 +8,10 @@ description: "A Ronaldo-Portugal football analytics note using public event data
 summary: "Portugal's exit revived the Ronaldo debate, but the bigger lesson is methodological: raw metrics, screenshots, and scoreboard narratives become weak evidence when stripped of role, opportunity set, system context, and tactical responsibility."
 tags: [football-analytics, sports-data-science, portugal, cristiano-ronaldo, world-cup, expected-goals, tactical-analysis, data-science, skm, tacticai]
 categories: [Sports Analytics, Data Science, Football]
+content_type: "research_study"
+content_label: "Research Study"
+search_phrase: "Ronaldo Portugal contextual football analysis"
+positioning_note: "Evidence-led football analysis using public event data and reported physical output; conclusions are contextual and descriptive rather than causal."
 ---
 
 # Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data

@@ -24,8 +24,8 @@ draft: false
 schema_type: "Article"
 keywords: "attention economy, post attention economy, contribution economy, AI and capitalism, future of social media, LifeOS, trust systems, reputation infrastructure, outcome economy"
 last_modified_at: 2026-04-24
-content_type: "research_concept"
-content_label: "Research / Concept Note"
+content_type: "concept_note"
+content_label: "Concept Note"
 search_phrase: "post-attention economy design patterns"
 positioning_note: "This is a systems and product thesis about attention, contribution, and AI-mediated trust, not a platform launch plan."
 ---
