@@ -4154,6 +4154,7 @@ body.blog-theme .newspaper-category-list li {
 
 .newspaper-article-sheet {
     position: relative;
+    min-width: 0;
     padding: clamp(2rem, 5vw, 5.4rem);
     border: 1px solid var(--news-rule);
     background:
@@ -4204,7 +4205,9 @@ body.blog-theme .tldr-box h2 {
 }
 
 body.blog-theme .newspaper-story {
+    min-width: 0;
     color: var(--news-ink);
+    overflow-wrap: anywhere;
 }
 
 body.blog-theme .newspaper-story > p,
@@ -4391,7 +4394,7 @@ body.blog-theme :focus-visible {
     }
 
     body.blog-theme .newspaper-article {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .newspaper-article-rail {
