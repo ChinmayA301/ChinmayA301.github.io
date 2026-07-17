@@ -2960,6 +2960,10 @@ body.blog-theme.theme-light {
 }
 
 /* Reference-mapped venture deck: clipped notes, shallow stack, lateral handoff */
+body.venture-lab-page {
+    overflow: visible !important;
+}
+
 .motion-ready .venture-lab {
     transform: none !important;
     transition-property: opacity !important;
