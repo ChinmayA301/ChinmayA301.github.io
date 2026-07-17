@@ -1162,6 +1162,62 @@ function splitExperience(items) {
     return { workItems, eduItems };
 }
 
+function setupCapabilityHinges() {
+    const cards = [...document.querySelectorAll("[data-capability-hinge]")];
+    if (!cards.length) return;
+
+    const desktopLayout = window.matchMedia("(min-width: 768px)");
+    let animationFrame = null;
+
+    cards.forEach((card, index) => {
+        card.style.setProperty("--hinge-direction", index % 2 === 0 ? "1" : "-1");
+        card.classList.add("hinge-ready");
+    });
+
+    if (prefersReducedMotion) {
+        cards.forEach(card => {
+            card.style.setProperty("--hinge-progress", "1");
+            card.classList.add("is-hinge-static", "is-hinge-revealed");
+        });
+        return;
+    }
+
+    const renderHinges = () => {
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const revealStart = viewportHeight * 0.84;
+        const revealEnd = viewportHeight * 0.34;
+
+        cards.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            const columnDelay = desktopLayout.matches ? (index % 3) * 0.08 : 0;
+            const rawProgress = (revealStart - rect.top) / Math.max(revealStart - revealEnd, 1);
+            const delayedProgress = Math.max(0, Math.min((rawProgress - columnDelay) / (1 - columnDelay), 1));
+            const smoothProgress = delayedProgress * delayedProgress * (3 - 2 * delayedProgress);
+            const focused = card.contains(document.activeElement);
+            const progress = focused ? 1 : smoothProgress;
+
+            card.style.setProperty("--hinge-progress", progress.toFixed(3));
+            card.classList.toggle("is-hinge-revealed", progress > 0.82);
+        });
+
+        animationFrame = null;
+    };
+
+    const requestRender = () => {
+        if (animationFrame !== null) return;
+        animationFrame = window.requestAnimationFrame(renderHinges);
+    };
+
+    cards.forEach(card => {
+        card.addEventListener("focusin", requestRender);
+        card.addEventListener("focusout", requestRender);
+    });
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender);
+    desktopLayout.addEventListener?.("change", requestRender);
+    requestRender();
+}
+
 async function loadHighlights() {
     const currentRoleEl = document.getElementById("currentRole");
     const educationEl = document.getElementById("educationHighlight");
@@ -1172,25 +1228,39 @@ async function loadHighlights() {
         const current = workItems.find(item => (item.org || "").toLowerCase().includes("hennepin")) || workItems[0];
         const latestEdu = eduItems.find(item => (item.title || "").toLowerCase().includes("m.s.")) || eduItems[0];
         if (currentRoleEl && current) {
+            currentRoleEl.classList.add("highlight-card--work");
             currentRoleEl.innerHTML = `
-        <p class="eyebrow">Selected Experience</p>
-        <h3 class="h5 mb-1">${current.title}</h3>
-        <p class="mb-1"><strong>${current.org}</strong> | ${current.time}</p>
-        ${current.location ? `<p class="small text-muted mb-2">${current.location}</p>` : ""}
-        <ul class="mb-0 small text-muted ps-3">
-          ${(current.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
-        </ul>
+        <div class="highlight-card-art" aria-hidden="true">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>HC</span>
+        </div>
+        <div class="highlight-card-content">
+          <p class="eyebrow">Selected Experience</p>
+          <h3 class="h5 mb-1">${current.title}</h3>
+          <p class="mb-1"><strong>${current.org}</strong> | ${current.time}</p>
+          ${current.location ? `<p class="small text-muted mb-2">${current.location}</p>` : ""}
+          <ul class="mb-0 small text-muted ps-3">
+            ${(current.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
       `;
         }
         if (educationEl && latestEdu) {
+            educationEl.classList.add("highlight-card--education");
             educationEl.innerHTML = `
-        <p class="eyebrow">Education</p>
-        <h3 class="h5 mb-1">${latestEdu.title}</h3>
-        <p class="mb-1"><strong>${latestEdu.org}</strong> | ${latestEdu.time}</p>
-        ${latestEdu.location ? `<p class="small text-muted mb-2">${latestEdu.location}</p>` : ""}
-        <ul class="mb-0 small text-muted ps-3">
-          ${(latestEdu.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
-        </ul>
+        <div class="highlight-card-art" aria-hidden="true">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>UMN</span>
+        </div>
+        <div class="highlight-card-content">
+          <p class="eyebrow">Education</p>
+          <h3 class="h5 mb-1">${latestEdu.title}</h3>
+          <p class="mb-1"><strong>${latestEdu.org}</strong> | ${latestEdu.time}</p>
+          ${latestEdu.location ? `<p class="small text-muted mb-2">${latestEdu.location}</p>` : ""}
+          <ul class="mb-0 small text-muted ps-3">
+            ${(latestEdu.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
       `;
         }
     } catch (err) {
@@ -1394,6 +1464,7 @@ loadCaseStudy();
 loadResumes();
 loadHighlights();
 loadAiBenchmarkPulse();
+setupCapabilityHinges();
 
 const refreshAiPulse = document.getElementById("refreshAiPulse");
 if (refreshAiPulse) {

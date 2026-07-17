@@ -4848,3 +4848,292 @@ body.blog-theme .blog-comment-submit p {
         flex-direction: column;
     }
 }
+
+/* Homepage capability hinges */
+#skills .row > [class*="col-"] {
+    perspective: 1400px;
+}
+
+#skills .capability-card.capability-hinge-card {
+    --hinge-progress: 0;
+    position: relative;
+    min-height: 330px;
+    padding: 0 !important;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgba(231, 232, 234, 0.14) !important;
+    background: #1a1d21 !important;
+}
+
+.capability-hinge-reveal,
+.capability-hinge-plate {
+    min-height: 330px;
+    padding: clamp(2rem, 3.4vw, 3rem);
+}
+
+.capability-hinge-reveal {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.032), transparent 44%),
+        repeating-linear-gradient(90deg, transparent 0 39px, rgba(231, 232, 234, 0.027) 40px),
+        #1b1f23;
+    transform: translateY(calc((1 - var(--hinge-progress)) * 16px));
+}
+
+.capability-hinge-reveal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 82% 15%, rgba(184, 137, 98, 0.13), transparent 36%);
+    pointer-events: none;
+}
+
+.capability-tool-label,
+.capability-hinge-index,
+.capability-hinge-cue {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.63rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.capability-tool-label {
+    margin-bottom: auto;
+    color: var(--rust-bright);
+}
+
+#skills .capability-hinge-reveal p {
+    max-width: 33rem;
+    margin: clamp(3rem, 8vw, 5rem) 0 1.3rem;
+    color: #d0d3d6 !important;
+    font-size: clamp(0.96rem, 1.25vw, 1.08rem);
+    line-height: 1.75;
+}
+
+#skills .capability-hinge-reveal a {
+    width: fit-content;
+    color: #e1e3e5 !important;
+}
+
+.capability-hinge-plate {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: end;
+    transform-origin: 50% 16px;
+    transform:
+        perspective(1400px)
+        rotateX(calc(var(--hinge-progress) * 112deg))
+        translateY(calc(var(--hinge-progress) * 118%))
+        rotateZ(calc(var(--hinge-progress) * var(--hinge-direction) * 5deg));
+    opacity: calc(1 - var(--hinge-progress));
+    background:
+        linear-gradient(112deg, rgba(255, 255, 255, 0.12), transparent 22% 69%, rgba(255, 255, 255, 0.06)),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 4px),
+        linear-gradient(145deg, #3b4045 0%, #22262a 44%, #30353a 72%, #1d2024 100%);
+    box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.18),
+        inset 0 -1px rgba(0, 0, 0, 0.75),
+        0 30px 55px rgba(0, 0, 0, 0.45);
+    will-change: transform, opacity;
+}
+
+.capability-hinge-plate::after {
+    content: "";
+    position: absolute;
+    inset: 24px 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+}
+
+.capability-hinge-rail {
+    position: absolute;
+    top: 7px;
+    left: 10%;
+    width: 80%;
+    height: 17px;
+    border: 1px solid rgba(8, 10, 12, 0.86);
+    border-radius: 999px;
+    background: linear-gradient(180deg, #747a7f 0%, #2a2e32 44%, #15181b 58%, #555b60 100%);
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.72),
+        inset 0 1px rgba(255, 255, 255, 0.32);
+}
+
+.capability-hinge-rail i {
+    position: absolute;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border: 1px solid #101214;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 30%, #a8adb1 0 12%, #4c5155 31%, #1b1e21 74%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    transform: translateY(-50%);
+}
+
+.capability-hinge-rail i:nth-child(1) { left: 10%; }
+.capability-hinge-rail i:nth-child(2) { left: calc(50% - 4px); }
+.capability-hinge-rail i:nth-child(3) { right: 10%; }
+
+.capability-hinge-index {
+    align-self: start;
+    justify-self: end;
+    margin-top: 0.35rem;
+    color: rgba(231, 232, 234, 0.55);
+}
+
+#skills .capability-hinge-plate h3 {
+    align-self: center;
+    max-width: 9ch;
+    margin: 0;
+    color: #eceeef !important;
+    font-size: clamp(2.4rem, 4vw, 4.3rem) !important;
+    line-height: 0.92;
+    text-wrap: balance;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.07), 0 2px 4px rgba(0, 0, 0, 0.42);
+}
+
+.capability-hinge-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #c7cacf;
+}
+
+.capability-hinge-cue::before {
+    content: "";
+    width: 1.4rem;
+    height: 1px;
+    background: var(--rust-bright);
+}
+
+.capability-hinge-card.is-hinge-revealed .capability-hinge-plate {
+    pointer-events: none;
+}
+
+/* Monochrome identity layers for the Work & Education cards */
+#highlights .highlight-card {
+    position: relative;
+    min-height: 370px;
+    padding: clamp(2rem, 4vw, 3.5rem) !important;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgba(231, 232, 234, 0.13) !important;
+    background:
+        linear-gradient(130deg, rgba(255, 255, 255, 0.035), transparent 42%),
+        #1a1d21 !important;
+}
+
+.highlight-card-content {
+    position: relative;
+    z-index: 2;
+    max-width: 88%;
+}
+
+.highlight-card-art {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    color: #c3c7ca;
+    filter: grayscale(1);
+    pointer-events: none;
+}
+
+.highlight-card-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #1a1d21 3%, rgba(26, 29, 33, 0.91) 42%, rgba(26, 29, 33, 0.27));
+}
+
+.highlight-card-art i {
+    position: absolute;
+    right: clamp(1rem, 4vw, 3rem);
+    bottom: clamp(1rem, 2vw, 2rem);
+    font-size: clamp(8rem, 16vw, 15rem);
+    line-height: 1;
+    opacity: 0.1;
+    transform: rotate(-5deg);
+}
+
+.highlight-card-art span {
+    position: absolute;
+    top: 50%;
+    right: -0.03em;
+    color: transparent;
+    font-family: "Inter", ui-sans-serif, sans-serif;
+    font-size: clamp(7rem, 15vw, 14rem);
+    font-weight: 600;
+    letter-spacing: -0.09em;
+    line-height: 0.75;
+    opacity: 0.12;
+    -webkit-text-stroke: 1px #d2d5d8;
+    transform: translateY(-50%);
+}
+
+.highlight-card--education .highlight-card-art i {
+    right: clamp(1rem, 3vw, 2.2rem);
+    bottom: clamp(0.5rem, 1vw, 1.1rem);
+    transform: rotate(4deg);
+}
+
+#highlights .highlight-card li,
+#highlights .highlight-card p {
+    color: #c9cdd1 !important;
+}
+
+@media (max-width: 767.98px) {
+    #skills .capability-card.capability-hinge-card,
+    .capability-hinge-reveal,
+    .capability-hinge-plate {
+        min-height: 300px;
+    }
+
+    #skills .capability-hinge-plate h3 {
+        font-size: clamp(2.6rem, 13vw, 4.1rem) !important;
+    }
+
+    #highlights .highlight-card {
+        min-height: 340px;
+    }
+
+    .highlight-card-content {
+        max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #skills .capability-card.capability-hinge-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .capability-hinge-plate {
+        position: relative;
+        order: -1;
+        min-height: 180px;
+        transform: none;
+        opacity: 1;
+        will-change: auto;
+    }
+
+    .capability-hinge-reveal {
+        min-height: auto;
+        transform: none;
+    }
+
+    .capability-hinge-cue {
+        display: none;
+    }
+}
