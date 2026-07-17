@@ -21,7 +21,7 @@
         content="Academic project work with clear objectives, datasets, and outcomes." />
     <meta name="twitter:image" content="https://app.chinmayarora.com/assets/images/profile1.png" />
 
-    <link rel="stylesheet" href="/css/style.css?v=20260716d" />
+    <link rel="stylesheet" href="/css/style.css?v=20260716f" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,11 +45,17 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link nav-link-blog" href="/blog/">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="/experience/">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/projects/">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link nav-link-intelligence" href="/intelligence/">Intelligence</a></li>
+                    <li class="nav-item dropdown nav-work-dropdown">
+                        <button class="nav-link dropdown-toggle nav-link-work" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Work</button>
+                        <ul class="dropdown-menu work-menu">
+                            <li><a class="dropdown-item work-menu-item" href="/projects/"><span>Projects</span><small>Builds and case studies</small></a></li>
+                            <li><a class="dropdown-item work-menu-item" href="/intelligence/"><span>Intelligence</span><small>Portfolio signals and live benchmarks</small></a></li>
+                            <li><a class="dropdown-item work-menu-item" href="/reports/"><span>Reports</span><small>Long-form technical evidence</small></a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="/ideas/">The Lab</a></li>
                     <li class="nav-item"><a class="nav-link" href="/coursework/">Coursework</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/reports/">Reports</a></li>
                     <li class="nav-item"><a class="nav-link" href="/upload/">Upload</a></li>
                     <li class="nav-item ms-lg-2">
                         <a class="btn btn-primary btn-sm" href="/assets/Chinmay_Arora_Master_Resume.pdf" target="_blank"
@@ -62,10 +68,108 @@
 
     <section id="coursework" class="section">
         <div class="container">
-            <h1 class="section-title text-center">Coursework Projects</h1>
+            <div class="coursework-intro text-center">
+                <span class="coursework-kicker">Academic foundation</span>
+                <h1 class="section-title">Coursework by degree</h1>
+            </div>
             <p class="section-text mx-auto text-center">
-                Coursework-specific work with objectives, datasets, and deliverables summarized in an article-style format.
+                The formal training behind my work in data science, machine learning, and intelligent systems.
             </p>
+
+            <div class="degree-coursework-grid mt-4">
+                <article class="degree-coursework-card degree-coursework-card--masters">
+                    <div class="degree-coursework-heading">
+                        <div>
+                            <span class="degree-level">Master of Science</span>
+                            <h2>Data Science</h2>
+                            <p>University of Minnesota · 2023–2026</p>
+                        </div>
+                        <span class="degree-mark" aria-hidden="true">MS</span>
+                    </div>
+                    <div class="course-group">
+                        <h3>Machine learning &amp; decision systems</h3>
+                        <ul class="course-chip-list" aria-label="Machine learning and decision systems courses">
+                            <li>Machine Learning</li>
+                            <li>Data Mining</li>
+                            <li>AI for Sequential Decision Making</li>
+                            <li>Responsible AI</li>
+                        </ul>
+                    </div>
+                    <div class="course-group">
+                        <h3>Statistical &amp; spatial analysis</h3>
+                        <ul class="course-chip-list" aria-label="Statistical and spatial analysis courses">
+                            <li>Applied Regression &amp; Multivariate Analysis</li>
+                            <li>Categorical Data Analysis</li>
+                            <li>Spatial Data Science</li>
+                        </ul>
+                    </div>
+                    <div class="course-group">
+                        <h3>Data systems &amp; communication</h3>
+                        <ul class="course-chip-list" aria-label="Data systems and communication courses">
+                            <li>Advanced Database Systems</li>
+                            <li>Visualization with AI</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="degree-coursework-card degree-coursework-card--bachelors">
+                    <div class="degree-coursework-heading">
+                        <div>
+                            <span class="degree-level">Bachelor of Technology</span>
+                            <h2>Computer Science &amp; Engineering</h2>
+                            <p>SRM Institute of Science and Technology · 2019–2023</p>
+                        </div>
+                        <span class="degree-mark" aria-hidden="true">BTech</span>
+                    </div>
+                    <div class="course-group">
+                        <h3>Computing foundations</h3>
+                        <ul class="course-chip-list" aria-label="Computing foundations courses">
+                            <li>Data Structures &amp; Algorithms</li>
+                            <li>Object-Oriented Design &amp; Programming</li>
+                            <li>Computer Organization &amp; Architecture</li>
+                            <li>Design &amp; Analysis of Algorithms</li>
+                            <li>Operating Systems</li>
+                            <li>Advanced Programming Practice</li>
+                        </ul>
+                    </div>
+                    <div class="course-group">
+                        <h3>Data &amp; intelligent systems</h3>
+                        <ul class="course-chip-list" aria-label="Data and intelligent systems courses">
+                            <li>Database Management Systems</li>
+                            <li>Artificial Intelligence</li>
+                            <li>Data Mining &amp; Analytics</li>
+                            <li>Natural Language Processing</li>
+                            <li>Digital Image Processing</li>
+                            <li>Pattern Recognition Techniques</li>
+                        </ul>
+                    </div>
+                    <div class="course-group">
+                        <h3>Systems, software &amp; mathematics</h3>
+                        <ul class="course-chip-list" aria-label="Systems software and mathematics courses">
+                            <li>Computer Networks</li>
+                            <li>Software Engineering &amp; Project Management</li>
+                            <li>Compiler Design</li>
+                            <li>Formal Languages &amp; Automata</li>
+                            <li>Probability &amp; Queueing Theory</li>
+                            <li>Discrete Mathematics for Engineers</li>
+                            <li>Calculus &amp; Linear Algebra</li>
+                        </ul>
+                    </div>
+                    <p class="curriculum-source">
+                        Core curriculum and relevant advanced modules from SRM's official 2018 Regulations.
+                        <a href="https://webstor.srmist.edu.in/web_assets/downloads/2023/csc-r2018-curriculum-syllabus.pdf"
+                            target="_blank" rel="noopener">View curriculum <span aria-hidden="true">↗</span></a>
+                    </p>
+                </article>
+            </div>
+
+            <div class="coursework-projects-heading text-center">
+                <span class="coursework-kicker">Applied work</span>
+                <h2 class="section-title">Coursework projects</h2>
+                <p class="section-text mx-auto">
+                    Selected academic builds with objectives, methods, evidence, and deliverables.
+                </p>
+            </div>
             <div id="courseworkProjects" class="row g-3 mt-2"></div>
         </div>
     </section>

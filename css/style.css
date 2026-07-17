@@ -185,6 +185,96 @@ h4,
     background: rgba(46, 130, 255, 0.15);
 }
 
+.nav-work-dropdown {
+    position: relative;
+}
+
+.navbar-dark .navbar-nav .nav-link-work {
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+}
+
+.nav-link-work::after {
+    margin-left: 0.48rem;
+    transition: transform 0.2s ease;
+}
+
+.navbar .work-menu {
+    min-width: 19rem;
+    padding: 0.55rem;
+    border: 1px solid rgba(138, 209, 255, 0.22);
+    border-radius: 17px;
+    background: rgba(10, 12, 17, 0.97);
+    box-shadow: 0 24px 58px rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(18px) saturate(140%);
+}
+
+.work-menu .work-menu-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.14rem;
+    padding: 0.68rem 0.78rem;
+    border-radius: 11px;
+    color: #eaf0f8;
+    white-space: normal;
+    transition: color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.work-menu .work-menu-item span {
+    font-weight: 700;
+}
+
+.work-menu .work-menu-item small {
+    color: #9caabd;
+    font-size: 0.72rem;
+    line-height: 1.35;
+}
+
+.work-menu .work-menu-item:hover,
+.work-menu .work-menu-item:focus,
+.work-menu .work-menu-item[aria-current="page"] {
+    color: #ffffff;
+    background: rgba(46, 130, 255, 0.15);
+    transform: translateX(2px);
+}
+
+.work-menu .work-menu-item:hover small,
+.work-menu .work-menu-item:focus small,
+.work-menu .work-menu-item[aria-current="page"] small {
+    color: #c9e8fb;
+}
+
+@media (min-width: 992px) {
+    .nav-work-dropdown:hover > .work-menu,
+    .nav-work-dropdown:focus-within > .work-menu {
+        display: block;
+        margin-top: 0;
+    }
+
+    .nav-work-dropdown:hover > .nav-link-work::after,
+    .nav-work-dropdown:focus-within > .nav-link-work::after {
+        transform: rotate(180deg);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar-dark .navbar-nav .nav-link-work {
+        width: 100%;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .work-menu {
+        width: 100%;
+        min-width: 0;
+        margin: 0.25rem 0 0.55rem;
+        box-shadow: none;
+    }
+}
+
 /* Hero */
 /* .hero {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
@@ -1585,6 +1675,169 @@ header p.lead {
 }
 
 /* Coursework + ideas */
+.coursework-intro {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.coursework-kicker {
+    display: inline-flex;
+    margin-bottom: 10px;
+    color: #8ad1ff;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.degree-coursework-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    align-items: start;
+}
+
+.degree-coursework-card {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(24px, 3vw, 34px);
+    border: 1px solid rgba(138, 209, 255, 0.2);
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(46, 130, 255, 0.16), transparent 38%),
+        linear-gradient(145deg, rgba(17, 21, 28, 0.96), rgba(10, 12, 17, 0.94));
+    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.22);
+}
+
+.degree-coursework-card--bachelors {
+    background:
+        radial-gradient(circle at 100% 0%, rgba(202, 164, 100, 0.14), transparent 40%),
+        linear-gradient(145deg, rgba(18, 20, 25, 0.96), rgba(10, 12, 17, 0.94));
+}
+
+.degree-coursework-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.degree-level {
+    display: block;
+    margin-bottom: 7px;
+    color: #8ad1ff;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.degree-coursework-card--bachelors .degree-level {
+    color: #e2c38d;
+}
+
+.degree-coursework-heading h2 {
+    margin: 0;
+    color: #f7f9fc;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.45rem, 2.4vw, 2rem);
+    line-height: 1.12;
+}
+
+.degree-coursework-heading p {
+    margin: 8px 0 0;
+    color: #c7d0dc;
+    font-size: 0.9rem;
+}
+
+.degree-mark {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    place-items: center;
+    border: 1px solid rgba(138, 209, 255, 0.3);
+    border-radius: 17px;
+    background: rgba(138, 209, 255, 0.08);
+    color: #cfeeff;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.degree-coursework-card--bachelors .degree-mark {
+    border-color: rgba(226, 195, 141, 0.3);
+    background: rgba(226, 195, 141, 0.08);
+    color: #f3d9ad;
+}
+
+.course-group {
+    margin-top: 22px;
+}
+
+.course-group h3 {
+    margin: 0 0 11px;
+    color: #e8edf5;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.course-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.course-chip-list li {
+    padding: 7px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.045);
+    color: #dce4ee;
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+.curriculum-source {
+    margin: 24px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #aeb9c8;
+    font-size: 0.78rem;
+    line-height: 1.6;
+}
+
+.curriculum-source a {
+    display: inline-block;
+    margin-left: 4px;
+    color: #e2c38d;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.curriculum-source a:hover,
+.curriculum-source a:focus-visible {
+    color: #f7ddb0;
+    text-decoration: underline;
+}
+
+.coursework-projects-heading {
+    max-width: 760px;
+    margin: clamp(72px, 10vw, 112px) auto 18px;
+}
+
+.coursework-projects-heading .section-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
 .course-card.card,
 .idea-card.card {
     border: 1px solid var(--stroke);
@@ -1612,6 +1865,35 @@ header p.lead {
 .course-card ul,
 .idea-card ul {
     padding-left: 18px;
+}
+
+@media (max-width: 991.98px) {
+    .degree-coursework-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .degree-coursework-card {
+        padding: 22px 18px;
+        border-radius: 19px;
+    }
+
+    .degree-coursework-heading {
+        gap: 12px;
+    }
+
+    .degree-mark {
+        width: 48px;
+        height: 48px;
+        flex-basis: 48px;
+        border-radius: 14px;
+        font-size: 0.68rem;
+    }
+
+    .course-chip-list li {
+        width: 100%;
+    }
 }
 
 .resume-card.card {
