@@ -1,10 +1,15 @@
-// Typed headline
-if (document.querySelector("#typed")) {
+// Typed hero thesis
+if (document.querySelector("#typed") && typeof Typed !== "undefined") {
     new Typed("#typed", {
-        strings: ["Hello, Welcome to the world of.."],
-        typeSpeed: 92,
-        backSpeed: 22,
-        loop: false,
+        strings: [
+            "Building systems from messy data.",
+            "Testing models beyond accuracy.",
+            "Turning evidence into decisions."
+        ],
+        typeSpeed: 48,
+        backSpeed: 24,
+        backDelay: 1500,
+        loop: true,
         showCursor: true
     });
 }
@@ -29,17 +34,58 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 });
 
-// Section reveal
+// Scroll progress + section reveal
+const scrollProgress = document.getElementById("scrollProgress");
+const updateScrollProgress = () => {
+    if (!scrollProgress) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0;
+    scrollProgress.style.transform = `scaleX(${progress})`;
+};
+
 const sections = document.querySelectorAll(".section");
-const reveal = () => {
-    const trigger = window.innerHeight * 0.82;
-    sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if (top < trigger) sec.classList.add("active");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const revealVisibleSections = () => {
+    const trigger = window.innerHeight * 0.9;
+    sections.forEach(section => {
+        if (section.getBoundingClientRect().top < trigger) section.classList.add("active");
     });
 };
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", reveal);
+if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    sections.forEach(section => section.classList.add("active"));
+} else {
+    document.documentElement.classList.add("motion-ready");
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("active");
+            sectionObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.04, rootMargin: "0px 0px -6% 0px" });
+    sections.forEach(section => sectionObserver.observe(section));
+    requestAnimationFrame(revealVisibleSections);
+}
+window.addEventListener("scroll", () => {
+    updateScrollProgress();
+    revealVisibleSections();
+}, { passive: true });
+window.addEventListener("resize", updateScrollProgress);
+window.addEventListener("load", () => {
+    updateScrollProgress();
+    revealVisibleSections();
+});
+updateScrollProgress();
+
+// Pointer-responsive light, kept subtle and disabled on touch/reduced motion.
+if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
+    document.addEventListener("pointermove", event => {
+        const target = event.target.closest(".interactive-surface, .project-box, .capability-card, .credential-card, .highlight-card");
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        target.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
+        target.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
+    }, { passive: true });
+}
 
 // Back-to-top (optional)
 const backToTopButton = document.createElement("button");
@@ -1007,7 +1053,8 @@ async function loadAiBenchmarkPulse() {
 async function loadProjects() {
     const grid = document.getElementById("projectsGrid");
     const featuredGrid = document.getElementById("featuredProjectsGrid");
-    if (!grid && !featuredGrid) return;
+    const intelligenceGrid = document.getElementById("portfolioIntelligence");
+    if (!grid && !featuredGrid && !intelligenceGrid) return;
     try {
         const projects = await loadJsonWithOverrides("projects", "data/projects.json");
         projectCache = Array.isArray(projects) ? [...projects].sort((a, b) => {
@@ -1017,20 +1064,21 @@ async function loadProjects() {
         if (grid) {
             renderProjects(projectCache);
             buildProjectFilters(projectCache);
-            renderPortfolioIntelligence(projectCache);
         }
+        if (intelligenceGrid) renderPortfolioIntelligence(projectCache);
         if (featuredGrid) {
             const featuredProjects = projectCache
                 .filter(project => project.featured)
                 .sort((a, b) => (a.featured_order || 99) - (b.featured_order || 99));
             renderProjects(featuredProjects, {
                 gridId: "featuredProjectsGrid",
-                columnClass: "col-md-6 col-xl-4"
+                columnClass: "featured-project-slot"
             });
         }
     } catch (e) {
         if (grid) grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
         if (featuredGrid) featuredGrid.innerHTML = `<p class="text-danger small">Could not load selected work.</p>`;
+        if (intelligenceGrid) intelligenceGrid.innerHTML = `<p class="text-danger small">Could not load portfolio intelligence.</p>`;
         console.error("Projects load error:", e);
     }
 }
