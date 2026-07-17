@@ -941,6 +941,40 @@ h4,
     color: var(--paper) !important;
 }
 
+.market-signal-proof {
+    display: block;
+    margin-top: 0.75rem;
+    padding-top: 0.68rem;
+    border-top: 1px solid rgba(231, 232, 234, 0.12);
+    color: #d2d5d8;
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.55;
+}
+
+.market-signal-proof > strong {
+    color: var(--rust-bright) !important;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.market-signal-proof a {
+    display: inline;
+    color: #e2e4e6 !important;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.65rem;
+    text-decoration-color: rgba(209, 166, 125, 0.6);
+    text-underline-offset: 0.2em;
+}
+
+.market-signal-proof a:hover,
+.market-signal-proof a:focus-visible {
+    color: var(--rust-bright) !important;
+}
+
 .venture-action {
     margin-top: auto;
     padding: 0.65rem 0.8rem !important;

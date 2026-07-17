@@ -2792,7 +2792,10 @@ function setupVentureCapitalBills() {
         const title = card.querySelector(".venture-header h3")?.textContent?.trim() || "Venture thesis";
         const stageLabel = card.querySelector(".venture-badge")?.textContent?.trim() || "Venture exploration";
         const summary = body.querySelector(".llm-summary")?.textContent?.trim() || "A venture thesis in active exploration.";
-        const marketSignal = body.querySelector(".market-signal")?.textContent?.replace(/^Market signal:\s*/i, "")?.trim() || "A market signal worth testing.";
+        const marketSignalElement = body.querySelector(".market-signal");
+        const marketSignalSummary = marketSignalElement?.cloneNode(true);
+        marketSignalSummary?.querySelectorAll(".market-signal-proof").forEach(proof => proof.remove());
+        const marketSignal = marketSignalSummary?.textContent?.replace(/^Market signal:\s*/i, "")?.trim() || "A market signal worth testing.";
 
         const overlay = visual.querySelector(".venture-overlay");
         overlay?.setAttribute("aria-hidden", "true");
