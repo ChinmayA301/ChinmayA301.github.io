@@ -4,10 +4,16 @@
     <h2 id="newsletter-heading">Get the next brain dump.</h2>
     <p>No fixed cadence yet. Leave your email for the first issue when it exists.</p>
   </div>
-  <form class="blog-newsletter-form" action="https://formspree.io/f/xrbyalqp" method="POST"
-    data-blog-form data-success-message="You’re on the early list. I’ll write when there is something worth sending.">
-    <input type="hidden" name="_subject" value="Brain Vomit newsletter signup">
-    <input type="hidden" name="source" value="Brain Vomit newsletter">
+  <form class="blog-newsletter-form"
+    action="https://script.google.com/macros/s/AKfycbwq0MIbBiyg6A7oI_e1rWpXSKmT5AA64Nf2Ut4pSzGWnOQ7bTd0tTqHcP8ToMeQnUg/exec"
+    method="POST" data-blog-form data-form-mode="google-sheets"
+    data-success-message="You’re on the early list. I’ll write when there is something worth sending.">
+    <input type="hidden" name="source_page" value="{{ page.url | absolute_url }}">
+    <input type="hidden" name="consent" value="Yes">
+    <label class="blog-form-honeypot" aria-hidden="true">
+      <span>Website</span>
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </label>
     <label for="newsletter-email-{{ page.url | slugify }}">Email address</label>
     <div class="blog-newsletter-control">
       <input id="newsletter-email-{{ page.url | slugify }}" type="email" name="email" autocomplete="email"

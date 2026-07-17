@@ -1,6 +1,26 @@
+# =============================================================================
+# robots.txt for app.chinmayarora.com
+#
+# Intent:
+#   - Allow all search engines and AI crawlers to index and reference this site.
+#   - Signal via Content-Signal that AI training and RAG grounding are welcome
+#     for the purpose of visibility (LLMEO).
+#   - Keep operational paths (upload endpoints, backend routes) out of indexes.
+# =============================================================================
+
+# -- Content signals (Cloudflare / IETF draft; advisory, not enforceable) ------
+# search:   yes  -> may build search indexes over this content
+# ai-input: yes  -> may use content for RAG / grounding / real-time retrieval
+# ai-train: yes  -> may use content for model training / fine-tuning
+# use:      full -> content may be reproduced with attribution per site license
+
+# -- Default rule: all crawlers welcome, with a few paths off-limits -----------
 User-agent: *
+Content-Signal: search=yes,ai-input=yes,ai-train=yes,use=full
 Allow: /
 Disallow: /upload/
 Disallow: /aegis-backend/
+Disallow: /cdn-cgi/
 
+# -- Sitemap ------------------------------------------------------------------
 Sitemap: https://app.chinmayarora.com/sitemap.xml

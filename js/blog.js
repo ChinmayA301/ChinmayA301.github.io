@@ -15,11 +15,39 @@
       }
 
       try {
-        const response = await fetch(form.action, {
+        const isGoogleSheetForm = form.dataset.formMode === 'google-sheets';
+        if (isGoogleSheetForm) {
+          const frameName = `newsletter-submit-${Date.now()}`;
+          const responseFrame = document.createElement('iframe');
+
+          responseFrame.name = frameName;
+          responseFrame.title = 'Newsletter signup response';
+          responseFrame.hidden = true;
+          document.body.appendChild(responseFrame);
+
+          form.target = frameName;
+          HTMLFormElement.prototype.submit.call(form);
+          form.reset();
+          if (status) status.textContent = form.dataset.successMessage || 'Thanks — your signup is on its way.';
+          if (button) {
+            button.disabled = false;
+            button.textContent = defaultLabel;
+          }
+
+          window.setTimeout(() => {
+            form.removeAttribute('target');
+            responseFrame.remove();
+          }, 30000);
+          return;
+        }
+
+        const requestOptions = {
           method: 'POST',
           body: new FormData(form),
           headers: { Accept: 'application/json' }
-        });
+        };
+
+        const response = await fetch(form.action, requestOptions);
 
         if (!response.ok) throw new Error('Form submission failed');
         form.reset();
@@ -83,4 +111,25 @@
       else if (status) status.textContent = url;
     }
   });
+
+  const syncGiscusTheme = () => {
+    const frame = document.querySelector('iframe.giscus-frame');
+    if (!frame?.contentWindow) return;
+    const theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+    frame.contentWindow.postMessage({
+      giscus: { setConfig: { theme } }
+    }, 'https://giscus.app');
+  };
+
+  if (document.querySelector('.giscus')) {
+    const themeObserver = new MutationObserver(syncGiscusTheme);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+    window.addEventListener('message', (event) => {
+      if (event.origin === 'https://giscus.app' && event.data?.giscus) syncGiscusTheme();
+    });
+    window.addEventListener('load', syncGiscusTheme, { once: true });
+  }
 })();

@@ -20,29 +20,32 @@
     <p class="blog-share-status" role="status" aria-live="polite"></p>
   </div>
 
-  <form class="blog-comment-form" action="https://formspree.io/f/xrbyalqp" method="POST"
-    data-blog-form data-success-message="Comment received. Thanks for adding to the thought.">
-    <input type="hidden" name="_subject" value="Brain Vomit comment: {{ page.title | escape }}">
-    <input type="hidden" name="post_title" value="{{ page.title | escape }}">
-    <input type="hidden" name="post_url" value="{{ page.url | absolute_url }}">
-    <div class="blog-comment-fields">
-      <label>
-        <span>Name</span>
-        <input type="text" name="name" autocomplete="name" placeholder="Your name" required>
-      </label>
-      <label>
-        <span>Email <small>not published</small></span>
-        <input type="email" name="email" autocomplete="email" placeholder="you@example.com" required>
-      </label>
+  <div class="blog-public-comments">
+    <div class="blog-public-comments-intro">
+      <p class="blog-community-kicker">Public thread</p>
+      <p>Comments are public and attached to this post through GitHub Discussions. Sign in with GitHub to join the thread.</p>
+      <a href="https://github.com/ChinmayA301/ChinmayA301.github.io/discussions/categories/general"
+        target="_blank" rel="noopener noreferrer">Open public discussions</a>
     </div>
-    <label>
-      <span>Comment</span>
-      <textarea name="message" rows="5" placeholder="Leave a thought, correction, question, or useful tangent." required></textarea>
-    </label>
-    <div class="blog-comment-submit">
-      <button type="submit">Send comment</button>
-      <p>Comments arrive directly to me; public threading is not live yet.</p>
-    </div>
-    <p class="blog-form-status" role="status" aria-live="polite"></p>
-  </form>
+    <div class="giscus" aria-label="Public comments for {{ page.title | escape }}"></div>
+    <script src="https://giscus.app/client.js"
+      data-repo="ChinmayA301/ChinmayA301.github.io"
+      data-repo-id="R_kgDONppHIw"
+      data-category="General"
+      data-category-id="DIC_kwDONppHI84DBahe"
+      data-mapping="pathname"
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="light"
+      data-lang="en"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async>
+    </script>
+    <noscript>
+      <p class="blog-comments-noscript">JavaScript is required for inline comments. Use the public discussions link above instead.</p>
+    </noscript>
+  </div>
 </section>

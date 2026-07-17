@@ -4645,6 +4645,18 @@ body.blog-theme .blog-community-header > p:last-child {
     margin-bottom: 0.65rem;
 }
 
+.blog-newsletter-form .blog-form-honeypot {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
 .blog-newsletter-control {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -4831,6 +4843,57 @@ body.blog-theme .blog-comment-submit p {
     line-height: 1.5;
 }
 
+.blog-public-comments {
+    margin-top: clamp(2.3rem, 5vw, 4rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--news-rule);
+}
+
+.blog-public-comments-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.7rem 2rem;
+    align-items: end;
+    margin-bottom: 1.8rem;
+}
+
+.blog-public-comments-intro .blog-community-kicker {
+    grid-column: 1 / -1;
+}
+
+body.blog-theme .blog-public-comments-intro > p:not(.blog-community-kicker),
+body.blog-theme .blog-comments-noscript {
+    max-width: 680px;
+    margin: 0;
+    color: var(--news-muted) !important;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.blog-public-comments-intro > a {
+    color: var(--news-ink) !important;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.59rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-underline-offset: 0.25em;
+}
+
+.giscus,
+.giscus-frame {
+    width: 100%;
+}
+
+.giscus-frame {
+    color-scheme: dark;
+}
+
+html.theme-light .giscus-frame,
+html[data-theme="light"] .giscus-frame {
+    color-scheme: light;
+}
+
 .blog-post-page .blog-newsletter {
     margin-top: clamp(3rem, 7vw, 5rem);
     padding-inline: 0;
@@ -4880,6 +4943,11 @@ body.blog-theme .blog-comment-submit p {
     .blog-comment-submit {
         align-items: flex-start;
         flex-direction: column;
+    }
+
+    .blog-public-comments-intro {
+        grid-template-columns: 1fr;
+        align-items: start;
     }
 }
 
