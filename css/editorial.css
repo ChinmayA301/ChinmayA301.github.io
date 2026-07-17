@@ -1,18 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap");
 
 :root {
-    --page: #080808;
-    --page-raised: #0d0d0d;
-    --paper: #f2f0ea;
-    --quiet: #b5b3ad;
-    --faint: #85837d;
-    --rule: #292927;
-    --rule-strong: #3b3a36;
-    --rust: #c87843;
-    --rust-bright: #df9562;
+    --page: #121416;
+    --page-raised: #171a1e;
+    --surface-1: #1d2126;
+    --surface-2: #252a30;
+    --surface-3: #2e353d;
+    --paper: #e7e8ea;
+    --quiet: #c0c4c9;
+    --faint: #989fa7;
+    --rule: rgba(225, 228, 232, 0.1);
+    --rule-strong: rgba(225, 228, 232, 0.18);
+    --rust: #b88962;
+    --rust-bright: #d1a67d;
+    --warm: #d1a67d;
+    --ink: #111315;
     --text: var(--paper);
     --muted: var(--quiet);
-    --panel: transparent;
+    --panel: var(--surface-1);
     --stroke: var(--rule);
     --brand: var(--rust);
     --brand-2: var(--rust);
@@ -36,7 +41,7 @@ body {
 
 ::selection {
     background: var(--rust);
-    color: #080808;
+    color: var(--ink);
 }
 
 .bg-orb {
@@ -146,9 +151,9 @@ h4,
     min-height: 72px;
     padding-block: 0 !important;
     border-bottom: 1px solid var(--rule) !important;
-    background: rgba(8, 8, 8, 0.96) !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
+    background: rgba(18, 20, 22, 0.92) !important;
+    box-shadow: 0 10px 34px rgba(2, 8, 16, 0.18) !important;
+    backdrop-filter: blur(14px) saturate(120%) !important;
 }
 
 .navbar .container {
@@ -171,7 +176,7 @@ h4,
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
-    color: #b8b7b2 !important;
+    color: var(--quiet) !important;
     font-family: "IBM Plex Mono", monospace !important;
     font-size: 0.67rem !important;
     font-weight: 500 !important;
@@ -197,7 +202,7 @@ h4,
 .navbar .btn-primary:hover,
 .navbar .btn-primary:focus-visible {
     background: var(--rust) !important;
-    color: #090909 !important;
+    color: var(--ink) !important;
 }
 
 .navbar-toggler {
@@ -209,11 +214,12 @@ h4,
 .navbar .work-menu {
     min-width: 20rem;
     padding: 0 !important;
-    border: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: #0a0a0a !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
+    border: 1px solid var(--rule) !important;
+    border-radius: 12px !important;
+    background: var(--surface-2) !important;
+    box-shadow: 0 24px 60px rgba(1, 7, 14, 0.38), inset 0 1px rgba(255, 255, 255, 0.035) !important;
+    backdrop-filter: blur(16px) !important;
+    overflow: hidden;
 }
 
 .work-menu .work-menu-item {
@@ -245,7 +251,7 @@ h4,
 .work-menu .work-menu-item:hover,
 .work-menu .work-menu-item:focus,
 .work-menu .work-menu-item[aria-current="page"] {
-    background: #141413 !important;
+    background: var(--surface-3) !important;
     color: var(--rust-bright) !important;
 }
 
@@ -325,33 +331,33 @@ h4,
 .btn {
     min-height: 44px;
     padding: 0.66rem 1rem !important;
-    border-radius: 0 !important;
+    border-radius: 8px !important;
     font-family: "IBM Plex Mono", monospace !important;
     font-size: 0.69rem !important;
     font-weight: 500 !important;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    box-shadow: none !important;
+    box-shadow: 0 8px 22px rgba(1, 7, 14, 0.16) !important;
 }
 
 .btn-primary {
     border-color: var(--rust) !important;
     background: var(--rust) !important;
-    color: #090909 !important;
+    color: var(--ink) !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
     border-color: var(--rust-bright) !important;
     background: var(--rust-bright) !important;
-    color: #090909 !important;
+    color: var(--ink) !important;
     transform: none !important;
 }
 
 .btn-outline-light,
 .btn-outline-secondary {
-    border-color: var(--rule-strong) !important;
-    background: transparent !important;
+    border-color: var(--rule) !important;
+    background: var(--surface-1) !important;
     color: var(--paper) !important;
 }
 
@@ -359,9 +365,9 @@ h4,
 .btn-outline-light:focus-visible,
 .btn-outline-secondary:hover,
 .btn-outline-secondary:focus-visible {
-    border-color: var(--paper) !important;
-    background: var(--paper) !important;
-    color: #090909 !important;
+    border-color: var(--rule-strong) !important;
+    background: var(--surface-3) !important;
+    color: var(--paper) !important;
 }
 
 .hero-signal-rail {
@@ -377,7 +383,7 @@ h4,
     margin: 0 !important;
     padding: 1rem 1rem 1rem 0 !important;
     border-right: 1px solid var(--rule);
-    color: #aaa9a4 !important;
+    color: var(--quiet) !important;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.67rem !important;
     font-weight: 400 !important;
@@ -406,7 +412,7 @@ h4,
     width: min(100%, 430px);
     margin: 0;
     border: 1px solid var(--rule);
-    background: #0b0b0b;
+    background: var(--surface-1);
 }
 
 .hero-portrait-frame .hero-img {
@@ -621,7 +627,7 @@ h4,
 
 .project-box.card:hover,
 .featured-project-slot .project-box.card:hover {
-    background: #0d0d0d !important;
+    background: var(--surface-1) !important;
     border-color: var(--rule-strong) !important;
 }
 
@@ -652,7 +658,7 @@ h4,
 .filter-pill:hover,
 .filter-pill:focus-visible {
     background: var(--rust) !important;
-    color: #080808 !important;
+    color: var(--ink) !important;
 }
 
 .role-paths {
@@ -761,38 +767,107 @@ h4,
     color: var(--rule-strong);
 }
 
-/* Venture lab: keep the full catalogue, remove glass-card styling */
+/* Venture lab showcase library */
 .venture-grid {
-    gap: 0 !important;
-    border-top: 1px solid var(--rule-strong);
-    border-left: 1px solid var(--rule);
+    counter-reset: venture-card;
+    gap: clamp(1rem, 1.8vw, 1.4rem) !important;
+    border: 0 !important;
 }
 
-.venture-card,
-.venture-card:hover {
-    border: 0 !important;
-    border-right: 1px solid var(--rule) !important;
-    border-bottom: 1px solid var(--rule) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
+.venture-card {
+    counter-increment: venture-card;
+    grid-column: span 4;
+    position: relative;
+    isolation: isolate;
+    border: 1px solid var(--rule) !important;
+    border-radius: 14px !important;
+    background: var(--surface-1) !important;
+    box-shadow:
+        0 18px 44px rgba(1, 7, 14, 0.24),
+        inset 0 1px rgba(255, 255, 255, 0.035) !important;
     backdrop-filter: none !important;
-    transform: none !important;
+    transition: transform 0.28s ease, background-color 0.28s ease, box-shadow 0.28s ease !important;
+}
+
+.venture-card::before {
+    content: counter(venture-card, decimal-leading-zero);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    min-width: 2.15rem;
+    height: 2.15rem;
+    padding-inline: 0.45rem;
+    border-radius: 8px;
+    background: rgba(29, 33, 38, 0.92);
+    color: var(--quiet);
+    box-shadow: inset 0 0 0 1px var(--rule);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+}
+
+.venture-card:hover,
+.venture-card:focus-within {
+    border-color: var(--rule-strong) !important;
+    background: var(--surface-2) !important;
+    box-shadow:
+        0 28px 64px rgba(1, 7, 14, 0.34),
+        inset 0 1px rgba(255, 255, 255, 0.05) !important;
+    transform: translateY(-4px) !important;
+}
+
+.venture-card-featured {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+}
+
+.venture-card-wide,
+.venture-card-tall {
+    grid-column: span 6 !important;
+    grid-row: auto !important;
 }
 
 .venture-visual {
-    border-bottom: 1px solid var(--rule) !important;
-    background: #10100f !important;
+    border: 0 !important;
+    background: var(--surface-2) !important;
+}
+
+.venture-card-featured .venture-visual {
+    min-height: 100%;
+    aspect-ratio: auto !important;
+}
+
+.venture-visual img {
+    opacity: 0.86;
+}
+
+.venture-card:hover .venture-visual img,
+.venture-card:focus-within .venture-visual img {
+    filter: brightness(0.68) saturate(0.9) !important;
+    transform: scale(1.035) !important;
 }
 
 .venture-overlay {
     padding: 1.5rem !important;
-    background: linear-gradient(180deg, transparent, rgba(8, 8, 8, 0.94) 78%) !important;
+    background: linear-gradient(180deg, rgba(18, 20, 22, 0.68), rgba(18, 20, 22, 0.9) 58%, rgba(18, 20, 22, 0.98)) !important;
+}
+
+.venture-overlay p {
+    color: var(--paper) !important;
+}
+
+.venture-link-text {
+    color: var(--rust-bright) !important;
 }
 
 .venture-body {
-    gap: 1rem !important;
-    padding: clamp(1.4rem, 2.5vw, 2.2rem) !important;
+    gap: 1.15rem !important;
+    padding: clamp(1.5rem, 2.8vw, 2.35rem) !important;
 }
 
 .venture-header h3 {
@@ -805,19 +880,42 @@ h4,
 
 .venture-badge,
 .venture-tag {
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    color: var(--rust-bright) !important;
     font-family: "IBM Plex Mono", monospace !important;
-    font-size: 0.61rem !important;
+    font-size: 0.68rem !important;
     font-weight: 500 !important;
     letter-spacing: 0.06em;
 }
 
+.venture-badge {
+    padding: 0.42rem 0.6rem !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    color: var(--rust-bright) !important;
+    background: rgba(184, 137, 98, 0.14) !important;
+    box-shadow: inset 0 0 0 1px rgba(209, 166, 125, 0.16);
+}
+
+.venture-badge.status-dev {
+    color: #a7dbba !important;
+    background: rgba(83, 149, 108, 0.16) !important;
+}
+
+.venture-badge.status-stealth {
+    color: #e4b783 !important;
+    background: rgba(176, 116, 61, 0.16) !important;
+}
+
+.venture-tags {
+    gap: 0.5rem !important;
+}
+
 .venture-tag {
-    color: var(--faint) !important;
+    padding: 0.45rem 0.6rem !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    background: var(--surface-2) !important;
+    color: var(--quiet) !important;
+    box-shadow: inset 0 0 0 1px var(--rule);
 }
 
 .venture-tag i {
@@ -831,11 +929,12 @@ h4,
 }
 
 .market-signal {
-    padding: 0.7rem 0 0.7rem 1rem !important;
-    border-left: 1px solid var(--rust) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
+    padding: 0.85rem 0.95rem !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    background: var(--surface-2) !important;
     color: var(--quiet) !important;
+    box-shadow: inset 3px 0 var(--warm), inset 0 0 0 1px var(--rule);
 }
 
 .market-signal strong {
@@ -844,23 +943,64 @@ h4,
 
 .venture-action {
     margin-top: auto;
-    padding: 0.35rem 0 !important;
+    padding: 0.65rem 0.8rem !important;
     border: 0 !important;
-    border-bottom: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
+    border-radius: 8px !important;
+    background: var(--surface-2) !important;
     color: var(--paper) !important;
+    box-shadow: inset 0 0 0 1px var(--rule);
     font-family: "IBM Plex Mono", monospace;
-    font-size: 0.63rem !important;
+    font-size: 0.68rem !important;
     text-transform: uppercase;
 }
 
 .venture-action:hover,
 .venture-action:focus-visible {
-    border-color: var(--rust) !important;
-    background: transparent !important;
-    color: var(--rust-bright) !important;
-    transform: none !important;
+    background: var(--rust) !important;
+    color: var(--ink) !important;
+    box-shadow: none;
+    transform: translateY(-1px) !important;
+}
+
+.venture-lab .venture-backlog .project-box.card {
+    border: 0 !important;
+    border-radius: 12px !important;
+    background: var(--surface-1) !important;
+    box-shadow: 0 16px 38px rgba(1, 7, 14, 0.2), inset 0 1px rgba(255, 255, 255, 0.03) !important;
+}
+
+.venture-lab .venture-backlog .project-box.card .card-body {
+    padding: clamp(1.35rem, 2.4vw, 2rem) !important;
+}
+
+@media (max-width: 1199.98px) {
+    .venture-card,
+    .venture-card-wide,
+    .venture-card-tall {
+        grid-column: span 6 !important;
+    }
+
+    .venture-card-featured {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .venture-card,
+    .venture-card-wide,
+    .venture-card-tall,
+    .venture-card-featured {
+        grid-column: 1 / -1 !important;
+    }
+
+    .venture-card-featured {
+        display: block;
+    }
+
+    .venture-card-featured .venture-visual {
+        min-height: 0;
+        aspect-ratio: 16 / 11 !important;
+    }
 }
 
 /* 3D Explore, redrawn in the editorial palette */
@@ -869,9 +1009,9 @@ h4,
     display: block !important;
     min-height: 460px !important;
     padding: 18px !important;
-    border: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: #0a0a09 !important;
+    border: 1px solid var(--rule) !important;
+    border-radius: 14px !important;
+    background: var(--surface-1) !important;
     perspective: 900px !important;
     overflow: hidden !important;
 }
@@ -881,11 +1021,11 @@ h4,
     content: "";
     position: absolute;
     inset: 44px 36px 42px;
-    border-left: 1px solid rgba(200, 120, 67, 0.32);
-    border-bottom: 1px solid rgba(200, 120, 67, 0.32);
+    border-left: 1px solid rgba(184, 137, 98, 0.32);
+    border-bottom: 1px solid rgba(184, 137, 98, 0.32);
     background:
-        linear-gradient(rgba(242, 240, 234, 0.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(242, 240, 234, 0.055) 1px, transparent 1px);
+        linear-gradient(rgba(230, 235, 241, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(230, 235, 241, 0.055) 1px, transparent 1px);
     background-size: 42px 42px;
     opacity: 0.8;
     transform: rotateX(58deg) rotateZ(-9deg);
@@ -923,8 +1063,8 @@ h4,
 }
 
 .scatter-blob {
-    border: 1px solid rgba(200, 120, 67, 0.52);
-    background: #21150f !important;
+    border: 1px solid rgba(184, 137, 98, 0.5);
+    background: #403126 !important;
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42) !important;
 }
 
@@ -933,16 +1073,16 @@ h4,
 }
 
 .scatter-node.scatter-accent .scatter-blob {
-    background: #2a1a11 !important;
+    background: #513b2b !important;
 }
 
 .scatter-node.scatter-neutral .scatter-blob {
-    background: #29251d !important;
-    border-color: rgba(223, 149, 98, 0.5);
+    background: #4a3828 !important;
+    border-color: rgba(214, 160, 107, 0.56);
 }
 
 .scatter-depth-line {
-    background: linear-gradient(90deg, rgba(200, 120, 67, 0.5), transparent) !important;
+    background: linear-gradient(90deg, rgba(184, 137, 98, 0.5), transparent) !important;
 }
 
 .scatter-label,
@@ -951,8 +1091,8 @@ h4,
     min-width: 180px !important;
     padding: 0.8rem 0.95rem !important;
     border: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: rgba(8, 8, 8, 0.92) !important;
+    border-radius: 9px !important;
+    background: rgba(37, 42, 48, 0.95) !important;
     opacity: 0.84 !important;
     transform: scale(0.96) translateY(3px) !important;
     backdrop-filter: none !important;
@@ -1044,7 +1184,7 @@ h4,
     margin: 0 0.45rem 0.45rem 0;
     padding: 0.3rem 0.5rem !important;
     border-color: var(--rule) !important;
-    color: #b7b6b0 !important;
+    color: var(--quiet) !important;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.64rem !important;
 }
@@ -1142,10 +1282,9 @@ h4,
 .form-control,
 .form-select {
     min-height: 50px;
-    border: 0 !important;
-    border-bottom: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
+    border: 1px solid var(--rule) !important;
+    border-radius: 8px !important;
+    background: var(--surface-1) !important;
     color: var(--paper) !important;
     box-shadow: none !important;
 }
@@ -1171,7 +1310,7 @@ h4,
 footer,
 .bg-dark {
     border-color: var(--rule) !important;
-    background: #080808 !important;
+    background: var(--page) !important;
     color: var(--faint) !important;
 }
 
@@ -1179,8 +1318,8 @@ footer,
     right: 1rem !important;
     bottom: 1rem !important;
     border: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: #0a0a0a !important;
+    border-radius: 8px !important;
+    background: var(--surface-2) !important;
     color: var(--paper) !important;
     box-shadow: none !important;
     font-family: "IBM Plex Mono", monospace;
@@ -1285,6 +1424,9 @@ body.blog-theme.theme-light {
     --faint: #77746d;
     --rule: #d0cbc0;
     --rule-strong: #aaa398;
+    --surface-1: #e5e0d7;
+    --surface-2: #dcd6ca;
+    --surface-3: #d1c9bb;
     background: var(--page) !important;
     color: var(--paper) !important;
 }
@@ -1471,8 +1613,8 @@ body.blog-theme.theme-light {
     height: clamp(330px, 29vw, 400px) !important;
     border-color: var(--rule-strong) !important;
     background:
-        radial-gradient(circle at 50% 20%, rgba(223, 149, 98, 0.16), transparent 31%),
-        linear-gradient(180deg, #151412, #090909) !important;
+        radial-gradient(circle at 50% 20%, rgba(184, 137, 98, 0.14), transparent 34%),
+        linear-gradient(180deg, var(--surface-2), var(--page)) !important;
     box-shadow: 0 32px 80px rgba(0, 0, 0, 0.42) !important;
 }
 
@@ -1491,7 +1633,7 @@ body.blog-theme.theme-light {
 }
 
 .hero-globe-halo {
-    background: radial-gradient(circle, rgba(200, 120, 67, 0.16), transparent 64%) !important;
+    background: radial-gradient(circle, rgba(192, 196, 201, 0.1), transparent 64%) !important;
     filter: blur(12px) !important;
 }
 
@@ -1503,8 +1645,8 @@ body.blog-theme.theme-light {
     height: auto !important;
     padding: 0.55rem 0.7rem !important;
     border-color: var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: rgba(8, 8, 8, 0.9) !important;
+    border-radius: 7px !important;
+    background: rgba(37, 42, 48, 0.94) !important;
     color: var(--rust-bright) !important;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.58rem !important;
@@ -1521,15 +1663,15 @@ body.blog-theme.theme-light {
 }
 
 .hero-globe-modal-overlay {
-    background: rgba(5, 5, 5, 0.9) !important;
+    background: rgba(5, 10, 17, 0.9) !important;
     backdrop-filter: blur(6px) !important;
 }
 
 .hero-globe-modal-panel,
 .consultative-shell {
-    border: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: #0a0a09 !important;
+    border: 1px solid var(--rule) !important;
+    border-radius: 14px !important;
+    background: var(--surface-1) !important;
     box-shadow: 0 34px 90px rgba(0, 0, 0, 0.58) !important;
     backdrop-filter: none !important;
 }
@@ -1554,8 +1696,8 @@ body.blog-theme.theme-light {
 #consultStatusLog,
 #consultationResult {
     border-color: var(--rule) !important;
-    border-radius: 0 !important;
-    background: #0d0d0c !important;
+    border-radius: 9px !important;
+    background: var(--surface-2) !important;
     box-shadow: none !important;
 }
 
@@ -1563,13 +1705,13 @@ body.blog-theme.theme-light {
 .hero-globe-location-chip,
 #closeConsultativeAi,
 #consultativeAiSubmit {
-    border-radius: 0 !important;
+    border-radius: 8px !important;
     box-shadow: none !important;
 }
 
 .hero-globe-location-chip.is-active {
     border-color: var(--rust) !important;
-    background: rgba(200, 120, 67, 0.12) !important;
+    background: rgba(184, 137, 98, 0.15) !important;
     color: var(--paper) !important;
 }
 
@@ -1578,8 +1720,8 @@ body.blog-theme.theme-light {
     width: 4.25rem !important;
     height: 4.25rem !important;
     border: 1px solid var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: #0a0a09 !important;
+    border-radius: 12px !important;
+    background: var(--surface-2) !important;
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42) !important;
     backdrop-filter: none !important;
 }
@@ -1644,7 +1786,7 @@ body.blog-theme.theme-light {
     flex-direction: column;
     gap: 1rem;
     overflow: hidden;
-    background: #0d0d0c;
+    background: var(--surface-2);
 }
 
 .consultative-pane > .mb-6 {
@@ -1731,13 +1873,13 @@ body.blog-theme.theme-light {
 
 #consultativeAiForm input {
     border-color: var(--rule-strong) !important;
-    border-radius: 0 !important;
-    background: #0d0d0c !important;
+    border-radius: 8px !important;
+    background: var(--surface-2) !important;
 }
 
 #consultativeAiSubmit {
     background: var(--rust) !important;
-    color: #080808 !important;
+    color: var(--ink) !important;
 }
 
 @media (max-width: 991.98px) {
