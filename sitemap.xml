@@ -4,7 +4,7 @@ permalink: /sitemap.xml
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{%- assign core_pages = "/|1.0|weekly,/blog/|0.9|weekly,/experience/|0.9|monthly,/projects/|0.9|monthly,/ideas/|0.9|monthly,/coursework/|0.8|monthly,/reports/|0.8|monthly,/resumes/|0.8|monthly,/ideas/aegis-ai-strategy/|0.8|monthly,/ideas/public-infrastructure-copilot/|0.8|monthly,/ideas/compliance-twin/|0.8|monthly,/ideas/operator-memory-cloud/|0.8|monthly,/ideas/civic-procurement-graph/|0.8|monthly,/ideas/research-commercialization-studio/|0.8|monthly,/ideas/visual-overlay-ai/|0.8|monthly,/ideas/ad-delivery-systems/|0.8|monthly" | split: "," -%}
+{%- assign core_pages = "/|1.0|weekly,/blog/|0.9|weekly,/experience/|0.9|monthly,/projects/|0.9|monthly,/ideas/|0.9|monthly,/coursework/|0.8|monthly,/reports/|0.8|monthly,/ideas/aegis-ai-strategy/|0.8|monthly,/ideas/public-infrastructure-copilot/|0.8|monthly,/ideas/compliance-twin/|0.8|monthly,/ideas/operator-memory-cloud/|0.8|monthly,/ideas/civic-procurement-graph/|0.8|monthly,/ideas/research-commercialization-studio/|0.8|monthly,/ideas/visual-overlay-ai/|0.8|monthly,/ideas/ad-delivery-systems/|0.8|monthly" | split: "," -%}
 {%- for item in core_pages %}
   {%- assign page_parts = item | split: "|" %}
   <url>

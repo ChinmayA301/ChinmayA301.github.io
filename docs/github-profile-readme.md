@@ -45,4 +45,4 @@ Current themes include Aegis AI governance and readiness, document intelligence,
 
 ## Contact
 
-[Portfolio](https://app.chinmayarora.com/) · [LinkedIn](https://www.linkedin.com/in/chinmay-arora-27682211b/) · [Email](mailto:chinmayarora2001@gmail.com) · [Resume](https://github.com/ChinmayA301/assets/blob/main/Resume.pdf)
+[Portfolio](https://app.chinmayarora.com/) · [LinkedIn](https://www.linkedin.com/in/chinmay-arora-27682211b/) · [Email](mailto:chinmayarora2001@gmail.com) · [Resume](https://app.chinmayarora.com/assets/Chinmay_Arora_Master_Resume.pdf)

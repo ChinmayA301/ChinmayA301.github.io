@@ -37,7 +37,6 @@ PAGE_PATHS = [
     Path("experience/index.html"),
     Path("projects/index.html"),
     Path("reports/index.html"),
-    Path("resumes/index.html"),
     Path("coursework/index.html"),
     Path("ideas/index.html"),
     Path("blog/index.html"),
