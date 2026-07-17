@@ -86,34 +86,56 @@
     "image": "{{ page.og_image | absolute_url }}"{% endif %}
   }
   </script>
-  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260717d' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260717l' | relative_url }}">
 </head>
-<body class="blog-theme">
+<body class="blog-theme blog-post-page">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-orb orb-3" aria-hidden="true"></div>
 
-  <header class="section pb-0">
+  <div class="blog-reading-progress" aria-hidden="true"><span></span></div>
+
+  <header class="section blog-edition-header blog-story-header pb-0">
     <div class="container">
-      <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-        <a class="navbar-brand fw-bold" href="{{ '/' | relative_url }}">CA</a>
+      <div class="blog-edition-utility">
+        <a class="blog-monogram" href="{{ '/' | relative_url }}" aria-label="Back to portfolio home">CA</a>
+        <a class="blog-edition-stamp blog-edition-link" href="{{ '/blog/' | relative_url }}"><span>Field Notes</span><span>Back to index</span></a>
         <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
       </div>
-      <h1 class="section-title">{{ page.title }}</h1>
-      <p class="section-text">Published on <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
-      {% if page.content_type %}
-      <div class="post-meta-row" aria-label="Post positioning">
-        <span class="blog-type-badge blog-type-{{ page.content_type | slugify }}">{{ page.content_label | default: page.content_type | replace: "_", " " }}</span>
-        {% if page.search_phrase %}
-        <span class="blog-search-phrase">{{ page.search_phrase }}</span>
+      <div class="blog-masthead-rule" aria-hidden="true"></div>
+      <div class="blog-story-heading">
+        <p class="blog-masthead-label">{{ page.categories | first | default: 'Essay' }} · Vol. {{ page.date | date: '%Y' }}</p>
+        <h1 class="section-title blog-story-title">{{ page.title }}</h1>
+        <div class="blog-story-byline">
+          <p>By {{ page.author | default: site.social.name }}</p>
+          <p><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>{% if page.reading_time %} · {{ page.reading_time }}{% endif %}</p>
+        </div>
+        {% if page.content_type %}
+        <div class="post-meta-row" aria-label="Post positioning">
+          <span class="blog-type-badge blog-type-{{ page.content_type | slugify }}">{{ page.content_label | default: page.content_type | replace: "_", " " }}</span>
+          {% if page.search_phrase %}
+          <span class="blog-search-phrase">{{ page.search_phrase }}</span>
+          {% endif %}
+        </div>
         {% endif %}
       </div>
-      {% endif %}
+      <div class="blog-masthead-rule blog-masthead-rule-double" aria-hidden="true"></div>
     </div>
   </header>
 
   <main id="main-content" class="section pt-4" role="main">
-    <article class="container blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+    <article class="container blog-post newspaper-article" itemscope itemtype="https://schema.org/BlogPosting">
+      <aside class="newspaper-article-rail" aria-label="Article details">
+        <p class="newspaper-rail-kicker">Filed under</p>
+        {% if page.categories %}
+        <ul class="newspaper-category-list">
+          {% for category in page.categories %}<li>{{ category }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        <p class="newspaper-rail-folio">CA / {{ page.date | date: '%m.%d.%y' }}</p>
+      </aside>
+
+      <div class="newspaper-article-sheet">
       {% if page.summary or page.bluf %}
       <section class="bluf-box" aria-labelledby="bluf-heading">
         <h2 id="bluf-heading" class="h4">BLUF</h2>
@@ -144,7 +166,7 @@
       </section>
       {% endif %}
 
-      <div itemprop="articleBody">
+      <div class="newspaper-story" itemprop="articleBody">
         {{ content }}
       </div>
 
@@ -153,6 +175,7 @@
         <a href="{{ '/projects/' | relative_url }}">Related Projects</a>
         <a href="{{ '/intelligence/' | relative_url }}">Portfolio Intelligence</a>
       </nav>
+      </div>
     </article>
   </main>
 
@@ -187,6 +210,18 @@
       localStorage.setItem(themeKey, nextTheme);
       setTheme(nextTheme);
     });
+
+    const progressBar = document.querySelector('.blog-reading-progress span');
+    const updateReadingProgress = () => {
+      if (!progressBar) return;
+      const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollRange > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollRange)) : 0;
+      progressBar.style.transform = `scaleX(${progress})`;
+    };
+
+    updateReadingProgress();
+    window.addEventListener('scroll', updateReadingProgress, { passive: true });
+    window.addEventListener('resize', updateReadingProgress);
 
     window.addEventListener('load', () => {
       const articleRoot = document.querySelector('.blog-post');

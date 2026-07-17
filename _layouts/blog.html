@@ -20,23 +20,29 @@
     }
   </style>
   {% seo %}
-  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260717d' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260717l' | relative_url }}">
 </head>
-<body class="blog-theme">
+<body class="blog-theme blog-index-page">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-orb orb-3" aria-hidden="true"></div>
 
-  <header class="section pb-0">
+  <header class="section blog-edition-header pb-0">
     <div class="container">
-      <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-        <a class="navbar-brand fw-bold" href="{{ '/' | relative_url }}">CA</a>
+      <div class="blog-edition-utility">
+        <a class="blog-monogram" href="{{ '/' | relative_url }}" aria-label="Back to portfolio home">CA</a>
+        <p class="blog-edition-stamp"><span>Independent notes</span><span>Chicago · {{ 'now' | date: '%Y' }}</span></p>
         <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
       </div>
-      <h1 class="section-title">{{ page.title }}</h1>
-      {% if page.description %}
-      <p class="section-text">{{ page.description }}</p>
-      {% endif %}
+      <div class="blog-masthead-rule" aria-hidden="true"></div>
+      <div class="blog-masthead-grid">
+        <p class="blog-masthead-label">Research · Systems · Culture</p>
+        <h1 class="section-title blog-masthead-title">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="section-text blog-masthead-deck">{{ page.description }}</p>
+        {% endif %}
+      </div>
+      <div class="blog-masthead-rule blog-masthead-rule-double" aria-hidden="true"></div>
     </div>
   </header>
 
@@ -83,6 +89,28 @@
       localStorage.setItem(themeKey, nextTheme);
       setTheme(nextTheme);
     });
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const newspaperSheets = Array.from(document.querySelectorAll('.newspaper-sheet'));
+
+    newspaperSheets.forEach((sheet, index) => {
+      sheet.style.setProperty('--sheet-order', index % 8);
+    });
+
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      document.documentElement.classList.add('newspaper-motion');
+      const sheetObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-printed');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.14, rootMargin: '0px 0px -5% 0px' });
+
+      newspaperSheets.forEach((sheet) => sheetObserver.observe(sheet));
+    } else {
+      newspaperSheets.forEach((sheet) => sheet.classList.add('is-printed'));
+    }
   </script>
 </body>
 </html>
