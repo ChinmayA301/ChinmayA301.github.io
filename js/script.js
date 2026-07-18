@@ -2518,8 +2518,64 @@ function setupMetricsStory() {
     requestRender();
 }
 
-async function setupWorldStory() {
+function loadDeferredScript(src, globalName) {
+    if (globalName && typeof window[globalName] !== "undefined") return Promise.resolve();
+
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) {
+        return new Promise((resolve, reject) => {
+            existing.addEventListener("load", resolve, { once: true });
+            existing.addEventListener("error", reject, { once: true });
+        });
+    }
+
+    return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.addEventListener("load", resolve, { once: true });
+        script.addEventListener("error", () => reject(new Error(`Failed to load ${src}`)), { once: true });
+        document.head.appendChild(script);
+    });
+}
+
+function setupWorldStory() {
     const section = document.getElementById("world-story");
+    if (!section) return;
+
+    let hasStarted = false;
+    const initialize = async () => {
+        if (hasStarted) return;
+        hasStarted = true;
+        section.classList.add("is-loading");
+
+        try {
+            await Promise.all([
+                loadDeferredScript("/assets/vendor/d3.v7.min.js", "d3"),
+                loadDeferredScript("/assets/vendor/topojson-client.min.js", "topojson")
+            ]);
+            await initializeWorldStory(section);
+        } catch (error) {
+            console.warn("World story could not initialize.", error);
+        } finally {
+            section.classList.remove("is-loading");
+        }
+    };
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        initialize();
+        return;
+    }
+
+    const loadObserver = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        loadObserver.disconnect();
+        initialize();
+    }, { rootMargin: "1200px 0px" });
+    loadObserver.observe(section);
+}
+
+async function initializeWorldStory(section) {
     const sticky = section?.querySelector(".world-story-sticky");
     const canvas = document.getElementById("storyGlobeCanvas");
     const beats = Array.from(section?.querySelectorAll("[data-world-beat]") || []);
@@ -2539,8 +2595,9 @@ async function setupWorldStory() {
     let land = null;
     let borders = null;
     let landDots = null;
-    let isVisible = true;
+    let isVisible = false;
     let lastFrame = 0;
+    let animationFrame = 0;
     let activeCityIndex = 0;
     const cities = [
         { key: "new-delhi", name: "New Delhi", note: "Home", coordinates: [77.2090, 28.6139], stop: 0.06 },
@@ -2767,21 +2824,42 @@ async function setupWorldStory() {
     }
 
     function animate(timestamp) {
+        if (!isVisible) {
+            animationFrame = 0;
+            return;
+        }
         updateProgress();
-        if (isVisible) drawGlobe(timestamp);
-        window.requestAnimationFrame(animate);
+        drawGlobe(timestamp);
+        animationFrame = window.requestAnimationFrame(animate);
+    }
+
+    function startAnimation() {
+        if (prefersReducedMotion || animationFrame) return;
+        animationFrame = window.requestAnimationFrame(animate);
+    }
+
+    function stopAnimation() {
+        if (!animationFrame) return;
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
     }
 
     if ("IntersectionObserver" in window) {
         const observer = new IntersectionObserver(entries => {
-            isVisible = entries.some(entry => entry.isIntersecting);
+            const nextVisible = entries.some(entry => entry.isIntersecting);
+            if (nextVisible === isVisible) return;
+            isVisible = nextVisible;
+            if (isVisible) startAnimation();
+            else stopAnimation();
         }, { rootMargin: "100% 0px" });
         observer.observe(section);
+    } else {
+        isVisible = true;
     }
 
     const handleResize = () => {
         updateProgress();
-        drawGlobe(lastFrame);
+        if (isVisible || prefersReducedMotion) drawGlobe(lastFrame);
     };
     cityButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -2796,11 +2874,12 @@ async function setupWorldStory() {
         });
     });
     window.addEventListener("resize", handleResize);
+    updateProgress();
+    drawGlobe(0);
     if (prefersReducedMotion) {
-        updateProgress();
-        drawGlobe(0);
-    } else {
-        window.requestAnimationFrame(animate);
+        return;
+    } else if (isVisible) {
+        startAnimation();
     }
 }
 

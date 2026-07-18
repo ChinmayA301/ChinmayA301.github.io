@@ -20,9 +20,12 @@
     <meta name="twitter:description"
         content="Reliable analytics, ML evaluation, retrieval, and responsible-AI systems by Chinmay Arora." />
     <meta name="twitter:image" content="https://app.chinmayarora.com/assets/images/profile-graduation.png" />
+    <link rel="preload" as="image" href="/assets/images/profile-graduation.png" type="image/png" fetchpriority="high" />
 
     <!-- Styles -->
     <link rel="stylesheet" href="/css/style.css?v=20260717d" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,7 +33,7 @@
         href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
     <!-- Icons / Effects -->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="application/ld+json">
@@ -666,8 +669,9 @@
                                         <text class="hero-doodle-copy" x="397" y="298">DECISIONS</text>
                                         <text class="hero-doodle-micro" x="337" y="516">BUILD / TEST / DOCUMENT</text>
                                     </svg>
-                                    <img src="assets/images/profile-graduation.png" alt="Chinmay Arora in graduation regalia"
-                                        class="hero-img">
+                                    <img src="/assets/images/profile-graduation.png" alt="Chinmay Arora in graduation regalia"
+                                        class="hero-img" width="488" height="512" loading="eager"
+                                        decoding="async" fetchpriority="high">
                                     <span class="hero-doodle-tag hero-doodle-tag--one" aria-hidden="true">01 · EVIDENCE</span>
                                     <span class="hero-doodle-tag hero-doodle-tag--two" aria-hidden="true">CA / SYSTEMS</span>
                                     <a class="hero-globe-hint" href="#world-story" aria-label="Explore cities on the interactive globe">
@@ -1097,10 +1101,8 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/vendor/d3.v7.min.js"></script>
-    <script src="/assets/vendor/topojson-client.min.js"></script>
-    <script src="/js/script.js?v=20260717m"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/script.js?v=20260718a" defer></script>
 </body>
 
 </html>
