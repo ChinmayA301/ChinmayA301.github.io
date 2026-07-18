@@ -38,20 +38,25 @@ KEYWORD_BOOSTS = {
 }
 SOURCE_WEIGHTS = {
     "project": 0.08,
-    "experience": 0.08,
+    "experience": 0.09,
     "skills": 0.06,
     "coursework": 0.055,
-    "report": 0.05,
-    "blog": 0.04,
-    "page": 0.035,
-    "resume": 0.035,
-    "profile": 0.035,
-    "lab": 0.025,
-    "manual_context": 0.02,
+    "report": 0.06,
+    "blog": 0.03,
+    "page": 0.01,
+    "resume": 0.02,
+    "profile": 0.02,
+    "lab": 0.02,
+    "manual_context": 0.015,
 }
 MATCH_STOPWORDS = {
-    "about", "after", "also", "and", "are", "been", "being", "build", "built", "company", "could",
-    "data", "from", "have", "into", "more", "that", "their", "this", "through", "using", "with", "work",
+    "about", "after", "again", "against", "also", "and", "any", "are", "because", "been", "being",
+    "before", "between", "both", "build", "built", "but", "company", "could", "current", "data", "does", "each", "for", "from",
+    "further", "had", "has", "have", "having", "how", "into", "its", "more", "most", "other", "our",
+    "out", "over", "recent", "same", "should", "some", "such", "than", "that", "the", "their", "them",
+    "then", "there", "these", "they", "this", "those", "through", "under", "using", "very", "was", "were",
+    "what", "when", "where", "which", "while", "who", "will", "with", "work", "would", "your",
+    "challenge", "challenges", "priority", "priorities", "responsibilities", "signal", "signals", "support",
 }
 EMBED_MODEL_ALIASES = {
     "models/text-embedding-004": "models/gemini-embedding-001",
@@ -206,7 +211,7 @@ def meaningful_tokens(text: str) -> set[str]:
     return {
         token
         for token in tokenize(text)
-        if token not in MATCH_STOPWORDS and len(token) > 2
+        if token not in MATCH_STOPWORDS and len(token) > 2 and not token.isdigit()
     }
 
 
@@ -235,11 +240,19 @@ def rerank_and_diversify_matches(
     for original in dedupe_matches(matches):
         item = dict(original)
         source = str(item.get("source") or "portfolio").lower()
-        candidate_tokens = meaningful_tokens(match_searchable_text(item))
-        shared_tokens = sorted(query_tokens & candidate_tokens)
+        searchable_text = match_searchable_text(item)
+        candidate_tokens = meaningful_tokens(searchable_text)
+        all_candidate_tokens = set(tokenize(searchable_text))
+        shared_tokens = sorted(
+            query_tokens & candidate_tokens,
+            key=lambda token: (-KEYWORD_BOOSTS.get(token, 1.0), token),
+        )
         raw_score = float(item.get("score") or 0)
-        overlap_bonus = min(len(shared_tokens), 6) * 0.012
-        evidence_bonus = 0.025 if candidate_tokens & evidence_terms else 0
+        overlap_bonus = min(sum(0.012 * KEYWORD_BOOSTS.get(token, 1.0) for token in shared_tokens), 0.09)
+        has_metric = bool(re.search(r"(?:\b\d+(?:\.\d+)?%|\b\d+(?:\.\d+)?x\b|\b\d{2,}[km]?\b)", searchable_text.lower()))
+        evidence_bonus = 0.025 if all_candidate_tokens & evidence_terms else 0
+        if has_metric:
+            evidence_bonus += 0.015
         relevance_score = raw_score + SOURCE_WEIGHTS.get(source, 0.02) + overlap_bonus + evidence_bonus
 
         item["retrieval_score"] = round(raw_score, 6)
