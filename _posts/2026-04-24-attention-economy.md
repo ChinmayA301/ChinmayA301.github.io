@@ -13,7 +13,7 @@ tags: [Attention-Economy, AI, Social-Media, LifeOS, Contribution, Reputation, Ca
 permalink: /blog/beyond-the-attention-economy/
 canonical_url: "https://app.chinmayarora.com/blog/beyond-the-attention-economy/"
 og_image: "/assets/images/beyond-attention-economy-cover.png"
-image_alt: "Concept illustration of a post-attention economy where contribution, trust, and real-world outcomes replace raw visibility as the main source of value."
+image_alt: "Exploratory illustration of a post-attention economy where contribution, trust, and real-world outcomes replace raw visibility as the main source of value."
 
 lang: "en"
 reading_time: "12 min"
@@ -25,9 +25,9 @@ schema_type: "Article"
 keywords: "attention economy, post attention economy, contribution economy, AI and capitalism, future of social media, LifeOS, trust systems, reputation infrastructure, outcome economy"
 last_modified_at: 2026-04-24
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "post-attention economy design patterns"
-positioning_note: "This is a systems and product thesis about attention, contribution, and AI-mediated trust, not a platform launch plan."
+positioning_note: "I am exploring a product and systems direction that shifts value from attention toward contribution and AI-mediated trust; this is not a platform launch plan."
 ---
 
 > **Key takeaways**

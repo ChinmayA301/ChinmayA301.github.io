@@ -5,7 +5,7 @@ date: 2026-05-19
 author: "Chinmay Arora"
 
 description: "A technical framework for using AI, proxy data, synthetic environments, and simulation loops to test high-friction decisions before committing capital, time, or operational risk."
-summary: "Some data is difficult, expensive, sensitive, or impossible to collect directly. Simulation Engineering AI proposes a practical framework for building proxy environments that approximate real-world decision conditions before deployment. Instead of assuming enough perfect data exists, the system uses synthetic data, public analogues, agent-based modeling, expert constraints, and validation loops to estimate whether an idea is worth testing in the real world."
+summary: "Some data is difficult, expensive, sensitive, or impossible to collect directly. I am developing Simulation Engineering AI as a practical framework for building proxy environments that approximate real-world decision conditions before deployment. Instead of assuming enough perfect data exists, the system uses synthetic data, public analogues, agent-based modeling, expert constraints, and validation loops to estimate whether an idea is worth testing in the real world."
 
 categories: [Simulation, AI-Systems, Applied-Research]
 tags: [Simulation-Engineering, Synthetic-Data, Proxy-Data, AI-Testing, Digital-Twins, Decision-Intelligence, Agent-Based-Modeling, Applied-AI]
@@ -24,9 +24,9 @@ schema_type: "Article"
 keywords: "simulation engineering AI, synthetic data, proxy data, AI simulation, digital twin, decision intelligence, high friction data, agent based modeling"
 last_modified_at: 2026-05-19
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "simulation engineering AI and proxy data"
-positioning_note: "This is a research framework for proxy environments and simulation loops, not a promise of perfect pre-deployment prediction."
+positioning_note: "I am developing a research and engineering framework for proxy environments and simulation loops; the project does not promise perfect pre-deployment prediction."
 ---
 
 ## Key takeaways
@@ -532,7 +532,7 @@ Better judgment under constraint.
 
 - GitHub profile: https://github.com/ChinmayA301
 - Portfolio / The Lab: https://app.chinmayarora.com
-- Project concept repository: https://github.com/ChinmayA301/simulation-engineering-ai
+- Project repository: https://github.com/ChinmayA301/simulation-engineering-ai
 - Related applied direction: proxy-data simulation, public-sector AI pilots, synthetic service-request routing, trend diffusion simulation, logistics workflow optimization
 - Possible implementation stack: Python, FastAPI, SimPy, Mesa, Pandas, scikit-learn, SDV, Streamlit / React dashboard, Monte Carlo simulation, agent-based modeling
 

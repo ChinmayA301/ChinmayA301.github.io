@@ -11,9 +11,9 @@ canonical_url: "https://app.chinmayarora.com/blog/context-passport/"
 
 summary: Claude’s Memory + import tool makes a key truth explicit—continuity is becoming the product. But assistant-native memory isn’t enough. The missing layer is user-owned, portable project-state memory that works across ChatGPT ↔ Gemini ↔ Claude and other tools, with provenance, diffs, privacy scopes, and token-budgeted context packs.
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "portable AI memory and context passport"
-positioning_note: "This is a product and infrastructure thesis for portable AI memory, not a build guide for a shipped protocol."
+positioning_note: "I am exploring the product and infrastructure requirements for portable AI memory; this documents the system direction rather than claiming a shipped protocol."
 ---
 
 # Claude Memory changes the game — but the real unlock is portable, user-owned memory

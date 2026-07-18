@@ -25,9 +25,9 @@ schema_type: "Article"
 keywords: "AI localisation media, dubbing AI, subtitling, cultural adaptation, media recommendation systems, content globalization"
 last_modified_at: 2026-04-03
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "AI localization for media content"
-positioning_note: "This is a concept framework for culturally intelligent AI localization, not a vendor implementation checklist."
+positioning_note: "I am developing a system framework for culturally intelligent AI localization, focused on pipeline and evaluation choices rather than a vendor implementation checklist."
 ---
 
 > **Key takeaways**

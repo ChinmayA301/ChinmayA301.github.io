@@ -5,7 +5,7 @@ date: 2026-04-24
 author: "Chinmay Arora"
 
 description: "A technical framework for a Decision-as-a-Service platform that helps users navigate ambiguous, high-stakes decisions by surfacing structured reference classes, heuristic lenses, and honest calibration — without the fake math."
-summary: "The Success Directory is a proposed Decision Intelligence platform designed to capture the latent heuristics of expert decision-making without overpromising on the math. Rather than using Inverse Reinforcement Learning on anecdotes or running CATE on n=1 strategic choices, it uses reference-class forecasting, a curated Decision Pattern Library, and four Expert Reasoning Lenses to produce a Decision Brief — a pressure-tested artifact that bridges the gap between data and real-world judgment."
+summary: "I am developing the Success Directory as a Decision Intelligence platform for capturing the latent heuristics of expert decision-making without overpromising on the math. Rather than using Inverse Reinforcement Learning on anecdotes or running CATE on n=1 strategic choices, it uses reference-class forecasting, a curated Decision Pattern Library, and four Expert Reasoning Lenses to produce a Decision Brief — a pressure-tested artifact that bridges the gap between data and real-world judgment."
 
 categories: [Decision-Intelligence, Data-Science, Applied-Research]
 tags: [Decision-Science, Causal-AI, IRL, Reference-Class-Forecasting, Bayesian-Reasoning, LLM-Applications, Strategy, Product-Design]
@@ -24,9 +24,9 @@ schema_type: "Article"
 keywords: "decision intelligence, decision-as-a-service, reference class forecasting, inverse reinforcement learning, CATE, causal AI, expert heuristics, LLM applications, strategy tool"
 last_modified_at: 2026-04-24
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "decision intelligence framework"
-positioning_note: "This is a decision-intelligence concept and reasoning framework, not a deployed Decision-as-a-Service product."
+positioning_note: "I am developing the reasoning architecture and product model for the Success Directory; it is an active Decision Intelligence exploration, not a deployed Decision-as-a-Service product."
 ---
 
 ## Key takeaways

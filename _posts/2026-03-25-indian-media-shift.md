@@ -13,7 +13,7 @@ tags: [India, Entertainment, Media-Strategy, Streaming, Audience-Behavior, Conte
 permalink: /blog/indian-media-strategy-shift/
 canonical_url: "https://app.chinmayarora.com/blog/indian-media-strategy-shift/"
 og_image: "/assets/images/indian-media-strategy-cover.png"
-image_alt: "Concept image showing the shift in Indian media toward plot-driven, youth-focused, globally competitive storytelling."
+image_alt: "Exploratory image showing the shift in Indian media toward plot-driven, youth-focused, globally competitive storytelling."
 
 lang: "en"
 reading_time: "11 min"
@@ -25,9 +25,9 @@ schema_type: "Article"
 keywords: "Indian media strategy, streaming India, youth entertainment India, content strategy, localization, Indian audience behavior"
 last_modified_at: 2026-04-03
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Research Exploration"
 search_phrase: "Indian media strategy and localization"
-positioning_note: "This is a strategic research note on media structure and cultural packaging, not a production plan."
+positioning_note: "I am investigating how media structure, audience strategy, and cultural packaging could shape Indian media growth; this is not a production plan."
 ---
 
 > **Key takeaways**

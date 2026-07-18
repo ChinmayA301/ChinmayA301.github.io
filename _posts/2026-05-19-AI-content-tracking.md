@@ -5,7 +5,7 @@ date: 2026-05-19
 author: "Chinmay Arora"
 
 description: "A practical research framework for tracking AI-generated content across text, images, code, and execution workflows using metadata, provenance, watermarking, behavioral fingerprints, and platform-level screening."
-summary: "As generative AI becomes embedded into writing, images, software, education, and media production, the question is not whether all AI content can be perfectly detected. It cannot. The better question is how to design layered systems that increase transparency, provenance, and accountability. This post proposes simple implementable ideas for AI content tracking across text, images, code, and execution patterns."
+summary: "As generative AI becomes embedded into writing, images, software, education, and media production, the question is not whether all AI content can be perfectly detected. It cannot. I am exploring layered systems that increase transparency, provenance, and accountability across text, images, code, and execution patterns."
 
 categories: [AI-Safety, Content-Provenance, Applied-Research]
 tags: [AI-Generated-Content, Watermarking, Provenance, Metadata, AI-Detection, Education-Tech, Social-Media, Code-Integrity]
@@ -24,9 +24,9 @@ schema_type: "Article"
 keywords: "AI content detection, AI watermarking, content provenance, metadata tracking, AI generated text, AI generated images, code integrity, AI safety"
 last_modified_at: 2026-05-19
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "AI-generated content provenance tracking"
-positioning_note: "This is a layered provenance and accountability concept, not a claim that AI content can be perfectly detected."
+positioning_note: "I am developing a layered provenance and accountability system across content types and execution workflows; the project does not claim perfect AI-content detection."
 ---
 
 ## Key takeaways
@@ -573,6 +573,6 @@ Practical trust.
 
 - GitHub profile: https://github.com/ChinmayA301
 - Portfolio / The Lab: https://app.chinmayarora.com
-- Project concept repository: https://github.com/ChinmayA301/ai-content-provenance-layer
+- Project repository: https://github.com/ChinmayA301/ai-content-provenance-layer
 - Possible MVP: browser extension or LMS plugin for document provenance, draft history, paste-event tracking, source validation, and AI-assistance disclosure
 - Possible implementation stack: Python, FastAPI, React, browser extension APIs, GitHub Actions, metadata parsers, C2PA tooling, document diffing

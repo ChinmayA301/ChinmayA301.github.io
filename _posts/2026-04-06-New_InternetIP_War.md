@@ -11,9 +11,9 @@ canonical_url: "https://app.chinmayarora.com/blog/agent-protocol-stack/"
 
 summary: The web is gaining a new protocol layer—not just for documents, APIs, or apps, but for agents. Protocols like A2A, ACP, UCP, and ATXP point toward an internet where software can discover other software, exchange context, negotiate actions, and complete transactions with far less human mediation.
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Research Exploration"
 search_phrase: "agent internet protocol layer"
-positioning_note: "This is an exploratory protocol-layer thesis for agentic systems, not a standards proposal."
+positioning_note: "I am tracking and comparing the emerging protocol layer for agentic systems; this is an evolving technical investigation, not a standards proposal."
 ---
 
 ## 1) Why This Matters: The Internet Is Moving from Retrieval to Action

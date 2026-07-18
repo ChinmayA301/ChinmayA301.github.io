@@ -5,7 +5,7 @@ date: 2026-04-03
 author: "Chinmay Arora"
 
 description: "A technical framework for a football metric that measures real match influence beyond goals and assists by weighting actions through expected outcome, pressure, context, and downstream impact."
-summary: "Successful Key Moment (SKM) is a proposed football intelligence metric designed to capture real match influence rather than only headline outcomes. Instead of overvaluing the final touch, SKM evaluates actions through expected outcome, tactical context, pressure, role, and downstream effect on the next phases of play. The goal is to bridge the gap between data and the eye test with a more realistic measure of contribution across positions and systems."
+summary: "I am developing Successful Key Moment (SKM), a football intelligence metric designed to capture real match influence rather than only headline outcomes. Instead of overvaluing the final touch, SKM evaluates actions through expected outcome, tactical context, pressure, role, and downstream effect on the next phases of play. The goal is to bridge the gap between data and the eye test with a more realistic measure of contribution across positions and systems."
 
 categories: [Sports-Analytics, Data-Science, Applied-Research]
 tags: [Football, Sports-Analytics, Metrics, xG, Decision-Science, Modeling, Performance-Analysis]
@@ -13,7 +13,7 @@ tags: [Football, Sports-Analytics, Metrics, xG, Decision-Science, Modeling, Perf
 permalink: /blog/successful-key-moment-metric/
 canonical_url: "https://app.chinmayarora.com/blog/successful-key-moment-metric/"
 og_image: "/assets/images/skm-football-metric-cover.png"
-image_alt: "Concept diagram for the Successful Key Moment football metric linking actions, pressure, and downstream impact."
+image_alt: "Exploratory diagram for the Successful Key Moment football metric linking actions, pressure, and downstream impact."
 
 lang: "en"
 reading_time: "13 min"
@@ -25,9 +25,9 @@ schema_type: "Article"
 keywords: "football analytics, new football metric, successful key moment, sports data science, expected outcome football, player impact model, VAEP, xT, match influence"
 last_modified_at: 2026-04-15
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "football analytics metric for match influence"
-positioning_note: "This is a proposed sports analytics metric and evaluation framing, not a finished commercial model."
+positioning_note: "I am developing the Successful Key Moment metric and its evaluation logic; it is an active sports-analytics project, not a finished commercial model."
 ---
 
 > **Key takeaways**

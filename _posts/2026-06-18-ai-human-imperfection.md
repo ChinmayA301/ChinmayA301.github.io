@@ -4,13 +4,13 @@ title: "AI and Human Imperfection: Detecting the Pattern Breakers"
 date: 2026-06-16
 author: "Chinmay Arora"
 
-description: "A concept and research-spec piece for an AI-human authenticity system that treats imperfection not as noise, but as cultural, linguistic, and creative signal."
-summary: "This research/concept note explores AI detection, human irregularity, and deliberate imperfection. It argues that the future of authenticity tooling should move beyond 'was this AI?' and toward a richer analysis of pattern-breaking, cultural residue, linguistic variation, and meaningful human texture."
-tags: [AI, Human-AI Interaction, Responsible AI, AI Detection, Computational Creativity, Data Science, Research Concept]
+description: "A research exploration of an AI-human authenticity system that treats imperfection not as noise, but as cultural, linguistic, and creative signal."
+summary: "I am exploring AI detection, human irregularity, and deliberate imperfection through a richer analysis of pattern-breaking, cultural residue, linguistic variation, and meaningful human texture."
+tags: [AI, Human-AI Interaction, Responsible AI, AI Detection, Computational Creativity, Data Science, Research Exploration]
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Research Exploration"
 search_phrase: "AI detection and human authenticity signals"
-positioning_note: "This is a research concept about authenticity signals and pattern-breaking, not a claim of reliable universal AI detection."
+positioning_note: "I am investigating authenticity signals and pattern-breaking as measurable forms of human texture; the exploration does not claim reliable universal AI detection."
 ---
 
 ## The idea I kept coming back to
@@ -87,7 +87,7 @@ A system that treats every deviation from smoothness as a flaw will gradually er
 
 That is the risk this project studies.
 
-## The research concept
+## The research exploration
 
 The project can be framed as a research prototype called:
 
@@ -251,7 +251,7 @@ sample = "I thought the answer was obvious. It was not. That is usually where th
 print(human_texture_proxy(sample))
 ```
 
-This code should not be sold as a detector. It is a research-scale demonstration of the kind of feature thinking the concept would require.
+This code should not be sold as a detector. It is a research-scale demonstration of the feature thinking this exploration requires.
 
 The research version would need embeddings, authorship baselines, multilingual corpora, adversarial testing, human annotation, and fairness audits.
 

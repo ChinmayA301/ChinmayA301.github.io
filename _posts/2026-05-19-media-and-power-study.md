@@ -5,7 +5,7 @@ date: 2026-05-19
 author: "Chinmay Arora"
 
 description: "A research framework for studying whether American media dominance caused global U.S. influence, or whether U.S. geopolitical power enabled the global spread of American media."
-summary: "This post proposes a correlational and comparative research framework for studying the relationship between media dominance and global power. Using the United States as the primary case, and comparing it with historical and emerging powers, the framework examines whether cultural exports generate geopolitical relevance or whether geopolitical relevance creates the conditions for cultural exports to dominate."
+summary: "I am developing a correlational and comparative research design for studying the relationship between media dominance and global power. Using the United States as the primary case and comparing it with historical and emerging powers, the exploration examines whether cultural exports generate geopolitical relevance or whether geopolitical relevance creates the conditions for cultural exports to dominate."
 
 categories: [Media-Studies, Geopolitics, Applied-Research]
 tags: [American-Media, Soft-Power, Globalization, Cultural-Exports, Geopolitics, Correlation-Study, Superpowers, Media-Influence]
@@ -13,7 +13,7 @@ tags: [American-Media, Soft-Power, Globalization, Cultural-Exports, Geopolitics,
 permalink: /blog/american-media-global-power-correlation/
 canonical_url: "https://app.chinmayarora.com/blog/american-media-global-power-correlation/"
 og_image: "/assets/images/us-media-global-power-cover.png"
-image_alt: "Conceptual world map showing flows of American media, culture, and geopolitical influence."
+image_alt: "Exploratory world map showing flows of American media, culture, and geopolitical influence."
 
 lang: "en"
 reading_time: "12 min"
@@ -24,9 +24,9 @@ schema_type: "Article"
 keywords: "American media, global power, soft power, cultural influence, media globalization, superpower rise, geopolitics, correlation study"
 last_modified_at: 2026-05-19
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Research Exploration"
 search_phrase: "media dominance and soft power correlation"
-positioning_note: "This is a correlational research framework, not a causal claim about media and geopolitical power."
+positioning_note: "I am building a correlational research design for comparing media reach and geopolitical power; the exploration does not make a causal claim."
 ---
 
 ## Key takeaways
@@ -474,6 +474,6 @@ It is also about controlling imagination.
 
 - GitHub profile: https://github.com/ChinmayA301
 - Portfolio / The Lab: https://app.chinmayarora.com
-- Project concept repository: https://github.com/ChinmayA301/us-media-global-power-study
+- Project repository: https://github.com/ChinmayA301/us-media-global-power-study
 - Possible dataset direction: media exports, box office share, music chart presence, platform ownership, trade centrality, GDP share, military presence, international student flows
 - Possible implementation stack: Python, Pandas, GeoPandas, NetworkX, World Bank API, OECD API, visualization dashboard

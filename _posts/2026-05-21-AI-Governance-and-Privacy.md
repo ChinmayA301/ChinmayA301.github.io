@@ -5,7 +5,7 @@ date: 2026-05-19
 author: "Chinmay Arora"
 
 description: "A practical framework for how organizations manage AI data privacy, internal governance, third-party vendor risk, and high-risk AI adoption across government, healthcare, security, and regulated sectors."
-summary: "AI adoption is no longer blocked only by model quality. It is increasingly blocked by trust: data privacy, unclear data practices, third-party vendor risk, accountability gaps, and uncertainty around governance standards. This post frames those concerns as the market opening for Aegis — an imagined AI trust layer that converts governance principles into reviewable artifacts for high-risk implementation."
+summary: "AI adoption is no longer blocked only by model quality. It is increasingly blocked by trust: data privacy, unclear data practices, third-party vendor risk, accountability gaps, and uncertainty around governance standards. I am developing Aegis as an AI trust-layer project that converts governance principles into reviewable artifacts for high-risk implementation."
 
 categories: [AI-Governance, Privacy, Applied-Research]
 tags: [AI-Governance, Privacy, Responsible-AI, Third-Party-Risk, Vendor-Risk, NIST-AI-RMF, ISO-42001, Aegis, Public-Sector-AI]
@@ -24,9 +24,9 @@ schema_type: "Article"
 keywords: "AI governance, AI privacy, responsible AI, third party AI risk, vendor risk management, AI contracts, NIST AI RMF, ISO 42001, public sector AI, healthcare AI governance"
 last_modified_at: 2026-05-19
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "AI governance privacy trust layer"
-positioning_note: "This is a governance and trust-layer concept for high-risk AI adoption, not legal advice or a finished compliance product."
+positioning_note: "I am developing Aegis as a governance and trust-layer project for high-risk AI adoption; the work is not legal advice or a finished compliance product."
 ---
 
 ## Key takeaways
@@ -804,7 +804,7 @@ It operationalizes them.
 
 ---
 
-## 13) Product Concept: AI Contract and Use-Case Review Engine
+## 13) Project Direction: AI Contract and Use-Case Review Engine
 
 One practical expression of Aegis is an AI contract and use-case review engine.
 
@@ -1001,7 +1001,7 @@ A bridge between innovation, privacy, governance, and institutional confidence.
 
 - Portfolio / The Lab: https://app.chinmayarora.com
 - GitHub profile: https://github.com/ChinmayA301
-- Aegis concept repository: https://github.com/ChinmayA301/aegis-ai-governance
+- Aegis project repository: https://github.com/ChinmayA301/aegis-ai-governance
 - AI contract review prototype: https://github.com/ChinmayA301/ai-contract-risk-review
 - Responsible AI audit templates: https://github.com/ChinmayA301/responsible-ai-audit-templates
 - Related applied direction: AI readiness assessment, vendor risk review, privacy review automation, public-sector AI pilot governance, model monitoring, and executive decision memos

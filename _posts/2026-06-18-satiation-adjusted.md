@@ -4,13 +4,13 @@ title: "The Satiation-Adjusted Serving System: Nutrition Labels Built Around Rea
 date: 2026-06-16
 author: "Chinmay Arora"
 
-description: "A concept and research-spec piece for replacing static nutrition serving sizes with satiation-adjusted meal units that better reflect how adults actually eat."
-summary: "This research/concept note explores a Satiation-Adjusted Serving System. Instead of treating label serving sizes as realistic eating units, it proposes a data-driven framework that estimates how much of a food behaves like a meal, snack, or insufficient portion based on calories, protein, fiber, energy density, volume, and satiety research."
-tags: [Data Science, Nutrition, Food Systems, Public Health, Product Design, Health Analytics, Research Concept]
+description: "A research exploration of replacing static nutrition serving sizes with satiation-adjusted meal units that better reflect how adults actually eat."
+summary: "I am developing a Satiation-Adjusted Serving System that estimates how much of a food behaves like a meal, snack, or insufficient portion using calories, protein, fiber, energy density, volume, and satiety research."
+tags: [Data Science, Nutrition, Food Systems, Public Health, Product Design, Health Analytics, Research Exploration]
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Research Exploration"
 search_phrase: "satiation adjusted serving size nutrition labels"
-positioning_note: "This is a nutrition systems concept grounded in satiety and labeling problems, not medical or dietary advice."
+positioning_note: "I am investigating a nutrition-labeling measurement system grounded in satiety research and real eating patterns; the work is not medical or dietary advice."
 ---
 
 ## Serving size is not the same as a meal
@@ -55,7 +55,7 @@ Two foods can both be 250 calories. One may keep someone full for hours. The oth
 
 That difference is not captured well by serving-size labels.
 
-## The research concept
+## The research exploration
 
 The project can be framed as:
 

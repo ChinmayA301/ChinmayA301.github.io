@@ -4,13 +4,13 @@ title: "Measuring the Cultural Impact of Media: From Dialogue to Tourism, Fashio
 date: 2026-06-16
 author: "Chinmay Arora"
 
-description: "A concept and research-spec piece for a data science system that measures how films, shows, games, and viral media reshape culture through language, fashion, tourism, food, search behavior, and online discourse."
-summary: "This post lays out a research-scale data science concept for studying the cultural impact of media. Instead of measuring popularity through views alone, it proposes a Cultural Diffusion Index that tracks how media changes what people say, buy, wear, visit, eat, search, and debate."
-tags: [Data Science, Media Analytics, Cultural Analytics, NLP, Social Listening, Causal Inference, Research Concept]
+description: "A research exploration of a data science system that measures how films, shows, games, and viral media reshape culture through language, fashion, tourism, food, search behavior, and online discourse."
+summary: "I am developing a research-scale data science approach for studying the cultural impact of media. Instead of measuring popularity through views alone, the exploration defines a Cultural Diffusion Index that tracks how media changes what people say, buy, wear, visit, eat, search, and debate."
+tags: [Data Science, Media Analytics, Cultural Analytics, NLP, Social Listening, Causal Inference, Research Exploration]
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Research Exploration"
 search_phrase: "measuring cultural impact of media"
-positioning_note: "This is a cultural analytics research concept, not a completed media measurement product."
+positioning_note: "I am developing a cultural-analytics research design and measurement system; empirical testing remains in progress, so this is not presented as a completed media-measurement product."
 ---
 
 ## Views are not cultural impact
@@ -47,7 +47,7 @@ The better cultural question is:
 
 That is harder to measure. It is also where the interesting data science lives.
 
-## The research concept
+## The research exploration
 
 The project can be framed as:
 

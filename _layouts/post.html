@@ -124,9 +124,9 @@
         {{ page.positioning_note | default: "This post reports an evidence trail, method, findings, and limitations. Claims are bounded to the data and design described." }}
       </section>
       {% elsif page.content_type == 'concept_note' %}
-      <section class="research-note-box concept-note-box" aria-label="Concept note positioning">
-        <strong>Concept note.</strong>
-        {{ page.positioning_note | default: "This essay shares a thesis, framework, or product concept for discussion. It does not claim completed empirical validation." }}
+      <section class="research-note-box concept-note-box" aria-label="Exploration positioning">
+        <strong>{{ page.content_label | default: "Project exploration" }}.</strong>
+        {{ page.positioning_note | default: "This post documents an active project or research exploration. Its current status and validation boundaries are stated explicitly." }}
       </section>
       {% endif %}
 

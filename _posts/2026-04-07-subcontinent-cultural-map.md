@@ -4,8 +4,8 @@ title: "Interactive Cultural Timeline Map: Visualizing the Movement of Civilizat
 date: 2026-04-03
 author: "Chinmay Arora"
 
-description: "A concept for an interactive world map that traces the movement of civilizations, trade, language, ideas, and cultural influence across time through layered visual storytelling."
-summary: "The Interactive Cultural Timeline Map is a proposed visualization system that combines world geography, temporal navigation, and relational storytelling to show how civilizations and cultures have moved, influenced each other, and shaped the modern world. Instead of static history, it offers a dynamic map of diffusion, exchange, continuity, and transformation."
+description: "A project exploration for an interactive world map that traces the movement of civilizations, trade, language, ideas, and cultural influence across time through layered visual storytelling."
+summary: "I am developing the Interactive Cultural Timeline Map as a visualization system that combines world geography, temporal navigation, and relational storytelling to show how civilizations and cultures have moved, influenced each other, and shaped the modern world. Instead of static history, it offers a dynamic map of diffusion, exchange, continuity, and transformation."
 
 categories: [Visualization, History-Tech, GeoAI]
 tags: [Cultural-History, Interactive-Maps, Timeline, Civilizations, Geospatial, Storytelling, Education-Tech]
@@ -13,7 +13,7 @@ tags: [Cultural-History, Interactive-Maps, Timeline, Civilizations, Geospatial, 
 permalink: /blog/interactive-cultural-timeline-map/
 canonical_url: "https://app.chinmayarora.com/blog/interactive-cultural-timeline-map/"
 og_image: "/assets/images/cultural-timeline-map-cover.png"
-image_alt: "Interactive world map concept showing floating cultural threads connecting civilizations across time."
+image_alt: "Interactive world map exploration showing floating cultural threads connecting civilizations across time."
 
 lang: "en"
 reading_time: "10 min"
@@ -25,9 +25,9 @@ schema_type: "Article"
 keywords: "interactive cultural timeline map, history visualization, civilization map, cultural diffusion, educational mapping"
 last_modified_at: 2026-04-03
 content_type: "concept_note"
-content_label: "Concept Note"
+content_label: "Project Exploration"
 search_phrase: "interactive cultural timeline map"
-positioning_note: "This is a geospatial visualization concept, not a finished product guide."
+positioning_note: "I am developing the information architecture and interaction model for a geospatial cultural-history visualizer; this documents the project direction, not a finished product guide."
 ---
 
 > **Key takeaways**
@@ -49,9 +49,9 @@ Languages spread. Religions travel. Trade routes reshape cities. Food crosses oc
 
 That is why an Interactive Cultural Timeline Map is such a compelling idea. It would not only show where cultures were. It would show **how they moved, connected, transformed, and persisted**.
 
-## 2) The Core Concept
+## 2) The Core Project Direction
 
-The proposed system is a flat, interactive world map combined with a time navigation layer.
+The system I am developing is a flat, interactive world map combined with a time navigation layer.
 
 Users can:
 - select a time period
