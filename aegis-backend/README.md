@@ -1,23 +1,44 @@
-## Usage
+# CAI Portfolio Architect Worker
 
-You can run the Worker defined by your new project by executing `wrangler dev` in this
-directory. This will start up an HTTP server and will allow you to iterate on your
-Worker without having to restart `wrangler`.
+Cloudflare Python Worker behind `rag.chinmayarora.com`. It researches a visitor's company, identifies likely priority pain points, retrieves the strongest matching evidence from Chinmay Arora's complete portfolio, and generates a concise consultation.
 
-### Types and autocomplete
+## Evidence corpus
 
-This project also includes a pyproject.toml with some requirements which
-set up autocomplete and type hints for this Python Workers project.
+The ingestion workflow indexes:
 
-To get these installed you'll need `uv`, which you can install by following
-https://docs.astral.sh/uv/getting-started/installation/.
+- structured portfolio projects and project reports;
+- professional experience and quantified outcomes;
+- skill groups linked to project evidence;
+- coursework projects;
+- research studies and project explorations from the blog;
+- portfolio, experience, coursework, projects, reports, ideas, and blog pages;
+- product and venture lab material.
 
-Once `uv` is installed, you can run the following:
+The production ingestion job intentionally excludes the legacy Aegis-only manual context file. It uses source quotas and per-title chunk limits so one long post or project family cannot dominate the index.
 
-```
-uv venv
+## Retrieval behavior
+
+The Worker:
+
+1. searches for current company priorities across strategy, product, customer, operations, data, AI, efficiency, growth, and risk;
+2. retrieves a larger candidate set from Pinecone;
+3. reranks for company-language overlap, evidence strength, and source quality;
+4. limits repeated source types and duplicate project families;
+5. asks Gemini to connect the top one or two company pains to the strongest transferable work.
+
+If embedding retrieval is rate-limited, the Worker falls back to a diversified set of projects and experience rather than Aegis-only context.
+
+## Local development
+
+```bash
 uv sync
+npx wrangler dev
 ```
 
-Then point your editor's Python plugin at the `.venv` directory. You should then have working
-autocomplete and type information in your editor.
+## Deployment
+
+```bash
+npm run deploy
+```
+
+The GitHub Actions ingestion workflow refreshes the Pinecone namespace after relevant portfolio content changes. It requires the Gemini and Pinecone repository secrets listed in `.env.example`.

@@ -162,8 +162,8 @@ function startConsultStatusFeed(companyName) {
     const queue = [
         CONSULT_STATUS_STEPS[0],
         `Researching ${companyName}...`,
-        "Consulting Aegis Lab...",
-        "Reviewing project and blog matches...",
+        "Identifying the company's priority pain points...",
+        "Scanning projects, experience, skills, coursework, research, and writing...",
         CONSULT_STATUS_STEPS[4]
     ];
     let index = 0;
@@ -188,21 +188,22 @@ function stopConsultStatusFeed() {
 
 function renderConsultationResult(payload) {
     if (!consultationResult) return;
-    const matches = (payload.portfolio_matches || []).slice(0, 3);
+    const matches = (payload.portfolio_matches || []).slice(0, 5);
     consultationResult.innerHTML = `
         <div class="space-y-4">
             <div class="rounded-[20px] border border-sky-300/15 bg-sky-300/10 p-4">
                 <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-sky-100">Pitch</p>
-                <p class="m-0 text-sm leading-7 text-slate-100">${payload.pitch || "No pitch returned."}</p>
+                <p class="m-0 text-sm leading-7 text-slate-100">${escapeHtml(payload.pitch || "No pitch returned.")}</p>
             </div>
             <div>
-                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">Matched Evidence</p>
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">Priority-Matched Evidence</p>
                 <div class="space-y-2">
                     ${matches.map(match => `
-                        <a class="block rounded-[18px] border border-white/10 bg-white/[0.04] p-3 text-slate-200 no-underline transition hover:bg-white/[0.08]" href="${match.url || "/"}" target="_blank" rel="noopener">
-                            <p class="mb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">${match.source || "portfolio"}</p>
-                            <p class="mb-1 text-sm font-semibold text-white">${match.title || "Portfolio Match"}</p>
-                            <p class="m-0 text-sm text-slate-300">${match.summary || ""}</p>
+                        <a class="block rounded-[18px] border border-white/10 bg-white/[0.04] p-3 text-slate-200 no-underline transition hover:bg-white/[0.08]" href="${escapeHtml(match.url || "/")}" target="_blank" rel="noopener">
+                            <p class="mb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">${escapeHtml(match.source || "portfolio")}</p>
+                            <p class="mb-1 text-sm font-semibold text-white">${escapeHtml(match.title || "Portfolio Match")}</p>
+                            <p class="mb-1 text-sm text-slate-300">${escapeHtml(match.summary || "")}</p>
+                            <p class="m-0 text-xs text-sky-100/80">${escapeHtml(match.match_reason || "Selected for its relevance to the identified priorities.")}</p>
                         </a>
                     `).join("") || `<p class="m-0 text-slate-400">No supporting matches returned.</p>`}
                 </div>
@@ -217,6 +218,7 @@ async function handleConsultativeAiSubmit(event) {
     const formData = new FormData(consultativeAiForm);
     const visitorName = (formData.get("visitor_name") || "").toString().trim();
     const companyName = (formData.get("company_name") || "").toString().trim();
+    const jobTitle = (formData.get("job_title") || "").toString().trim();
     if (!visitorName || !companyName) return;
 
     resetConsultationUi();
@@ -236,7 +238,7 @@ async function handleConsultativeAiSubmit(event) {
             body: JSON.stringify({
                 visitor_name: visitorName,
                 company_name: companyName,
-                job_title: "decision maker"
+                job_title: jobTitle || "company decision maker"
             })
         });
 

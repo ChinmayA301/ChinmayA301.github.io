@@ -26,7 +26,31 @@ EMBED_BATCH_SIZE = 20
 API_CALL_DELAY_SECONDS = 20
 RATE_LIMIT_RETRY_SECONDS = 45
 MAX_RETRIES = 2
-DEFAULT_MAX_INGEST_DOCUMENTS = 80
+DEFAULT_MAX_INGEST_DOCUMENTS = 240
+MAX_CHUNKS_PER_TITLE = {
+    "page": 3,
+    "blog": 2,
+    "project": 2,
+    "report": 2,
+    "experience": 2,
+    "skills": 2,
+    "coursework": 2,
+    "resume": 2,
+    "lab": 2,
+    "data": 1,
+}
+SOURCE_QUOTAS = {
+    "project": 60,
+    "experience": 28,
+    "skills": 18,
+    "coursework": 28,
+    "report": 28,
+    "page": 32,
+    "resume": 10,
+    "blog": 72,
+    "lab": 28,
+    "data": 16,
+}
 PORTFOLIO_HOSTS = {
     "app.chinmayarora.com",
     "chinmayarora.com",
@@ -521,10 +545,16 @@ def infer_type_from_filename(path: Path) -> str:
     name = path.stem.lower()
     if "lab" in name or "idea" in name:
         return "lab"
-    if "project" in name or "report" in name or "coursework" in name:
-        return "project"
     if "experience" in name:
         return "experience"
+    if "skill" in name:
+        return "skills"
+    if "coursework" in name:
+        return "coursework"
+    if "report" in name:
+        return "report"
+    if "project" in name:
+        return "project"
     if "resume" in name:
         return "resume"
     return "data"
@@ -580,6 +610,8 @@ def build_data_documents(data_dir: Path) -> list[dict[str, Any]]:
     documents = []
     seen_urls: set[tuple[str, str]] = set()
     for path in sorted(data_dir.glob("*.json")):
+        if path.name == "aegis_rag_context.json":
+            continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(payload, list):
             continue
@@ -667,32 +699,31 @@ def document_priority(document: dict[str, Any]) -> int:
         for key in ("title", "summary", "url", "type", "chunk_text")
     ).lower()
     score = {
-        "page": 70,
-        "project": 62,
-        "lab": 58,
-        "experience": 54,
-        "resume": 48,
-        "blog": 42,
-        "report": 40,
-        "coursework": 32,
+        "project": 92,
+        "experience": 90,
+        "skills": 86,
+        "report": 82,
+        "coursework": 76,
+        "page": 72,
+        "resume": 68,
+        "blog": 62,
+        "lab": 56,
         "data": 24,
     }.get(str(document.get("type", "")).lower(), 20)
-    if "aegis" in searchable:
-        score += 120
-    if "governance" in searchable or "compliance" in searchable or "audit" in searchable:
-        score += 45
-    if "data scientist" in searchable or "data analyst" in searchable or "analytics" in searchable:
-        score += 34
-    if "stock analyzer" in searchable:
-        score += 28
+    if any(token in searchable for token in ["result", "improved", "reduced", "delivered", "deployed", "validated"]):
+        score += 22
+    if any(char.isdigit() for char in searchable):
+        score += 12
+    if any(token in searchable for token in ["evaluation", "benchmark", "experiment", "calibration", "data quality"]):
+        score += 16
+    if any(token in searchable for token in ["python", "sql", "machine learning", "analytics", "rag", "power bi"]):
+        score += 10
     if "app.chinmayarora.com" in searchable:
         score += 8
     return score
 
 
 def prioritize_documents(documents: list[dict[str, Any]], max_documents: int) -> list[dict[str, Any]]:
-    if len(documents) <= max_documents:
-        return documents
     ranked = sorted(
         documents,
         key=lambda document: (
@@ -702,7 +733,45 @@ def prioritize_documents(documents: list[dict[str, Any]], max_documents: int) ->
             str(document.get("id", "")),
         ),
     )
-    return ranked[:max_documents]
+
+    title_counts: dict[tuple[str, str], int] = {}
+    breadth_limited = []
+    for document in ranked:
+        source_type = str(document.get("type", "data")).lower()
+        title_key = (source_type, str(document.get("title", "")).lower())
+        title_limit = MAX_CHUNKS_PER_TITLE.get(source_type, 1)
+        if title_counts.get(title_key, 0) >= title_limit:
+            continue
+        title_counts[title_key] = title_counts.get(title_key, 0) + 1
+        breadth_limited.append(document)
+
+    if len(breadth_limited) <= max_documents:
+        return breadth_limited
+
+    selected = []
+    selected_ids: set[str] = set()
+    for source_type, quota in SOURCE_QUOTAS.items():
+        source_documents = [
+            document
+            for document in breadth_limited
+            if str(document.get("type", "data")).lower() == source_type
+        ]
+        for document in source_documents[:quota]:
+            if len(selected) >= max_documents:
+                return selected
+            document_id = str(document.get("id", ""))
+            selected.append(document)
+            selected_ids.add(document_id)
+
+    for document in breadth_limited:
+        if len(selected) >= max_documents:
+            break
+        document_id = str(document.get("id", ""))
+        if document_id in selected_ids:
+            continue
+        selected.append(document)
+        selected_ids.add(document_id)
+    return selected
 
 
 def quota_skip_enabled() -> bool:
