@@ -3,18 +3,19 @@
   "@context": "https://schema.org",
   "@type": {{ page.schema_type | default: "TechArticle" | jsonify }},
   "headline": {{ page.title | jsonify }},
-  "description": {{ page.summary | default: page.description | default: page.excerpt | strip_html | strip_newlines | truncate: 240 | jsonify }},
-  "url": "{{ page.canonical_url | default: page.url | absolute_url }}",
-  "mainEntityOfPage": "{{ page.canonical_url | default: page.url | absolute_url }}",
+  "description": {{ include.description | jsonify }},
+  "url": {{ include.canonical | jsonify }},
+  "mainEntityOfPage": {{ include.canonical | jsonify }},
+  "image": {{ include.image | jsonify }},
   "datePublished": "{{ page.date | date_to_xmlschema }}",
-  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+  "dateModified": "{{ include.modified | date_to_xmlschema }}",
   "inLanguage": "{{ page.lang | default: site.lang | default: 'en-US' | replace: '_', '-' }}",
   {% if page.keywords %}
   "keywords": {{ page.keywords | jsonify }},
   {% elsif page.tags %}
   "keywords": {{ page.tags | jsonify }},
   {% endif %}
-  "wordCount": {{ content | strip_html | number_of_words }},
+  "wordCount": {{ page.content | strip_html | number_of_words }},
   "author": {
     "@type": "Person",
     "@id": "https://app.chinmayarora.com/#person",
@@ -31,7 +32,6 @@
     "@id": "https://app.chinmayarora.com/blog/#blog"
   }{% if page.categories %},
   "articleSection": {{ page.categories | jsonify }}{% endif %}{% if page.content_type %},
-  "genre": {{ page.content_label | default: page.content_type | jsonify }}{% endif %}{% if page.og_image %},
-  "image": "{{ page.og_image | absolute_url }}"{% endif %}
+  "genre": {{ page.content_label | default: page.content_type | jsonify }}{% endif %}
 }
 </script>

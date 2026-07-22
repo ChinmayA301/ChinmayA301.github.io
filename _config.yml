@@ -4,6 +4,7 @@ description: >-
   Chinmay Arora's portfolio and research notes on AI engineering, data science, AI governance, RAG systems, analytics engineering, and concept-stage AI products.
 baseurl: ""
 url: "https://app.chinmayarora.com"
+default_og_image: "/assets/images/default-og.png"
 lang: en_US
 timezone: America/Chicago
 

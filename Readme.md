@@ -21,6 +21,14 @@ This repository powers Chinmay Arora's technical portfolio, research writing, pr
 - Homepage JSON-LD identifies Chinmay Arora as the same entity across portfolio, GitHub, LinkedIn, Aegis, and PolyRAG surfaces.
 - Blog posts use structured `BlogPosting` metadata and flagged research/concept posts use explicit `content_type` front matter.
 
+## Project Writing
+
+- [Aegis AI governance and privacy trust layer](https://app.chinmayarora.com/blog/ai-governance-privacy-trust-layer/)
+- [SignalGraph and GitHub fake-star detection](https://app.chinmayarora.com/blog/signalgraph-github-fake-star-economy/)
+- [Wax Seal digital provenance and tamper evidence](https://app.chinmayarora.com/blog/wax-seal-cybersecurity/)
+- [Bayesian optimization on the Higgs retweet graph](https://app.chinmayarora.com/blog/influence-maximization-bayesian-optimization-higgs/)
+- [FinBizInfo financial balance-sheet RAG](https://app.chinmayarora.com/blog/financial-balance-sheet-rag/)
+
 ## AI assistance and verification
 
 AI tools are used for selected scaffolding, syntax assistance, documentation structure, and presentation review. Content, project maturity, evaluation logic, links, and final code changes are manually reviewed; public claims are written to distinguish completed analysis, deployed demos, prototypes, and in-development work.

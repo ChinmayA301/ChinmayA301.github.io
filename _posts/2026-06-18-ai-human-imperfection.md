@@ -4,7 +4,7 @@ title: "AI and Human Imperfection: Detecting the Pattern Breakers"
 date: 2026-06-16
 author: "Chinmay Arora"
 
-description: "A research exploration of an AI-human authenticity system that treats imperfection not as noise, but as cultural, linguistic, and creative signal."
+description: "A research exploration of an AI-human authenticity system that treats imperfection not as noise, but as cultural, linguistic, and creative evidence for provenance-aware evaluation."
 summary: "I am exploring AI detection, human irregularity, and deliberate imperfection through a richer analysis of pattern-breaking, cultural residue, linguistic variation, and meaningful human texture."
 tags: [AI, Human-AI Interaction, Responsible AI, AI Detection, Computational Creativity, Data Science, Research Exploration]
 content_type: "concept_note"

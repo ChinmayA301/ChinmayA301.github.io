@@ -1,0 +1,52 @@
+{%- assign related_limit = 3 -%}
+{%- assign related_count = 0 -%}
+{%- assign related_urls = '|' -%}
+{%- capture related_items -%}
+  {%- for candidate in site.posts -%}
+    {%- if candidate.url != page.url and related_count < related_limit -%}
+      {%- assign shares_topic = false -%}
+      {%- for tag in page.tags -%}
+        {%- if candidate.tags contains tag -%}
+          {%- assign shares_topic = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if shares_topic -%}
+        <li>
+          <a href="{{ candidate.url | relative_url }}">{{ candidate.title }}</a>
+          {%- if candidate.description %}
+          <p>{{ candidate.description | strip_html | strip_newlines | truncate: 170 }}</p>
+          {%- endif %}
+        </li>
+        {%- assign related_count = related_count | plus: 1 -%}
+        {%- assign related_urls = related_urls | append: candidate.url | append: '|' -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if related_count < related_limit -%}
+    {%- for candidate in site.posts -%}
+      {%- capture candidate_token -%}|{{ candidate.url }}|{%- endcapture -%}
+      {%- if candidate.url != page.url and related_count < related_limit and related_urls contains candidate_token -%}
+      {%- elsif candidate.url != page.url and related_count < related_limit -%}
+        <li>
+          <a href="{{ candidate.url | relative_url }}">{{ candidate.title }}</a>
+          {%- if candidate.description %}
+          <p>{{ candidate.description | strip_html | strip_newlines | truncate: 170 }}</p>
+          {%- endif %}
+        </li>
+        {%- assign related_count = related_count | plus: 1 -%}
+        {%- assign related_urls = related_urls | append: candidate.url | append: '|' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if related_count > 0 -%}
+<aside class="automatic-related-posts" aria-labelledby="related-posts-heading">
+  <p class="blog-community-kicker">Continue reading</p>
+  <h2 id="related-posts-heading">Related posts</h2>
+  <ol>
+    {{ related_items }}
+  </ol>
+</aside>
+{%- endif -%}

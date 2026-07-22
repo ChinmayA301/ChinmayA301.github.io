@@ -4,7 +4,7 @@ title: "Wax Seal Cybersecurity: Designing Trust, Provenance, and Tamper Evidence
 date: 2026-04-03
 author: "Chinmay Arora"
 
-description: "A cybersecurity project exploration inspired by wax seals, using layered identity markers, visible tamper evidence, and symbolic trust chains to rethink authenticity in digital systems."
+description: "A digital provenance and tamper evidence framework inspired by wax seals, combining cryptographic verification, chain-of-custody metadata, and human-legible trust states."
 summary: "I am exploring how one of history’s simplest trust mechanisms can inform modern digital security design. Instead of focusing only on hidden encryption, the model emphasizes visible tamper evidence, provenance, symbolic identity, and human-legible verification. The resulting framework examines message authenticity, trust signaling, and system-level integrity in high-friction or human-sensitive digital environments."
 
 categories: [Cybersecurity, Systems-Design, Applied-Research]
@@ -12,7 +12,7 @@ tags: [Cybersecurity, Identity, Provenance, Authentication, Tamper-Evidence, Hum
 
 permalink: /blog/wax-seal-cybersecurity/
 canonical_url: "https://app.chinmayarora.com/blog/wax-seal-cybersecurity/"
-og_image: "/assets/images/wax-seal-cybersecurity-cover.png"
+og_image: "/assets/images/og-wax-seal.png"
 image_alt: "Digital security exploration inspired by wax seals, combining provenance, tamper evidence, and symbolic authentication."
 
 lang: "en"
@@ -23,7 +23,7 @@ draft: false
 
 schema_type: "Article"
 keywords: "wax seal cybersecurity, digital provenance, tamper evidence, human centered security, authentication design, trust systems"
-last_modified_at: 2026-04-03
+last_modified_at: 2026-07-22
 content_type: "concept_note"
 content_label: "Project Exploration"
 search_phrase: "digital provenance and tamper evidence"
@@ -31,6 +31,8 @@ positioning_note: "I am developing a human-legible trust and provenance model fo
 ---
 
 > **Key takeaways**
+> **BLUF:** Wax Seal is a human-centered trust layer for digital artifacts: cryptographic evidence remains underneath, while visible provenance, approval state, and tamper history help people understand what they can trust.
+>
 > - Historical wax seals solved authenticity and tamper-evidence in a human-readable way.
 > - Modern cybersecurity often secures systems cryptographically while remaining opaque to users.
 > - A wax-seal-inspired model emphasizes provenance, symbolic trust, and visible integrity signals.
@@ -268,12 +270,18 @@ A good security system does not merely prevent tampering. It tells the truth abo
 
 That is what the wax seal did well centuries ago. And that is still a worthy design goal now.
 
-## Related Work
-- [AI Localisation for Media](/blog/ai-localisation-for-media/)
-- [Indian Media Strategy Shift](/blog/indian-media-strategy-shift/)
-- [Interactive Cultural Timeline Map](/blog/interactive-cultural-timeline-map/)
+## Related posts
 
-## References / Further Directions
-- Trust and provenance design in cybersecurity systems
-- Human-centered security and interpretable authentication research
-- AI content provenance and synthetic media verification frameworks
+This article is part of a three-part series on governance-layer AI: how systems make risk, provenance, and technical credibility reviewable.
+
+- [Aegis: an AI governance and privacy trust layer](/blog/ai-governance-privacy-trust-layer/)
+- [SignalGraph: credibility-adjusted signals for open-source diligence](/blog/signalgraph-github-fake-star-economy/)
+- [Tracking AI-generated content through provenance](/blog/tracking-ai-generated-content/)
+
+## References and project links
+
+- [C2PA technical specification for content provenance and authenticity](https://spec.c2pa.org/specifications/specifications/2.3/specs/C2PA_Specification.html)
+- [W3C Verifiable Credentials Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/)
+- [NIST Digital Identity Guidelines](https://pages.nist.gov/800-63-4/)
+- [OWASP Software Component Verification Standard](https://scvs.owasp.org/)
+- [Wax Seal project repository](https://github.com/ChinmayA301/wax-seal)

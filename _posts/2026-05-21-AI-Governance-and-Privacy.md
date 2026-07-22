@@ -4,7 +4,7 @@ title: "AI Governance and Privacy: Building the Trust Layer for High-Risk AI Ado
 date: 2026-05-19
 author: "Chinmay Arora"
 
-description: "A practical framework for how organizations manage AI data privacy, internal governance, third-party vendor risk, and high-risk AI adoption across government, healthcare, security, and regulated sectors."
+description: "A practical AI governance framework for privacy, vendor risk, human oversight, and audit evidence, showing how Aegis turns responsible AI principles into reviewable deployment decisions."
 summary: "AI adoption is no longer blocked only by model quality. It is increasingly blocked by trust: data privacy, unclear data practices, third-party vendor risk, accountability gaps, and uncertainty around governance standards. I am developing Aegis as an AI trust-layer project that converts governance principles into reviewable artifacts for high-risk implementation."
 
 categories: [AI-Governance, Privacy, Applied-Research]
@@ -12,7 +12,7 @@ tags: [AI-Governance, Privacy, Responsible-AI, Third-Party-Risk, Vendor-Risk, NI
 
 permalink: /blog/ai-governance-privacy-trust-layer/
 canonical_url: "https://app.chinmayarora.com/blog/ai-governance-privacy-trust-layer/"
-og_image: "/assets/images/ai-governance-privacy-cover.png"
+og_image: "/assets/images/og-aegis-ai-governance.png"
 image_alt: "Architecture diagram showing AI governance, privacy review, vendor risk, contract review, and responsible AI audit layers."
 
 lang: "en"
@@ -22,7 +22,7 @@ featured: false
 draft: false
 schema_type: "Article"
 keywords: "AI governance, AI privacy, responsible AI, third party AI risk, vendor risk management, AI contracts, NIST AI RMF, ISO 42001, public sector AI, healthcare AI governance"
-last_modified_at: 2026-05-19
+last_modified_at: 2026-07-22
 content_type: "concept_note"
 content_label: "Project Exploration"
 search_phrase: "AI governance privacy trust layer"
@@ -30,6 +30,8 @@ positioning_note: "I am developing Aegis as a governance and trust-layer project
 ---
 
 ## Key takeaways
+
+> **BLUF:** Aegis treats AI governance as deployment infrastructure: one reviewable workflow connecting use-case risk, data handling, vendor controls, human oversight, approval evidence, and post-launch monitoring.
 
 - The biggest barrier to AI adoption is no longer only technical performance. It is trust.
 - Organizations worry about what data AI systems access, where that data goes, how it is retained, and who is accountable when something goes wrong.
@@ -458,7 +460,7 @@ These systems require strong documentation, fairness review, explainability, and
 
 Several frameworks already guide AI governance.
 
-NIST AI RMF provides a risk-management structure around governing, mapping, measuring, and managing AI risks. ISO/IEC 42001 provides a management-system approach for organizations building or using AI systems. The EU AI Act creates a risk-based regulatory model, with stricter requirements for high-risk AI systems. These are useful foundations, but organizations still struggle to convert them into day-to-day review workflows.  [oai_citation:0‡NIST](https://www.nist.gov/?utm_source=chatgpt.com)
+NIST AI RMF provides a risk-management structure around governing, mapping, measuring, and managing AI risks. ISO/IEC 42001 provides a management-system approach for organizations building or using AI systems. The EU AI Act creates a risk-based regulatory model, with stricter requirements for high-risk AI systems. These are useful foundations, but organizations still struggle to convert them into day-to-day review workflows.  [NIST](https://www.nist.gov/?utm_source=chatgpt.com)
 
 The gap is operational.
 
@@ -974,26 +976,21 @@ A bridge between innovation, privacy, governance, and institutional confidence.
 
 ## References and further reading
 
-- NIST AI Risk Management Framework: https://www.nist.gov/itl/ai-risk-management-framework
-- NIST Generative AI Profile: https://www.nist.gov/itl/ai-risk-management-framework/generative-ai-profile
-- ISO/IEC 42001:2023 Artificial Intelligence Management System: https://www.iso.org/standard/42001
-- ISO overview of AI management systems: https://www.iso.org/artificial-intelligence/ai-management-systems
-- EU AI Act high-level summary: https://artificialintelligenceact.eu/high-level-summary/
-- EU AI Act Article 6, high-risk AI classification: https://artificialintelligenceact.eu/article/6/
-- IAPP AI Governance resources: https://iapp.org/resources/article/third-party-resources-ai-governance
-- PwC Responsible AI and Third-Party Risk Management: https://www.pwc.com/us/en/tech-effect/ai-analytics/responsible-ai-tprm.html
-- Content Credentials / C2PA provenance standard: https://c2pa.org/
-- W3C Verifiable Credentials: https://www.w3.org/TR/vc-data-model/
+- [NIST AI Risk Management Framework 1.0](https://doi.org/10.6028/NIST.AI.100-1)
+- [NIST Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1)
+- [ISO/IEC 42001 artificial intelligence management systems](https://www.iso.org/standard/42001)
+- [European Commission regulatory framework for AI](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
+- [W3C Verifiable Credentials Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/)
 
 ---
 
 ## Related posts
 
-- [Aegis AI Strategy and Audit: OS for Companies](/blog/aegis-ai-strategy-audit/)
-- [Simulation Engineering AI: Testing Decisions Before Reality Gets Expensive](/blog/simulation-engineering-ai/)
-- [Tracking AI-Generated Content: Simple, Practical Systems for Text, Images, Code, and Execution Patterns](/blog/tracking-ai-generated-content/)
-- [The Success Directory: A Decision Intelligence Framework for High-Stakes, Ambiguous Choices](/blog/success-directory-decision-intelligence/)
-- [AI Phone Co-Pilot for Seniors: Guided Interfaces for Everyday Digital Tasks](/blog/ai-phone-copilot-seniors/)
+This article is part of a three-part series on governance-layer AI: how systems make risk, provenance, and technical credibility reviewable.
+
+- [SignalGraph: credibility-adjusted signals for open-source diligence](/blog/signalgraph-github-fake-star-economy/)
+- [Wax Seal: human-legible provenance and tamper evidence](/blog/wax-seal-cybersecurity/)
+- [Financial Balance-Sheet RAG: citation-grounded document intelligence](/blog/financial-balance-sheet-rag/)
 
 ---
 

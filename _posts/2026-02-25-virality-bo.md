@@ -2,7 +2,7 @@
 layout: post
 title: "Engineering Virality with Bayesian Optimization"
 date: 2026-02-25
-description: "From predicting trends to optimizing them — a big-idea exploration of Bayesian Optimization in social influence systems."
+description: "A Bayesian optimization study of virality and influence maximization, testing how sequential search, diffusion models, and graph-aware seed selection compare with simple network heuristics."
 summary: "What if trends were not just forecasted but engineered? This article explores how Bayesian Optimization transforms virality into a sequential decision-making problem."
 tags:
   - bayesian optimization

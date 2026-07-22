@@ -4589,7 +4589,91 @@ body.blog-theme :focus-visible {
     }
 }
 
-/* Brain Vomit — comments, sharing, and the future newsletter */
+/* Related reading, comments, sharing, and the future newsletter */
+.automatic-related-posts {
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+    padding-block: clamp(1.75rem, 4vw, 2.75rem);
+    border-top: 4px double var(--news-rule-strong);
+    border-bottom: 1px solid var(--news-rule);
+}
+
+.automatic-related-posts h2 {
+    margin: 0.5rem 0 1.4rem;
+    color: var(--news-ink) !important;
+    font-family: "Instrument Serif", Georgia, serif !important;
+    font-size: clamp(2.1rem, 4.2vw, 3.7rem) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: 0.98;
+}
+
+.automatic-related-posts ol {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: related-post;
+}
+
+.automatic-related-posts li {
+    min-width: 0;
+    padding: 1.1rem 1.25rem 0.25rem 0;
+    border-right: 1px solid var(--news-rule);
+    counter-increment: related-post;
+}
+
+.automatic-related-posts li + li {
+    padding-left: 1.25rem;
+}
+
+.automatic-related-posts li:last-child {
+    border-right: 0;
+}
+
+.automatic-related-posts li::before {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--news-accent);
+    content: "0" counter(related-post);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.66rem;
+}
+
+.automatic-related-posts a {
+    color: var(--news-ink) !important;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.08;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+}
+
+body.blog-theme .automatic-related-posts p:not(.blog-community-kicker) {
+    margin: 0.8rem 0 0;
+    color: var(--news-muted) !important;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+    .automatic-related-posts ol {
+        grid-template-columns: 1fr;
+    }
+
+    .automatic-related-posts li,
+    .automatic-related-posts li + li {
+        padding: 1rem 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--news-rule);
+    }
+
+    .automatic-related-posts li:last-child {
+        border-bottom: 0;
+    }
+}
+
 .blog-newsletter {
     display: grid;
     grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1.18fr);

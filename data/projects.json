@@ -31,7 +31,7 @@
             },
             {
                 "label": "Related Writing",
-                "url": "/blog/the-impact-of-ai-on-local-government-digital-experience/"
+                "url": "/blog/ai-governance-privacy-trust-layer/"
             }
         ]
     },
@@ -418,6 +418,10 @@
             {
                 "label": "Live Site",
                 "url": "https://www.finbizinfo.com"
+            },
+            {
+                "label": "Related Writing",
+                "url": "/blog/financial-balance-sheet-rag/"
             }
         ]
     },
@@ -485,6 +489,10 @@
             {
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/Signal-Graph"
+            },
+            {
+                "label": "Related Writing",
+                "url": "/blog/signalgraph-github-fake-star-economy/"
             }
         ]
     },
@@ -512,6 +520,10 @@
             {
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/wax-seal"
+            },
+            {
+                "label": "Related Writing",
+                "url": "/blog/wax-seal-cybersecurity/"
             }
         ]
     },

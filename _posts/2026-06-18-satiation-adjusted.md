@@ -4,7 +4,7 @@ title: "The Satiation-Adjusted Serving System: Nutrition Labels Built Around Rea
 date: 2026-06-16
 author: "Chinmay Arora"
 
-description: "A research exploration of replacing static nutrition serving sizes with satiation-adjusted meal units that better reflect how adults actually eat."
+description: "A research exploration of replacing static nutrition serving sizes with satiation-adjusted meal units that better reflect how adults eat, compare foods, and interpret nutrition labels."
 summary: "I am developing a Satiation-Adjusted Serving System that estimates how much of a food behaves like a meal, snack, or insufficient portion using calories, protein, fiber, energy density, volume, and satiety research."
 tags: [Data Science, Nutrition, Food Systems, Public Health, Product Design, Health Analytics, Research Exploration]
 content_type: "concept_note"

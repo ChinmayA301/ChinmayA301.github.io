@@ -1,6 +1,6 @@
 ---
 title: "Welcome to the Blog"
-description: "How this blog is structured for technical readers, SEO, and LLM discovery."
+description: "A guide to how Chinmay Arora's technical blog uses BLUF summaries, structured evidence, internal links, and metadata to help readers, search engines, and AI systems find useful work."
 bluf: "Every post starts with key decisions first, then implementation detail, so both humans and LLMs can parse quickly."
 tldr:
   - "Read BLUF first for the core recommendation."
