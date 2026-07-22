@@ -220,7 +220,11 @@ def audit_page(url: str) -> PageAudit:
 
 def write_csv(audits: list[PageAudit], path: Path) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(asdict(audits[0]).keys()))
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=list(asdict(audits[0]).keys()),
+            lineterminator="\n",
+        )
         writer.writeheader()
         for audit in audits:
             row = asdict(audit)
