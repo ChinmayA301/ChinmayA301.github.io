@@ -2,6 +2,8 @@
 
 Cloudflare Python Worker behind `rag.chinmayarora.com`. It researches a visitor's company, identifies likely priority pain points, retrieves the strongest matching evidence from Chinmay Arora's complete portfolio, and generates a concise consultation.
 
+Related Aegis research: [AI Governance and Privacy: Building the Trust Layer for High-Risk AI Adoption](https://app.chinmayarora.com/blog/ai-governance-privacy-trust-layer/).
+
 ## Evidence corpus
 
 The ingestion workflow indexes:

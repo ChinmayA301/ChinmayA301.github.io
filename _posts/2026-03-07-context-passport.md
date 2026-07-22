@@ -16,7 +16,7 @@ search_phrase: "portable AI memory and context passport"
 positioning_note: "I am exploring the product and infrastructure requirements for portable AI memory; this documents the system direction rather than claiming a shipped protocol."
 ---
 
-# Claude Memory changes the game — but the real unlock is portable, user-owned memory
+## Claude Memory changes the game — but the real unlock is portable, user-owned memory
 
 There’s a quiet tax every power user pays in 2026:
 

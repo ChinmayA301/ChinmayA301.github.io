@@ -14,7 +14,7 @@ search_phrase: "Ronaldo Portugal contextual football analysis"
 positioning_note: "Evidence-led football analysis using public event data and reported physical output; conclusions are contextual and descriptive rather than causal."
 ---
 
-# Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data
+## Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data
 
 Incomplete data context is as dangerous as incomplete data.
 

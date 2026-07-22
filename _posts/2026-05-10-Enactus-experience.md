@@ -22,7 +22,7 @@ schema_type: BlogPosting
 keywords: "Project Restub, Enactus SRM, cigarette butt waste, brick making, social entrepreneurship, sustainability, circular economy, FlyLife, drone medicine delivery, Enactus marketplace"
 ---
 
-# Project Restub: Turning Cigarette Waste into Bricks Through Social Entrepreneurship
+## Project Restub: Turning Cigarette Waste into Bricks Through Social Entrepreneurship
 
 Before my work moved deeper into data science, AI governance, decision intelligence, and applied research, one of the most important parts of my undergraduate journey came through **Enactus SRM**.
 

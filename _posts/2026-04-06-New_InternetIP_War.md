@@ -8,6 +8,7 @@ categories: [AI, Internet-Infrastructure, Protocols]
 tags: [A2A, ACP, UCP, ATXP, Agentic-AI, Interoperability, AI-Commerce, AI-Payments, Internet-Protocols, Developer-Infrastructure]
 og_image: "/assets/images/agent-protocol-stack.png"
 canonical_url: "https://app.chinmayarora.com/blog/agent-protocol-stack/"
+permalink: /blog/agent-protocol-stack/
 
 summary: The web is gaining a new protocol layer—not just for documents, APIs, or apps, but for agents. Protocols like A2A, ACP, UCP, and ATXP point toward an internet where software can discover other software, exchange context, negotiate actions, and complete transactions with far less human mediation.
 content_type: "concept_note"

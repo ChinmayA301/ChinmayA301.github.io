@@ -19,6 +19,8 @@ plugins:
 exclude:
   - Readme.md
   - VISIBILITY.md
+  - audit_output
+  - scripts
 
 defaults:
   - scope:
