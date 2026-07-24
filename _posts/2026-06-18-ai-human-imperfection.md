@@ -267,12 +267,12 @@ What counts as meaningful imperfection? Who decides? Is a grammar “mistake” 
 
 This project would need a human annotation protocol that separates:
 
-1. **mechanical error** — accidental typos, broken syntax, formatting errors;
-2. **expressive irregularity** — unusual but meaningful phrasing;
-3. **cultural or dialectal variation** — non-standard but systematic language;
-4. **process trace** — signs of drafting, revision, or embodied labor;
-5. **adversarial artifacts** — weirdness inserted to game detection;
-6. **institutional smoothness** — human writing shaped by templates and professional norms.
+1. **mechanical error** - accidental typos, broken syntax, formatting errors;
+2. **expressive irregularity** - unusual but meaningful phrasing;
+3. **cultural or dialectal variation** - non-standard but systematic language;
+4. **process trace** - signs of drafting, revision, or embodied labor;
+5. **adversarial artifacts** - weirdness inserted to game detection;
+6. **institutional smoothness** - human writing shaped by templates and professional norms.
 
 Without this taxonomy, the model will learn lazy proxies.
 

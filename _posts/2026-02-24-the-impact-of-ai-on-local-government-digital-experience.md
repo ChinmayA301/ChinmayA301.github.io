@@ -27,7 +27,7 @@ When local governments talk about “using AI,” the first constraint isn’t m
 - Data access and purpose limitation
 - Traceability (what influenced an outcome?)
 - Defensibility (can we explain it under review?)
-- Measurable impact (time, quality, equity—consistently)
+- Measurable impact (time, quality, equity - consistently)
 - Safe iteration (pilot → learn → scale without chaos)
 
 So the technical core becomes: **build a system where AI outputs are governed, measured, and explainable by default.**

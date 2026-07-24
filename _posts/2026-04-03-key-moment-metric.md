@@ -31,7 +31,7 @@ positioning_note: "I am developing the Successful Key Moment metric and its eval
 ---
 
 > **Key takeaways**
-> - Most football metrics still overweight final outcomes such as goals and assists — even advanced ones inherit this bias.
+> - Most football metrics still overweight final outcomes such as goals and assists - even advanced ones inherit this bias.
 > - Existing frameworks like xT and VAEP address parts of this problem, but none combine difficulty, context, role, and downstream influence in a single unified score.
 > - SKM is designed to score actions by expected value, context, pressure, role expectations, and downstream match influence.
 > - The metric is intended to better reflect role-sensitive contribution across systems and positions.
@@ -41,9 +41,9 @@ positioning_note: "I am developing the Successful Key Moment metric and its eval
 
 Football analytics has become highly effective at quantifying certain kinds of value: shot quality, passing progression, possession value, defensive actions, and on-ball involvement. Yet a major gap still remains between what analysts, coaches, and viewers *see* in a match and what mainstream data systems tend to reward.
 
-Goals and assists are still culturally dominant. Even more advanced metrics often inherit the same bias by remaining tightly centered around terminal events — shots, final passes, or possession endings. But football is a chain-reaction sport. Many of its most important moments are neither the final action nor a conventional box-score event.
+Goals and assists are still culturally dominant. Even more advanced metrics often inherit the same bias by remaining tightly centered around terminal events - shots, final passes, or possession endings. But football is a chain-reaction sport. Many of its most important moments are neither the final action nor a conventional box-score event.
 
-A midfielder slowing tempo under pressure, a center-back stepping into space to break a line, a full-back making an underlapping run that distorts shape, or a forward occupying two defenders to create a lane for someone else — these are often decisive moments in the *structure* of the match without appearing decisive in the stat sheet.
+A midfielder slowing tempo under pressure, a center-back stepping into space to break a line, a full-back making an underlapping run that distorts shape, or a forward occupying two defenders to create a lane for someone else - these are often decisive moments in the *structure* of the match without appearing decisive in the stat sheet.
 
 That is the motivation behind **Successful Key Moment (SKM)**: a metric that attempts to quantify the quality and influence of important actions based not only on what happened immediately, but on what was expected, what the context demanded, and what changed afterward.
 
@@ -51,15 +51,15 @@ That is the motivation behind **Successful Key Moment (SKM)**: a metric that att
 
 Before introducing SKM's architecture, it is worth being precise about what already exists and where the gaps remain. This field is active, and SKM should be understood as building on prior work rather than ignoring it.
 
-### Expected Threat (xT) — Singh, 2019
+### Expected Threat (xT) - Singh, 2019
 
-Karun Singh's xT model divides the pitch into a grid and assigns each cell a probability that a possession starting there will yield a goal within the next few actions. Passes and carries are then valued by the xT difference between their start and end zones. xT is elegant and interpretable — its biggest strength is that non-technical audiences can grasp it immediately.
+Karun Singh's xT model divides the pitch into a grid and assigns each cell a probability that a possession starting there will yield a goal within the next few actions. Passes and carries are then valued by the xT difference between their start and end zones. xT is elegant and interpretable - its biggest strength is that non-technical audiences can grasp it immediately.
 
 Its limitations are well-documented. It is purely location-based: two passes covering the same pitch zones score identically regardless of the pressure on the passer, the speed of the move, or the game state. It cannot value defensive actions. It treats a 1-0 pass in the 90th minute the same as one at 3-0 in the 20th. SKM's difficulty (D) and context (C) components are a direct response to these gaps.
 
-### VAEP — Decroos, Bransen, Van Haaren & Davis, 2019
+### VAEP - Decroos, Bransen, Van Haaren & Davis, 2019
 
-VAEP (Valuing Actions by Estimating Probabilities) is the closest existing cousin to SKM and deserves direct engagement. Rather than grid-based zones, VAEP trains a classifier on the entire action sequence context — action type, location, game state, recent history — to estimate how each action shifts the short-term probability of scoring or conceding. It covers all on-ball action types, not just passes and carries.
+VAEP (Valuing Actions by Estimating Probabilities) is the closest existing cousin to SKM and deserves direct engagement. Rather than grid-based zones, VAEP trains a classifier on the entire action sequence context - action type, location, game state, recent history - to estimate how each action shifts the short-term probability of scoring or conceding. It covers all on-ball action types, not just passes and carries.
 
 VAEP is a significant advance. It already does a lot of what SKM proposes to do. The comparison paper by Van Roy, Robberechts, Decroos & Davis (2020) shows that VAEP more accurately values risk and contextual failure than xT, because it can assign negative value to actions that shift possession probability against the team.
 
@@ -67,25 +67,25 @@ Where VAEP falls short, and where SKM attempts to go further, is on three dimens
 
 1. **Difficulty relative to expectation**: VAEP measures what happened to match state. It does not isolate how *improbable* the successful action was relative to what a typical player in that situation would achieve. A line-breaking pass through a compressed block and a routine sideways switch can produce the same ΔP. SKM's difficulty multiplier (D) explicitly captures this gap.
 
-2. **Role-based normalization**: VAEP applies the same framework to every player regardless of tactical role. A holding midfielder and an attacking midfielder are compared on the same distribution. SKM's role/system factor (R) adjusts for what is expected given a player's role, formation, and system — rewarding deviation that consistently improves match state, rather than treating all high-value actions as equally impressive regardless of how naturally they fall within a player's responsibilities.
+2. **Role-based normalization**: VAEP applies the same framework to every player regardless of tactical role. A holding midfielder and an attacking midfielder are compared on the same distribution. SKM's role/system factor (R) adjusts for what is expected given a player's role, formation, and system - rewarding deviation that consistently improves match state, rather than treating all high-value actions as equally impressive regardless of how naturally they fall within a player's responsibilities.
 
-3. **Interpretable decomposition**: VAEP produces a single number. SKM produces a decomposed score — V, D, C, R, and ΔP are visible and attributable. This matters for communicating findings to coaches and scouts who need to understand *why* an action was rated highly, not just that it was.
+3. **Interpretable decomposition**: VAEP produces a single number. SKM produces a decomposed score - V, D, C, R, and ΔP are visible and attributable. This matters for communicating findings to coaches and scouts who need to understand *why* an action was rated highly, not just that it was.
 
-### OBV (On-Ball Value) — StatsBomb
+### OBV (On-Ball Value) - StatsBomb
 
-StatsBomb's proprietary OBV metric follows a similar philosophy to VAEP: every on-ball action is valued by its effect on the probability of the team scoring or conceding. OBV is used internally by clubs and has been partially described in public research, but its full methodology is proprietary. SKM is designed as an open, reproducible framework — the full pipeline should be replicable from public event data.
+StatsBomb's proprietary OBV metric follows a similar philosophy to VAEP: every on-ball action is valued by its effect on the probability of the team scoring or conceding. OBV is used internally by clubs and has been partially described in public research, but its full methodology is proprietary. SKM is designed as an open, reproducible framework - the full pipeline should be replicable from public event data.
 
-### DxT — 2025
+### DxT - 2025
 
-A 2025 paper introduced DxT (Dynamic Expected Threat), which extends xT by incorporating real-time off-ball player positioning. Rather than assigning static zone-level threat values, DxT adjusts them dynamically based on where defenders and attackers are at the moment of the action. This is directly aligned with SKM's Layer 3 (tracking and pressure modeling). DxT performs worse than VAEP on global player ranking tasks but is more interpretable for coaching-level tactical analysis — which is exactly the use case SKM also targets.
+A 2025 paper introduced DxT (Dynamic Expected Threat), which extends xT by incorporating real-time off-ball player positioning. Rather than assigning static zone-level threat values, DxT adjusts them dynamically based on where defenders and attackers are at the moment of the action. This is directly aligned with SKM's Layer 3 (tracking and pressure modeling). DxT performs worse than VAEP on global player ranking tasks but is more interpretable for coaching-level tactical analysis - which is exactly the use case SKM also targets.
 
-### xSuccess — Paul, Klemp & Memmert, 2026
+### xSuccess - Paul, Klemp & Memmert, 2026
 
 The most recent adjacent work isolates completion probability as a correction to outcome-driven models like VAEP. xSuccess estimates how likely a given action was to succeed given context, then adjusts the raw VAEP value accordingly. A risky action that happened to succeed is deflated; a well-executed action that failed due to variance is partially credited. This overlaps meaningfully with SKM's difficulty multiplier. The difference is that SKM incorporates difficulty as one of several adjustments, rather than as a correction applied post-hoc to a VAEP-derived score.
 
 ### Where SKM fits
 
-SKM is not claiming to outperform VAEP on player ranking accuracy — that is an empirical question that requires building and testing the model. The claim is narrower and more tractable: that by combining role-normalization, contextual weighting, and an explicit difficulty term into a single decomposable framework, SKM produces scores that are more interpretable to coaches and scouts, fairer across positions, and more aligned with how football observers actually evaluate influence.
+SKM is not claiming to outperform VAEP on player ranking accuracy - that is an empirical question that requires building and testing the model. The claim is narrower and more tractable: that by combining role-normalization, contextual weighting, and an explicit difficulty term into a single decomposable framework, SKM produces scores that are more interpretable to coaches and scouts, fairer across positions, and more aligned with how football observers actually evaluate influence.
 
 ## 3) The Core Idea Behind SKM
 
@@ -121,7 +121,7 @@ $$
 SKM_i = \Delta P_i + \alpha \cdot D_i + \beta \cdot C_i + \gamma \cdot R_i
 $$
 
-Here, ΔP is the primary signal — the downstream change in expected positive outcome. Difficulty, context, and role are *adjustments* that augment the baseline. This formulation makes it easy to decompose any score and explain which factor drove it. It is the recommended starting point for implementation.
+Here, ΔP is the primary signal - the downstream change in expected positive outcome. Difficulty, context, and role are *adjustments* that augment the baseline. This formulation makes it easy to decompose any score and explain which factor drove it. It is the recommended starting point for implementation.
 
 ### 4.2 Multiplicative framing (for interaction effects)
 
@@ -129,12 +129,12 @@ $$
 SKM_i = \Delta P_i \times D_i \times C_i \times R_i
 $$
 
-The multiplicative version captures the intuition that difficulty should *amplify* value rather than merely add to it. A difficult action in a critical game state under high pressure should score meaningfully higher than a routine action under the same conditions — not just additively higher. The trade-off is that a zero in any factor zeroes the whole score, which creates fragility. This version makes more sense once the components are well-calibrated and validated individually.
+The multiplicative version captures the intuition that difficulty should *amplify* value rather than merely add to it. A difficult action in a critical game state under high pressure should score meaningfully higher than a routine action under the same conditions - not just additively higher. The trade-off is that a zero in any factor zeroes the whole score, which creates fragility. This version makes more sense once the components are well-calibrated and validated individually.
 
 ### Component definitions
 
-- **ΔP_i**: downstream change in expected positive outcome probability (scoring minus conceding), estimated from action sequences — the anchor of the metric
-- **D_i**: difficulty multiplier, derived from completion probability models — how improbable was success given the context
+- **ΔP_i**: downstream change in expected positive outcome probability (scoring minus conceding), estimated from action sequences - the anchor of the metric
+- **D_i**: difficulty multiplier, derived from completion probability models - how improbable was success given the context
 - **C_i**: contextual importance multiplier, incorporating game minute, scoreline state, opponent quality, field zone, and pressure phase
 - **R_i**: role/system adjustment, reflecting how expected or surprising this action type is for this player's role and tactical context
 
@@ -159,7 +159,7 @@ The ΔP model can be trained using a gradient-boosted classifier on event sequen
 
 Difficulty is central to the correction SKM makes over existing metrics. A sideways pass with no pressure is not equal to a same-distance pass through a compressed block.
 
-Difficulty is estimated as the inverse of a completion probability model — how likely was success given this context? Inputs:
+Difficulty is estimated as the inverse of a completion probability model - how likely was success given this context? Inputs:
 
 - under-pressure flag and pressure distance
 - number of nearby defenders (from 360 data where available)
@@ -189,7 +189,7 @@ One of the persistent weaknesses in football evaluation is applying identical st
 
 SKM's role factor works in two steps:
 
-1. **Cluster players into role archetypes** based on their per-90 action profiles — roughly six to eight clusters (deep defender, ball-playing CB, holding mid, progressive mid, wide attacker, central attacker, and hybrids).
+1. **Cluster players into role archetypes** based on their per-90 action profiles - roughly six to eight clusters (deep defender, ball-playing CB, holding mid, progressive mid, wide attacker, central attacker, and hybrids).
 
 2. **Compute role-expected action distributions** for each cluster, then score each action by how surprising it is relative to role expectations. A center-back completing a line-breaking progressive pass into the final third earns a higher R_i than a midfielder doing the same. A striker shooting is role-expected and earns R_i ≈ 1.
 
@@ -217,19 +217,19 @@ To make the above concrete, consider the following action from a hypothetical Ch
 | Component | Score | Reasoning |
 |---|---|---|
 | ΔP_i | +0.07 | Pass moves team from low-threat defensive zone into high-threat transition; estimated from sequence model |
-| D_i | 2.4 | Under heavy pressure, line-breaking pass through compressed block — completion probability ~30% in this context |
+| D_i | 2.4 | Under heavy pressure, line-breaking pass through compressed block - completion probability ~30% in this context |
 | C_i | 1.8 | 76th minute, tied score, knockout match, high pressure phase |
-| R_i | 1.1 | Holding midfielder playing line-breaking pass — within role but toward the impactful edge of role distribution |
+| R_i | 1.1 | Holding midfielder playing line-breaking pass - within role but toward the impactful edge of role distribution |
 
 **Additive SKM**: 0.07 + (0.3 × 2.4) + (0.3 × 1.8) + (0.3 × 1.1) = 0.07 + 0.72 + 0.54 + 0.33 = **1.66**
 
 **Multiplicative SKM**: 0.07 × 2.4 × 1.8 × 1.1 = **0.333**
 
-By contrast, a statistically identical pass — same start and end zones, same action type — made at 3-0 in the 20th minute with no pressure and no defenders nearby would score:
+By contrast, a statistically identical pass - same start and end zones, same action type - made at 3-0 in the 20th minute with no pressure and no defenders nearby would score:
 
 **Additive SKM**: 0.07 + (0.3 × 0.8) + (0.3 × 0.6) + (0.3 × 1.0) = 0.07 + 0.24 + 0.18 + 0.30 = **0.79**
 
-The first pass is approximately twice as valuable — even though both produced the same ΔP. That gap is the point of SKM.
+The first pass is approximately twice as valuable - even though both produced the same ΔP. That gap is the point of SKM.
 
 ## 7) SKM as a Bridge Between Metrics and the Eye Test
 
@@ -282,7 +282,7 @@ Model expected action distributions by role cluster, formation, coach/system, ga
 ## 9) Example Use Cases
 
 ### Player evaluation
-SKM surfaces players who consistently improve team state without dominating visible output — central midfielders, ball-playing center-backs, pressing forwards, and hybrid defenders whose contribution rarely appears on a traditional stat line.
+SKM surfaces players who consistently improve team state without dominating visible output - central midfielders, ball-playing center-backs, pressing forwards, and hybrid defenders whose contribution rarely appears on a traditional stat line.
 
 ### Recruitment
 Recruitment departments want players whose influence survives context shifts and opponent quality changes. SKM can surface players who make difficult positive actions repeatedly, operate effectively under pressure, and elevate possession states without needing high-volume final-third output.
@@ -291,7 +291,7 @@ Recruitment departments want players whose influence survives context shifts and
 Coaches can use SKM to examine where important state changes are created, which actions break structure, and whose decisions stabilize or destabilize key phases.
 
 ### Broadcast and media
-A broadcast-ready version of SKM could improve football storytelling. Instead of centering all narratives on goals and assists, analysts could explain — with data — why one action in the 77th minute mattered more than three passes in the 30th.
+A broadcast-ready version of SKM could improve football storytelling. Instead of centering all narratives on goals and assists, analysts could explain - with data - why one action in the 77th minute mattered more than three passes in the 30th.
 
 ## 10) Guardrails and Limitations
 
@@ -305,7 +305,7 @@ A public-data version of SKM will be meaningfully less powerful than a tracking-
 Any metric risks rewarding styles that are easier to measure. Low-tempo controllers, off-ball manipulators, and non-ball-dominant defenders remain hard to capture fully. SKM's Layer 3 and Layer 4 are designed to reduce this bias, but not eliminate it.
 
 ### Interpretability matters
-A metric this layered cannot become a black box. Coaches, scouts, and fans need understandable decompositions: why was this moment scored highly? Which factor drove the score — pressure, difficulty, context, or downstream effect? The additive formulation exists specifically to preserve this transparency.
+A metric this layered cannot become a black box. Coaches, scouts, and fans need understandable decompositions: why was this moment scored highly? Which factor drove the score - pressure, difficulty, context, or downstream effect? The additive formulation exists specifically to preserve this transparency.
 
 ## 11) Why This Matters
 

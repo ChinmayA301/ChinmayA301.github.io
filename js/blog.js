@@ -28,7 +28,7 @@
           form.target = frameName;
           HTMLFormElement.prototype.submit.call(form);
           form.reset();
-          if (status) status.textContent = form.dataset.successMessage || 'Thanks — your signup is on its way.';
+          if (status) status.textContent = form.dataset.successMessage || 'Thanks, your signup is on its way.';
           if (button) {
             button.disabled = false;
             button.textContent = defaultLabel;

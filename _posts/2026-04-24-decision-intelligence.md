@@ -4,8 +4,8 @@ title: "The Success Directory: A Decision Intelligence Framework for High-Stakes
 date: 2026-04-24
 author: "Chinmay Arora"
 
-description: "A technical framework for a Decision-as-a-Service platform that helps users navigate ambiguous, high-stakes decisions by surfacing structured reference classes, heuristic lenses, and honest calibration — without the fake math."
-summary: "I am developing the Success Directory as a Decision Intelligence platform for capturing the latent heuristics of expert decision-making without overpromising on the math. Rather than using Inverse Reinforcement Learning on anecdotes or running CATE on n=1 strategic choices, it uses reference-class forecasting, a curated Decision Pattern Library, and four Expert Reasoning Lenses to produce a Decision Brief — a pressure-tested artifact that bridges the gap between data and real-world judgment."
+description: "A technical framework for a Decision-as-a-Service platform that helps users navigate ambiguous, high-stakes decisions by surfacing structured reference classes, heuristic lenses, and honest calibration - without the fake math."
+summary: "I am developing the Success Directory as a Decision Intelligence platform for capturing the latent heuristics of expert decision-making without overpromising on the math. Rather than using Inverse Reinforcement Learning on anecdotes or running CATE on n=1 strategic choices, it uses reference-class forecasting, a curated Decision Pattern Library, and four Expert Reasoning Lenses to produce a Decision Brief - a pressure-tested artifact that bridges the gap between data and real-world judgment."
 
 categories: [Decision-Intelligence, Data-Science, Applied-Research]
 tags: [Decision-Science, Causal-AI, IRL, Reference-Class-Forecasting, Bayesian-Reasoning, LLM-Applications, Strategy, Product-Design]
@@ -77,7 +77,7 @@ You cannot tell when the model is drawing on 40 well-documented analogues or one
 
 Most data systems, even sophisticated ones, inherit the bias of box scores.
 
-They track what happened at the end — the acquisition closed, the product was sunsetted, the hire was made — without modeling what changed in the structure of the situation before that endpoint.
+They track what happened at the end - the acquisition closed, the product was sunsetted, the hire was made - without modeling what changed in the structure of the situation before that endpoint.
 
 That is the motivation behind the Success Directory: a Decision Intelligence platform that treats historical decision patterns as the core asset, imposes honest calibration, and is explicit about what the math can and cannot tell you.
 
@@ -87,7 +87,7 @@ That is the motivation behind the Success Directory: a Decision Intelligence pla
 
 The Success Directory is built on a principle borrowed from Daniel Kahneman and Amos Tversky’s work on the outside view:
 
-> Before trusting your inside view of a decision — your logic, your narrative, your confidence in this specific situation — first look at the reference class.
+> Before trusting your inside view of a decision - your logic, your narrative, your confidence in this specific situation - first look at the reference class.
 
 How often do people in structurally similar situations, making structurally similar choices, succeed?
 
@@ -153,7 +153,7 @@ Confirmation bias with a log-partition function attached.
 
 ### 3.2 CATE on Strategic Decisions
 
-Double Machine Learning and related CATE estimators are the right tool when you have many units — companies, individuals, markets — some of which received a “treatment” and some of which did not, with sufficient overlap for causal identification.
+Double Machine Learning and related CATE estimators are the right tool when you have many units - companies, individuals, markets - some of which received a “treatment” and some of which did not, with sufficient overlap for causal identification.
 
 The problem is that strategic business decisions are largely \( n = 1 \).
 

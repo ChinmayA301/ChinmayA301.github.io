@@ -25,7 +25,7 @@
             },
             {
                 "title": "Finding",
-                "text": "The best observed AUC was 0.612 and ADI produced no consistent lift. The result is methodological evidence about weak incremental utility and observation bias—not a deployable clinical model or a causal claim."
+                "text": "The best observed AUC was 0.612 and ADI produced no consistent lift. The result is methodological evidence about weak incremental utility and observation bias, not a deployable clinical model or a causal claim."
             }
         ],
         "stack": [

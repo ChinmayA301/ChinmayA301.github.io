@@ -3,14 +3,14 @@ layout: post
 title: "The Internet’s Next Protocol Layer: A2A, ACP, UCP, ATXP and the Shift from Pages to Agents"
 date: 2026-04-06
 author: "Chinmay Arora"
-description: "An exploratory technical essay on the emerging protocol stack for agentic systems—how A2A, ACP, UCP, and ATXP signal a shift from human-click web flows to interoperable, transactable AI agents."
+description: "An exploratory technical essay on the emerging protocol stack for agentic systems - how A2A, ACP, UCP, and ATXP signal a shift from human-click web flows to interoperable, transactable AI agents."
 categories: [AI, Internet-Infrastructure, Protocols]
 tags: [A2A, ACP, UCP, ATXP, Agentic-AI, Interoperability, AI-Commerce, AI-Payments, Internet-Protocols, Developer-Infrastructure]
 og_image: "/assets/images/agent-protocol-stack.png"
 canonical_url: "https://app.chinmayarora.com/blog/agent-protocol-stack/"
 permalink: /blog/agent-protocol-stack/
 
-summary: The web is gaining a new protocol layer—not just for documents, APIs, or apps, but for agents. Protocols like A2A, ACP, UCP, and ATXP point toward an internet where software can discover other software, exchange context, negotiate actions, and complete transactions with far less human mediation.
+summary: The web is gaining a new protocol layer - not just for documents, APIs, or apps, but for agents. Protocols like A2A, ACP, UCP, and ATXP point toward an internet where software can discover other software, exchange context, negotiate actions, and complete transactions with far less human mediation.
 content_type: "concept_note"
 content_label: "Research Exploration"
 search_phrase: "agent internet protocol layer"
@@ -213,7 +213,7 @@ Google’s March 19, 2026 UCP update added practical capabilities such as cart o
 
 If UCP standardizes commercial interaction, **ATXP** targets an even more missing piece: letting agents actually pay.
 
-Circuit & Chisel launched ATXP in September 2025 alongside a **$19.2 million** seed round. Company and investor materials describe ATXP as a protocol for **instant, nested, delegated, and low-cost micropayments** between AI agents—something legacy payment rails struggle to support well. Samsung Next described ATXP as designed for transactions that are “nested, delegated, and composable,” while ATXP’s own developer docs emphasize per-tool-call pricing, signed payment authorization, and tool access without managing API keys or vendor accounts. :contentReference[oaicite:11]{index=11}
+Circuit & Chisel launched ATXP in September 2025 alongside a **$19.2 million** seed round. Company and investor materials describe ATXP as a protocol for **instant, nested, delegated, and low-cost micropayments** between AI agents - something legacy payment rails struggle to support well. Samsung Next described ATXP as designed for transactions that are “nested, delegated, and composable,” while ATXP’s own developer docs emphasize per-tool-call pricing, signed payment authorization, and tool access without managing API keys or vendor accounts. :contentReference[oaicite:11]{index=11}
 
 ### 6.1 Why existing payment rails are awkward for agents
 
@@ -455,28 +455,28 @@ The next wave may be built on controlling something quieter but even more powerf
 
 the rails through which agents discover, trust, transact, and act.
 
-That is what makes A2A, ACP, UCP, and ATXP worth watching now—while they still look like protocol acronyms rather than obvious economic infrastructure.
+That is what makes A2A, ACP, UCP, and ATXP worth watching now - while they still look like protocol acronyms rather than obvious economic infrastructure.
 
 ## Sources
 
-- Google Developers Blog — A2A announcement / Linux Foundation transition  
-- Linux Foundation — Agent2Agent project launch  
-- IBM Research / ACP docs — ACP overview and migration into A2A  
-- Google Developers Blog / Google Blog — Universal Commerce Protocol launch and updates  
-- ATXP docs / Samsung Next / PR Newswire — ATXP and agent-native payments  
+- Google Developers Blog - A2A announcement / Linux Foundation transition
+- Linux Foundation - Agent2Agent project launch
+- IBM Research / ACP docs - ACP overview and migration into A2A
+- Google Developers Blog / Google Blog - Universal Commerce Protocol launch and updates
+- ATXP docs / Samsung Next / PR Newswire - ATXP and agent-native payments
 
 ### Primary references used for this article
 
-- [Google Developers Blog — A2A: A new era of agent interoperability](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/)
-- [Linux Foundation — Launches the Agent2Agent Protocol Project](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents)
-- [IBM Research — Agent Communication Protocol](https://research.ibm.com/projects/agent-communication-protocol)
-- [ACP Docs — Quickstart / migration note](https://agentcommunicationprotocol.dev/introduction/quickstart)
-- [Google Developers Blog — Under the hood: Universal Commerce Protocol (UCP)](https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/)
-- [Google Blog — Agentic commerce: AI tools and protocol updates for retailers and platforms](https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/)
-- [Google Blog — UCP updates](https://blog.google/products-and-platforms/products/shopping/ucp-updates/)
-- [ATXP Docs — Build agents](https://docs.atxp.ai/developers/build-agents)
-- [Samsung Next — Why we invested in Circuit and Chisel](https://www.samsungnext.com/blog/why-we-invested-in-circuit-and-chisel)
-- [PR Newswire — Circuit & Chisel secures $19.2 million and launches ATXP](https://www.prnewswire.com/news-releases/circuit--chisel-secures-19-2-million-and-launches-atxp-a-web-wide-protocol-for-agentic-payments-302562331.html)
+- [Google Developers Blog - A2A: A new era of agent interoperability](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/)
+- [Linux Foundation - Launches the Agent2Agent Protocol Project](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents)
+- [IBM Research - Agent Communication Protocol](https://research.ibm.com/projects/agent-communication-protocol)
+- [ACP Docs - Quickstart / migration note](https://agentcommunicationprotocol.dev/introduction/quickstart)
+- [Google Developers Blog - Under the hood: Universal Commerce Protocol (UCP)](https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/)
+- [Google Blog - Agentic commerce: AI tools and protocol updates for retailers and platforms](https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/)
+- [Google Blog - UCP updates](https://blog.google/products-and-platforms/products/shopping/ucp-updates/)
+- [ATXP Docs - Build agents](https://docs.atxp.ai/developers/build-agents)
+- [Samsung Next - Why we invested in Circuit and Chisel](https://www.samsungnext.com/blog/why-we-invested-in-circuit-and-chisel)
+- [PR Newswire - Circuit & Chisel secures $19.2 million and launches ATXP](https://www.prnewswire.com/news-releases/circuit--chisel-secures-19-2-million-and-launches-atxp-a-web-wide-protocol-for-agentic-payments-302562331.html)
     D --> E[Merchant Systems]
     A --> F[ATXP / Payment Layer]
     F --> G[Paid Tools / Wallet / Settlement]

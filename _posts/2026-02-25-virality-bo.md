@@ -28,7 +28,7 @@ Most AI systems ask:
 
 > *Can we predict what will go viral?*
 
-Prediction assumes trends are passive — something we observe after they emerge.
+Prediction assumes trends are passive - something we observe after they emerge.
 
 But trends are not passive.
 
@@ -59,7 +59,7 @@ Data → Model → Prediction
 
 Decision → Propagation → Feedback → Optimization → Better Decision
 
-The shift is subtle — but profound.
+The shift is subtle - but profound.
 
 We move from observing trends to engineering them.
 
@@ -92,7 +92,7 @@ Influencers and network structure drive spread:
 - high-degree nodes  
 - algorithmic boosts  
 
-Amplification introduces uncertainty — exactly what BO exploits.
+Amplification introduces uncertainty - exactly what BO exploits.
 
 ---
 
@@ -153,7 +153,7 @@ Expected influence:
 
 Estimated using Monte Carlo simulations.
 
-Each evaluation is expensive — which is exactly where BO shines.
+Each evaluation is expensive - which is exactly where BO shines.
 
 ---
 
@@ -203,20 +203,20 @@ Optimization becomes intelligent exploration.
 flowchart LR
   %% Time-layered IC spread (t0 -> t1 -> t2 -> t3)
 
-  subgraph T0["t0 — seeds"]
+  subgraph T0["t0 - seeds"]
     direction TB
     S1((S1)):::seed
     S2((S2)):::seed
   end
 
-  subgraph T1["t1 — newly activated"]
+  subgraph T1["t1 - newly activated"]
     direction TB
     A1((A1)):::active
     A2((A2)):::active
     A3((A3)):::active
   end
 
-  subgraph T2["t2 — newly activated"]
+  subgraph T2["t2 - newly activated"]
     direction TB
     B1((B1)):::active
     B2((B2)):::active
@@ -224,7 +224,7 @@ flowchart LR
     B4((B4)):::active
   end
 
-  subgraph T3["t3 — newly activated"]
+  subgraph T3["t3 - newly activated"]
     direction TB
     C1((C1)):::active
     C2((C2)):::active
@@ -270,7 +270,7 @@ flowchart TB
   %% "Heatmap-style" BO convergence (Mermaid can't render true heatmaps,
   %% so we approximate with a colored grid + a trajectory overlay)
 
-  subgraph H["Search Space Heatmap (approx) — BO converges toward higher values"]
+  subgraph H["Search Space Heatmap (approx) - BO converges toward higher values"]
     direction TB
 
     %% Row 1 (low to medium)
@@ -348,7 +348,7 @@ A simple baseline for trend seeding is **random selection**:
 - run the propagation simulation (IC / Monte Carlo)
 - record reach / engagement / virality
 
-This is appealing because it is easy and unbiased — but it is extremely inefficient in large combinatorial spaces.
+This is appealing because it is easy and unbiased - but it is extremely inefficient in large combinatorial spaces.
 
 Bayesian Optimization (BO) improves over random by **learning from every evaluation** and deciding where to test next using a surrogate model + acquisition function. In high-noise propagation problems, this often yields stronger performance under a fixed evaluation budget.
 
@@ -605,7 +605,7 @@ This equation approximates the **expected influence spread** under the Independe
 
 Because influence propagation is stochastic, we simulate it multiple times and average the results. This gives us a stable estimate of expected virality.
 
-Each evaluation is computationally expensive — making Bayesian Optimization ideal.
+Each evaluation is computationally expensive - making Bayesian Optimization ideal.
 
 ---
 
@@ -613,7 +613,7 @@ Each evaluation is computationally expensive — making Bayesian Optimization id
 
 'ViralityScore(x) = Σ_i w_i · f_i(x)'
 
-Virality is not a single signal — it is a weighted combination of measurable engagement features:
+Virality is not a single signal - it is a weighted combination of measurable engagement features:
 
 - (f_i(x)) = engagement feature (e.g., share velocity, clustering coefficient, watch-time retention)
 - (w_i) = learned importance weight
@@ -646,7 +646,7 @@ Bayesian Optimization does not optimize the true function directly. It optimizes
 
 - f(x⁺) = best observed value so far
 
-EI chooses strategies expected to outperform the current best — balancing exploration and exploitation.
+EI chooses strategies expected to outperform the current best - balancing exploration and exploitation.
 
 ---
 
@@ -731,7 +731,7 @@ Rather than predicting trends passively, this framework:
 3. Learns from outcomes  
 4. Improves future decisions  
 
-The mathematics is not just descriptive — it is prescriptive.
+The mathematics is not just descriptive - it is prescriptive.
 
 It enables AI to navigate social systems intelligently.
 
@@ -751,7 +751,7 @@ This is where sequential decision-making and BO begin to merge.
 
 ---
 
-## The Big Idea — Final Thought
+## The Big Idea - Final Thought
 
 Most systems try to predict trends after they happen.
 
@@ -779,4 +779,4 @@ It’s about learning how to move through the space.
 ## Author Note
 
 Written as part of my exploration in **AI for Sequential Decision Making**  
-MS Data Science — University of Minnesota
+MS Data Science - University of Minnesota

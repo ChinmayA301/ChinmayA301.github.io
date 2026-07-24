@@ -2,7 +2,7 @@
 
 ## Data Scientist · Applied AI Engineer · Enterprise AI Solutions
 
-I turn ambiguous operational problems into practical data and AI systems—connecting stakeholder discovery, solution architecture, implementation, evaluation, and adoption.
+I turn ambiguous operational problems into practical data and AI systems, connecting stakeholder discovery, solution architecture, implementation, evaluation, and adoption.
 
 One candid note: this GitHub is deliberately AI-polished. I use AI tools to help structure documentation, accelerate selected scaffolding, and pressure-test how the work is presented. The builds, datasets, experiments, ambitions, decisions, and results are real. I review, test, and own what I publish, and I state maturity and limitations where they matter.
 

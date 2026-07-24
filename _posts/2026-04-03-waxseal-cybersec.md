@@ -47,7 +47,7 @@ Organizations do not know what can be trusted at a glance.
 Interfaces fail to communicate integrity in ways humans can act on.
 Messages can be technically protected while practically deceptive.
 
-That is why an old physical mechanism — the wax seal — is surprisingly useful as a design metaphor.
+That is why an old physical mechanism - the wax seal - is surprisingly useful as a design metaphor.
 
 Historically, wax seals did three important things at once:
 1. identified origin

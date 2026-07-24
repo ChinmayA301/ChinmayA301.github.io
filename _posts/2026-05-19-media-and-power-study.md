@@ -448,8 +448,8 @@ It is also about controlling imagination.
 ## References and further reading
 
 - Joseph Nye, *Soft Power: The Means to Success in World Politics*: https://www.publicaffairsbooks.com/titles/joseph-s-nye-jr/soft-power/9781586483067/
-- Harvard Kennedy School — Joseph Nye and Soft Power: https://www.hks.harvard.edu/faculty/joseph-nye
-- USC Center on Public Diplomacy — Soft Power resources: https://uscpublicdiplomacy.org/
+- Harvard Kennedy School - Joseph Nye and Soft Power: https://www.hks.harvard.edu/faculty/joseph-nye
+- USC Center on Public Diplomacy - Soft Power resources: https://uscpublicdiplomacy.org/
 - UNESCO Institute for Statistics: https://uis.unesco.org/
 - World Bank Open Data: https://data.worldbank.org/
 - OECD Data: https://data.oecd.org/

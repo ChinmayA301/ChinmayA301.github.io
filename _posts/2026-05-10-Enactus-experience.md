@@ -28,7 +28,7 @@ Before my work moved deeper into data science, AI governance, decision intellige
 
 Enactus gave me an early space to think about entrepreneurship not only as business creation, but as a way to solve practical social problems.
 
-One of the projects I brainstormed and led during this period was **Project Restub** — an initiative focused on using **cigarette butt waste** as a potential input for **brick-making**, while involving **local brick workers** in the process.
+One of the projects I brainstormed and led during this period was **Project Restub** - an initiative focused on using **cigarette butt waste** as a potential input for **brick-making**, while involving **local brick workers** in the process.
 
 At its core, Restub asked a simple but powerful question:
 
@@ -286,7 +286,7 @@ That lesson remains relevant in almost every applied AI or data science project 
 
 ## Enactus Marketplace: E-Commerce for Enactus India Products
 
-Another project I contributed to was an **Enactus marketplace** — an e-commerce platform concept for products created across Enactus India initiatives.
+Another project I contributed to was an **Enactus marketplace** - an e-commerce platform concept for products created across Enactus India initiatives.
 
 The idea was to create a common platform where Enactus-produced products could be discovered, listed, and sold more effectively.
 
@@ -426,7 +426,7 @@ They taught me that the best ideas are not always the most complicated.
 
 Sometimes they start with a simple question:
 
-> What are we currently throwing away — materially, socially, or operationally — that could become useful if we redesigned the system around it?
+> What are we currently throwing away - materially, socially, or operationally - that could become useful if we redesigned the system around it?
 
 That question has followed me into almost every project since.
 

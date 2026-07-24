@@ -183,12 +183,12 @@ This project is not just scraping social media and making a dashboard.
 
 The hard parts are:
 
-1. **entity resolution** — mapping a phrase or product to the media title;
-2. **baseline estimation** — knowing what would have happened without the media event;
-3. **lag modeling** — some effects happen immediately, others peak weeks later;
-4. **cross-platform normalization** — TikTok, Google Trends, Reddit, and news behave differently;
-5. **causal humility** — avoiding overclaiming when confounders exist;
-6. **cultural context** — knowing that the same symbol can mean different things in different communities.
+1. **entity resolution** - mapping a phrase or product to the media title;
+2. **baseline estimation** - knowing what would have happened without the media event;
+3. **lag modeling** - some effects happen immediately, others peak weeks later;
+4. **cross-platform normalization** - TikTok, Google Trends, Reddit, and news behave differently;
+5. **causal humility** - avoiding overclaiming when confounders exist;
+6. **cultural context** - knowing that the same symbol can mean different things in different communities.
 
 A good portfolio project should show this tension rather than hide it.
 
@@ -411,7 +411,7 @@ The product should not claim perfect causality. Its value is structured evidence
 
 A realistic positioning:
 
-> “A cultural analytics engine that tracks how media properties move through language, consumer behavior, tourism, fashion, and public discourse — with confidence scores instead of hype.”
+> “A cultural analytics engine that tracks how media properties move through language, consumer behavior, tourism, fashion, and public discourse - with confidence scores instead of hype.”
 
 ## The deeper point
 

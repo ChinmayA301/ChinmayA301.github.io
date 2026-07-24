@@ -4,7 +4,7 @@ if (document.querySelector("#typed") && typeof Typed !== "undefined") {
         strings: [
             "Discovering the real operating problem.",
             "Building from messy data to working systems.",
-            "Evaluating what should—and should not—deploy."
+            "Evaluating what should deploy, and what should not."
         ],
         typeSpeed: 48,
         backSpeed: 24,
