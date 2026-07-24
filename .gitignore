@@ -8,3 +8,6 @@
 !.env.example
 __pycache__/
 *.pyc
+
+# Hosted independently through Sites; the portfolio embeds its production URL.
+/dashboards/metric-substitution-audit/

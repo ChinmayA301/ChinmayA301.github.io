@@ -2503,6 +2503,76 @@ body.blog-theme.theme-light {
     }
 }
 
+/* Embedded research dashboards */
+.research-dashboard-shell {
+    margin: 2rem 0 2.5rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--blog-ink, #121212) 24%, transparent);
+    border-radius: 18px;
+    background: #f4f0e8;
+    box-shadow: 0 24px 70px rgba(18, 18, 18, 0.14);
+}
+
+.research-dashboard-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(18, 18, 18, 0.16);
+    color: #171717;
+}
+
+.research-dashboard-toolbar p {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.86rem;
+    line-height: 1.35;
+}
+
+.research-dashboard-toolbar span {
+    color: #5b5a55;
+}
+
+.research-dashboard-toolbar a {
+    flex: 0 0 auto;
+    padding: 0.58rem 0.78rem;
+    border: 1px solid #171717;
+    border-radius: 999px;
+    color: #171717;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.research-dashboard-toolbar a:hover,
+.research-dashboard-toolbar a:focus-visible {
+    background: #171717;
+    color: #fff;
+}
+
+.research-dashboard-shell iframe {
+    display: block;
+    width: 100%;
+    height: min(78vh, 820px);
+    min-height: 620px;
+    border: 0;
+    background: #f4f0e8;
+}
+
+@media (max-width: 767px) {
+    .research-dashboard-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .research-dashboard-shell iframe {
+        height: 720px;
+        min-height: 0;
+    }
+}
+
 /* Static hero portrait: city exploration now belongs to the full-page globe */
 .hero-media-shell-static {
     --globe-reveal: 0 !important;
