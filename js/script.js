@@ -2,9 +2,9 @@
 if (document.querySelector("#typed") && typeof Typed !== "undefined") {
     new Typed("#typed", {
         strings: [
-            "Building systems from messy data.",
-            "Testing models beyond accuracy.",
-            "Turning evidence into decisions."
+            "Discovering the real operating problem.",
+            "Building from messy data to working systems.",
+            "Evaluating what should—and should not—deploy."
         ],
         typeSpeed: 48,
         backSpeed: 24,
@@ -554,8 +554,8 @@ function buildProjectFilters(projects) {
         { key: "all", label: "All work" },
         { key: "data-science", label: "Data Science" },
         { key: "analytics", label: "Analytics" },
-        { key: "applied-ai", label: "Applied AI" },
-        { key: "responsible-ai", label: "Responsible AI" }
+        { key: "applied-ai", label: "Enterprise AI Solutions" },
+        { key: "responsible-ai", label: "AI Reliability & Governance" }
     ];
     const params = new URLSearchParams(window.location.search);
     const requestedPath = params.get("path");
@@ -2958,7 +2958,7 @@ function setupVentureCapitalBills() {
         deckStage.className = "venture-deck-stage";
         const deckHeading = document.createElement("header");
         deckHeading.className = "venture-deck-heading";
-        deckHeading.innerHTML = `<span>VENTURE NOTES</span><h2>Ideas backed by evidence</h2><p>CA · PRODUCT AND VENTURE LAB</p>`;
+        deckHeading.innerHTML = `<span>EXPLORATION ARCHIVE</span><h2>Ideas that shaped the thesis</h2><p>CA · PRODUCT AND VENTURE LAB</p>`;
         const deckStack = document.createElement("div");
         deckStack.className = "venture-deck-stack";
         ventureCards.forEach(card => deckStack.appendChild(card));

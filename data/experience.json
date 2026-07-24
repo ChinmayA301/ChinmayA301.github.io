@@ -37,7 +37,7 @@
         "time": "Jul 2024 - Sep 2024",
         "location": "Remote, USA",
         "bullets": [
-            "Built scalable Python scraping and ETL pipelines with BeautifulSoup, Selenium, aiohttp, MongoDB, and Azure SQL, improving commercial-real-estate data acquisition speed 4x.",
+            "Built asynchronous Python scraping and ETL pipelines with BeautifulSoup, Selenium, aiohttp, MongoDB, and Azure SQL, reducing commercial-real-estate extraction time from about eight hours to two.",
             "Applied XGBoost, Random Forest, KMeans, PCA, SHAP, and LIME for property valuation, segmentation, and explainable investor analysis.",
             "Deployed containerized FastAPI services and Azure-backed workflows for production-facing data acquisition and ML experimentation."
         ]

@@ -46,7 +46,7 @@
 
 ## The Lab Venture Exploration
 
-The Lab is Chinmay Arora's venture and product exploration surface. It highlights Aegis without making it the only focus and also includes career simulation, AI survey/interview intelligence, AI-native enterprise operating systems, freight/logistics intelligence, senior-focused AI phone assistance, experience-based media worlds, text-to-AR utility systems, high-friction data access products, sports intelligence, and nutrition/satiation system redesign.
+The Lab is Chinmay Arora's founder exploration dossier. It connects the work through one thesis: AI becomes operationally useful when context, authority, evidence, and human decision-making are connected. Aegis is the current independent commercial direction; StepLens is the longer-term interface opportunity; TransferSignal is a deployed proof build. Other ideas remain in an honestly staged exploration archive.
 
 Relevant public writing and surfaces:
 
