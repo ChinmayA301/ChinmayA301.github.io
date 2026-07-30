@@ -1,5 +1,58 @@
 [
     {
+        "title": "Behavioral Policy Conformance Testing for Enterprise AI Systems",
+        "featured": true,
+        "subtitle": "Technical Report 001: deterministic evidence handling around probabilistic AI behavior",
+        "timeframe": "Jul 2026",
+        "role": "Responsible AI Engineer / Researcher",
+        "status": "Version 0.1 · Synthetic validation",
+        "summary": "A prototype protocol that translates written AI policy into repeated behavioral tests, compares a policy condition with a control, and binds the results to a time-bounded deployment evidence bundle.",
+        "sections": [
+            {
+                "title": "Research question",
+                "text": "Can written AI policy be converted into repeatable behavioral tests whose results support a bounded, reviewable, and time-limited deployment authorization decision?"
+            },
+            {
+                "title": "Contribution",
+                "text": "Integrates atomic policy claims, repeated trials, Wilson score intervals, a matched control, human-set evidence thresholds, reproducibility metadata, and an integrity-sealed authorization artifact."
+            },
+            {
+                "title": "Experiment",
+                "text": "Evaluated six synthetic claims using two probes, ten executions, and two conditions for 240 scripted responses. Five claims were selected as mandatory authorization requirements."
+            },
+            {
+                "title": "Result",
+                "text": "All five gate requirements cleared an 80% minimum lower confidence bound. The result validates the mechanics of the pipeline, not the behavior or safety of a real AI system."
+            },
+            {
+                "title": "Boundary",
+                "text": "The report publishes the architecture, method, synthetic results, and limitations while keeping prompts, scoring code, internal heuristics, adapters, and production configuration private."
+            }
+        ],
+        "stack": [
+            "Behavioral Evaluation",
+            "Wilson Intervals",
+            "Control Conditions",
+            "Evidence Bundles",
+            "SHA-256"
+        ],
+        "tags": [
+            "AI Governance",
+            "LLM Evaluation",
+            "Responsible AI"
+        ],
+        "artifacts": [
+            {
+                "label": "Read Technical Report",
+                "link": "/blog/behavioral-policy-conformance-enterprise-ai/"
+            },
+            {
+                "label": "Aegis Strategy",
+                "link": "/ideas/aegis-ai-strategy/"
+            }
+        ]
+    },
+    {
         "title": "Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation",
         "subtitle": "Temporal cohort design and controlled ADI feature ablation across three follow-up horizons",
         "timeframe": "2025",

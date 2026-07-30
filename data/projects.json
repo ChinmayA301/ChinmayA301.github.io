@@ -31,6 +31,10 @@
             },
             {
                 "label": "Related Writing",
+                "url": "/blog/behavioral-policy-conformance-enterprise-ai/"
+            },
+            {
+                "label": "Governance Essay",
                 "url": "/blog/ai-governance-privacy-trust-layer/"
             }
         ]

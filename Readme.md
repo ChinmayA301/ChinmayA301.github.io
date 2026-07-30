@@ -23,6 +23,7 @@ This repository powers Chinmay Arora's technical portfolio, research writing, pr
 
 ## Project Writing
 
+- [Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems](https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/)
 - [Aegis AI governance and privacy trust layer](https://app.chinmayarora.com/blog/ai-governance-privacy-trust-layer/)
 - [SignalGraph and GitHub fake-star detection](https://app.chinmayarora.com/blog/signalgraph-github-fake-star-economy/)
 - [Wax Seal digital provenance and tamper evidence](https://app.chinmayarora.com/blog/wax-seal-cybersecurity/)
