@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems"
+title: "Aegis Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems"
 date: 2026-07-30
 author: "Chinmay Arora"
 description: "Aegis turns written AI policy into repeatable behavioral claims, measures probabilistic responses, and binds the results to a reviewable deployment authorization artifact."
