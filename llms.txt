@@ -73,6 +73,9 @@ High-signal research/concept clusters:
 
 Selected essays that support the project claims:
 
+- [The End of Programming as the Primary Interface](https://app.chinmayarora.com/blog/end-programming-primary-interface/): Independent research exploration of versioned intent graphs, generated implementations, behavioral evidence, and human approval as a possible interface above source code.
+- [The Randomness Problem Nobody Seems Comfortable Talking About](https://app.chinmayarora.com/blog/interaction-derived-unpredictability/): Independent cryptography research agenda for heterogeneous entropy, commit-reveal protocols, selective-abort analysis, assumption lattices, and publicly verifiable failure boundaries.
+- [The Best Human in the World Does Not Exist](https://app.chinmayarora.com/blog/human-capability-tournament/): Independent measurement proposal for floor-gated broad capability, transfer under interference, accessibility, validation, and open community trials.
 - [Behavioral Policy Conformance Testing for Enterprise AI Systems](https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/): Technical Report 001 on repeated policy testing and deployment evidence bundles, with synthetic results and explicit limitations.
 - [AI in Local Government DX](https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/): Governance, auditability, risk tiering, and operational AI implementation in local government.
 - [AI Governance and Privacy](https://app.chinmayarora.com/blog/AI-Governance-and-Privacy/): Trust layer for high-risk AI adoption, vendor risk, and governance controls.
