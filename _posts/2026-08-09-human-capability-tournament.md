@@ -3,15 +3,15 @@ layout: post
 title: "The Best Human in the World Does Not Exist"
 date: 2026-08-09
 author: "Chinmay Arora"
-description: "A methodology-first proposal for measuring broad human capability through floor-gated domains, learning, recovery, teamwork, and an open validation program."
-summary: "Sport crowns specialists. A broad-capability tournament could instead test whether a person can remain competent across physical, analytical, social, creative, and uncertain situations—but only if the protocol publishes its definition, protects access, and treats validation as the main event."
-tags: [Measurement, Psychometrics, Sports Science, Human Performance, Experimental Design, Research Exploration]
+description: "Prime Human v0.1 turns a broad-capability tournament into an inspectable measurement proposal: a public taxonomy, floor-gated scoring, a live sensitivity simulator, and explicit failure conditions."
+summary: "In a seeded synthetic population of 50,000, only 2.536% clear the median in all eight simulated domains. That result is not evidence about people. It is a stress test of a rule—and a reason to publish the rule before building the arena."
+tags: [Measurement, Psychometrics, Sports Science, Human Performance, Experimental Design, Research Artifact]
 categories: [Measurement, Human Performance]
 content_type: "concept_note"
-content_label: "Research Exploration"
+content_label: "Research Artifact"
 search_phrase: "open measurement standard for broad human capability"
-positioning_note: "This is a proposed measurement and participation protocol. No human subjects have been tested, the weights are not validated, and the framework does not identify a scientifically universal ‘best human.’"
-reading_time: "14 min read"
+positioning_note: "Real scoring code, synthetic data, and no human subjects. The taxonomy, weights, floors, task forms, and title remain unvalidated proposals."
+reading_time: "16 min read"
 permalink: /blog/human-capability-tournament/
 canonical_url: "https://app.chinmayarora.com/blog/human-capability-tournament/"
 og_image: "/assets/images/og-human-capability-tournament.png"
@@ -21,256 +21,204 @@ toc: true
 featured: false
 draft: false
 schema_type: "TechArticle"
-keywords: "human capability index, psychometrics, measurement invariance, geometric mean, floor score, human performance, open standard"
-last_modified_at: 2026-08-09
+keywords: "Prime Human, human capability index, scoring simulator, psychometrics, measurement invariance, geometric mean, floor score, human performance"
+last_modified_at: 2026-08-11
 ---
 
 ![Competitors rotate through physical, analytical, social, and construction stations inside a large arena.](/assets/images/og-human-capability-tournament.png)
 
 *A broad-capability test would need stations that interfere with one another: clear thinking after exertion, cooperation across difference, construction under time, and recovery before the next demand. Illustration generated for this essay.*
 
-## The arena after midnight
+<aside class="research-artifact-disclosure" aria-labelledby="how-to-read-prime-human">
+  <h2 id="how-to-read-prime-human">How to read this artifact</h2>
+  <p><strong>Synthetic data, real code.</strong> The simulator generates 50,000 invented competitors from a seeded factor model. It measures no person and validates no title. The scoring transformations, controls, and ranking reversals are executable.</p>
+  <p><strong>What would make it real.</strong> The taxonomy needs cognitive interviews, accessible task forms, preregistered human trials, retest evidence, measurement-invariance tests, and an independent challenge process before any public ranking.</p>
+  <p><strong>What is absent.</strong> Human Trials v0.1 and the application specifications remain build documents, not published research artifacts. No unit-economics figure appears because no auditable scenario workbook accompanies this release.</p>
+</aside>
 
-The stadium lights are off except for six white rectangles on the floor. In one, a loaded stretcher rests beside a staircase. In another, radios, cables, and a damaged antenna lie across a workbench. A soundproof booth holds two chairs and a hostage-negotiation script. At the far end, a team stares at instructions written in a language none of them speaks.
+## The first cut
 
-There is no 100-meter final. No barbell under a spotlight. No quiz-show buzzer waiting to reward the fastest specialist.
+The terminal finishes its run. Fifty thousand synthetic names sit behind the screen. At a floor of the 50th percentile in every simulated domain, **1,268 remain**. The other 48,732 fail at least one threshold. The survival rate is **2.536%**.
 
-The first competitor carries the stretcher upstairs. Her forearms shake. Without a recovery break, she enters the radio station and must diagnose why a hurricane shelter cannot reach the field team. Then she joins three strangers, one of whom has information the others do not possess. The clock stays visible.
+That number looks sharp on the dark glass. It is not a population estimate. The people are invented, the factor loadings are assumptions, and the seed is fixed at \`20260807\`. The result says something narrower: when a rule demands median-or-better performance across eight partly correlated domains, the intersection becomes small very quickly.
 
-What would this event measure?
+An earlier draft carried a second headline: physical performance would consume 30–40% of composite variance under naive scoring. The attached simulator does not reproduce it. Under its default open norms, equal weights, and arithmetic aggregation, the display attributes **5.2%** of composite variance to the physical domain. At the first floor, physical weakness accounts for **15.5%** of eliminations; the other domains range from **10.9% to 14.0%**.
 
-Not “the best human.” That person does not exist outside the definition chosen by the organizer. The honest target is narrower: a published, repeatable standard for **broad capability under transfer, fatigue, cooperation, and uncertainty**.
+I am leaving the failed headline on the record because this is what an artifact is for. The chart below comes from the released seed and parameters. The red bar is noticeable, not sovereign.
 
-This essay turns that idea away from spectacle and toward method. The central artifacts are an ontology, a scoring rule, an experimental protocol, and a public record of where the measurement fails.
+![Horizontal bar chart showing each domain's share of first-floor eliminations. Physical is highest at 15.5 percent; the eight domains range from 10.9 to 15.5 percent.](/assets/blog/prime-human/domain-elimination-share.png)
 
-## Specialists are real; the universal ranking is not
+*Figure 1. Weakest-domain attribution among competitors eliminated at the 50th-percentile floor. Synthetic N=50,000; open norms; eight-domain simulator v0.1. The [data](/blog-artifacts/prime-human/domain-elimination-share.json) and [renderer](/blog-artifacts/prime-human/render_domain_elimination_share.py) are published beside the figure.*
 
-Sport solves a clean problem by narrowing the world. A track is flat. A bar has a known height. A clock reaches the thousandth of a second. Within those boundaries, excellence becomes visible.
+## Move the rule; move the winner
 
-Combined events already widen the aperture. World Athletics publishes [rules and scoring tables](https://worldathletics.org/download/download?filename=53f7d332-be0c-434c-8467-1d9078966147.pdf&urlslug=IAAF+Scoring+Tables+for+Combined+Events) for the decathlon and heptathlon, converting performances across different events into points. Yet these are still athletic constructs. A decathlete is not asked to repair a radio, calm a frightened teammate, or learn a novel symbol system between events.
+On the arena wall, a leaderboard feels like an answer. In the code, it is a function. Change the reference group, the aggregation rule, a domain weight, the eligible ages, or the floor schedule, and the same synthetic performances produce a different order.
 
-Psychometric batteries approach another part of the problem. The [NIH Toolbox](https://nihtoolbox.org/assessments/) provides standardized assessment across cognition, motor function, sensation, and emotion, creating what the National Institute on Aging calls a [common currency](https://www.nia.nih.gov/research/resource/nih-toolbox) for comparison across studies. NASA’s [Task Load Index](https://humanfactors.arc.nasa.gov/groups/tlx/downloads/HFES_2006_Paper.pdf) measures perceived workload across dimensions such as mental, physical, and temporal demand.
+<div class="research-dashboard-shell research-dashboard-shell--prime-human">
+  <div class="research-dashboard-toolbar">
+    <p><strong>Scoring-rule simulator v0.1</strong><br><span>Move the controls. The leaderboard reorders—same synthetic athletes, same performances, different rule.</span></p>
+    <a href="/blog-artifacts/prime-human/scoring-rule-simulator-v0.1.html" target="_blank" rel="noopener">Open full simulator ↗</a>
+  </div>
+  <iframe
+    src="/blog-artifacts/prime-human/scoring-rule-simulator-v0.1.html"
+    title="Interactive Prime Human scoring-rule sensitivity simulator"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+  >
+    <a href="/blog-artifacts/prime-human/scoring-rule-simulator-v0.1.html">Open the scoring simulator.</a>
+  </iframe>
+</div>
 
-None of these instruments claims to find the best person in the world. That restraint is worth copying.
+The default schedule raises the floor from the 50th to the 65th, 75th, and 85th percentiles. In this run, the field moves from 50,000 to 1,268, then 222, 50, and finally 8. Those counts are not forecasts for an event. They expose how violently an apparently modest floor schedule can narrow a field.
 
-## A capability ontology, version 0.1
+The simulator also exposes a seam between artifacts. Its eight domains stop at creativity. The taxonomy proposes a ninth domain, integrity, but the code does not simulate it. That omission is deliberate. A one-shot “secret” moral test would be easy to stage, hard to retest, and culturally brittle. Until repeated observed-choice tasks show reliability, integrity belongs in the conduct and safety rules—not in the number over a competitor's head.
 
-On a folding table at the edge of the arena, the protocol should begin with a definition that anyone can mark in red ink.
+## The proposal that broke the method
 
-| Domain | Candidate task in physical space | Measurement | Main confound |
-|---|---|---|---|
-| Physical resilience | Carry, climb, stabilize, then recover | Work completed, safety, heart-rate recovery | Body size, disability, training access |
-| Analytical reasoning | Diagnose a failing water or communication system | Accuracy, calibration, time, information requested | Prior technical exposure |
-| Social coordination | Complete a hidden-information team mission | Shared situational awareness, inclusion, team outcome | Language, culture, teammate composition |
-| Creative construction | Build a working shelter, tool, or communication artifact | Function, constraint satisfaction, repairability | Craft familiarity, materials access |
-| Learning speed | Infer a new rule system, then apply it after interference | Learning curve, retention, transfer | Education, test familiarity |
-| Decision under uncertainty | Allocate scarce resources during a changing scenario | Regret, calibration, reversibility, ethical constraints | Values embedded in the scenario |
+In an early draft, medals, ventures, patents, difficult careers, and civic achievements sat on the scoring sheet. The idea had intuitive heat. A person who had already built something under pressure seemed to bring evidence that a laboratory station could not capture.
 
-The memory excerpt proposed an additional **integrity** domain based on costly observed choices rather than reputation or self-report. The instinct is understandable: capability without conduct feels incomplete. The measurement is fragile. Once a participant knows a “secret” choice is an integrity test, the station changes. Cultural norms alter what counts as fair sacrifice. One-shot behavior has poor test–retest reliability.
+Then the validation plan reached the same sheet. If past achievement enters the score, and later achievement is used to claim that the score predicts consequential performance, the loop closes on itself. Opportunity, inherited wealth, geography, discrimination, health, and institutional access enter twice: first as points, then as supposed confirmation.
 
-For an initial protocol, integrity should therefore remain a **conduct and safety gate**, not a percentile score. Fraud, coercion, sabotage, or abuse can disqualify a result. The event should not pretend that a staged game reads moral character.
+The achievement score came out.
 
-Likewise, wealth, credentials, fame, job title, and medals do not belong in the score. They are outcomes entangled with opportunity, geography, age, health, discrimination, and historical moment. If the framework wants to measure a person’s capacity to build, it should put materials on a bench, set a deadline, blind the evaluators, and observe the build.
+What survived was a task called **The Venture**. Each participant receives a bounded problem, the same resource budget, a deadline, and blind judging against published constraints. The station observes planning, learning, coordination, and delivery in the room. It does not award points for the biography carried through the door.
 
-## The floor before the crown
+A season format may retain prior achievement only as a capped tiebreak, published before the season and excluded from criterion validation. My preference for v0.1 is stricter: no biography in the primary ranking. If the tiebreak cannot be defended without prestige leaking into measurement, it should disappear as well.
 
-An additive score can hide a dangerous weakness. A participant at the 99th percentile in strength and the 10th percentile in coordination may still rank highly if the weights are generous. Calling that person “broadly capable” would be arithmetic theater.
+## What the instrument refuses to count
 
-The knowledge-transfer excerpt offered a better mechanic: separate a **Floor** from a **Composite**.
+At the registration desk, exclusion rules matter as much as task rules. They stop a broad-capability test from quietly becoming a census of privilege.
 
-Let $p_{id} \in (0,1]$ be participant $i$’s normed percentile in domain $d$.
+| Excluded signal | Why it stays outside the score |
+|---|---|
+| Personality | Descriptive, not a capability; high context dependence |
+| Administered IQ | Licensing and fairness burden; poor fit with a public, observable event |
+| Inherited wealth or status | Not capability |
+| Achievement and accolades | Dominated by access, timing, and survivorship bias |
+| Audience voting | Popularity is not validity |
+| Luck | Difficult to norm and easy to narrate after the fact |
+| National norming | Encourages country rankings and demographic storytelling |
+
+The complete rationale lives in the [Human Capability Taxonomy v0.1](/blog-artifacts/prime-human/human-capability-taxonomy-v0.1.md). Nothing in that document has been validated on human participants.
+
+## A floor before a crown
+
+At the workbench, additive scoring can hide a dangerous weakness. A participant at the 99th percentile in one domain and the 10th in another may still rank highly if the weights are generous. The total looks broad while the profile remains brittle.
+
+Let $p_{id} \in (0,1]$ be participant $i$'s normed percentile in domain $d$. The floor is the weakest measured domain:
 
 $$
 F_i = \min_d p_{id}
 $$
 
-$F_i$ is the participant’s weakest measured domain. A round has a pre-published threshold $\tau_r$. Advancement requires:
+A round publishes its threshold $\tau_r$ before the season. Advancement requires:
 
 $$
 F_i \geq \tau_r
 $$
 
-Only participants who clear the floor are ranked by a breadth-sensitive composite. A weighted geometric mean prevents one spectacular result from fully compensating for a near-zero score:
+Among those who clear the floor, a weighted geometric mean rewards breadth while limiting compensation:
 
 $$
-B_i = \exp\left(\frac{\sum_{d=1}^{D} w_d\ln(p_{id}+\epsilon)}{\sum_{d=1}^{D} w_d}\right)
+B_i =
+\exp\left(
+\frac{\sum_{d=1}^{D} w_d \ln(p_{id}+\epsilon)}
+{\sum_{d=1}^{D} w_d}
+\right)
 $$
 
-Here $w_d$ are preregistered domain weights and $\epsilon$ prevents a numerical collapse at zero. The weights are not facts. They are choices that must be published, sensitivity-tested, and revised only between protocol versions.
+The weights $w_d$ are not natural constants. They are governance decisions. The small $\epsilon$ is numerical protection, not permission to bury a zero. Both belong in a versioned rulebook, alongside sensitivity plots that show when a leader changes under plausible alternatives.
 
-The scoreboard would show both numbers:
+The taxonomy proposes nine domains: physical capacity, cognitive capability, adaptability, decision quality, social capability, emotional capability, resilience, creativity, and integrity. The tournament should not force those nine labels to survive contact with data. If factor analysis collapses them into fewer stable constructs, the next protocol should use fewer names.
 
-| Participant profile | Floor | Breadth composite | Interpretation |
-|---|---:|---:|---|
-| High specialist | 0.18 | 0.71 | Exceptional peak, but does not clear a broad-capability floor |
-| Steady generalist | 0.58 | 0.64 | Clears the floor; few exposed weaknesses |
-| Strong all-rounder | 0.72 | 0.79 | Clears the floor and ranks highly among survivors |
+## Four rules that constitute the competition
 
-These values are illustrative, not results from human testing.
+Under bright arena lights, format details become part of the measurement. A dramatic producer's choice can turn one unlucky station into a season-ending event. The [Competition Format Specification v0.1](/blog-artifacts/prime-human/competition-format-spec-v0.1.md) therefore begins with four rules that cannot be traded for spectacle:
+
+1. **Elimination means failure against a published standard, never placing last.**
+2. **The floor schedule and norming rules are published before the season.** No mid-season change is allowed.
+3. **The capability catalog is public; the exact station instantiation is hidden.** Participants know the construct, not the puzzle.
+4. **No single event ends a season.** Every domain receives at least three attempts before a floor can eliminate someone.
+
+These rules change the emotional geometry of the arena. A competitor does not stare at the athlete in last place and hope they slip. Each person faces the same line painted across the floor.
+
+The season and the world title also need different clocks. A season can gather repeated evidence across open sessions, qualifying circuits, and multiple station forms. A world final is shorter and more theatrical, which makes it statistically weaker. The title should therefore depend on a minimum evidence bundle, not a single televised night.
 
 ## Capability appears when tasks collide
 
-At the workbench, a participant can solve the radio fault while rested. The harder question begins after the stretcher carry, when sweat darkens the paper schematic and a teammate insists on the wrong diagnosis.
+On a clean table, a rested participant can diagnose a radio fault. The harder question begins after a loaded carry, when sweat softens the paper schematic and a teammate points to the wrong wire.
 
-Independent stations measure isolated peaks. The proposed tournament should also measure **interference**:
+Independent stations reveal peaks. Interference stations reveal transfer:
 
 - reasoning after physical fatigue;
-- communication after a personal error;
-- learning a second system after mastering the first;
+- communication after a visible personal error;
+- learning a second symbol system after mastering the first;
 - leading, then following, with the same teammates;
-- making a reversible choice before an irreversible one;
 - repairing a failed artifact instead of receiving a clean restart.
 
-This adds three longitudinal quantities to the domain scores:
-
-- $L_i$: learning gain across repeated unfamiliar tasks;
-- $R_i$: recovery after exertion, error, or stress;
-- $T_i$: team contribution estimated across multiple randomized teams.
-
-A provisional research score might be written as:
+The protocol can observe three longitudinal quantities without pretending they are already calibrated: learning gain $L_i$, recovery $R_i$, and team contribution $T_i$ across randomized groups. A provisional research score could be written:
 
 $$
 S_i = B_i + \alpha L_i + \beta R_i + \gamma T_i
 $$
 
-No value for $\alpha$, $\beta$, or $\gamma$ should be announced from an armchair. Pilot data, reliability analysis, stakeholder review, and sensitivity tests must come first. A leaderboard that flips completely under small plausible weight changes is not stable enough to carry a grand title.
+No value for $\alpha$, $\beta$, or $\gamma$ belongs on the scoreboard yet. A sports scientist can make the fatigue sequence safe. A psychometrician can estimate retest reliability. An accessibility researcher can identify when an adaptation preserves the construct and when it creates a different task. A public-service or logistics team can supply realistic scenarios without donating confidential incidents. These are research partnerships, not endorsements.
 
-## Tournament flow
+## Human Trials v0.1 is the next gate
 
-The format should resist the television instinct to remove the last-ranked participant after each dramatic event. Early single elimination magnifies task order, injury, teammate luck, and one bad station. Everyone should complete a broad baseline before any floor rises.
+The first real room should be a university gym, rehabilitation lab, training center, or public-service facility—not a stadium. Fifty to one hundred consenting adults would rotate through multiple task forms while station order, teammate assignment, missingness, and recovery intervals are logged.
 
-```mermaid
-flowchart TD
-    A["Accessible orientation and consent"] --> B["Baseline across all domains"]
-    B --> C["Randomized station order"]
-    C --> D["Individual tasks"]
-    C --> E["Team tasks with rotated roles"]
-    C --> F["Learning and transfer tasks"]
-    D --> G["Recovery window with measurement"]
-    E --> G
-    F --> G
-    G --> H["Published floor check"]
-    H -->|"clears floor"| I["Rank by breadth, learning, recovery, teamwork"]
-    H -->|"below floor"| J["Retain full profile; no single-event erasure"]
-    I --> K["Replication round with new task forms"]
-    J --> K
-    K --> L["Open validation report"]
-```
+The study would preregister its hypotheses, exclusions, transformations, stopping rule, and criteria for abandoning the composite. It would test reliability, factor structure, order effects, team variance, and measurement invariance across language, sex, age, disability, and cultural groups. The [NIH Toolbox](https://nihtoolbox.org/assessments/) offers a useful precedent for standardized multidomain assessment, while its [cognition validation study](https://pubmed.ncbi.nlm.nih.gov/23479546/) shows the amount of reliability and validity work that a new instrument must earn.
 
-The “retain full profile” branch matters. A person who misses the competition threshold still contributes data to the scientific question, with consent, and receives a useful map of strengths and uncertainty. The format should not turn a weak day into a public identity.
+Human Trials v0.1 exists as the next build gate, but it is not published here. A protocol involving consent, safety, accommodations, privacy, and adverse-event handling should not be reduced to blog decoration. It needs formal review and accountable research partners before recruitment.
 
-## The validation program is the event
+## How the method could spread
 
-Inside a smaller university gym, the first trial should involve 50–100 consenting adults—not a world final. Preregister the hypotheses, task order, exclusions, scoring transformation, missing-data treatment, and stopping rule. Use multiple task forms so retesting does not merely reward memory.
+In a school gym, a fire station, or a recreation center, the useful social object is not a global podium. It is a local open session that a group can inspect and repeat.
 
-The study should test:
+A **Season Open** could use inexpensive equipment and several equivalent task forms. Everyone completes the full circuit; nobody is eliminated. Each participant receives a profile with uncertainty, a weakest measured domain, and a retest date. A group then chooses one floor to practice together: communication under fatigue, calibrated decisions, recovery, or unfamiliar-tool learning.
 
-1. **Reliability:** Do domain scores remain reasonably stable when the underlying capacity should be stable?
-2. **Factor structure:** Do the proposed domains separate, or do nine labels collapse into three empirical factors?
-3. **Measurement invariance:** Do items function comparably across language, sex, age, disability, and cultural groups?
-4. **Convergent and discriminant validity:** Do scores relate to established measures where expected without becoming duplicates?
-5. **Order and fatigue effects:** Does starting at the stairs versus the negotiation booth change who clears the floor?
-6. **Team variance:** Does a participant’s social score survive rotation across teammates and roles?
-7. **Sensitivity:** How much do rankings change under defensible alternative norms, weights, and floor schedules?
+Four weeks later, fresh tape marks the floor and a new task form lands on the table. The retest becomes useful only if local organizers publish what failed: a translation that changed the negotiation, a movement that excluded too many bodies, a ceiling effect, an unreliable rating rubric, or a sensor that behaved differently across skin and body types.
 
-The [NIH Toolbox cognition battery validation work](https://pmc.ncbi.nlm.nih.gov/articles/PMC3662346/) provides one example of examining reliability and convergent validity across several instruments. A broad-capability protocol would need its own evidence rather than borrowing validity from the tools it combines.
+Open task specifications, assessor training, protocol versioning, and de-identified benchmark data would let independent sites challenge the method. Social spread should operate as distributed error correction. A copied logo proves nothing; a reproducible criticism does.
 
-Life outcomes—education, occupation, civic contribution, health, or later crisis performance—may be studied with separate consent, but they should remain **outside the score**. Otherwise the index validates itself against ingredients it already contains. A long follow-up could ask whether an early capability floor predicts later adaptation. It cannot quietly award points for the later outcome.
+## Published artifacts
 
-## A minimal analysis pipeline
+The release is intentionally small:
 
-At a laptop beside the timing desk, the analysis should be reproducible from de-identified data and a versioned protocol.
+- [Scoring-rule simulator v0.1](/blog-artifacts/prime-human/scoring-rule-simulator-v0.1.html) — the executable synthetic model embedded above;
+- [Human Capability Taxonomy v0.1](/blog-artifacts/prime-human/human-capability-taxonomy-v0.1.md) — domains, dimensions, exclusions, scoring proposal, and open problems;
+- [Competition Format Specification v0.1](/blog-artifacts/prime-human/competition-format-spec-v0.1.md) — constitutive rules, season shape, advancement, and format risks;
+- [Elimination-share data](/blog-artifacts/prime-human/domain-elimination-share.json) and [figure renderer](/blog-artifacts/prime-human/render_domain_elimination_share.py) — the static chart's provenance.
 
-```python
-# Method sketch. Real analysis needs preregistration and uncertainty estimates.
-domains = normalize_with_reference_sample(raw_task_scores)
-floor = domains.min(axis=1)
-
-clears = floor >= published_floor
-breadth = weighted_geometric_mean(domains, preregistered_weights)
-
-report = {
-    "reliability": estimate_test_retest(domains),
-    "factor_models": compare_confirmatory_models(domains),
-    "invariance": test_group_measurement_invariance(domains, groups),
-    "order_effects": estimate_station_order_effects(domains, assignments),
-    "ranking_sensitivity": perturb_norms_weights_and_floors(domains),
-}
-```
-
-Every public result should carry the protocol version, reference population, accessible adaptation used, missing stations, and uncertainty interval. “82nd percentile” is meaningless if the comparison group and accommodation are hidden.
-
-## An invitation to run the first honest pilot
-
-I am looking for research and practice partners who can help test whether the ontology survives real people. The first collaboration is not an arena production. It is a preregistered pilot in a university gym, rehabilitation lab, training center, or public-service facility, with 50–100 consenting participants and enough time to retest them.
-
-| Collaborator | First shared artifact |
-|---|---|
-| Psychometrician or quantitative psychologist | A measurement model, reliability targets, and ranking-sensitivity plan |
-| Sports scientist or occupational physiologist | Safe interference and recovery protocols |
-| Accessibility and disability researcher | Construct-linked task adaptations and rules for non-comparable scores |
-| Team-science or organizational-behavior researcher | Rotated-role tasks and a model of teammate variance |
-| Emergency, logistics, healthcare, or public-service team | De-identified scenarios where transfer and coordination matter in practice |
-| Community organization | Multilingual cognitive interviews and a locally run open session |
-
-The pilot should release its protocol, task forms where safe, de-identified analysis code, and null findings. A partner can challenge the floor rule, collapse domains, or recommend that no overall ranking be published. The purpose of collaboration is to discover what the construct can support—not to protect the headline.
-
-## Fairness cannot be an appendix
-
-At the staircase station, a wheelchair user should not be handed an improvised substitute ten minutes before the trial. Accessibility has to enter during construct design. The question is not “Can everyone perform the same movement?” It is “Can alternative tasks measure the intended capacity without importing a different one?”
-
-That is difficult. A grip task, a wheeled propulsion task, and a loaded carry are not automatically equivalent. Translation changes negotiation cues. Familiar tools reward prior exposure. Wearable sensors behave differently across bodies. Team ratings reproduce bias. Public leaderboards invite shame and surveillance.
-
-The protocol needs an accessibility panel, multilingual cognitive interviews, community review of scenarios, privacy-preserving publication, an appeal path, and explicit zones where cross-group ranking is not defensible. Some adaptations may support within-person progress while forbidding between-person comparison. That limitation should appear on the result card, not in eight-point type.
-
-## How an open standard could spread socially
-
-The idea will not spread because a commentator declares someone the world’s best. It could spread because a group of people in a school gym, fire station, recreation center, or university lab can run the same small protocol, inspect their profiles, and improve one floor together.
-
-Begin with a **Season Open** that uses inexpensive, locally available equipment and publishes several equivalent task forms. Participants complete all domains in teams; no one is eliminated. A personal card shows a six-sided profile, the weakest measured domain, confidence intervals, and one retest date. Groups can choose a shared practice target: communication under fatigue, recovery, or calibrated decisions.
-
-The social loop is concrete:
-
-```mermaid
-flowchart LR
-    A["Local open session"] --> B["Personal profile with uncertainty"]
-    B --> C["Group chooses one floor to practice"]
-    C --> D["Four-week shared training"]
-    D --> E["Retest with a new task form"]
-    E --> F["De-identified contribution to norms"]
-    F --> G["Protocol and accessibility revisions"]
-    G --> A
-```
-
-Public storytelling should focus on transfer, not humiliation: the climber learning to ask for help, the analyst calming a team after a wrong call, the mechanic mastering an unfamiliar notation. Short clips can show the task and the decision point, while the methods page shows the scoring and uncertainty. Local organizers should publish failures—stations with language bias, ceiling effects, unsafe movement, or unreliable ratings—so another site does not repeat them.
-
-Open task specifications, assessor training materials, de-identified benchmark data, and protocol versioning let the method travel without central permission. The standard gains legitimacy when independent teams can criticize it, reproduce it, and force a revision.
-
-## What would make me abandon the ranking
-
-The composite should be dropped if factor analysis does not support the domain structure; if retest reliability is too low for individual interpretation; if accessible variants cannot be linked to a common construct; if team scores mostly measure teammate assignment; if floor thresholds amplify one demographic confound; or if small analytical choices reorder the leaders.
-
-The tournament itself should be abandoned if participation creates predictable injury, coercive data collection, or public stigma that cannot be mitigated. A scientifically interesting number does not outrank the person standing on the mat.
-
-## No final podium
-
-Near dawn, volunteers wheel the stretcher back to its mark. Tape peels from the concrete. On the scoreboard, the largest number is not labeled **BEST HUMAN**. It is labeled with a protocol version, a reference sample, and a confidence interval.
-
-One participant cleared every floor and ranked first under the published rules. Another recovered fastest. A third made every team better. None of those findings licenses a claim about the whole human being.
-
-The worthwhile achievement is smaller and harder: a measurement that shows its definition, survives a retest, includes more bodies, and changes when the evidence tells it to.
+The taxonomy and format specification are linked source documents rather than compressed into this post. The Human Trials protocol, application specifications, and unpublished economic model remain outside the release.
 
 ### A narrow bridge to Aegis
 
-This article remains an independent measurement and human-performance proposal. I also plan to bring its strongest methods into [Aegis](/ideas/aegis-ai-strategy/): floor-based readiness gates, measurement-invariance checks, accessible assessment design, and longitudinal retesting could improve how Aegis evaluates whether people and teams are prepared to oversee consequential AI. Aegis would borrow the methodology; it would not turn this tournament into a governance product.
+Prime Human remains an independent measurement and human-performance proposal. I plan to carry its strongest methods into [Aegis](/ideas/aegis-ai-strategy/): floor-based readiness gates, sensitivity analysis, accessible assessment design, and longitudinal retesting could improve how Aegis evaluates whether people and teams are prepared to oversee consequential AI. Aegis borrows the method; it does not become the premise of this article.
+
+## The open problems are the conclusion
+
+When the arena empties, the tape still holds unresolved questions to the concrete:
+
+1. **Measurement invariance is unproven.** A score that changes meaning across language, disability, sex, age, or culture cannot support a shared ranking.
+2. **The taxonomy may be too large.** Nine domains and 28 dimensions may collapse into fewer empirical factors.
+3. **A minimum is noisy.** The floor amplifies one bad measurement, one injury, or one unfamiliar station.
+4. **A world final is too short.** A title decided by one compact trial may contradict the repeated evidence of a season.
+5. **Integrity is unresolved.** One-shot observed behavior is vulnerable to staging, context, and weak retest reliability.
+6. **Reference norms may reproduce access.** A global label can conceal unequal equipment, nutrition, safety, coaching, and prior exposure.
+7. **Hidden instantiations create an integrity burden.** Leaked stations or inconsistent judging could overpower the construct.
+8. **Spectacle can corrupt the instrument.** A visually dramatic event may receive weight that its reliability does not deserve.
+
+The floor lights click off one row at a time. No podium resolves those problems. Until human evidence does, Prime Human v0.1 is a public hypothesis with runnable code—not a claim that the world's best human has been found.
 
 ## References
 
-- World Athletics, [Scoring Tables for Combined Events](https://worldathletics.org/download/download?filename=53f7d332-be0c-434c-8467-1d9078966147.pdf&urlslug=IAAF+Scoring+Tables+for+Combined+Events).
+- Prime Human, [Human Capability Taxonomy v0.1](/blog-artifacts/prime-human/human-capability-taxonomy-v0.1.md).
+- Prime Human, [Competition Format Specification v0.1](/blog-artifacts/prime-human/competition-format-spec-v0.1.md).
+- Prime Human, [Scoring-rule simulator v0.1](/blog-artifacts/prime-human/scoring-rule-simulator-v0.1.html).
 - NIH Toolbox, [Assessment system overview](https://nihtoolbox.org/assessments/).
-- National Institute on Aging, [NIH Toolbox overview](https://www.nia.nih.gov/research/resource/nih-toolbox).
-- Weintraub et al., [“Cognition Assessment Using the NIH Toolbox”](https://pmc.ncbi.nlm.nih.gov/articles/PMC3662346/), *Neurology*, 2013.
-- Hart, [“NASA-Task Load Index (NASA-TLX); 20 Years Later”](https://humanfactors.arc.nasa.gov/groups/tlx/downloads/HFES_2006_Paper.pdf), 2006.
+- Weintraub et al., [“Cognition Assessment Using the NIH Toolbox”](https://pubmed.ncbi.nlm.nih.gov/23479546/), *Neurology*, 2013.
 
 ## Related essays
 

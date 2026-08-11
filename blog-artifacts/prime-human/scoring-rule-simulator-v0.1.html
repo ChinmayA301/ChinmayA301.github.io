@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human Capability Index — Scoring Rule Simulator v0.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  color-scheme:light;
+  --vellum:#E8EBE2;
+  --vellum-deep:#DBE0D3;
+  --grid:#BFC8B8;
+  --ink:#161E1A;
+  --ink-soft:#4A574E;
+  --signal:#B4361D;
+  --teal:#2C5A60;
+  --gold:#8A6A1E;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--vellum);
+  background-image:
+    linear-gradient(var(--grid) .5px,transparent .5px),
+    linear-gradient(90deg,var(--grid) .5px,transparent .5px);
+  background-size:22px 22px;
+  color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  font-size:14px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:2px solid var(--ink);
+  padding:34px 0 14px;
+  display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;
+}
+.artifact-meta{
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+h1{
+  font-family:Archivo,sans-serif;font-weight:800;
+  font-size:clamp(30px,5.4vw,58px);line-height:.93;letter-spacing:-.035em;
+  margin:8px 0 0;text-transform:uppercase;
+}
+h1 em{font-style:normal;color:var(--signal)}
+.stamp{
+  border:1.5px solid var(--signal);color:var(--signal);
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;padding:7px 11px;line-height:1.4;
+  transform:rotate(-1.6deg);max-width:230px;flex:none;
+}
+.standfirst{
+  max-width:62ch;margin:20px 0 0;font-size:15.5px;color:var(--ink-soft);
+}
+.standfirst strong{color:var(--ink);font-weight:500}
+
+/* ---------- layout ---------- */
+.rig{display:grid;grid-template-columns:270px 1fr;gap:0;margin-top:0;border-bottom:2px solid var(--ink)}
+.rail{border-right:1px solid var(--ink);padding:26px 22px 30px 0}
+.stage{padding:26px 0 30px 26px;min-width:0}
+
+/* ---------- controls ---------- */
+.ctl{margin-bottom:26px}
+.ctl > .lab{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:9px;
+}
+.opts{display:flex;flex-direction:column;gap:1px;background:var(--grid);border:1px solid var(--ink)}
+.opt{
+  background:var(--vellum);border:0;text-align:left;cursor:pointer;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.02em;
+  padding:8px 10px;color:var(--ink);display:flex;gap:8px;align-items:baseline;
+  transition:background .12s;
+}
+.opt:hover{background:var(--vellum-deep)}
+.opt .tick{color:transparent;font-size:10px}
+.opt[aria-pressed="true"]{background:var(--ink);color:var(--vellum)}
+.opt[aria-pressed="true"] .tick{color:var(--signal)}
+.opt .sub{color:var(--ink-soft);font-size:10px;margin-left:auto;font-family:"IBM Plex Sans",sans-serif}
+.opt[aria-pressed="true"] .sub{color:#9FAC9C}
+.opt:focus-visible{outline:2px solid var(--signal);outline-offset:-2px}
+
+.note{font-size:11.5px;color:var(--ink-soft);margin-top:9px;line-height:1.45}
+
+/* ---------- readout strip ---------- */
+.readout{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--ink);border:1px solid var(--ink);margin-bottom:26px}
+.cell{background:var(--vellum);padding:11px 12px}
+.cell .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.cell .v{font-family:"IBM Plex Mono",monospace;font-size:23px;font-weight:600;line-height:1.2;margin-top:3px}
+.cell .v.warn{color:var(--signal)}
+.cell .u{font-size:10.5px;color:var(--ink-soft)}
+
+/* ---------- leaderboard ---------- */
+.secthead{
+  display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--ink);
+  padding-bottom:6px;margin-bottom:0;
+}
+.secthead h2{
+  font-family:Archivo,sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:15px;letter-spacing:-.01em;margin:0;
+}
+.secthead .hint{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-left:auto}
+
+.board{position:relative;margin-bottom:34px}
+.row{
+  display:grid;grid-template-columns:32px 76px 1fr 58px 76px 50px;gap:10px;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--grid);will-change:transform;
+}
+.floorcell{font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:600;text-align:right;color:var(--gold)}
+.floorcell small{display:block;font-size:8.5px;letter-spacing:.12em;color:var(--ink-soft);font-weight:400}
+.empty{padding:26px 0;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--signal)}
+.row.top{background:linear-gradient(90deg,rgba(180,54,29,.07),transparent 60%)}
+.rank{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:600;text-align:right}
+.who{font-family:"IBM Plex Mono",monospace;font-size:12px}
+.who .meta{color:var(--ink-soft);font-size:10.5px}
+.bars{display:flex;gap:2px;align-items:flex-end;height:30px}
+.bars .b{flex:1;background:var(--teal);min-height:1px;opacity:.85}
+.bars .b.lo{background:var(--signal)}
+.score{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;text-align:right}
+.delta{font-family:"IBM Plex Mono",monospace;font-size:11px;text-align:right;color:var(--ink-soft)}
+.delta.up{color:var(--teal)}
+.delta.down{color:var(--signal)}
+.delta.new{color:var(--gold)}
+
+.legend{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+
+/* ---------- composition ---------- */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-bottom:34px}
+.panel{min-width:0}
+.panel h3{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 10px;font-weight:400;
+}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.axtxt{font-family:"IBM Plex Mono",monospace;font-size:9px;fill:var(--ink-soft);letter-spacing:.08em}
+.axtxt.big{font-size:11px;fill:var(--ink);font-weight:500}
+
+/* ---------- footer / provenance ---------- */
+.prov{border-top:2px solid var(--ink);padding-top:26px;margin-top:0}
+.prov h2{font-family:Archivo,sans-serif;font-weight:800;text-transform:uppercase;font-size:15px;margin:0 0 12px}
+.cols{columns:2;column-gap:34px;font-size:12.5px;color:var(--ink-soft)}
+.cols p{margin:0 0 11px;break-inside:avoid}
+.cols strong{color:var(--ink);font-weight:500}
+table{border-collapse:collapse;width:100%;font-family:"IBM Plex Mono",monospace;font-size:11px;margin-top:16px}
+th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--grid)}
+th{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--ink)}
+td.num{text-align:right}
+
+@media (max-width:880px){
+  .rig{grid-template-columns:1fr}
+  .rail{border-right:0;border-bottom:1px solid var(--ink);padding:22px 0 24px}
+  .stage{padding:24px 0 26px}
+  .pair{grid-template-columns:1fr}
+  .readout{grid-template-columns:repeat(2,1fr)}
+  .row{grid-template-columns:24px 62px 1fr 42px 56px 40px;gap:6px}
+  .cols{columns:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .row{transition:none !important}
+}
+</style>
+
+</head>
+<body>
+<div class="sheet">
+
+<header class="masthead">
+  <div>
+    <span class="artifact-meta">Human Capability Index · Scoring rule sensitivity · Build v0.1</span>
+    <h1>Who wins depends<br>on a rule <em>nobody</em><br>argues about</h1>
+  </div>
+  <div class="stamp">Synthetic population<br>Real method · Simulated data<br>No human subjects</div>
+</header>
+
+<p class="standfirst">A broad-capability sport has to compress eight incommensurable domains into one number. That compression is a choice, not a measurement. <strong>Change the normalization or the aggregation and the leaderboard reorders — same athletes, same performances.</strong> Move the controls and watch the top ten.</p>
+
+<div class="rig">
+  <aside class="rail">
+    <div class="ctl">
+      <span class="lab">Reference population</span>
+      <div class="opts" id="norm"></div>
+      <p class="note">Percentiles are computed against this group. Norming against a narrower reference asks “how exceptional for someone like you?” rather than “how exceptional, full stop.”</p>
+    </div>
+    <div class="ctl">
+      <span class="lab">Aggregation</span>
+      <div class="opts" id="agg"></div>
+      <p class="note">Arithmetic lets one extreme domain carry a weak profile. Geometric and harmonic means penalise gaps.</p>
+    </div>
+    <div class="ctl">
+      <span class="lab">Domain weights</span>
+      <div class="opts" id="wts"></div>
+    </div>
+    <div class="ctl">
+      <span class="lab">Age eligibility</span>
+      <div class="opts" id="elig"></div>
+    </div>
+    <div class="ctl">
+      <span class="lab">Floor schedule</span>
+      <div class="opts" id="floor"></div>
+      <p class="note">Each round you must clear the floor in <em>every</em> domain. Fail anywhere and you are out, whatever the rest looks like. Survivors are then ranked by composite.</p>
+    </div>
+  </aside>
+
+  <main class="stage">
+    <div class="readout" id="readout"></div>
+
+    <div class="secthead"><h2>Standings</h2><span class="hint">Δ vs. open · arithmetic · equal</span></div>
+    <div class="board" id="board"></div>
+    <div class="legend">
+      <span>Bars: Phy · Cog · Adp · Dec · Soc · Emo · Res · Cre</span>
+      <span style="color:var(--signal)">Red bar = below 50th pct</span>
+    </div>
+
+    <div class="pair" style="margin-top:34px">
+      <div class="panel">
+        <h3>Field collapse, round by round</h3>
+        <div id="collapse"></div>
+      </div>
+      <div class="panel">
+        <h3>What actually eliminated people</h3>
+        <div id="cause"></div>
+        <p class="note">The binding domain — each competitor's weakest — is what ends their run. If one bar towers, the sport has one real event.</p>
+      </div>
+    </div>
+
+    <div class="pair">
+      <div class="panel">
+        <h3>Who this rule selects — top 50</h3>
+        <div id="comp"></div>
+      </div>
+      <div class="panel">
+        <h3>Profile of the current leader</h3>
+        <div id="radar"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Domain share of composite variance</h3>
+      <div id="varchart"></div>
+      <p class="note">If one domain explains most of the spread in the composite, the index is mostly measuring that domain wearing eight labels.</p>
+    </div>
+  </main>
+</div>
+
+<section class="prov">
+  <h2>What this is, and what it is not</h2>
+  <div class="cols">
+    <p><strong>Real method, synthetic data.</strong> No person was measured. A population of 50,000 synthetic competitors is generated from a three-factor model (physical, cognitive, socio-emotional) with domain-specific loadings, then shifted by age and sex effect sizes set as stated parameters below. The scoring, normalization and aggregation code is the real thing; the inputs are invented.</p>
+    <p><strong>The effect sizes are assumptions, not findings.</strong> They are set to plausible magnitudes so the mechanics are visible. The physical sex gap in particular is a single composite standin for measures that in reality range from near-parity to well over 2 SD depending on whether you test relative endurance or upper-body power. Do not read any number here as an empirical claim.</p>
+    <p><strong>What is real is the structural result.</strong> Under any factor model where one domain has a large group-level mean difference and the aggregation is additive, that domain dominates the composite and the eligibility rule quietly determines the podium. That conclusion does not depend on the specific constants.</p>
+    <p><strong>Age curves are directional.</strong> Physical and fluid-reasoning peaks are placed in the twenties; decision quality, social and emotional capacity peak decades later. This is the standard shape in the literature, rendered here as smooth quadratics rather than fitted curves.</p>
+  </div>
+
+  <table>
+    <thead><tr><th>Domain</th><th class="num">Loading: phys</th><th class="num">Loading: cog</th><th class="num">Loading: soc-emo</th><th class="num">Age peak</th><th class="num">Sex effect (SD)</th></tr></thead>
+    <tbody id="params"></tbody>
+  </table>
+  <p class="note" style="margin-top:14px">Sex effect is signed male-minus-female in standard deviations, applied as ±half to each competitor. Loadings are on orthogonal standard-normal factors; unique variance fills the remainder.</p>
+</section>
+
+</div>
+
+<script>
+/* ============ deterministic RNG ============ */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const rnd=mulberry32(20260807);
+function gauss(){let u=0,v=0;while(u===0)u=rnd();while(v===0)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+
+/* ============ model spec ============ */
+const DOM=[
+ {k:'phy',n:'Physical',    l:[.86,0,0],    peak:26,curv:.0022,sex: 1.30},
+ {k:'cog',n:'Cognitive',   l:[0,.82,0],    peak:24,curv:.0009,sex: 0.00},
+ {k:'adp',n:'Adaptability',l:[.05,.56,.20],peak:25,curv:.0008,sex: 0.00},
+ {k:'dec',n:'Decision',    l:[0,.54,.26],  peak:48,curv:.0006,sex: 0.05},
+ {k:'soc',n:'Social',      l:[0,.10,.76],  peak:45,curv:.0004,sex:-0.15},
+ {k:'emo',n:'Emotional',   l:[0,.06,.71],  peak:55,curv:.0004,sex:-0.10},
+ {k:'res',n:'Resilience',  l:[.34,.05,.42],peak:45,curv:.0004,sex: 0.10},
+ {k:'cre',n:'Creativity',  l:[0,.26,.16],  peak:35,curv:.0004,sex: 0.00}
+];
+const N=50000;
+const POP=[];
+for(let i=0;i<N;i++){
+  const F=[gauss(),gauss(),gauss()];
+  const male=rnd()<.5;
+  const age=18+Math.floor(rnd()*44);            // 18..61
+  const z={};
+  DOM.forEach(d=>{
+    const sys=d.l[0]*F[0]+d.l[1]*F[1]+d.l[2]*F[2];
+    const uv=Math.max(0,1-(d.l[0]**2+d.l[1]**2+d.l[2]**2));
+    const ageAdj=-d.curv*Math.pow(age-d.peak,2);
+    z[d.k]=sys+Math.sqrt(uv)*gauss()+ageAdj+(male?.5:-.5)*d.sex;
+  });
+  POP.push({id:i,tag:'SUBJ '+String(1000+i),male,age,z});
+}
+
+/* ============ controls ============ */
+const NORMS=[
+ {id:'open', t:'Open',            s:'everyone'},
+ {id:'sex',  t:'Sex-normed',      s:'within sex'},
+ {id:'age',  t:'Age-normed',      s:'5-yr bins'},
+ {id:'both', t:'Sex + age normed',s:'both'}
+];
+const AGGS=[
+ {id:'arith',t:'Arithmetic mean',s:'Σ w·p'},
+ {id:'geom', t:'Geometric mean', s:'Π p^w'},
+ {id:'harm', t:'Harmonic mean',  s:'weakest-link'}
+];
+const WSETS=[
+ {id:'equal',t:'Equal',            s:'.125 ×8', w:{phy:.125,cog:.125,adp:.125,dec:.125,soc:.125,emo:.125,res:.125,cre:.125}},
+ {id:'phys', t:'Physical-lean',    s:'phy .30', w:{phy:.30,cog:.10,adp:.10,dec:.10,soc:.10,emo:.10,res:.10,cre:.10}},
+ {id:'cogn', t:'Cognitive-lean',   s:'cog .25', w:{phy:.08,cog:.25,adp:.15,dec:.18,soc:.07,emo:.07,res:.08,cre:.12}},
+ {id:'integ',t:'Integrated-event', s:'judgment',w:{phy:.08,cog:.12,adp:.18,dec:.20,soc:.12,emo:.10,res:.15,cre:.05}}
+];
+const ELIGS=[
+ {id:'all',t:'Open age',   s:'18–61'},
+ {id:'prime',t:'25–35 only',s:'“prime”'}
+];
+const FLOORS=[
+ {id:'off',   t:'No floor',  s:'rank only',   sched:[]},
+ {id:'gentle',t:'Gentle',    s:'40·55·65·75', sched:[40,55,65,75]},
+ {id:'std',   t:'Standard',  s:'50·65·75·85', sched:[50,65,75,85]},
+ {id:'brutal',t:'Brutal',    s:'60·75·85·90', sched:[60,75,85,90]}
+];
+const state={norm:'open',agg:'arith',wts:'equal',elig:'all',floor:'std'};
+
+function buildOpts(host,items,key){
+  host.innerHTML='';
+  items.forEach(it=>{
+    const b=document.createElement('button');
+    b.className='opt';b.type='button';
+    b.setAttribute('aria-pressed',state[key]===it.id);
+    b.innerHTML='<span class="tick">■</span><span>'+it.t+'</span><span class="sub">'+it.s+'</span>';
+    b.onclick=()=>{state[key]=it.id;buildAll();render()};
+    host.appendChild(b);
+  });
+}
+function buildAll(){
+  buildOpts(document.getElementById('norm'),NORMS,'norm');
+  buildOpts(document.getElementById('agg'),AGGS,'agg');
+  buildOpts(document.getElementById('wts'),WSETS,'wts');
+  buildOpts(document.getElementById('elig'),ELIGS,'elig');
+  buildOpts(document.getElementById('floor'),FLOORS,'floor');
+}
+
+/* ============ scoring ============ */
+function eligible(){return state.elig==='prime'?POP.filter(p=>p.age>=25&&p.age<=35):POP}
+function groupKey(p,mode){
+  const band=Math.floor((p.age-18)/5);
+  if(mode==='open')return 'A';
+  if(mode==='sex') return p.male?'M':'F';
+  if(mode==='age') return 'b'+band;
+  return (p.male?'M':'F')+band;
+}
+function percentiles(pool,mode){
+  const groups={};
+  pool.forEach(p=>{(groups[groupKey(p,mode)] ||= []).push(p)});
+  const out=new Map();
+  pool.forEach(p=>out.set(p.id,{}));
+  Object.values(groups).forEach(g=>{
+    DOM.forEach(d=>{
+      const s=[...g].sort((a,b)=>a.z[d.k]-b.z[d.k]);
+      const n=s.length;
+      s.forEach((p,i)=>{out.get(p.id)[d.k]=Math.max(.5,Math.min(99.9,(i+.5)/n*100))});
+    });
+  });
+  return out;
+}
+function composite(pc,w,agg){
+  if(agg==='arith'){let s=0;DOM.forEach(d=>s+=w[d.k]*pc[d.k]);return s}
+  if(agg==='geom'){let s=0;DOM.forEach(d=>s+=w[d.k]*Math.log(pc[d.k]));return Math.exp(s)}
+  let s=0;DOM.forEach(d=>s+=w[d.k]/pc[d.k]);return 1/s;
+}
+function rankPool(mode,aggId,wId){
+  const pool=eligible();
+  const pcs=percentiles(pool,mode);
+  const w=WSETS.find(x=>x.id===wId).w;
+  const rows=pool.map(p=>{
+    const pc=pcs.get(p.id);
+    let fl=Infinity,bk=DOM[0].k;
+    DOM.forEach(d=>{if(pc[d.k]<fl){fl=pc[d.k];bk=d.k}});
+    return{p,pc,h:composite(pc,w,aggId),floor:fl,bind:bk};
+  });
+  rows.sort((a,b)=>b.h-a.h);
+  return rows;
+}
+function runRounds(rows,sched){
+  const causes={};DOM.forEach(d=>causes[d.k]=0);
+  if(!sched.length)return{rounds:[],survivors:rows,causes,start:rows.length};
+  let alive=rows;const rounds=[];
+  sched.forEach(f=>{
+    const next=[];
+    alive.forEach(r=>{if(r.floor>=f)next.push(r);else causes[r.bind]++});
+    rounds.push({f,before:alive.length,after:next.length});
+    alive=next;
+  });
+  return{rounds,survivors:alive,causes,start:rows.length};
+}
+function spearman(aRank,bRank,ids){
+  const n=ids.length;let s=0;
+  ids.forEach(id=>{const d=aRank.get(id)-bRank.get(id);s+=d*d});
+  return 1-6*s/(n*(n*n-1));
+}
+
+/* ============ render ============ */
+let prevRank=null, prevPos=new Map();
+function render(){
+  const cur=rankPool(state.norm,state.agg,state.wts);
+  const base=rankPool('open','arith','equal');
+  const curR=new Map(cur.map((r,i)=>[r.p.id,i+1]));
+  const baseR=new Map(base.map((r,i)=>[r.p.id,i+1]));
+  const ids=cur.map(r=>r.p.id);
+
+  /* rounds */
+  const sched=FLOORS.find(f=>f.id===state.floor).sched;
+  const R=runRounds(cur,sched);
+  const surv=R.survivors;
+  const qual=surv.slice(0,50);
+
+  /* readout */
+  const rho=spearman(curR,baseR,ids);
+  const males=qual.filter(r=>r.p.male).length;
+  const totElim=Object.values(R.causes).reduce((a,b)=>a+b,0);
+  let topCause=DOM[0],topN=-1;
+  DOM.forEach(d=>{if(R.causes[d.k]>topN){topN=R.causes[d.k];topCause=d}});
+  const causeShare=totElim?Math.round(topN/totElim*100):0;
+
+  document.getElementById('readout').innerHTML=[
+    ['Field remaining','<span class="v'+(surv.length===0?' warn':'')+'">'+surv.length.toLocaleString()+'</span>','of '+R.start.toLocaleString()+' entered'],
+    ['Leader floor','<span class="v">'+(surv.length?surv[0].floor.toFixed(0):'—')+'<span class="u">th</span></span>','weakest domain'],
+    ['Biggest eliminator','<span class="v'+(causeShare>34?' warn':'')+'">'+causeShare+'<span class="u">%</span></span>',totElim?topCause.n.toLowerCase():'no cuts made'],
+    ['Qualified sex split','<span class="v'+(qual.length&&(males/qual.length>.8||males/qual.length<.2)?' warn':'')+'">'+males+'<span class="u">/'+(qual.length-males)+'</span></span>','male / female'],
+    ['Rank correlation','<span class="v">'+rho.toFixed(3)+'</span>','Spearman ρ, full field']
+  ].map(c=>'<div class="cell"><div class="k">'+c[0]+'</div>'+c[1]+'<div class="u">'+c[2]+'</div></div>').join('');
+
+  /* leaderboard with FLIP */
+  const board=document.getElementById('board');
+  const oldPos=new Map();
+  [...board.children].forEach(el=>oldPos.set(el.dataset.id,el.getBoundingClientRect().top));
+  board.innerHTML='';
+  if(!surv.length){
+    board.innerHTML='<div class="empty">No competitor cleared every floor. The schedule is harder than this field is deep — lower the floor, or widen the reference population.</div>';
+  }
+  surv.slice(0,12).forEach((r,i)=>{
+    const d=baseR.has(r.p.id)?baseR.get(r.p.id)-(i+1):null;
+    let dTxt='—',dCls='';
+    if(d!==null&&d>0){dTxt='▲'+d;dCls='up'}
+    else if(d!==null&&d<0){dTxt='▼'+(-d);dCls='down'}
+    const el=document.createElement('div');
+    el.className='row'+(i===0?' top':'');
+    el.dataset.id=r.p.id;
+    el.innerHTML=
+      '<div class="rank">'+(i+1)+'</div>'+
+      '<div class="who">'+r.p.tag+'<div class="meta">'+(r.p.male?'M':'F')+' · '+r.p.age+'</div></div>'+
+      '<div class="bars">'+DOM.map(dd=>{
+        const v=r.pc[dd.k];
+        return '<div class="b'+(v<50?' lo':'')+'" style="height:'+Math.max(2,v*.30)+'px" title="'+dd.n+' '+v.toFixed(0)+'"></div>'
+      }).join('')+'</div>'+
+      '<div class="floorcell">'+r.floor.toFixed(0)+'<small>FLOOR</small></div>'+
+      '<div class="score">'+r.h.toFixed(1)+'</div>'+
+      '<div class="delta '+dCls+'">'+dTxt+'</div>';
+    board.appendChild(el);
+  });
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    [...board.children].forEach(el=>{
+      const was=oldPos.get(el.dataset.id);
+      if(was===undefined){el.style.opacity=0;requestAnimationFrame(()=>{el.style.transition='opacity .35s';el.style.opacity=1});return}
+      const now=el.getBoundingClientRect().top;
+      const dy=was-now;
+      if(!dy)return;
+      el.style.transform='translateY('+dy+'px)';
+      requestAnimationFrame(()=>{el.style.transition='transform .5s cubic-bezier(.22,1,.36,1)';el.style.transform='translateY(0)'});
+    });
+  }
+
+  drawCollapse(R);
+  drawCause(R.causes,totElim);
+  if(qual.length){drawComp(qual);drawRadar(surv[0])}
+  else{document.getElementById('comp').innerHTML='';document.getElementById('radar').innerHTML=''}
+  drawVar(cur);
+}
+
+/* field collapse per round */
+function drawCollapse(R){
+  const W=440,H=170,y0=126;
+  if(!R.rounds.length){
+    document.getElementById('collapse').innerHTML='<p class="note">No floor applied — the whole field advances and ranking alone decides. Turn on a floor schedule to see the cuts.</p>';
+    return;
+  }
+  const steps=[{f:null,after:R.start}].concat(R.rounds);
+  const mx=R.start,cw=W/steps.length;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Field size after each round">';
+  steps.forEach((st,i)=>{
+    const h=Math.max(2,Math.sqrt(st.after/mx)*96);
+    s+='<rect x="'+(i*cw+6)+'" y="'+(y0-h)+'" width="'+(cw-12)+'" height="'+h+'" fill="'+(i===0?'var(--ink)':'var(--teal)')+'" opacity="'+(i===0?.28:.82)+'"/>';
+    s+='<text class="axtxt big" x="'+(i*cw+cw/2)+'" y="'+(y0-h-6)+'" text-anchor="middle">'+st.after.toLocaleString()+'</text>';
+    s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0+14)+'" text-anchor="middle">'+(i===0?'ENTER':'R'+i)+'</text>';
+    if(st.f!==null)s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0+26)+'" text-anchor="middle" fill="var(--signal)">≥'+st.f+'th</text>';
+  });
+  s+='<line x1="0" y1="'+y0+'" x2="'+W+'" y2="'+y0+'" stroke="var(--ink)"/>';
+  s+='<text class="axtxt" x="0" y="158">HEIGHT ON SQRT SCALE — LINEAR WOULD BE INVISIBLE BY R3</text></svg>';
+  document.getElementById('collapse').innerHTML=s;
+}
+
+/* which domain did the killing */
+function drawCause(causes,tot){
+  const W=440,H=112,y0=84;
+  if(!tot){document.getElementById('cause').innerHTML='<p class="note">Nobody was eliminated.</p>';return}
+  const mx=Math.max(...DOM.map(d=>causes[d.k]));
+  const cw=W/8;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Domain responsible for eliminations">';
+  DOM.forEach((d,i)=>{
+    const pct=causes[d.k]/tot*100,h=causes[d.k]/mx*66;
+    const dom=pct>30;
+    s+='<rect x="'+(i*cw+4)+'" y="'+(y0-h)+'" width="'+(cw-8)+'" height="'+Math.max(h,1)+'" fill="'+(dom?'var(--signal)':'var(--ink)')+'" opacity="'+(dom?.9:.72)+'"/>';
+    s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0-h-5)+'" text-anchor="middle">'+pct.toFixed(0)+'%</text>';
+    s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0+14)+'" text-anchor="middle">'+d.n.slice(0,3).toUpperCase()+'</text>';
+  });
+  s+='<line x1="0" y1="'+y0+'" x2="'+W+'" y2="'+y0+'" stroke="var(--ink)"/></svg>';
+  document.getElementById('cause').innerHTML=s;
+}
+
+/* composition: sex bar + age histogram */
+function drawComp(top){
+  const m=top.filter(r=>r.p.male).length,f=top.length-m;
+  const bins=new Array(9).fill(0); // 18-22,23-27,...,58-62
+  top.forEach(r=>{const b=Math.min(8,Math.floor((r.p.age-18)/5));bins[b]++});
+  const mx=Math.max(...bins,1);
+  const W=440,H=170;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Composition of the top 50">';
+  s+='<text class="axtxt" x="0" y="10">SEX</text>';
+  const bw=m/top.length*W;
+  s+='<rect x="0" y="18" width="'+bw+'" height="20" fill="var(--teal)"/>';
+  s+='<rect x="'+bw+'" y="18" width="'+(W-bw)+'" height="20" fill="var(--signal)" opacity=".65"/>';
+  s+='<text class="axtxt big" x="6" y="33" fill="#E8EBE2">M '+m+'</text>';
+  s+='<text class="axtxt big" x="'+(W-8)+'" y="33" text-anchor="end" fill="#E8EBE2">F '+f+'</text>';
+  s+='<text class="axtxt" x="0" y="66">AGE DISTRIBUTION</text>';
+  const y0=150,hMax=76,cw=W/9;
+  bins.forEach((v,i)=>{
+    const h=v/mx*hMax;
+    s+='<rect x="'+(i*cw+3)+'" y="'+(y0-h)+'" width="'+(cw-6)+'" height="'+Math.max(h,1)+'" fill="var(--ink)" opacity=".82"/>';
+    s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0+13)+'" text-anchor="middle">'+(18+i*5)+'</text>';
+    if(v)s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0-h-4)+'" text-anchor="middle">'+v+'</text>';
+  });
+  s+='<line x1="0" y1="'+y0+'" x2="'+W+'" y2="'+y0+'" stroke="var(--ink)"/></svg>';
+  document.getElementById('comp').innerHTML=s;
+}
+
+/* radar */
+function drawRadar(r){
+  const S=210,c=S/2,R=76;
+  const pts=DOM.map((d,i)=>{
+    const a=-Math.PI/2+i/DOM.length*2*Math.PI;
+    const v=r.pc[d.k]/100;
+    return[c+Math.cos(a)*R*v,c+Math.sin(a)*R*v,c+Math.cos(a)*R,c+Math.sin(a)*R,a,d,r.pc[d.k]];
+  });
+  let s='<svg viewBox="0 0 '+S+' '+S+'" role="img" aria-label="Capability profile of the leader">';
+  [.25,.5,.75,1].forEach(f=>{
+    const poly=DOM.map((d,i)=>{const a=-Math.PI/2+i/DOM.length*2*Math.PI;return (c+Math.cos(a)*R*f)+','+(c+Math.sin(a)*R*f)}).join(' ');
+    s+='<polygon points="'+poly+'" fill="none" stroke="var(--grid)" stroke-width="'+(f===1?1.2:.6)+'"/>';
+  });
+  pts.forEach(p=>{s+='<line x1="'+c+'" y1="'+c+'" x2="'+p[2]+'" y2="'+p[3]+'" stroke="var(--grid)" stroke-width=".6"/>'});
+  s+='<polygon points="'+pts.map(p=>p[0]+','+p[1]).join(' ')+'" fill="var(--signal)" fill-opacity=".2" stroke="var(--signal)" stroke-width="1.6"/>';
+  pts.forEach(p=>{
+    const lx=c+Math.cos(p[4])*(R+17),ly=c+Math.sin(p[4])*(R+17);
+    const anc=Math.abs(Math.cos(p[4]))<.3?'middle':(Math.cos(p[4])>0?'start':'end');
+    s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="2.4" fill="var(--signal)"/>';
+    s+='<text class="axtxt" x="'+lx+'" y="'+(ly+3)+'" text-anchor="'+anc+'">'+p[5].n.slice(0,3).toUpperCase()+' '+p[6].toFixed(0)+'</text>';
+  });
+  s+='</svg><div class="note" style="margin-top:4px">'+r.p.tag+' · '+(r.p.male?'male':'female')+' · age '+r.p.age+' · composite '+r.h.toFixed(1)+'</div>';
+  document.getElementById('radar').innerHTML=s;
+}
+
+/* variance decomposition: correlation² of each domain pct with composite, normalised */
+function drawVar(rows){
+  const n=rows.length;
+  const hs=rows.map(r=>r.h);
+  const hm=hs.reduce((a,b)=>a+b)/n;
+  const hsd=Math.sqrt(hs.reduce((a,b)=>a+(b-hm)**2,0)/n);
+  const shares=DOM.map(d=>{
+    const xs=rows.map(r=>r.pc[d.k]);
+    const xm=xs.reduce((a,b)=>a+b)/n;
+    const xsd=Math.sqrt(xs.reduce((a,b)=>a+(b-xm)**2,0)/n);
+    let cov=0;for(let i=0;i<n;i++)cov+=(xs[i]-xm)*(hs[i]-hm);
+    const r=cov/n/(xsd*hsd||1);
+    return{d,v:r*r};
+  });
+  const tot=shares.reduce((a,b)=>a+b.v,0)||1;
+  const W=440,H=112,y0=84;
+  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Domain share of composite variance">';
+  const cw=W/8;
+  shares.forEach((x,i)=>{
+    const pct=x.v/tot*100,h=pct/Math.max(...shares.map(z=>z.v/tot*100))*66;
+    const dom=pct>28;
+    s+='<rect x="'+(i*cw+4)+'" y="'+(y0-h)+'" width="'+(cw-8)+'" height="'+Math.max(h,1)+'" fill="'+(dom?'var(--signal)':'var(--teal)')+'" opacity="'+(dom?.9:.75)+'"/>';
+    s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0-h-5)+'" text-anchor="middle">'+pct.toFixed(0)+'%</text>';
+    s+='<text class="axtxt" x="'+(i*cw+cw/2)+'" y="'+(y0+14)+'" text-anchor="middle">'+x.d.n.slice(0,3).toUpperCase()+'</text>';
+  });
+  s+='<line x1="0" y1="'+y0+'" x2="'+W+'" y2="'+y0+'" stroke="var(--ink)"/></svg>';
+  document.getElementById('varchart').innerHTML=s;
+}
+
+/* params table */
+document.getElementById('params').innerHTML=DOM.map(d=>
+  '<tr><td>'+d.n+'</td><td class="num">'+d.l[0].toFixed(2)+'</td><td class="num">'+d.l[1].toFixed(2)+'</td><td class="num">'+d.l[2].toFixed(2)+'</td><td class="num">'+d.peak+'</td><td class="num">'+(d.sex>0?'+':'')+d.sex.toFixed(2)+'</td></tr>'
+).join('');
+
+buildAll();render();
+</script>
+</body>
+</html>

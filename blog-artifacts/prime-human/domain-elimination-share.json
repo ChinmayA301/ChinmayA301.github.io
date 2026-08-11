@@ -1,0 +1,19 @@
+{
+  "artifact": "Prime Human scoring-rule simulator v0.1",
+  "seed": 20260807,
+  "synthetic_population": 50000,
+  "norming": "open",
+  "floor_percentile": 50,
+  "survivors": 1268,
+  "survival_rate_percent": 2.536,
+  "elimination_share_percent": {
+    "Physical": 15.5421,
+    "Cognitive": 11.1569,
+    "Adaptability": 10.9107,
+    "Decision": 11.91,
+    "Social": 11.3437,
+    "Emotional": 12.302,
+    "Resilience": 12.8396,
+    "Creativity": 13.9949
+  }
+}
