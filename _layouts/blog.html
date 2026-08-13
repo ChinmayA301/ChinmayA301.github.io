@@ -27,10 +27,10 @@
     }
   </style>
   {% include seo-head.html %}
-  {% include schema-blog.html %}
-  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260722a' | relative_url }}">
+  {% unless page.hide_blog_schema %}{% include schema-blog.html %}{% endunless %}
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260813a' | relative_url }}">
 </head>
-<body class="blog-theme blog-index-page">
+<body class="blog-theme blog-index-page{% if page.body_class %} {{ page.body_class }}{% endif %}">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-orb orb-3" aria-hidden="true"></div>
@@ -67,6 +67,7 @@
         <a href="{{ '/blog/' | relative_url }}">Blog</a> |
         <a href="{{ '/projects/' | relative_url }}">Projects</a> |
         <a href="{{ '/intelligence/' | relative_url }}">Intelligence</a> |
+        <a href="{{ '/blog/privacy/' | relative_url }}">Privacy</a> |
         <a class="blog-footer-muted" href="{{ '/llms.txt' | relative_url }}" aria-label="View llms.txt">llms.txt</a>
       </p>
     </div>

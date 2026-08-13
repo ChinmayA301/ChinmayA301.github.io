@@ -5241,6 +5241,281 @@ body.blog-theme .blog-share-status {
     line-height: 1.5;
 }
 
+body.blog-theme .blog-form-note a {
+    color: var(--news-ink) !important;
+    text-decoration-color: var(--news-accent);
+}
+
+/* Privacy notice — an editorial ledger inside the existing newspaper system */
+.privacy-notice {
+    max-width: 1180px;
+    margin: 0 auto;
+    color: var(--news-ink);
+}
+
+.privacy-brief {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: clamp(3rem, 6vw, 5.5rem);
+    border-block: 4px double var(--news-rule-strong);
+}
+
+body.blog-theme .privacy-brief p {
+    margin: 0;
+    padding: 1.2rem clamp(1rem, 2.4vw, 2rem);
+    color: var(--news-muted) !important;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(1.05rem, 1.45vw, 1.22rem);
+    line-height: 1.45;
+}
+
+.privacy-brief p + p {
+    border-left: 1px solid var(--news-rule);
+}
+
+body.blog-theme .privacy-brief strong {
+    color: var(--news-ink);
+    font-weight: 400;
+}
+
+.privacy-spread {
+    display: grid;
+    grid-template-columns: minmax(190px, 0.3fr) minmax(0, 760px);
+    gap: clamp(2.75rem, 7vw, 7.5rem);
+    justify-content: center;
+    align-items: start;
+}
+
+.privacy-index {
+    position: sticky;
+    top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--news-rule-strong);
+}
+
+.privacy-index dl {
+    display: grid;
+    gap: 1rem;
+    margin: 0 0 2.5rem;
+}
+
+.privacy-index dl > div {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--news-rule);
+}
+
+.privacy-index dt,
+.privacy-toc > span {
+    color: var(--news-accent);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+body.blog-theme .privacy-index dd {
+    margin: 0.35rem 0 0;
+    color: var(--news-muted) !important;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.3;
+}
+
+.privacy-toc ol {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: privacy-toc;
+}
+
+.privacy-toc li {
+    counter-increment: privacy-toc;
+}
+
+.privacy-toc a {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 0.2rem;
+    color: var(--news-muted) !important;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.61rem;
+    letter-spacing: 0.04em;
+    line-height: 1.45;
+    text-decoration: none;
+}
+
+.privacy-toc a::before {
+    content: counter(privacy-toc, decimal-leading-zero);
+    color: var(--news-faint);
+    font-variant-numeric: tabular-nums;
+}
+
+.privacy-toc a:hover,
+.privacy-toc a:focus-visible {
+    color: var(--news-accent) !important;
+}
+
+.privacy-copy {
+    min-width: 0;
+}
+
+.privacy-copy section {
+    scroll-margin-top: 2rem;
+    padding-bottom: clamp(2.7rem, 6vw, 4.8rem);
+}
+
+.privacy-copy section + section {
+    padding-top: clamp(2.7rem, 6vw, 4.8rem);
+    border-top: 1px solid var(--news-rule-strong);
+}
+
+body.blog-theme .privacy-copy h2,
+body.blog-theme .privacy-copy h3 {
+    color: var(--news-ink) !important;
+    font-family: "Instrument Serif", Georgia, serif !important;
+    font-weight: 400 !important;
+}
+
+body.blog-theme .privacy-copy h2 {
+    max-width: 680px;
+    margin: 0 0 1.5rem;
+    font-size: clamp(2.45rem, 5vw, 4.6rem) !important;
+    letter-spacing: -0.045em !important;
+    line-height: 0.95;
+}
+
+body.blog-theme .privacy-copy h3 {
+    margin: 2.2rem 0 0.7rem;
+    font-size: clamp(1.45rem, 2.5vw, 2rem) !important;
+    letter-spacing: -0.025em !important;
+    line-height: 1.05;
+}
+
+body.blog-theme .privacy-copy p,
+body.blog-theme .privacy-copy li {
+    max-width: 70ch;
+    color: var(--news-muted) !important;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(1.12rem, 1.55vw, 1.28rem);
+    letter-spacing: -0.01em;
+    line-height: 1.62;
+}
+
+.privacy-copy ul {
+    display: grid;
+    gap: 0.65rem;
+    margin: 1.25rem 0;
+    padding-left: 1.25rem;
+}
+
+body.blog-theme .privacy-copy strong {
+    color: var(--news-ink);
+    font-weight: 400;
+}
+
+body.blog-theme .privacy-copy code {
+    padding: 0.08rem 0.32rem;
+    background: var(--news-sheet-raised);
+    color: var(--news-ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72em;
+}
+
+body.blog-theme .privacy-copy a {
+    color: var(--news-ink) !important;
+    text-decoration-color: var(--news-accent);
+}
+
+.privacy-service-list {
+    margin: 2rem 0;
+    border-top: 1px solid var(--news-rule-strong);
+}
+
+.privacy-service-list > div {
+    display: grid;
+    grid-template-columns: minmax(110px, 0.24fr) minmax(0, 1fr) auto;
+    gap: 1rem 2rem;
+    align-items: baseline;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid var(--news-rule);
+}
+
+body.blog-theme .privacy-service-list h3,
+body.blog-theme .privacy-service-list p {
+    margin: 0;
+}
+
+.privacy-service-list > div > a,
+.privacy-service-list > div > span {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.privacy-contact {
+    margin-top: 0.3rem;
+    padding: clamp(2rem, 4vw, 3.4rem) !important;
+    border: 1px solid var(--news-rule-strong) !important;
+    background: var(--news-sheet) !important;
+}
+
+.privacy-contact h2 {
+    font-size: clamp(2.2rem, 4vw, 3.8rem) !important;
+}
+
+.privacy-contact p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 991.98px) {
+    .privacy-spread {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 3.5rem;
+    }
+
+    .privacy-index {
+        position: static;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+        gap: 2.5rem;
+    }
+
+    .privacy-index dl {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .privacy-brief,
+    .privacy-index,
+    .privacy-service-list > div {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .privacy-brief p + p {
+        border-top: 1px solid var(--news-rule);
+        border-left: 0;
+    }
+
+    .privacy-service-list > div {
+        gap: 0.7rem;
+    }
+
+    .privacy-service-list > div > a,
+    .privacy-service-list > div > span {
+        white-space: normal;
+    }
+
+    .privacy-contact {
+        margin-inline: -0.4rem;
+        padding: 1.5rem !important;
+    }
+}
+
 body.blog-theme .blog-form-status,
 body.blog-theme .blog-share-status {
     min-height: 1.5em;
