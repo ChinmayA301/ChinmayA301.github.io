@@ -508,6 +508,57 @@ For the full build log and limitations, see [Influence Maximization using BO](/b
 
 ---
 
+## Approach B: The Same Network, Different People
+
+There is a methodological weakness in the experiment above.
+
+The Higgs topology is real. The behavior moving through it is not.
+
+Independent Cascade models commonly give every eligible edge the same activation probability, or draw those probabilities from an arbitrary distribution. That is useful for isolating graph structure. It also assumes that everybody is equally likely to activate on every kind of content.
+
+They are not.
+
+A technically literate node should not respond to an ML paper in the same way it responds to a sports clip. A highly social, video-oriented node may reverse that ordering. So Approach B replaces the single global probability with a topic-conditional one:
+
+'logit p(u → v | c) = logit p₀ + β₁ affinity(v,c) + β₂ share(v) + β₃ similarity(u,v,c)'
+
+The persona signals come from the [public MatrAIx release](https://huggingface.co/datasets/MatrAIx2026/MatrAIx_Persona_1M_Public_Release), which exposes 1,290 categorical dimensions spanning technical familiarity, interests, psychology, lifestyle, and media behavior. The first implementation builds two deliberately different content profiles:
+
+- an **ML paper**, using machine-learning familiarity, technology and science interest, technical literacy, need for cognition, and reading preference;
+- a **sports clip**, using sports interest, sports exposure, video preference, excitement seeking, and social-media attitude.
+
+BO now searches over four interpretable weights: topology, topic affinity, sharing propensity, and neighborhood redundancy. The question becomes more specific:
+
+> **Which structurally strong nodes are plausible first adopters for this particular content?**
+
+### The conditioning problem is part of the model
+
+There is no identity join between a MatrAIx persona and an anonymous Higgs node. Randomly sampling 223,833 global personas would not recreate Twitter's user distribution during the July 2012 Higgs discovery. Pretending otherwise would turn synthetic enrichment into fake ground truth.
+
+So the implementation treats persona assignment as an explicit sensitivity parameter. It runs three assumptions about how strongly a node's observed graph activity aligns with a sampled persona's platform-fit score:
+
+- `0.00`: random assignment;
+- `0.35`: weak alignment;
+- `0.70`: strong-alignment stress test.
+
+A result that disappears across this grid is assumption-sensitive, not robust.
+
+The initial audit of the 999-row decoded public sample found 665 age-eligible records and an effective sample size of 652.8 after soft conditioning. The requested fields are usable but incomplete: coverage ranges from 18.0% to 77.0%. The ML-paper and sports-clip affinity scores are meaningfully distinct in the sample (correlation = -0.225). That is enough to run the mechanism as a synthetic sensitivity experiment. It is **not** evidence about the actual preferences of Higgs users.
+
+### Three-tier provenance
+
+| Layer | What it is | What can be claimed |
+|---|---|---|
+| Network | Real [SNAP Higgs retweet topology](https://snap.stanford.edu/data/higgs/web/twitter-higgs.html) | The edges and graph structure are observed data |
+| People and behavior | Synthetic persona-to-node assignments and assumed activation coefficients | A controlled modeling scenario, not reconstructed user behavior |
+| Method | Heterogeneous IC simulation, Monte Carlo evaluation, and Gaussian-process BO | A reproducible topic-conditional influence-maximization method |
+
+Even a human-grounded MatrAIx record becomes synthetic metadata once it is assigned to an anonymous graph node. The honest output is therefore a robustness study over assumptions, not a claim that the model discovered who those Twitter users really were.
+
+The implementation, conditioning audit, tests, and reporting contract are in the [Approach B research artifact](https://github.com/ChinmayA301/blog-artifacts/tree/codex/persona-conditioned-bo/virality-bayesian-optimization). The full 223,833-node performance result is intentionally not reported until the cached Higgs graph is supplied and every conditioning value is run.
+
+---
+
 ## Why This Is Innovative
 
 Bayesian Optimization is commonly used for:
