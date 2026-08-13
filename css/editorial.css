@@ -5289,8 +5289,12 @@ body.blog-theme .privacy-brief strong {
 .privacy-index {
     position: sticky;
     top: 2rem;
+    max-height: calc(100vh - 4rem);
     padding-top: 1rem;
     border-top: 1px solid var(--news-rule-strong);
+    overflow-y: auto;
+    scrollbar-color: var(--news-rule-strong) transparent;
+    scrollbar-width: thin;
 }
 
 .privacy-index dl {
@@ -5339,9 +5343,12 @@ body.blog-theme .privacy-index dd {
     display: grid;
     grid-template-columns: 1.6rem 1fr;
     gap: 0.2rem;
+    align-items: center;
+    min-height: 2rem;
+    padding-block: 0.22rem;
     color: var(--news-muted) !important;
     font-family: "IBM Plex Mono", monospace;
-    font-size: 0.61rem;
+    font-size: 0.68rem;
     letter-spacing: 0.04em;
     line-height: 1.45;
     text-decoration: none;
@@ -5383,7 +5390,7 @@ body.blog-theme .privacy-copy h2 {
     max-width: 680px;
     margin: 0 0 1.5rem;
     font-size: clamp(2.45rem, 5vw, 4.6rem) !important;
-    letter-spacing: -0.045em !important;
+    letter-spacing: -0.04em !important;
     line-height: 0.95;
 }
 
@@ -5479,9 +5486,11 @@ body.blog-theme .privacy-service-list p {
 
     .privacy-index {
         position: static;
+        max-height: none;
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
         gap: 2.5rem;
+        overflow: visible;
     }
 
     .privacy-index dl {

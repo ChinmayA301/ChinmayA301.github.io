@@ -39,8 +39,13 @@ last_modified_at: 2026-08-13
           <li><a href="#collection">Information collected</a></li>
           <li><a href="#use">How it is used</a></li>
           <li><a href="#services">Service providers</a></li>
+          <li><a href="#cookies">Cookies and storage</a></li>
           <li><a href="#storage">Storage and retention</a></li>
+          <li><a href="#transfers">International processing</a></li>
           <li><a href="#rights">Your choices and rights</a></li>
+          <li><a href="#children">Children’s privacy</a></li>
+          <li><a href="#links">External links</a></li>
+          <li><a href="#changes">Policy changes</a></li>
           <li><a href="#contact">Contact</a></li>
         </ol>
       </nav>
@@ -90,7 +95,7 @@ last_modified_at: 2026-08-13
         <div class="privacy-service-list" role="list">
           <div role="listitem">
             <h3>Google</h3>
-            <p>The newsletter form uses Google Apps Script and stores signup records in a private Google Sheet. Google processes related account, service, and network data under its own privacy terms.</p>
+            <p>The newsletter form uses Google Apps Script and stores signup records in a private Google Sheet. Privacy emails sent to the listed Gmail address are also processed and stored through Google’s email service. Google handles related account, service, and network data under its own privacy terms.</p>
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
           </div>
           <div role="listitem">
