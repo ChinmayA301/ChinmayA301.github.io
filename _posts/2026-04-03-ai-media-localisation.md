@@ -23,7 +23,7 @@ draft: false
 
 schema_type: "Article"
 keywords: "AI localisation media, dubbing AI, subtitling, cultural adaptation, media recommendation systems, content globalization"
-last_modified_at: 2026-04-03
+last_modified_at: 2026-08-15
 ---
 
 > **Key takeaways**
@@ -258,6 +258,24 @@ The future winners in global media will not just make content that travels.
 They will build systems that understand how to help content belong somewhere new.
 
 That is what AI localisation should aim for.
+
+## 11) From Framework to Build: locstack v1
+
+The stack above is a design, not a claim of what exists. To pressure-test it, I built a working companion — [**locstack**](https://github.com/ChinmayA301/Media-localisation-ai), a modular Hindi→English (multi-pair by design) localisation pipeline, and used it to check which parts of section 4's layered pipeline hold up in practice.
+
+**What's implemented**, mapped onto the framework above:
+
+- **4.1 Content understanding** — per-line emotion, register, idiom, and cultural-reference tagging, ahead of translation rather than folded into it.
+- **4.2 Translation and adaptation** — constrained translation with two distinct modes: subtitle mode budgets each line by reading-speed norms; a separate **lyrics mode** targets syllable-matched cadence for song and rap, so a translated line can still ride the original beat.
+- **4.3 Subtitle intelligence** — deterministic reading-speed, line-length, and timing QA, run independently of the model.
+- **4.5 Cultural QA** — a second pass that flags cultural flattening, tonal drift, meaning errors, and sensitivity risks with a rationale, explicitly advisory rather than a replacement for an editor (the hybrid model in section 8).
+- **A live-captioning extension**, not originally scoped in the framework above: a browser extension that translates whatever video is playing in a tab, using a delay-line buffer — the picture and audio are held a few seconds behind live so they resurface in sync with the caption once translation catches up, rather than captions trailing the speaker.
+
+**What's deliberately not built**: 4.4 (voice and dubbing) and 4.6 (discovery and recommendation) stay unimplemented. Voice cloning in particular is gated behind the consent problem raised in section 7.3 — a design for it exists, but it requires a verified consent manifest before any voice model can load, which is a real product decision, not a technical one.
+
+**What the build surfaced that the framework alone didn't**: reading-speed norms and rap are close to incompatible — a rap verse can't be subtitled at normal reading speeds without gutting it, which is itself evidence for treating 4.3 as an optimization problem rather than a fixed constraint. Automatic speech recognition, not translation, was consistently the weakest link — it degrades on archival mono audio and on vocals over a beat, and errors there propagate downstream into cultural-QA flags that are really ASR artifacts. And live translation is close to real-time but not instant: on standard hosted inference, captions land five to six seconds behind speech, which is the actual cost of doing 4.1 and 4.2 per line rather than over a whole script at once.
+
+None of this changes the argument above — if anything, the ASR bottleneck and the rap/reading-speed conflict make the case for section 4 being a genuine systems problem, not a translation problem with extra steps.
 
 ## Related Work
 - neural machine translation
