@@ -1,4 +1,4 @@
-name: Aegis RAG Ingestion
+name: CAI Portfolio Ingestion
 
 on:
   push:
@@ -45,9 +45,13 @@ jobs:
         env:
           PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
           PINECONE_HOST: ${{ secrets.PINECONE_HOST }}
-          PINECONE_INDEX: ${{ secrets.PINECONE_INDEX }}
-          PINECONE_NAMESPACE: ${{ secrets.PINECONE_NAMESPACE }}
+          PINECONE_INDEX: ${{ secrets.PINECONE_INDEX || vars.PINECONE_INDEX || 'portfolio-index' }}
+          PINECONE_NAMESPACE: ${{ secrets.PINECONE_NAMESPACE || vars.PINECONE_NAMESPACE || 'portfolio' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_EMBED_MODEL: models/gemini-embedding-001
+          GEMINI_EMBED_DIMENSIONS: 1024
+          MAX_INGEST_DOCUMENTS: 240
+          ALLOW_INGEST_QUOTA_SKIP: false
+          PINECONE_RESET_NAMESPACE: true
           DATA_DIR: ../data
         run: python ingest.py

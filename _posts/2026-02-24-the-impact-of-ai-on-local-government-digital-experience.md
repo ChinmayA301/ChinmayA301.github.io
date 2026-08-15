@@ -10,8 +10,11 @@ tags: [Hennepin-County, AI-Governance, AI-Auditing, Digital-Experience, Evaluati
 og_image: "/assets/images/ai-audit-viz.png"
 canonical_url: "https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/"
 
-summary: This post proposes a practical operating model for AI in local government digital experience for risk-tiered intake, auditable decision logs, and measurable outcomes across time,quality and equity. 
-
+summary: I am developing a practical operating model for AI in local government digital experience, centered on risk-tiered intake, auditable decision logs, and measurable outcomes across time, quality, and equity.
+content_type: "concept_note"
+content_label: "Research Exploration"
+search_phrase: "AI governance framework for local government"
+positioning_note: "I am exploring a governance and operating model for local-government AI adoption; the work is an analytical project, not a step-by-step procurement guide."
 ---
 
 ## Core idea: 
@@ -24,7 +27,7 @@ When local governments talk about “using AI,” the first constraint isn’t m
 - Data access and purpose limitation
 - Traceability (what influenced an outcome?)
 - Defensibility (can we explain it under review?)
-- Measurable impact (time, quality, equity—consistently)
+- Measurable impact (time, quality, equity - consistently)
 - Safe iteration (pilot → learn → scale without chaos)
 
 So the technical core becomes: **build a system where AI outputs are governed, measured, and explainable by default.**

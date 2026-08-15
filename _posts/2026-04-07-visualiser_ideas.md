@@ -24,6 +24,10 @@ draft: false
 schema_type: "Article"
 keywords: "user segmentation, severance style segmentation, geospatial visualization, subcontinent map, behavior modeling, GeoAI"
 last_modified_at: 2026-04-03
+content_type: "concept_note"
+content_label: "Project Exploration"
+search_phrase: "segmentation visualization and geospatial intelligence"
+positioning_note: "I am exploring two connected visualization systems for contextual segmentation and geospatial intelligence; this documents the design direction rather than presenting a dashboard tutorial."
 ---
 
 > **Key takeaways**
@@ -47,7 +51,7 @@ The two projects in this post try to move in the opposite direction:
 - the first by modeling people as layered and situational
 - the second by modeling place as dynamic, connected, and relational
 
-## 2) Part I — Severance-Style User Segmentation
+## 2) Part I - Severance-Style User Segmentation
 
 The inspiration here is conceptual rather than literal. In the show *Severance*, identity is partitioned into different selves associated with different environments and memories. In real life, people are not split that cleanly, but behavior is still strongly contextual.
 
@@ -121,7 +125,7 @@ Better approaches include:
 
 This is where the Severance metaphor becomes useful visually. A user is not one block. A user is a structured interaction system.
 
-## 5) Part II — A Geo-Visualizer for the Indian Subcontinent
+## 5) Part II - A Geo-Visualizer for the Indian Subcontinent
 
 The second idea expands from the individual to the regional scale.
 

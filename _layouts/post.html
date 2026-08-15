@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="{{ page.canonical_url | default: page.url | absolute_url }}">
-  <link rel="stylesheet" href="{{ '/css/style.css?v=20260403c' | relative_url }}">
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('blog-theme');
+      const defaultTheme = savedTheme === 'dark' ? 'dark' : 'light';
+      document.documentElement.classList.toggle('theme-light', defaultTheme === 'light');
+      document.documentElement.setAttribute('data-theme', defaultTheme);
+    })();
+  </script>
+  <link rel="stylesheet" href="{{ '/css/style.css?v=20260716d' | relative_url }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,58 +54,73 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"></script>
   <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-  {% seo %}
-  {% if page.og_image %}
-  <meta property="og:image" content="{{ page.og_image | absolute_url }}">
-  {% endif %}
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": {{ page.title | jsonify }},
-    "description": {{ page.summary | default: page.description | default: page.excerpt | strip_html | strip_newlines | jsonify }},
-    "datePublished": "{{ page.date | date_to_xmlschema }}",
-    "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
-    "author": {
-      "@type": "Person",
-      "name": {{ page.author | default: site.social.name | jsonify }}
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "{{ page.url | absolute_url }}"
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": {{ site.social.name | jsonify }}
-    },
-    "url": "{{ page.canonical_url | default: page.url | absolute_url }}"{% if page.og_image %},
-    "image": "{{ page.og_image | absolute_url }}"{% endif %}
-  }
-  </script>
+  {% include seo-head.html %}
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260813b' | relative_url }}">
 </head>
-<body class="blog-theme">
+<body class="blog-theme blog-post-page">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-orb orb-3" aria-hidden="true"></div>
 
-  <header class="section pb-0">
+  <div class="blog-reading-progress" aria-hidden="true"><span></span></div>
+
+  <header class="section blog-edition-header blog-story-header pb-0">
     <div class="container">
-      <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-        <a class="navbar-brand fw-bold" href="{{ '/' | relative_url }}">CA</a>
-        <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
+      <div class="blog-edition-utility">
+        <a class="blog-monogram" href="{{ '/' | relative_url }}" aria-label="Back to portfolio home">CA</a>
+        <a class="blog-edition-stamp blog-edition-link" href="{{ '/blog/' | relative_url }}"><span>Brain Vomit</span><span>Back to index</span></a>
+        <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to dark mode">Dark Mode</button>
       </div>
-      <h1 class="section-title">{{ page.title }}</h1>
-      <p class="section-text">Published on <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
+      <div class="blog-masthead-rule" aria-hidden="true"></div>
+      <div class="blog-story-heading">
+        <p class="blog-masthead-label">{{ page.categories | first | default: 'Essay' }} · Vol. {{ page.date | date: '%Y' }}</p>
+        <h1 class="section-title blog-story-title">{{ page.title }}</h1>
+        <div class="blog-story-byline">
+          <p>By {{ page.author | default: site.social.name }}</p>
+          <p><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>{% if page.reading_time %} · {{ page.reading_time }}{% endif %}</p>
+        </div>
+        {% if page.content_type %}
+        <div class="post-meta-row" aria-label="Post positioning">
+          <span class="blog-type-badge blog-type-{{ page.content_type | slugify }}">{{ page.content_label | default: page.content_type | replace: "_", " " }}</span>
+          {% if page.search_phrase %}
+          <span class="blog-search-phrase">{{ page.search_phrase }}</span>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="blog-masthead-rule blog-masthead-rule-double" aria-hidden="true"></div>
     </div>
   </header>
 
   <main id="main-content" class="section pt-4" role="main">
-    <article class="container blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+    <article class="container blog-post newspaper-article" itemscope itemtype="https://schema.org/BlogPosting">
+      <aside class="newspaper-article-rail" aria-label="Article details">
+        <p class="newspaper-rail-kicker">Filed under</p>
+        {% if page.categories %}
+        <ul class="newspaper-category-list">
+          {% for category in page.categories %}<li>{{ category }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        <p class="newspaper-rail-folio">CA / {{ page.date | date: '%m.%d.%y' }}</p>
+      </aside>
+
+      <div class="newspaper-article-sheet">
       {% if page.summary or page.bluf %}
       <section class="bluf-box" aria-labelledby="bluf-heading">
         <h2 id="bluf-heading" class="h4">BLUF</h2>
         <p>{{ page.summary | default: page.bluf }}</p>
+      </section>
+      {% endif %}
+
+      {% if page.content_type == 'research_study' %}
+      <section class="research-note-box research-study-box" aria-label="Research study positioning">
+        <strong>Research study.</strong>
+        {{ page.positioning_note | default: "This post reports an evidence trail, method, findings, and limitations. Claims are bounded to the data and design described." }}
+      </section>
+      {% elsif page.content_type == 'concept_note' %}
+      <section class="research-note-box concept-note-box" aria-label="Exploration positioning">
+        <strong>{{ page.content_label | default: "Project exploration" }}.</strong>
+        {{ page.positioning_note | default: "This post documents an active project or research exploration. Its current status and validation boundaries are stated explicitly." }}
       </section>
       {% endif %}
 
@@ -113,20 +135,30 @@
       </section>
       {% endif %}
 
-      <div itemprop="articleBody">
+      <div class="newspaper-story" itemprop="articleBody">
         {{ content }}
       </div>
+
+      {% include related-posts.html %}
+      {% include blog-post-community.html %}
+      {% include blog-newsletter.html %}
 
       <nav aria-label="Post navigation" class="blog-nav mt-5">
         <a href="{{ '/blog/' | relative_url }}">Back to Blog Index</a>
         <a href="{{ '/projects/' | relative_url }}">Related Projects</a>
+        <a href="{{ '/intelligence/' | relative_url }}">Portfolio Intelligence</a>
       </nav>
+      </div>
     </article>
   </main>
 
   <footer class="bg-dark text-white py-3 border-top">
     <div class="container text-center small">
       <p class="mb-0">&copy; <span id="year"></span> Chinmay Arora. All Rights Reserved.</p>
+      <p class="mb-0 mt-1">
+        <a href="{{ '/blog/' | relative_url }}">Blog</a> |
+        <a href="{{ '/blog/privacy/' | relative_url }}">Privacy</a>
+      </p>
     </div>
   </footer>
 
@@ -155,6 +187,18 @@
       localStorage.setItem(themeKey, nextTheme);
       setTheme(nextTheme);
     });
+
+    const progressBar = document.querySelector('.blog-reading-progress span');
+    const updateReadingProgress = () => {
+      if (!progressBar) return;
+      const scrollRange = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollRange > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollRange)) : 0;
+      progressBar.style.transform = `scaleX(${progress})`;
+    };
+
+    updateReadingProgress();
+    window.addEventListener('scroll', updateReadingProgress, { passive: true });
+    window.addEventListener('resize', updateReadingProgress);
 
     window.addEventListener('load', () => {
       const articleRoot = document.querySelector('.blog-post');
@@ -193,5 +237,6 @@
       }
     });
   </script>
+  <script src="{{ '/js/blog.js?v=20260717e' | relative_url }}"></script>
 </body>
 </html>

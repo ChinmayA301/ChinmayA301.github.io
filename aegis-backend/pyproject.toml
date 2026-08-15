@@ -1,7 +1,7 @@
 [project]
 name = "aegis-backend"
 version = "0.1.0"
-description = "Cloudflare Python Worker for Aegis consultative RAG"
+description = "Cloudflare Python Worker for CAI portfolio-wide consultative retrieval"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []

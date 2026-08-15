@@ -1,18 +1,22 @@
 ---
 layout: post
-title: "Claude Memory changes the game — but the real unlock is portable, user-owned memory"
+title: "Claude Memory changes the game - but the real unlock is portable, user-owned memory"
 date: 2026-03-04
 author: "Chinmay Arora"
-description: "Claude’s Memory + import flow is a major validation of a bigger shift: the next battleground isn’t model quality, it’s continuity. This post breaks down the remaining gap—portable, user-owned memory with provenance, diffs, privacy scopes, and token-aware context packing."
+description: "Claude’s Memory + import flow is a major validation of a bigger shift: the next battleground isn’t model quality, it’s continuity. This post breaks down the remaining gap - portable, user-owned memory with provenance, diffs, privacy scopes, and token-aware context packing."
 categories: [AI, LLM, Product, Agents]
 tags: [Claude, Memory, Context-Portability, MCP, NotebookLM, Multi-Assistant, Workflow, BuildInPublic, AI-Infra, Knowledge-Management]
 og_image: "/assets/images/context-passport-hero.png"
 canonical_url: "https://app.chinmayarora.com/blog/context-passport/"
 
-summary: Claude’s Memory + import tool makes a key truth explicit—continuity is becoming the product. But assistant-native memory isn’t enough. The missing layer is user-owned, portable project-state memory that works across ChatGPT ↔ Gemini ↔ Claude and other tools, with provenance, diffs, privacy scopes, and token-budgeted context packs.
+summary: Claude’s Memory + import tool makes a key truth explicit - continuity is becoming the product. But assistant-native memory isn’t enough. The missing layer is user-owned, portable project-state memory that works across ChatGPT ↔ Gemini ↔ Claude and other tools, with provenance, diffs, privacy scopes, and token-budgeted context packs.
+content_type: "concept_note"
+content_label: "Project Exploration"
+search_phrase: "portable AI memory and context passport"
+positioning_note: "I am exploring the product and infrastructure requirements for portable AI memory; this documents the system direction rather than claiming a shipped protocol."
 ---
 
-# Claude Memory changes the game — but the real unlock is portable, user-owned memory
+## Claude Memory changes the game - but the real unlock is portable, user-owned memory
 
 There’s a quiet tax every power user pays in 2026:
 
@@ -27,21 +31,21 @@ And every time you switch, you re-pay the same fee:
 - Rebuild definitions and context  
 - Reconstruct “where we left off”
 
-Claude’s latest move is a direct attack on that tax — and it’s a strong signal the industry is pivoting from **sessions** to **workstreams**.[verge-claude-memory-import]
+Claude’s latest move is a direct attack on that tax - and it’s a strong signal the industry is pivoting from **sessions** to **workstreams**.[verge-claude-memory-import]
 
 ---
 
 ## TL;DR
 
 - **Claude Memory** being available broadly (including free users) + a **memory import flow** from other chatbots reduces switching friction massively.[verge-claude-memory-import]  
-- If you’re technical, you can already approximate portability with **MCP servers**, a **NotebookLM vault**, or disciplined “source-of-truth docs” — but it’s still a hassle.[mcp-spec]  
+- If you’re technical, you can already approximate portability with **MCP servers**, a **NotebookLM vault**, or disciplined “source-of-truth docs,” but it’s still a hassle.[mcp-spec]
 - What’s still missing is a **universal, user-owned memory layer** that works across assistants and tools with:
   **provenance**, **diffs**, **privacy scopes**, and **token-budgeted context packs**.  
 - That gap is what I’m building: **Context Passport** (project-state transfer, not transcript transfer).
 
 ---
 
-## 1) What Claude just did — and why it matters
+## 1) What Claude just did - and why it matters
 
 Anthropic essentially made two statements:
 
@@ -52,7 +56,7 @@ Claude now supports:
 - **Persistent memory** across conversations (preferences, ongoing projects, continuity)
 - A **migration/import workflow** that helps bring your context from other assistants into Claude (implemented today via a guided prompt/export-and-paste flow)[verge-claude-memory-import]
 
-This matters because it acknowledges the real unit of value isn’t a chat — it’s a **long-running project**.
+This matters because it acknowledges the real unit of value isn’t a chat - it’s a **long-running project**.
 
 ### The “continuity shift”
 The next adoption curve is not:
@@ -69,7 +73,7 @@ Claude’s Memory feature is a major leap toward that future.[verge-claude-memor
 
 If you’re technically proficient, you can already make “memory portability” *mostly* manageable:
 
-### Option A — Build an MCP server as your memory layer
+### Option A - Build an MCP server as your memory layer
 MCP (Model Context Protocol) is an open protocol aiming to standardize how LLM apps connect to tools and context sources.[mcp-spec]  
 In practice, you can:
 - store your “project state” in your own system
@@ -78,7 +82,7 @@ In practice, you can:
 
 If you’re already living inside agent stacks, MCP is the closest thing to “USB-C for context.”[mcp-spec]
 
-### Option B — Use NotebookLM as a manual memory vault
+### Option B - Use NotebookLM as a manual memory vault
 NotebookLM is great as a “source-of-truth” hub when you’re disciplined:
 - you paste summaries
 - you store canonical docs
@@ -87,7 +91,7 @@ NotebookLM is great as a “source-of-truth” hub when you’re disciplined:
 And if you’re on NotebookLM Enterprise, there are APIs for managing notebooks and sources programmatically.[notebooklm-api-notebooks][notebooklm-api-sources]  
 On the consumer side, NotebookLM also supports discovering/adding sources directly in-product.[notebooklm-help-sources]
 
-### Option C — “Perplexity-style” research + canonical docs
+### Option C - “Perplexity-style” research + canonical docs
 This is the common power-user workaround:
 - research tool for sourcing
 - a doc for decisions/tasks
@@ -96,13 +100,13 @@ This is the common power-user workaround:
 It works… but it’s operational overhead.
 
 **Bottom line:**  
-Portability is possible today — but it requires you to become a part-time **context logistics engineer**.
+Portability is possible today - but it requires you to become a part-time **context logistics engineer**.
 
 Claude’s move is important because it productizes a chunk of that burden for mainstream users.[verge-claude-memory-import]
 
 ---
 
-## 3) What Claude Memory solves — and what it doesn’t (yet)
+## 3) What Claude Memory solves - and what it doesn’t (yet)
 
 ### What it solves well
 - **Continuity inside Claude:** preferences and long-running threads become smoother  
@@ -200,13 +204,13 @@ That validates three things:
 
 ### The deeper gap: memory inside an assistant vs memory you own
 
-Claude’s Memory is a big step — but it’s still largely **assistant-native continuity**.
+Claude’s Memory is a big step - but it’s still largely **assistant-native continuity**.
 
 A **user-owned memory layer** goes one level deeper:
 
 - **Not tied to one vendor** (Claude/ChatGPT/Gemini won’t be your only surfaces forever)
 - **Not trapped in one UI** (web apps, IDE copilots, research tools, creator tools)
-- **Compatible with emerging standards like MCP** — where “memory” can become an addressable, portable resource rather than a platform feature.[mcp-spec]
+- **Compatible with emerging standards like MCP** - where “memory” can become an addressable, portable resource rather than a platform feature.[mcp-spec]
 
 That is the “Context Passport” thesis:
 
@@ -222,7 +226,7 @@ If you’re technical, you can approximate portability today by:
 - maintaining a disciplined NotebookLM / docs vault, or  
 - doing Perplexity-style research + manually curating a “source-of-truth” brief.
 
-It works — but it’s operational overhead and doesn’t scale across tools or teams.
+It works - but it’s operational overhead and doesn’t scale across tools or teams.
 
 Context Passport’s design goal is to make this frictionless by building a **portable project-state layer** with:
 
@@ -321,7 +325,7 @@ Every item in Project State should have a provenance pointer:
 - You can answer “why is this in memory?”
 - You can safely prune without losing accountability.
 
-This is what most “context transfer” tools miss — and why they eventually feel unreliable.
+This is what most “context transfer” tools miss - and why they eventually feel unreliable.
 
 ---
 
@@ -496,7 +500,7 @@ That’s why standards like MCP matter: they create a path where “memory” be
 
 ### NotebookLM as a “memory hub” (optional but powerful)
 
-NotebookLM Enterprise exposes APIs to create/manage notebooks and add/manage sources programmatically — meaning Passport can publish a “Project Brief” and keep it updated as a living source of truth.[notebooklm-api-notebooks]
+NotebookLM Enterprise exposes APIs to create/manage notebooks and add/manage sources programmatically - meaning Passport can publish a “Project Brief” and keep it updated as a living source of truth.[notebooklm-api-notebooks]
 
 ---
 
@@ -518,13 +522,13 @@ Claude’s Memory + import flow is a big deal because it makes an implicit truth
 
 > In the agent era, intelligence is table stakes. Continuity is the product.
 
-And yes — if you’re technical enough, you can brute-force continuity today with MCP servers and notebook vaults.
+And yes - if you’re technical enough, you can brute-force continuity today with MCP servers and notebook vaults.
 
 But it shouldn’t require bespoke workflows.
 
 The next wave is the tool that makes context portability feel like:
 
-**“Continue where I left off” — anywhere.**
+**“Continue where I left off” - anywhere.**
 
 ---
 

@@ -1,33 +1,94 @@
-# Chinmay Arora | Portfolio, Venture Lab, and Technical Writing
+# Chinmay Arora | AI Engineering, Responsible Data Science, Governance, and Analytics
 
-> Summary: Structured overview of Chinmay Arora's portfolio, venture concepts, and technical writing spanning AI audit systems, GovTech product strategy, applied data science, LLM system design, and enterprise compliance tooling.
+> Summary: Chinmay Arora's portfolio covers AI engineering, responsible machine learning, AI governance and strategy, analytics engineering, BI systems, RAG/document intelligence, technical writing, and product-oriented data work.
 
 ## Canonical Entry Points
 
-- [Portfolio Home](https://app.chinmayarora.com/): Main landing page covering professional profile, projects, venture work, and technical writing.
-- [The Lab](https://app.chinmayarora.com/ideas/): Collection page for venture concepts and startup theses.
-- [Blog](https://app.chinmayarora.com/blog/): Index of technical posts on AI systems, evaluation, retrieval, and deployment.
+- [Portfolio Home](https://app.chinmayarora.com/): Main portfolio landing page for professional profile, selected projects, experience, and technical writing.
+- [Projects](https://app.chinmayarora.com/projects/): Public and privacy-safe project index. Public repos are linked; private work is described at product/outcome level only.
+- [Experience](https://app.chinmayarora.com/experience/): Work and education timeline.
+- [The Lab](https://app.chinmayarora.com/ideas/): Venture and product concept showcase.
+- [Blog](https://app.chinmayarora.com/blog/): Technical essays on AI systems, governance, retrieval, evaluation, and strategy.
+- [Coursework](https://app.chinmayarora.com/coursework/): MS and B.Tech academic project work linked to public repositories where available.
 
-## Venture Pipeline (The Lab)
+## Highlighted Work
 
-- [Aegis AI Strategy](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): AI compliance infrastructure for enterprises that need faster audit preparation, policy cross-referencing, and governance-ready operating controls.
-- [Public Infrastructure Copilot](https://app.chinmayarora.com/ideas/public-infrastructure-copilot/): GovTech planning software that turns service requests, maintenance data, and neighborhood signals into ranked infrastructure investment decisions.
-- [Compliance Twin](https://app.chinmayarora.com/ideas/compliance-twin/): A mid-market compliance graph product designed to map controls, evidence, and obligations into a traceable operating system.
-- [Operator Memory Cloud](https://app.chinmayarora.com/ideas/operator-memory-cloud/): A shared memory layer for startup teams that preserves decisions, workflows, and execution context across fast-moving workstreams.
-- [Civic Procurement Graph](https://app.chinmayarora.com/ideas/civic-procurement-graph/): Procurement intelligence software that organizes bids, contracts, vendors, and agency activity into a searchable public market map.
-- [Research Commercialization Studio](https://app.chinmayarora.com/ideas/research-commercialization-studio/): A venture-support workflow for turning academic research into commercialization briefs, prototypes, and institution-ready startup narratives.
+- [Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems](https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/): A synthetic end-to-end validation of the Aegis evidence protocol, connecting atomic policy claims, repeated trials, a control condition, confidence bounds, human authorization thresholds, and a sealed deployment evidence bundle. It does not claim real-model conformance or regulatory compliance.
+- [Aegis AI Governance & Readiness](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): Highlighted governance workstream covering readiness scorecards, risk registers, human-review gates, audit evidence, monitoring, and executive-ready AI adoption artifacts. Live surfaces: [Aegis app](https://aegisai-5wz.pages.dev) and [readiness survey](https://aegis-survey.vercel.app).
+- [PolyRAG](https://github.com/ChinmayA301/PolyRAG): Multi-model RAG over public AI-governance documents with citation-grounded answers, FAISS retrieval, OCR fallback, FastAPI, Docker, and a hosted Hugging Face demo at https://chinmaya301-polyrag.hf.space.
+- [Operations Control Tower](https://github.com/ChinmayA301/Operations-Control-Tower): Operations analytics on real Olist data with SQL star schema, supplier risk score, Great Expectations checks, and Looker Studio-ready marts.
+- [Healthcare Readmission Risk with Fairness & Calibration](https://github.com/ChinmayA301/Risk-Prediction-with-Fairness-Geography): Responsible-AI risk-modeling prototype with leakage control, calibration, Fairlearn subgroup checks, SHAP, and model-card limitations.
+- [Tabular ML Benchmark](https://github.com/ChinmayA301/Tabular-ML-Benchmark-Human-Feature-Engineering-vs-AutoML-Agentic-Baselines): Config-driven benchmark across real domains measuring AUC, calibration, runtime, and robustness under shift.
+- [Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation](https://github.com/ChinmayA301/MS-projectss/tree/main/capstone): Supporting healthcare data science work with patient-level temporal cohorts, matched ADI feature ablation, calibration, SHAP, and explicit follow-up-quality analysis. Best observed AUC was 0.612; ADI showed no consistent lift, and the work is not framed as clinically deployable.
+- [Public-Sector AI Readiness & Efficiency Evaluation](https://github.com/ChinmayA301/MS-projectss/tree/main/public-sector-ai-efficiency): Supporting responsible-AI work connecting workflow baselines, public-data proxy studies, resident-segment analysis, human-review gates, governance artifacts, and controlled-pilot decisions. Simulated outputs are hypotheses rather than county production claims.
+- [FinBizInfo](https://www.finbizinfo.com): Financial document intelligence deployment for OCR/RAG-style extraction, risk flags, and structured analysis.
+- TransferSignal: Private football transfer-rumour intelligence board with deterministic scoring, source reliability ledger, AI-assisted claim extraction, protected admin workflows, and newsroom-style UX. No private repo is public-linked.
+- [Stock Analyzer / InvestTracker](https://www.investtracker.aiautomatedapp.com): Live investment-tracking and market-analysis workspace combining portfolio monitoring, stock research, time-series signals, and investor-readable decision support without presenting forecasts as certainty.
+- Multi-Agent AI-Native ERP for Compliance Mapping: Active private build for mapping company workflows, obligations, controls, evidence, owners, readiness gaps, and recurring execution across compliance-heavy functions. Capability is public; implementation details and schemas are private.
+- AI Survey & Interviewing Tool: Active product workstream for adaptive interviews, survey design, multilingual response capture, quality scoring, structured extraction, and insight synthesis for stakeholder research and readiness assessment.
+- AI Football Intelligence & Tracking System: Active sports-intelligence direction spanning TransferSignal, source reliability, player/team tracking, tactical context, confidence scoring, and editorial-grade dashboards.
+- AI Lead Discovery & CRM Improvement: Private consulting-demo workstream for agentic lead discovery, enrichment, scoring, account research, outreach support, and CRM hygiene with auditable agent steps.
+- AI Governance Setup for Regulated Teams: Advisory and implementation work for HIPAA, finance, public-sector, and school contexts, including AI readiness, policy mapping, risk registers, acceptable-use boundaries, vendor review, human oversight, evidence trails, and pilot evaluation.
+- Freight Forwarding Finance BI: CargoWise-shaped Power BI/SQL analytics for job margin variance, AR aging, DSO, branch performance, and source reconciliation. Client/private details are not exposed.
+- [SignalGraph](https://github.com/ChinmayA301/Signal-Graph): Credibility-adjusted signal layer for detecting fake-star and open-source metric manipulation.
+- [Wax Seal](https://github.com/ChinmayA301/wax-seal): Trust-provenance framework for visible tamper evidence and digital-artifact authenticity.
+- [Geo Visualizer](https://geo-visualizer-mu.vercel.app): Interactive geographic visualization for the Indian subcontinent.
+- [Severance-Style Segmentation Interface](https://severance-style-visualizer.vercel.app): Product-style segmentation visualization interface.
 
-## Research Archive (The Blog)
+## Coursework, Publications, and Credentials
 
-These posts provide the technical methodology for the ventures listed above.
+- [MS Projects](https://github.com/ChinmayA301/MS-projectss): Coursework and academic builds across machine learning systems, PostgreSQL/data workflows, social-data optimization, computer vision, and geospatial/public-health analytics.
+- [B.Tech Projects](https://github.com/ChinmayA301/BTech): Undergraduate project archive including financial modeling, sports analytics, OCR/NLP document parsing, and optimization work.
+- [Face Mask Detection using Deep Learning CNN Architecture, IJSER](https://www.ijser.in/archives/v10i12/SE221206135738.pdf): CNN-based computer-vision publication and minor project signal.
+- [Payment System for University, IJSER](https://www.ijser.in/archives/v11i8/SE23822002659.pdf): undergraduate payment-system publication covering university ID-card payment architecture.
+- Publications: Face Mask Detection using Deep Learning CNN Architecture; Payment System for University; 17+ public technical essays on analytics, AI systems, RAG, and governance.
+- Certifications and credential signals: CargoWise One Professional Certification, Microsoft Azure, Web Applications and Databases using PHP, Claude / AI coding tooling, IBM Data Science, Google IoT for Google Cloud, analytics and BI tooling.
+- Live tracking graph: the Projects page includes an AI Evaluation Benchmark Pulse that ingests live GitHub repository search data for LLM evaluation, RAG evaluation, agent evaluation, and ML benchmarking repositories, then renders a cohort-based traction chart and top-repository table.
 
-- [Claude Memory changes the game — but the real unlock is portable, user-owned memory](https://app.chinmayarora.com/blog/context-passport/): Notes on portable memory, canonical context, and research workflows for LLM-powered systems.
-- [Engineering Virality with Bayesian Optimization](https://app.chinmayarora.com/blog/virality-bo/): Framing content growth as a Bayesian optimization problem.
-- [Bayesian Optimization Meets Graphs](https://app.chinmayarora.com/blog/bo-graph/): Graph-informed experimentation and optimization ideas.
-- [AI in Local Government DX: A Technical Deep Dive into Governance, Auditing, and Operationalization](https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/): Public sector AI deployment, governance, and auditability patterns.
-- [Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment](https://app.chinmayarora.com/blog/segmentation/): Segmentation and risk-aware service design in government contexts.
-- [Welcome to the Blog](https://app.chinmayarora.com/blog/welcome-to-the-blog/): Introductory note on the purpose and scope of the research archive.
+## The Lab Venture Exploration
 
-## Technical Skills
+The Lab is Chinmay Arora's founder exploration dossier. It connects the work through one thesis: AI becomes operationally useful when context, authority, evidence, and human decision-making are connected. Aegis is the current independent commercial direction; StepLens is the longer-term interface opportunity; TransferSignal is a deployed proof build. Other ideas remain in an honestly staged exploration archive.
 
-Python, React, Cloudflare Zero Trust, R, SQL, dbt, Pandas, NumPy, SciPy, Scikit-learn, XGBoost, TensorFlow, PyTorch, CV/NLP, LangChain, HuggingFace, ChromaDB, RAG, Text-to-SQL, Docker, FastAPI, CI/CD, MLflow, Supabase, Prometheus, Power BI, Tableau, Qlik, KPI design, storytelling, ArcGIS, QGIS, GeoPandas, ADI/SVI, spatial statistics
+Relevant public writing and surfaces:
+
+- [Aegis AI Strategy](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): AI governance and readiness workstream.
+- [Text-to-AR Utility Systems](https://app.chinmayarora.com/blog/text-to-ar-human-centered-standard/): Human-centered AR and spatial interface framing.
+- [Simulation Engineering for AI](https://app.chinmayarora.com/blog/simulation-engineering-ai/): Proxy data, simulation, and decision systems under imperfect information.
+- [Successful Key Moment Metric](https://app.chinmayarora.com/blog/successful-key-moment-metric/): Football intelligence and sports analytics framing.
+- [Satiation-Adjusted Nutrition](https://app.chinmayarora.com/blog/satiation-adjusted/): Food, serving-size, and consumer behavior systems.
+
+## Blog Positioning
+
+The blog is an independent writing space, not a duplicate project catalog. "Research Study" posts contain an identifiable evidence trail, method, reported findings, and limitations. "Concept Note" posts present theses, frameworks, proposed metrics, system designs, or research directions and do not claim completed empirical validation.
+
+High-signal research/concept clusters:
+
+- AI governance and public-sector AI: local government AI, segmentation, AI governance/privacy, Aegis.
+- RAG, memory, and AI infrastructure: Context Passport, PolyRAG, agent protocol layers.
+- Trust, provenance, and platform integrity: Wax Seal, SignalGraph, AI-generated content tracking.
+- Sports and media intelligence: Successful Key Moment, Ronaldo context analysis, media cultural impact, AI localization, Indian media strategy.
+- Simulation and decision systems: Simulation Engineering AI, Decision Intelligence, proxy data, forecast discipline.
+
+## Technical Writing
+
+Selected essays that support the project claims:
+
+- [The End of Programming as the Primary Interface](https://app.chinmayarora.com/blog/end-programming-primary-interface/): Independent research exploration of versioned intent graphs, generated implementations, behavioral evidence, and human approval as a possible interface above source code.
+- [The Randomness Problem Nobody Seems Comfortable Talking About](https://app.chinmayarora.com/blog/interaction-derived-unpredictability/): Independent cryptography research agenda for heterogeneous entropy, commit-reveal protocols, selective-abort analysis, assumption lattices, and publicly verifiable failure boundaries.
+- [The Best Human in the World Does Not Exist](https://app.chinmayarora.com/blog/human-capability-tournament/): Independent measurement proposal for floor-gated broad capability, transfer under interference, accessibility, validation, and open community trials.
+- [Behavioral Policy Conformance Testing for Enterprise AI Systems](https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/): Technical Report 001 on repeated policy testing and deployment evidence bundles, with synthetic results and explicit limitations.
+- [AI in Local Government DX](https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/): Governance, auditability, risk tiering, and operational AI implementation in local government.
+- [AI Governance and Privacy](https://app.chinmayarora.com/blog/AI-Governance-and-Privacy/): Trust layer for high-risk AI adoption, vendor risk, and governance controls.
+- [Public Sector Segmentation](https://app.chinmayarora.com/blog/segmentation/): Resident/customer segmentation as a safer AI deployment backbone.
+- [Context Passport](https://app.chinmayarora.com/blog/context-passport/): Portable AI memory, provenance, diffs, privacy scopes, and context packing.
+- [SignalGraph](https://app.chinmayarora.com/blog/fake-star/): Replacing raw GitHub stars with credibility-adjusted open-source signals.
+- [Wax Seal Cybersecurity](https://app.chinmayarora.com/blog/waxseal-cybersec/): Trust, provenance, and tamper-evidence framing for digital systems.
+- [Data Science Career Audit](https://app.chinmayarora.com/blog/data-science-career-audit/): Source-backed labor-market analysis of data science, AI pressure, and durable role signals.
+
+## Current Positioning
+
+Chinmay Arora is an M.S. Data Science candidate at the University of Minnesota focused on AI engineering, responsible ML, governance strategy, RAG systems, analytics engineering, BI dashboards, geospatial analysis, and product strategy. Public work emphasizes real datasets, calibration, subgroup analysis, drift/robustness checks, model cards, source-backed writing, and privacy-safe presentation of private product work.
+
+## Skills
+
+Python, SQL, R, pandas, NumPy, scikit-learn, XGBoost, PyTorch, TensorFlow, SHAP, Fairlearn, calibration, MLflow, Evidently, LangChain, LlamaIndex, FAISS, ChromaDB, Pinecone, RAGAS, FastAPI, Docker, Supabase, PostgreSQL, MongoDB, Azure SQL, Power BI, Tableau, QlikSense, Looker Studio, Excel/VBA, ArcGIS, GeoPandas, PySAL, NIST AI RMF, risk registers, model cards, human-in-the-loop review, AI readiness assessment, technical writing.

@@ -1,0 +1,34 @@
+[
+    {
+        "title": "Aegis AI Governance & Readiness Platform",
+        "type": "aegis",
+        "url": "https://aegisai-5wz.pages.dev",
+        "summary": "Aegis is Chinmay Arora's highlighted AI governance and readiness workstream for compliance-sensitive teams.",
+        "description": "Aegis helps organizations move from vague AI ambition to measurable readiness, controlled pilots, and evidence-backed governance. The work covers readiness scorecards, risk registers, human-review gates, audit evidence, monitoring logic, and executive-facing assessment flows for HIPAA, finance, public sector, schools, and other regulated environments.",
+        "tags": ["Aegis", "AI Governance", "Compliance", "Audit Readiness", "Responsible AI", "Strategy"]
+    },
+    {
+        "title": "Aegis Strategy Page",
+        "type": "aegis",
+        "url": "https://app.chinmayarora.com/ideas/aegis-ai-strategy/",
+        "summary": "Portfolio strategy page for the Aegis governance workstream.",
+        "description": "The Aegis strategy page frames Chinmay's governance work as a practical operating layer for regulated AI adoption: policy-to-control mapping, readiness scoring, risk ownership, review gates, evidence trails, and deployment-readiness artifacts. It should be treated as a key source when visitors ask about AI governance, public-sector AI, regulated AI deployment, audit preparation, or strategy leadership.",
+        "tags": ["Aegis", "AI Strategy", "Governance", "Risk", "Readiness"]
+    },
+    {
+        "title": "Aegis Readiness Survey",
+        "type": "aegis",
+        "url": "https://aegis-survey.vercel.app",
+        "summary": "Readiness survey surface associated with Aegis.",
+        "description": "The Aegis readiness survey captures organizational posture around AI use cases, risk controls, human review, data exposure, compliance expectations, and operating readiness. It supports consultative conversations with leaders who need to understand where AI adoption is safe, blocked, or under-governed.",
+        "tags": ["Aegis", "Survey", "AI Readiness", "Compliance Mapping"]
+    },
+    {
+        "title": "Chinmay Arora Role Fit: AI Engineering, Data Science, Analytics, and Governance",
+        "type": "profile",
+        "url": "https://app.chinmayarora.com/",
+        "summary": "Core positioning for Chinmay's portfolio assistant.",
+        "description": "Chinmay Arora works across AI engineering, data science, data analysis, analytics engineering, and AI governance strategy. Relevant experience includes building AI and analytics systems, responsible ML evaluation, BI dashboards, compliance-aware AI strategy, RAG and retrieval systems, venture exploration, and privacy-safe presentation of private product work.",
+        "tags": ["Data Scientist", "Data Analyst", "AI Engineer", "AI Governance", "Analytics Engineering"]
+    }
+]

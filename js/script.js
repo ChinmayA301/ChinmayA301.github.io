@@ -1,10 +1,15 @@
-// Typed headline
-if (document.querySelector("#typed")) {
+// Typed hero thesis
+if (document.querySelector("#typed") && typeof Typed !== "undefined") {
     new Typed("#typed", {
-        strings: ["Hello, Welcome to the world of.."],
-        typeSpeed: 92,
-        backSpeed: 22,
-        loop: false,
+        strings: [
+            "Discovering the real operating problem.",
+            "Building from messy data to working systems.",
+            "Evaluating what should deploy, and what should not."
+        ],
+        typeSpeed: 48,
+        backSpeed: 24,
+        backDelay: 1500,
+        loop: true,
         showCursor: true
     });
 }
@@ -29,17 +34,75 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 });
 
-// Section reveal
+// Scroll progress + section reveal
+const scrollProgress = document.getElementById("scrollProgress");
+const updateScrollProgress = () => {
+    if (!scrollProgress) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0;
+    scrollProgress.style.transform = `scaleX(${progress})`;
+};
+
 const sections = document.querySelectorAll(".section");
-const reveal = () => {
-    const trigger = window.innerHeight * 0.82;
-    sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if (top < trigger) sec.classList.add("active");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const heroMediaShell = document.getElementById("heroGlobeToggle");
+const heroSection = document.querySelector(".hero");
+const updateHeroMediaReveal = () => {
+    if (!heroMediaShell || !heroSection) return;
+    const revealDistance = Math.min(window.innerHeight * 0.38, 320);
+    const reveal = prefersReducedMotion
+        ? 1
+        : Math.max(0, Math.min(window.scrollY / Math.max(revealDistance, 1), 1));
+    heroMediaShell.style.setProperty("--globe-reveal", reveal.toFixed(3));
+    heroMediaShell.classList.toggle("is-scroll-revealed", reveal > 0.08);
+};
+const revealVisibleSections = () => {
+    const trigger = window.innerHeight * 0.9;
+    sections.forEach(section => {
+        if (section.getBoundingClientRect().top < trigger) section.classList.add("active");
     });
 };
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", reveal);
+if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    sections.forEach(section => section.classList.add("active"));
+} else {
+    document.documentElement.classList.add("motion-ready");
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("active");
+            sectionObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.04, rootMargin: "0px 0px -6% 0px" });
+    sections.forEach(section => sectionObserver.observe(section));
+    requestAnimationFrame(revealVisibleSections);
+}
+window.addEventListener("scroll", () => {
+    updateScrollProgress();
+    updateHeroMediaReveal();
+    revealVisibleSections();
+}, { passive: true });
+window.addEventListener("resize", () => {
+    updateScrollProgress();
+    updateHeroMediaReveal();
+});
+window.addEventListener("load", () => {
+    updateScrollProgress();
+    updateHeroMediaReveal();
+    revealVisibleSections();
+});
+updateScrollProgress();
+updateHeroMediaReveal();
+
+// Pointer-responsive light, kept subtle and disabled on touch/reduced motion.
+if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
+    document.addEventListener("pointermove", event => {
+        const target = event.target.closest(".interactive-surface, .project-box, .capability-card, .credential-card, .highlight-card");
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        target.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
+        target.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
+    }, { passive: true });
+}
 
 // Back-to-top (optional)
 const backToTopButton = document.createElement("button");
@@ -99,8 +162,8 @@ function startConsultStatusFeed(companyName) {
     const queue = [
         CONSULT_STATUS_STEPS[0],
         `Researching ${companyName}...`,
-        "Consulting Aegis Lab...",
-        "Reviewing project and blog matches...",
+        "Identifying the company's priority pain points...",
+        "Scanning projects, experience, skills, coursework, research, and writing...",
         CONSULT_STATUS_STEPS[4]
     ];
     let index = 0;
@@ -125,21 +188,22 @@ function stopConsultStatusFeed() {
 
 function renderConsultationResult(payload) {
     if (!consultationResult) return;
-    const matches = (payload.portfolio_matches || []).slice(0, 3);
+    const matches = (payload.portfolio_matches || []).slice(0, 5);
     consultationResult.innerHTML = `
         <div class="space-y-4">
             <div class="rounded-[20px] border border-sky-300/15 bg-sky-300/10 p-4">
                 <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-sky-100">Pitch</p>
-                <p class="m-0 text-sm leading-7 text-slate-100">${payload.pitch || "No pitch returned."}</p>
+                <p class="m-0 text-sm leading-7 text-slate-100">${escapeHtml(payload.pitch || "No pitch returned.")}</p>
             </div>
             <div>
-                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">Matched Evidence</p>
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">Priority-Matched Evidence</p>
                 <div class="space-y-2">
                     ${matches.map(match => `
-                        <a class="block rounded-[18px] border border-white/10 bg-white/[0.04] p-3 text-slate-200 no-underline transition hover:bg-white/[0.08]" href="${match.url || "/"}" target="_blank" rel="noopener">
-                            <p class="mb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">${match.source || "portfolio"}</p>
-                            <p class="mb-1 text-sm font-semibold text-white">${match.title || "Portfolio Match"}</p>
-                            <p class="m-0 text-sm text-slate-300">${match.summary || ""}</p>
+                        <a class="block rounded-[18px] border border-white/10 bg-white/[0.04] p-3 text-slate-200 no-underline transition hover:bg-white/[0.08]" href="${escapeHtml(match.url || "/")}" target="_blank" rel="noopener">
+                            <p class="mb-1 text-[11px] uppercase tracking-[0.2em] text-slate-400">${escapeHtml(match.source || "portfolio")}</p>
+                            <p class="mb-1 text-sm font-semibold text-white">${escapeHtml(match.title || "Portfolio Match")}</p>
+                            <p class="mb-1 text-sm text-slate-300">${escapeHtml(match.summary || "")}</p>
+                            <p class="m-0 text-xs text-sky-100/80">${escapeHtml(match.match_reason || "Selected for its relevance to the identified priorities.")}</p>
                         </a>
                     `).join("") || `<p class="m-0 text-slate-400">No supporting matches returned.</p>`}
                 </div>
@@ -154,6 +218,7 @@ async function handleConsultativeAiSubmit(event) {
     const formData = new FormData(consultativeAiForm);
     const visitorName = (formData.get("visitor_name") || "").toString().trim();
     const companyName = (formData.get("company_name") || "").toString().trim();
+    const jobTitle = (formData.get("job_title") || "").toString().trim();
     if (!visitorName || !companyName) return;
 
     resetConsultationUi();
@@ -173,7 +238,7 @@ async function handleConsultativeAiSubmit(event) {
             body: JSON.stringify({
                 visitor_name: visitorName,
                 company_name: companyName,
-                job_title: "decision maker"
+                job_title: jobTitle || "company decision maker"
             })
         });
 
@@ -236,6 +301,110 @@ const GITHUB_DEFAULTS = {
     repo: "ChinmayA301.github.io",
     branch: "main"
 };
+
+const PORTFOLIO_SIGNAL_MODEL = {
+    skills: [
+        { key: "rag", label: "RAG / Retrieval", color: "#8ad1ff" },
+        { key: "evaluation", label: "Evaluation", color: "#ffc46f" },
+        { key: "governance", label: "Governance", color: "#9df2d0" },
+        { key: "analytics", label: "Analytics Engineering", color: "#9dc2ff" },
+        { key: "product", label: "Product Systems", color: "#f3a6ff" },
+        { key: "trust", label: "Trust Signals", color: "#ff9c8a" }
+    ],
+    projects: {
+        "Aegis AI Governance & Readiness Platform": {
+            skills: ["governance", "evaluation", "product"],
+            roles: { dataScientist: 2, aiEngineer: 3, strategy: 5, governance: 5 }
+        },
+        "PolyRAG: Multi-Model Governance RAG": {
+            skills: ["rag", "evaluation", "governance"],
+            roles: { dataScientist: 3, aiEngineer: 5, strategy: 3, governance: 5 }
+        },
+        "TransferSignal": {
+            skills: ["product", "trust", "evaluation"],
+            roles: { dataScientist: 3, aiEngineer: 4, strategy: 3, governance: 2 }
+        },
+        "Operations Control Tower": {
+            skills: ["analytics", "evaluation", "product"],
+            roles: { dataScientist: 4, aiEngineer: 2, strategy: 4, governance: 2 }
+        },
+        "Healthcare Readmission Risk with Fairness & Calibration": {
+            skills: ["evaluation", "governance", "analytics"],
+            roles: { dataScientist: 5, aiEngineer: 3, strategy: 3, governance: 5 }
+        },
+        "Tabular ML Benchmark: Human FE vs AutoML": {
+            skills: ["evaluation", "analytics", "product"],
+            roles: { dataScientist: 5, aiEngineer: 4, strategy: 3, governance: 3 }
+        },
+        "Longitudinal Diabetes Risk Modeling with Neighborhood Deprivation": {
+            skills: ["evaluation", "analytics", "governance"],
+            roles: { dataScientist: 5, aiEngineer: 3, strategy: 2, governance: 4 }
+        },
+        "Public-Sector AI Readiness & Efficiency Evaluation": {
+            skills: ["governance", "evaluation", "product"],
+            roles: { dataScientist: 4, aiEngineer: 4, strategy: 5, governance: 5 }
+        },
+        "Financial Document Intelligence (FinBizInfo)": {
+            skills: ["rag", "analytics", "governance"],
+            roles: { dataScientist: 3, aiEngineer: 4, strategy: 3, governance: 4 }
+        },
+        "Data Science Career Audit": {
+            skills: ["analytics", "evaluation", "trust"],
+            roles: { dataScientist: 4, aiEngineer: 2, strategy: 5, governance: 2 }
+        },
+        "SignalGraph": {
+            skills: ["trust", "analytics", "evaluation"],
+            roles: { dataScientist: 4, aiEngineer: 3, strategy: 4, governance: 3 }
+        },
+        "Wax Seal Trust Provenance": {
+            skills: ["trust", "governance", "product"],
+            roles: { dataScientist: 2, aiEngineer: 4, strategy: 4, governance: 5 }
+        }
+    },
+    governanceRadar: [
+        { label: "Policy & controls", value: 88 },
+        { label: "Risk registers", value: 84 },
+        { label: "Human review", value: 80 },
+        { label: "Evidence trails", value: 86 },
+        { label: "Evaluation", value: 90 },
+        { label: "Monitoring", value: 76 }
+    ],
+    roleLabels: [
+        { key: "dataScientist", label: "Data Scientist" },
+        { key: "aiEngineer", label: "AI Engineer" },
+        { key: "strategy", label: "Strategy" },
+        { key: "governance", label: "Governance" }
+    ]
+};
+
+const AI_BENCHMARK_PULSE_SEARCHES = [
+    {
+        key: "llm",
+        label: "LLM evaluation",
+        query: "llm evaluation benchmark language:Python stars:>50",
+        color: "#8ad1ff"
+    },
+    {
+        key: "rag",
+        label: "RAG evaluation",
+        query: "rag evaluation benchmark language:Python stars:>20",
+        color: "#9df2d0"
+    },
+    {
+        key: "agent",
+        label: "Agent evaluation",
+        query: "agent evaluation benchmark language:Python stars:>10",
+        color: "#ffc46f"
+    },
+    {
+        key: "ml",
+        label: "ML benchmarking",
+        query: "machine learning benchmark evaluation language:Python stars:>50",
+        color: "#f3a6ff"
+    }
+];
+
+let aiPulseChartState = null;
 
 function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -306,17 +475,35 @@ function resolveJsonUrls(path) {
     return Array.from(new Set(candidates));
 }
 
-function renderProjects(projects) {
-    const grid = document.getElementById("projectsGrid");
+function renderProjects(projects, options = {}) {
+    const gridId = options.gridId || "projectsGrid";
+    const columnClass = options.columnClass || "col-md-6";
+    const grid = document.getElementById(gridId);
     if (!grid) return;
-    const githubProfile = "https://github.com/ChinmayA301";
     if (!projects.length) {
         grid.innerHTML = `<p class="text-muted small">No projects found yet.</p>`;
         return;
     }
     grid.innerHTML = projects.map(p => {
-        const link = p.link || p.tweetUrl || githubProfile;
+        const link = p.link || p.tweetUrl || "";
         const tags = (p.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${escapeHtml(t)}</span>`).join("");
+        const actions = (p.links || []).filter(item => item && item.url && item.label);
+        const actionLinks = actions.length ? `
+            <div class="project-actions mt-3">
+                ${actions.map(item => `
+                    <a class="project-cta" href="${escapeHtml(item.url)}" ${/^https?:\/\//i.test(item.url) ? 'target="_blank" rel="noopener"' : ""}>${escapeHtml(item.label === "GitHub" ? "Explore implementation" : item.label)}</a>
+                `).join("")}
+            </div>
+        ` : "";
+        const status = p.status ? `<p class="project-status mb-2">${escapeHtml(p.status)}</p>` : "";
+        const contributionText = p.contribution || p.role || "";
+        const contributionLabel = p.contribution ? "Contribution" : "Role";
+        const role = contributionText ? `<p class="project-role"><strong>${contributionLabel}</strong>${escapeHtml(contributionText)}</p>` : "";
+        const result = p.result ? `<p class="project-result"><strong>Result</strong>${escapeHtml(p.result)}</p>` : "";
+        const why = p.why ? `<p class="project-why"><strong>Operational relevance</strong>${escapeHtml(p.why)}</p>` : "";
+        const stack = p.stack ? `<p class="project-stack"><strong>Tools</strong>${escapeHtml(p.stack)}</p>` : "";
+        const projectMeta = role || stack ? `<div class="project-signal-meta">${role}${stack}</div>` : "";
+        const privacy = p.privacy ? `<p class="project-privacy">${escapeHtml(p.privacy)}</p>` : "";
         const tweetEmbed = p.tweetUrl ? `
             <div class="project-embed mt-3">
                 <blockquote class="twitter-tweet" data-media-max-width="560">
@@ -326,23 +513,33 @@ function renderProjects(projects) {
                 </blockquote>
             </div>
         ` : "";
-        const cta = p.tweetUrl ? `
-            <a class="project-cta" href="${escapeHtml(link)}" target="_blank" rel="noopener">Open video post</a>
+        const tweetCta = p.tweetUrl ? `
+            <a class="project-cta" href="${escapeHtml(p.tweetUrl)}" target="_blank" rel="noopener">Open video post</a>
         ` : "";
+        const projectActions = [actionLinks, tweetCta].filter(Boolean).join("");
         const cardBody = `
             <div class="card-body">
                 <h3 class="h5">${escapeHtml(p.title)}</h3>
-                <p class="mb-2 small text-muted">${escapeHtml(p.description)}</p>
+                ${status}
+                <p class="mb-2 small text-muted">${escapeHtml(p.problem || p.description)}</p>
+                ${projectMeta}
+                ${result}
+                ${why}
+                ${privacy}
                 <div class="project-tags">${tags}</div>
                 ${tweetEmbed}
-                ${cta}
+                ${projectActions}
             </div>
         `;
         return `
-          <div class="col-md-6">
+          <div class="${columnClass}">
             ${p.tweetUrl
                 ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
-                : `<a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">${cardBody}</a>`}
+                : actions.length
+                    ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
+                    : link
+                        ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">${cardBody}</a>`
+                        : `<article class="project-box card shadow-sm h-100">${cardBody}</article>`}
           </div>
         `;
     }).join("");
@@ -353,40 +550,554 @@ function renderProjects(projects) {
 function buildProjectFilters(projects) {
     const filterWrap = document.getElementById("projectsFilter");
     if (!filterWrap) return;
-    const tags = new Set();
-    projects.forEach(p => (p.tags || []).forEach(t => tags.add(t)));
-    const tagList = ["All", ...Array.from(tags).sort()];
-    filterWrap.innerHTML = tagList.map(tag => `
-      <button class="filter-pill ${tag === "All" ? "active" : ""}" data-filter="${tag}">${tag}</button>
+    const paths = [
+        { key: "all", label: "All work" },
+        { key: "data-science", label: "Data Science" },
+        { key: "analytics", label: "Analytics" },
+        { key: "applied-ai", label: "Enterprise AI Solutions" },
+        { key: "responsible-ai", label: "AI Reliability & Governance" }
+    ];
+    const params = new URLSearchParams(window.location.search);
+    const requestedPath = params.get("path");
+    const activePath = paths.some(path => path.key === requestedPath) ? requestedPath : "all";
+    filterWrap.innerHTML = paths.map(path => `
+      <button class="filter-pill ${path.key === activePath ? "active" : ""}" data-path="${path.key}">${path.label}</button>
     `).join("");
     applyStagger(filterWrap.querySelectorAll(".filter-pill"));
+
+    const renderPath = path => {
+        const filtered = path === "all"
+            ? projectCache
+            : projectCache.filter(project => (project.paths || []).includes(path));
+        renderProjects(filtered);
+    };
+
+    renderPath(activePath);
 
     filterWrap.querySelectorAll(".filter-pill").forEach(btn => {
         btn.addEventListener("click", () => {
             filterWrap.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            const filter = btn.getAttribute("data-filter");
-            if (filter === "All") {
-                renderProjects(projectCache);
-                return;
-            }
-            const filtered = projectCache.filter(p => (p.tags || []).includes(filter));
-            renderProjects(filtered);
+            const path = btn.getAttribute("data-path") || "all";
+            const nextUrl = new URL(window.location.href);
+            if (path === "all") nextUrl.searchParams.delete("path");
+            else nextUrl.searchParams.set("path", path);
+            window.history.replaceState({}, "", nextUrl);
+            renderPath(path);
         });
     });
+}
+
+function getPortfolioProfiles(projects) {
+    const model = PORTFOLIO_SIGNAL_MODEL.projects;
+    return Object.keys(model)
+        .map(title => {
+            const project = projects.find(item => item.title === title);
+            if (!project) return null;
+            return {
+                ...model[title],
+                title,
+                description: project.description,
+                status: project.status,
+                link: project.link || (project.links || [])[0]?.url || "",
+                tags: project.tags || []
+            };
+        })
+        .filter(Boolean);
+}
+
+function getSkillByKey(key) {
+    return PORTFOLIO_SIGNAL_MODEL.skills.find(skill => skill.key === key);
+}
+
+function renderSkillProjectGraph(profiles) {
+    const skills = PORTFOLIO_SIGNAL_MODEL.skills.filter(skill =>
+        profiles.some(profile => profile.skills.includes(skill.key))
+    );
+    const height = Math.max(360, Math.max(skills.length, profiles.length) * 54 + 70);
+    const skillStep = skills.length > 1 ? (height - 90) / (skills.length - 1) : 1;
+    const projectStep = profiles.length > 1 ? (height - 90) / (profiles.length - 1) : 1;
+    const skillPositions = new Map(skills.map((skill, idx) => [skill.key, 45 + idx * skillStep]));
+    const projectPositions = new Map(profiles.map((profile, idx) => [profile.title, 45 + idx * projectStep]));
+    const edges = profiles.flatMap(profile => profile.skills.map(skillKey => {
+        const skill = getSkillByKey(skillKey);
+        const y1 = skillPositions.get(skillKey);
+        const y2 = projectPositions.get(profile.title);
+        return `<path class="skill-edge" d="M 130 ${y1} C 250 ${y1}, 355 ${y2}, 480 ${y2}" stroke="${skill?.color || "#8ad1ff"}" />`;
+    }));
+    const skillNodes = skills.map(skill => `
+        <g class="skill-node" transform="translate(24 ${skillPositions.get(skill.key)})">
+            <circle r="8" fill="${skill.color}" />
+            <text x="18" y="5">${escapeHtml(skill.label)}</text>
+        </g>
+    `).join("");
+    const projectNodes = profiles.map(profile => `
+        <g class="project-node" transform="translate(496 ${projectPositions.get(profile.title)})">
+            <circle r="6" />
+            <text x="16" y="-2">${escapeHtml(profile.title)}</text>
+            <text x="16" y="15" class="project-node-meta">${escapeHtml(profile.status || "Portfolio project")}</text>
+        </g>
+    `).join("");
+    return `
+        <article class="portfolio-panel portfolio-panel-wide">
+            <div class="portfolio-panel-header">
+                <div>
+                    <p class="eyebrow">Skill-to-project graph</p>
+                    <h3>Bipartite evidence map</h3>
+                </div>
+                <span>${profiles.length} projects</span>
+            </div>
+            <div class="skill-graph-wrap" role="img" aria-label="Bipartite graph connecting portfolio skills to selected projects">
+                <svg class="skill-graph" viewBox="0 0 760 ${height}" preserveAspectRatio="xMinYMin meet">
+                    <line class="graph-rail" x1="130" y1="24" x2="130" y2="${height - 24}" />
+                    <line class="graph-rail" x1="480" y1="24" x2="480" y2="${height - 24}" />
+                    ${edges.join("")}
+                    ${skillNodes}
+                    ${projectNodes}
+                </svg>
+            </div>
+            <div class="graph-legend">
+                ${skills.map(skill => `<span style="--legend-color:${skill.color}">${escapeHtml(skill.label)}</span>`).join("")}
+            </div>
+        </article>
+    `;
+}
+
+function getRadarPoint(index, total, value, radius, center) {
+    const angle = (Math.PI * 2 * index / total) - Math.PI / 2;
+    const scaledRadius = radius * (value / 100);
+    return {
+        x: center + Math.cos(angle) * scaledRadius,
+        y: center + Math.sin(angle) * scaledRadius,
+        labelX: center + Math.cos(angle) * (radius + 34),
+        labelY: center + Math.sin(angle) * (radius + 34)
+    };
+}
+
+function renderGovernanceRadar() {
+    const dimensions = PORTFOLIO_SIGNAL_MODEL.governanceRadar;
+    const center = 170;
+    const radius = 104;
+    const total = dimensions.length;
+    const rings = [25, 50, 75, 100].map(value => {
+        const points = dimensions.map((_, idx) => {
+            const point = getRadarPoint(idx, total, value, radius, center);
+            return `${point.x},${point.y}`;
+        }).join(" ");
+        return `<polygon class="radar-ring" points="${points}" />`;
+    }).join("");
+    const axes = dimensions.map((dimension, idx) => {
+        const outer = getRadarPoint(idx, total, 100, radius, center);
+        return `
+            <line class="radar-axis" x1="${center}" y1="${center}" x2="${outer.x}" y2="${outer.y}" />
+            <text class="radar-label" x="${outer.labelX}" y="${outer.labelY}">${escapeHtml(dimension.label)}</text>
+        `;
+    }).join("");
+    const valuePoints = dimensions.map((dimension, idx) => {
+        const point = getRadarPoint(idx, total, dimension.value, radius, center);
+        return `${point.x},${point.y}`;
+    }).join(" ");
+    const average = Math.round(dimensions.reduce((sum, item) => sum + item.value, 0) / dimensions.length);
+    return `
+        <article class="portfolio-panel">
+            <div class="portfolio-panel-header">
+                <div>
+                    <p class="eyebrow">Governance maturity radar</p>
+                    <h3>Controls readiness</h3>
+                </div>
+                <span>${average}/100</span>
+            </div>
+            <div class="radar-wrap" role="img" aria-label="Governance maturity radar across policy, risk, review, evidence, evaluation, and monitoring">
+                <svg class="radar-chart" viewBox="0 0 340 340">
+                    ${rings}
+                    ${axes}
+                    <polygon class="radar-area" points="${valuePoints}" />
+                    ${dimensions.map((dimension, idx) => {
+                        const point = getRadarPoint(idx, total, dimension.value, radius, center);
+                        return `<circle class="radar-dot" cx="${point.x}" cy="${point.y}" r="4"><title>${escapeHtml(dimension.label)}: ${dimension.value}/100</title></circle>`;
+                    }).join("")}
+                </svg>
+            </div>
+            <div class="radar-dimensions">
+                ${dimensions.map(item => `
+                    <div>
+                        <span>${escapeHtml(item.label)}</span>
+                        <strong>${item.value}</strong>
+                    </div>
+                `).join("")}
+            </div>
+        </article>
+    `;
+}
+
+function getRoleClass(score) {
+    if (score >= 5) return "role-score-strong";
+    if (score >= 4) return "role-score-good";
+    if (score >= 3) return "role-score-medium";
+    return "role-score-light";
+}
+
+function renderRoleFitMatrix(profiles) {
+    const roleLabels = PORTFOLIO_SIGNAL_MODEL.roleLabels;
+    return `
+        <article class="portfolio-panel portfolio-panel-wide">
+            <div class="portfolio-panel-header">
+                <div>
+                    <p class="eyebrow">Role fit matrix</p>
+                    <h3>Projects mapped to target signals</h3>
+                </div>
+                <span>1-5 fit</span>
+            </div>
+            <div class="role-matrix-wrap">
+                <table class="role-matrix">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project</th>
+                            ${roleLabels.map(role => `<th scope="col">${escapeHtml(role.label)}</th>`).join("")}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${profiles.map(profile => `
+                            <tr>
+                                <th scope="row">
+                                    ${profile.link
+                                        ? `<a href="${escapeHtml(profile.link)}" target="_blank" rel="noopener">${escapeHtml(profile.title)}</a>`
+                                        : escapeHtml(profile.title)}
+                                </th>
+                                ${roleLabels.map(role => {
+                                    const score = profile.roles[role.key] || 0;
+                                    return `
+                                        <td>
+                                            <span class="role-score ${getRoleClass(score)}" aria-label="${escapeHtml(role.label)} fit ${score} out of 5">
+                                                <span style="width:${score * 20}%"></span>
+                                            </span>
+                                            <strong>${score}</strong>
+                                        </td>
+                                    `;
+                                }).join("")}
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    `;
+}
+
+function renderPortfolioIntelligence(projects) {
+    const wrap = document.getElementById("portfolioIntelligence");
+    if (!wrap) return;
+    const profiles = getPortfolioProfiles(projects);
+    if (!profiles.length) {
+        wrap.innerHTML = `<p class="text-muted small">Portfolio signal map will appear after projects load.</p>`;
+        return;
+    }
+    wrap.innerHTML = `
+        ${renderSkillProjectGraph(profiles)}
+        <div class="portfolio-split">
+            ${renderGovernanceRadar()}
+            ${renderRoleFitMatrix(profiles)}
+        </div>
+    `;
+    applyStagger(wrap.querySelectorAll(".portfolio-panel"));
+}
+
+function getQuarterKey(dateValue) {
+    const date = new Date(dateValue);
+    if (Number.isNaN(date.getTime())) return "Unknown";
+    const quarter = Math.floor(date.getUTCMonth() / 3) + 1;
+    return `${date.getUTCFullYear()} Q${quarter}`;
+}
+
+function getQuarterIndex(key) {
+    const match = String(key).match(/^(\d{4}) Q([1-4])$/);
+    if (!match) return 0;
+    return Number(match[1]) * 4 + Number(match[2]);
+}
+
+function formatCompactNumber(value) {
+    return new Intl.NumberFormat("en", {
+        notation: "compact",
+        maximumFractionDigits: value >= 1000 ? 1 : 0
+    }).format(value || 0);
+}
+
+function formatDateShort(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "Unknown";
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+}
+
+async function fetchAiPulseLane(lane) {
+    const url = new URL("https://api.github.com/search/repositories");
+    url.searchParams.set("q", lane.query);
+    url.searchParams.set("sort", "updated");
+    url.searchParams.set("order", "desc");
+    url.searchParams.set("per_page", "20");
+    const response = await fetch(url.toString(), {
+        headers: { Accept: "application/vnd.github+json" },
+        cache: "no-store"
+    });
+    if (!response.ok) {
+        throw new Error(`GitHub API returned ${response.status} for ${lane.label}`);
+    }
+    const payload = await response.json();
+    return (payload.items || []).map(item => ({
+        lane: lane.key,
+        laneLabel: lane.label,
+        laneColor: lane.color,
+        name: item.full_name,
+        description: item.description || "",
+        url: item.html_url,
+        stars: item.stargazers_count || 0,
+        forks: item.forks_count || 0,
+        openIssues: item.open_issues_count || 0,
+        language: item.language || "Unknown",
+        createdAt: item.created_at,
+        updatedAt: item.updated_at
+    }));
+}
+
+function buildAiPulseDataset(items) {
+    const deduped = Array.from(
+        items.reduce((map, item) => {
+            const existing = map.get(item.name);
+            if (!existing || item.stars > existing.stars) {
+                map.set(item.name, item);
+            }
+            return map;
+        }, new Map()).values()
+    ).sort((a, b) => b.stars - a.stars);
+
+    const quarterKeys = Array.from(new Set(deduped.map(item => getQuarterKey(item.createdAt))))
+        .filter(key => key !== "Unknown")
+        .sort((a, b) => getQuarterIndex(a) - getQuarterIndex(b));
+    const labels = quarterKeys.slice(-12);
+    const firstVisibleIndex = labels.length ? getQuarterIndex(labels[0]) : 0;
+    const lanes = AI_BENCHMARK_PULSE_SEARCHES.map(lane => {
+        const laneItems = deduped.filter(item => item.lane === lane.key);
+        let carry = laneItems
+            .filter(item => getQuarterIndex(getQuarterKey(item.createdAt)) < firstVisibleIndex)
+            .reduce((sum, item) => sum + item.stars, 0);
+        const points = labels.map(label => {
+            const quarterStars = laneItems
+                .filter(item => getQuarterKey(item.createdAt) === label)
+                .reduce((sum, item) => sum + item.stars, 0);
+            carry += quarterStars;
+            return carry;
+        });
+        return { ...lane, points, totalStars: laneItems.reduce((sum, item) => sum + item.stars, 0), count: laneItems.length };
+    });
+
+    return {
+        labels,
+        lanes,
+        repos: deduped.slice(0, 10),
+        totalStars: deduped.reduce((sum, item) => sum + item.stars, 0),
+        repoCount: deduped.length,
+        updatedAt: new Date()
+    };
+}
+
+function drawAiPulseChart(canvas, dataset) {
+    if (!canvas || !dataset?.labels?.length) return;
+    const parent = canvas.parentElement;
+    const width = Math.max(620, parent?.clientWidth || 720);
+    const height = 330;
+    const ratio = window.devicePixelRatio || 1;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const pad = { top: 26, right: 28, bottom: 52, left: 68 };
+    const chartWidth = width - pad.left - pad.right;
+    const chartHeight = height - pad.top - pad.bottom;
+    const allValues = dataset.lanes.flatMap(lane => lane.points);
+    const maxValue = Math.max(...allValues, 1);
+    const xFor = idx => pad.left + (dataset.labels.length === 1 ? 0 : (idx / (dataset.labels.length - 1)) * chartWidth);
+    const yFor = value => pad.top + chartHeight - (value / maxValue) * chartHeight;
+
+    ctx.font = "12px Space Grotesk, sans-serif";
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+    ctx.fillStyle = "rgba(208, 216, 230, 0.7)";
+    for (let i = 0; i <= 4; i += 1) {
+        const value = (maxValue / 4) * i;
+        const y = yFor(value);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(width - pad.right, y);
+        ctx.stroke();
+        ctx.fillText(formatCompactNumber(Math.round(value)), 12, y + 4);
+    }
+
+    const labelInterval = Math.max(1, Math.ceil(dataset.labels.length / 5));
+    dataset.labels.forEach((label, idx) => {
+        const lastIndex = dataset.labels.length - 1;
+        if (idx !== 0 && idx !== lastIndex && idx % labelInterval !== 0) return;
+        if (idx !== lastIndex && lastIndex - idx < labelInterval) return;
+        const x = xFor(idx);
+        ctx.fillStyle = "rgba(208, 216, 230, 0.68)";
+        const offset = idx === dataset.labels.length - 1 ? 48 : 22;
+        ctx.fillText(label, x - offset, height - 20);
+    });
+
+    dataset.lanes.forEach(lane => {
+        if (!lane.points.some(Boolean)) return;
+        ctx.beginPath();
+        lane.points.forEach((value, idx) => {
+            const x = xFor(idx);
+            const y = yFor(value);
+            if (idx === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        });
+        ctx.lineWidth = 2.4;
+        ctx.strokeStyle = lane.color;
+        ctx.stroke();
+
+        lane.points.forEach((value, idx) => {
+            if (idx !== lane.points.length - 1 && idx % 3 !== 0) return;
+            ctx.beginPath();
+            ctx.arc(xFor(idx), yFor(value), 3.2, 0, Math.PI * 2);
+            ctx.fillStyle = lane.color;
+            ctx.fill();
+        });
+    });
+}
+
+function renderAiPulse(dataset) {
+    const wrap = document.getElementById("aiBenchmarkPulse");
+    if (!wrap) return;
+    const topRepo = dataset.repos[0];
+    wrap.innerHTML = `
+        <article class="ai-pulse-panel">
+            <div class="ai-pulse-chart-head">
+                <div>
+                    <p class="eyebrow">Current traction index</p>
+                    <h3>Evaluation and benchmarking repo cohorts</h3>
+                </div>
+                <span>Updated ${escapeHtml(dataset.updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</span>
+            </div>
+            <div class="ai-pulse-grid">
+                <div class="ai-pulse-chart-card">
+                    <div class="ai-pulse-chart-scroll">
+                        <canvas id="aiPulseCanvas" aria-label="Live AI evaluation benchmark tracking graph"></canvas>
+                    </div>
+                    <div class="ai-pulse-legend">
+                        ${dataset.lanes.map(lane => `<span style="--legend-color:${lane.color}">${escapeHtml(lane.label)}</span>`).join("")}
+                    </div>
+                    <p class="ai-pulse-note">Source: live GitHub repository search. Values are current stars accumulated by repository creation cohort, not historical star counts.</p>
+                </div>
+                <aside class="ai-pulse-side">
+                    <div class="ai-pulse-stats">
+                        <div><span>Tracked repos</span><strong>${dataset.repoCount}</strong></div>
+                        <div><span>Total stars</span><strong>${formatCompactNumber(dataset.totalStars)}</strong></div>
+                        <div><span>Top signal</span><strong>${escapeHtml(topRepo?.name || "n/a")}</strong></div>
+                    </div>
+                    <div class="ai-pulse-table-wrap">
+                        <table class="ai-pulse-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Repository</th>
+                                    <th scope="col">Lane</th>
+                                    <th scope="col">Stars</th>
+                                    <th scope="col">Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${dataset.repos.map(repo => `
+                                    <tr>
+                                        <th scope="row"><a href="${escapeHtml(repo.url)}" target="_blank" rel="noopener">${escapeHtml(repo.name)}</a></th>
+                                        <td>${escapeHtml(repo.laneLabel)}</td>
+                                        <td>${formatCompactNumber(repo.stars)}</td>
+                                        <td>${formatDateShort(repo.updatedAt)}</td>
+                                    </tr>
+                                `).join("")}
+                            </tbody>
+                        </table>
+                    </div>
+                </aside>
+            </div>
+        </article>
+    `;
+    aiPulseChartState = dataset;
+    drawAiPulseChart(document.getElementById("aiPulseCanvas"), dataset);
+    applyStagger(wrap.querySelectorAll(".ai-pulse-panel"));
+}
+
+function renderAiPulseError(message) {
+    const wrap = document.getElementById("aiBenchmarkPulse");
+    if (!wrap) return;
+    wrap.innerHTML = `
+        <article class="ai-pulse-panel ai-pulse-error">
+            <p class="eyebrow">Live ingest unavailable</p>
+            <h3>GitHub signals could not be loaded</h3>
+            <p>${escapeHtml(message)} Refresh again in a moment, or check the browser/network rate limit.</p>
+        </article>
+    `;
+}
+
+async function loadAiBenchmarkPulse() {
+    const wrap = document.getElementById("aiBenchmarkPulse");
+    if (!wrap) return;
+    const refresh = document.getElementById("refreshAiPulse");
+    if (refresh) {
+        refresh.disabled = true;
+        refresh.textContent = "Loading";
+    }
+    wrap.innerHTML = `<p class="text-muted small mb-0">Loading live AI evaluation signals...</p>`;
+    try {
+        const results = await Promise.all(AI_BENCHMARK_PULSE_SEARCHES.map(fetchAiPulseLane));
+        const dataset = buildAiPulseDataset(results.flat());
+        renderAiPulse(dataset);
+    } catch (error) {
+        console.error("AI benchmark pulse load error:", error);
+        renderAiPulseError(error.message || "The live data request failed.");
+    } finally {
+        if (refresh) {
+            refresh.disabled = false;
+            refresh.textContent = "Refresh";
+        }
+    }
 }
 
 // Render Projects from JSON
 async function loadProjects() {
     const grid = document.getElementById("projectsGrid");
-    if (!grid) return;
+    const featuredGrid = document.getElementById("featuredProjectsGrid");
+    const intelligenceGrid = document.getElementById("portfolioIntelligence");
+    if (!grid && !featuredGrid && !intelligenceGrid) return;
     try {
         const projects = await loadJsonWithOverrides("projects", "data/projects.json");
-        projectCache = Array.isArray(projects) ? projects : [];
-        renderProjects(projectCache);
-        buildProjectFilters(projectCache);
+        projectCache = Array.isArray(projects) ? [...projects].sort((a, b) => {
+            if (Boolean(a.featured) !== Boolean(b.featured)) return a.featured ? -1 : 1;
+            return (a.featured_order || 99) - (b.featured_order || 99);
+        }) : [];
+        if (grid) {
+            renderProjects(projectCache);
+            buildProjectFilters(projectCache);
+        }
+        if (intelligenceGrid) renderPortfolioIntelligence(projectCache);
+        if (featuredGrid) {
+            const featuredProjects = projectCache
+                .filter(project => project.featured)
+                .sort((a, b) => (a.featured_order || 99) - (b.featured_order || 99));
+            renderProjects(featuredProjects, {
+                gridId: "featuredProjectsGrid",
+                columnClass: "featured-project-slot"
+            });
+        }
     } catch (e) {
-        grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
+        if (grid) grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
+        if (featuredGrid) featuredGrid.innerHTML = `<p class="text-danger small">Could not load selected work.</p>`;
+        if (intelligenceGrid) intelligenceGrid.innerHTML = `<p class="text-danger small">Could not load portfolio intelligence.</p>`;
         console.error("Projects load error:", e);
     }
 }
@@ -442,9 +1153,8 @@ function splitExperience(items) {
     const workItems = [];
     items.forEach(item => {
         const title = (item.title || "").toLowerCase();
-        const org = (item.org || "").toLowerCase();
         const isEdu = title.includes("m.s.") || title.includes("b.tech") || title.includes("b.tech.")
-            || org.includes("university") || org.includes("institute");
+            || title.includes("master") || title.includes("bachelor");
         if (isEdu) {
             eduItems.push(item);
         } else {
@@ -454,6 +1164,87 @@ function splitExperience(items) {
     return { workItems, eduItems };
 }
 
+function setupCapabilityHinges() {
+    const section = document.getElementById("skills");
+    const cards = [...document.querySelectorAll("[data-capability-hinge]")];
+    if (!section || !cards.length) return;
+
+    let animationFrame = null;
+
+    cards.forEach((card, index) => {
+        const direction = index % 2 === 0 ? 1 : -1;
+        card.style.setProperty("--hinge-direction", String(direction));
+        card.style.setProperty("--hinge-swing", "0");
+        card.style.setProperty("--hinge-drop", "0");
+        card.style.setProperty("--hinge-opacity", "1");
+        card.dataset.hingeOrder = String(index + 1);
+        card.classList.add("hinge-ready");
+        card.classList.toggle("hinge-from-right", direction < 0);
+    });
+
+    if (prefersReducedMotion) {
+        section.classList.add("is-hinge-static");
+        cards.forEach(card => {
+            card.style.setProperty("--hinge-progress", "1");
+            card.style.setProperty("--hinge-swing", "0");
+            card.style.setProperty("--hinge-drop", "0");
+            card.style.setProperty("--hinge-opacity", "0");
+            card.classList.add("is-hinge-static", "is-hinge-revealed");
+        });
+        return;
+    }
+
+    const renderHinges = () => {
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const sectionRect = section.getBoundingClientRect();
+        const scrollableDistance = Math.max(sectionRect.height - viewportHeight, 1);
+        const sceneProgress = Math.max(0, Math.min(-sectionRect.top / scrollableDistance, 1));
+        const holdBeforeRelease = 0.14;
+        const holdAfterRelease = 0.08;
+        const sequenceSpan = 1 - holdBeforeRelease - holdAfterRelease;
+        const cardSlot = sequenceSpan / cards.length;
+        const motionSpan = cardSlot * 0.8;
+
+        section.style.setProperty("--hinge-sequence", sceneProgress.toFixed(3));
+        section.classList.toggle("is-hinge-pinned", sceneProgress > 0 && sceneProgress < 1);
+        section.classList.toggle("is-hinge-complete", sceneProgress >= 0.99);
+
+        cards.forEach((card, index) => {
+            const cardStart = holdBeforeRelease + (index * cardSlot);
+            const rawProgress = Math.max(0, Math.min((sceneProgress - cardStart) / motionSpan, 1));
+            const smoothProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+            const swingRaw = Math.min(rawProgress / 0.52, 1);
+            const swingProgress = 1 + (2.7 * Math.pow(swingRaw - 1, 3)) + (1.7 * Math.pow(swingRaw - 1, 2));
+            const dropRaw = Math.max(0, Math.min((rawProgress - 0.44) / 0.56, 1));
+            const dropProgress = dropRaw * dropRaw;
+            const fadeProgress = Math.max(0, Math.min((dropRaw - 0.48) / 0.52, 1));
+            const focused = card.contains(document.activeElement);
+            const progress = focused ? 1 : smoothProgress;
+
+            card.style.setProperty("--hinge-progress", progress.toFixed(3));
+            card.style.setProperty("--hinge-swing", (focused ? 1 : swingProgress).toFixed(3));
+            card.style.setProperty("--hinge-drop", (focused ? 1 : dropProgress).toFixed(3));
+            card.style.setProperty("--hinge-opacity", (focused ? 0 : 1 - fadeProgress).toFixed(3));
+            card.classList.toggle("is-hinge-revealed", progress > 0.82);
+        });
+
+        animationFrame = null;
+    };
+
+    const requestRender = () => {
+        if (animationFrame !== null) return;
+        animationFrame = window.requestAnimationFrame(renderHinges);
+    };
+
+    cards.forEach(card => {
+        card.addEventListener("focusin", requestRender);
+        card.addEventListener("focusout", requestRender);
+    });
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender);
+    requestRender();
+}
+
 async function loadHighlights() {
     const currentRoleEl = document.getElementById("currentRole");
     const educationEl = document.getElementById("educationHighlight");
@@ -461,28 +1252,42 @@ async function loadHighlights() {
     try {
         const items = await fetchJsonStrict("data/experience.json");
         const { workItems, eduItems } = splitExperience(items);
-        const current = workItems.find(item => (item.time || "").toLowerCase().includes("present")) || workItems[0];
-        const latestEdu = eduItems[0];
+        const current = workItems.find(item => (item.org || "").toLowerCase().includes("hennepin")) || workItems[0];
+        const latestEdu = eduItems.find(item => (item.title || "").toLowerCase().includes("m.s.")) || eduItems[0];
         if (currentRoleEl && current) {
+            currentRoleEl.classList.add("highlight-card--work");
             currentRoleEl.innerHTML = `
-        <p class="eyebrow">Current Position</p>
-        <h3 class="h5 mb-1">${current.title}</h3>
-        <p class="mb-1"><strong>${current.org}</strong> | ${current.time}</p>
-        ${current.location ? `<p class="small text-muted mb-2">${current.location}</p>` : ""}
-        <ul class="mb-0 small text-muted ps-3">
-          ${(current.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
-        </ul>
+        <div class="highlight-card-art" aria-hidden="true">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>HC</span>
+        </div>
+        <div class="highlight-card-content">
+          <p class="eyebrow">Selected Experience</p>
+          <h3 class="h5 mb-1">${current.title}</h3>
+          <p class="mb-1"><strong>${current.org}</strong> | ${current.time}</p>
+          ${current.location ? `<p class="small text-muted mb-2">${current.location}</p>` : ""}
+          <ul class="mb-0 small text-muted ps-3">
+            ${(current.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
       `;
         }
         if (educationEl && latestEdu) {
+            educationEl.classList.add("highlight-card--education");
             educationEl.innerHTML = `
-        <p class="eyebrow">Education</p>
-        <h3 class="h5 mb-1">${latestEdu.title}</h3>
-        <p class="mb-1"><strong>${latestEdu.org}</strong> | ${latestEdu.time}</p>
-        ${latestEdu.location ? `<p class="small text-muted mb-2">${latestEdu.location}</p>` : ""}
-        <ul class="mb-0 small text-muted ps-3">
-          ${(latestEdu.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
-        </ul>
+        <div class="highlight-card-art" aria-hidden="true">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>UMN</span>
+        </div>
+        <div class="highlight-card-content">
+          <p class="eyebrow">Education</p>
+          <h3 class="h5 mb-1">${latestEdu.title}</h3>
+          <p class="mb-1"><strong>${latestEdu.org}</strong> | ${latestEdu.time}</p>
+          ${latestEdu.location ? `<p class="small text-muted mb-2">${latestEdu.location}</p>` : ""}
+          <ul class="mb-0 small text-muted ps-3">
+            ${(latestEdu.bullets || []).slice(0, 2).map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
       `;
         }
     } catch (err) {
@@ -663,8 +1468,8 @@ async function loadResumes() {
                 ${(r.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
               </div>` : ""}
             ${r.file ? `
-              <a class="btn btn-outline-light btn-sm" href="${r.file}" target="_blank" rel="noopener" download>
-                Download PDF
+              <a class="btn btn-outline-light btn-sm" href="${r.file}" target="_blank" rel="noopener">
+                Open Resume
               </a>` : ""}
           </div>
         </div>
@@ -685,6 +1490,21 @@ loadFutureIdeas();
 loadCaseStudy();
 loadResumes();
 loadHighlights();
+loadAiBenchmarkPulse();
+setupCapabilityHinges();
+
+const refreshAiPulse = document.getElementById("refreshAiPulse");
+if (refreshAiPulse) {
+    refreshAiPulse.addEventListener("click", loadAiBenchmarkPulse);
+}
+
+window.addEventListener("resize", () => {
+    if (!aiPulseChartState) return;
+    window.clearTimeout(window.aiPulseResizeTimer);
+    window.aiPulseResizeTimer = window.setTimeout(() => {
+        drawAiPulseChart(document.getElementById("aiPulseCanvas"), aiPulseChartState);
+    }, 150);
+});
 
 function applyStagger(elements) {
     elements.forEach((el, idx) => {
@@ -699,7 +1519,9 @@ async function loadCaseStudy() {
     if (!wrap) return;
     try {
         const reports = await loadJsonWithOverrides("project_reports", "data/project_reports.json");
-        const featured = Array.isArray(reports) ? reports[0] : null;
+        const featured = Array.isArray(reports)
+            ? reports.find(report => report.featured === true) || reports[0]
+            : null;
         if (!featured) return;
         const bulletSource = (featured.sections || []).find(s => (s.bullets || []).length) || {};
         wrap.innerHTML = `
@@ -1030,10 +1852,9 @@ function setupHeroGlobe() {
     const locationName = document.getElementById("heroGlobeLocationName");
     const locationNote = document.getElementById("heroGlobeLocationNote");
     const locationChips = document.getElementById("heroGlobeLocationChips");
-    const inlineCanvas = document.getElementById("heroGlobeCanvas");
     const previewCanvas = document.getElementById("heroGlobePreviewCanvas");
     const modalCanvas = document.getElementById("heroGlobeModalCanvas");
-    if (!trigger || !modal || !inlineCanvas || !previewCanvas || !modalCanvas) return;
+    if (!trigger || !modal || !previewCanvas || !modalCanvas) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const locations = [
@@ -1088,45 +1909,6 @@ function setupHeroGlobe() {
         [[72, 23], [84, 20], [96, 20], [108, 18], [120, 17]],
         [[113, -22], [128, -25], [141, -31]]
     ];
-    const landSamples = buildLandSamples(landPolygons, 4);
-
-    function buildLandSamples(polygons, step) {
-        const samples = [];
-        polygons.forEach((polygon) => {
-            let minLon = Infinity;
-            let maxLon = -Infinity;
-            let minLat = Infinity;
-            let maxLat = -Infinity;
-            polygon.forEach(([lon, lat]) => {
-                minLon = Math.min(minLon, lon);
-                maxLon = Math.max(maxLon, lon);
-                minLat = Math.min(minLat, lat);
-                maxLat = Math.max(maxLat, lat);
-            });
-            for (let lat = minLat; lat <= maxLat; lat += step) {
-                for (let lon = minLon; lon <= maxLon; lon += step) {
-                    if (pointInPolygon([lon, lat], polygon)) {
-                        samples.push({ lat, lon });
-                    }
-                }
-            }
-        });
-        return samples;
-    }
-
-    function pointInPolygon(point, polygon) {
-        const [x, y] = point;
-        let inside = false;
-        for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i, i += 1) {
-            const [xi, yi] = polygon[i];
-            const [xj, yj] = polygon[j];
-            const intersects = ((yi > y) !== (yj > y))
-                && (x < ((xj - xi) * (y - yi)) / ((yj - yi) || Number.EPSILON) + xi);
-            if (intersects) inside = !inside;
-        }
-        return inside;
-    }
-
     function updateLocationDetails(location) {
         if (!locationName || !locationNote || !location) return;
         locationName.textContent = location.name;
@@ -1237,16 +2019,64 @@ function setupHeroGlobe() {
             });
         }
 
+        function drawProjectedLandPolygon(polygon, radius) {
+            ctx.beginPath();
+            let started = false;
+            let visiblePoints = 0;
+            for (let i = 0; i < polygon.length; i += 1) {
+                const current = polygon[i % polygon.length];
+                const next = polygon[(i + 1) % polygon.length];
+                const steps = Math.max(
+                    2,
+                    Math.ceil(Math.max(Math.abs(next[0] - current[0]), Math.abs(next[1] - current[1])) / 3)
+                );
+                for (let step = 0; step < steps; step += 1) {
+                    const t = step / steps;
+                    const lon = current[0] + (next[0] - current[0]) * t;
+                    const lat = current[1] + (next[1] - current[1]) * t;
+                    const point = project(lat, lon, radius);
+                    if (point.depth <= 0.015) {
+                        if (visiblePoints > 2) {
+                            ctx.closePath();
+                        }
+                        started = false;
+                        continue;
+                    }
+                    if (!started) {
+                        ctx.moveTo(point.x, point.y);
+                        started = true;
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                    visiblePoints += 1;
+                }
+            }
+            if (visiblePoints < 3) return;
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+        }
+
         function drawLand(radius) {
-            landSamples.forEach((sample) => {
-                const point = project(sample.lat, sample.lon, radius);
-                if (point.depth <= 0) return;
-                const size = 2.1 + point.depth * 1.25;
-                ctx.beginPath();
-                ctx.fillStyle = `rgba(104, 180, 142, ${0.16 + point.depth * 0.22})`;
-                ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
-                ctx.fill();
-            });
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(state.width / 2, state.height / 2, radius * 0.995, 0, Math.PI * 2);
+            ctx.clip();
+
+            ctx.fillStyle = "rgba(91, 169, 122, 0.58)";
+            ctx.strokeStyle = "rgba(226, 247, 229, 0.28)";
+            ctx.lineWidth = 1.2;
+            landPolygons.forEach((polygon) => drawProjectedLandPolygon(polygon, radius));
+
+            ctx.fillStyle = "rgba(185, 221, 153, 0.34)";
+            [
+                [[-6, 55], [-2, 58], [1, 55], [-2, 51]],
+                [[72, 8], [79, 10], [82, 6], [78, 1], [73, 4]],
+                [[45, -13], [50, -16], [49, -24], [44, -25], [43, -18]],
+                [[96, 5], [103, 2], [106, -4], [101, -8], [96, -3]],
+                [[138, 36], [143, 40], [146, 35], [142, 31], [138, 33]],
+                [[170, -34], [178, -39], [173, -45], [166, -42], [165, -37]]
+            ].forEach((polygon) => drawProjectedLandPolygon(polygon, radius));
 
             boundaryLines.forEach((line) => {
                 ctx.beginPath();
@@ -1268,6 +2098,7 @@ function setupHeroGlobe() {
                 ctx.lineWidth = 1;
                 ctx.stroke();
             });
+            ctx.restore();
         }
 
         function drawPins(radius) {
@@ -1490,12 +2321,6 @@ function setupHeroGlobe() {
         };
     }
 
-    const inlineGlobe = createGlobe(inlineCanvas, {
-        autorotate: true,
-        interactive: false,
-        radiusFactor: 0.4,
-        glow: 1
-    });
     const previewGlobe = createGlobe(previewCanvas, {
         autorotate: true,
         interactive: false,
@@ -1528,8 +2353,6 @@ function setupHeroGlobe() {
             modal.setAttribute("aria-hidden", "false");
             document.body.style.overflow = "hidden";
             window.requestAnimationFrame(() => {
-                inlineGlobe.resize();
-                inlineGlobe.draw();
                 previewGlobe.resize();
                 previewGlobe.draw();
                 modalGlobe.resize();
@@ -1561,6 +2384,721 @@ function setupHeroGlobe() {
     });
 }
 
+function setupMetricsStory() {
+    const section = document.getElementById("evidence-pulse");
+    const sticky = section?.querySelector(".metrics-story-sticky");
+    const canvas = document.getElementById("metricsChartCanvas");
+    const metricItems = Array.from(section?.querySelectorAll("[data-metric-item]") || []);
+    if (!section || !sticky || !canvas || !metricItems.length) return;
+
+    document.body.classList.add("scroll-stories-ready");
+    const context = canvas.getContext("2d");
+    const clamp01 = value => Math.max(0, Math.min(1, value));
+    const easeOut = value => 1 - Math.pow(1 - clamp01(value), 3);
+    let progress = prefersReducedMotion ? 1 : 0;
+    let frameRequested = false;
+
+    function drawChart() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = Math.max(1, Math.round(rect.width));
+        const height = Math.max(1, Math.round(rect.height));
+        const pixelWidth = Math.round(width * dpr);
+        const pixelHeight = Math.round(height * dpr);
+        if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+            canvas.width = pixelWidth;
+            canvas.height = pixelHeight;
+        }
+
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.clearRect(0, 0, width, height);
+
+        const pad = { top: 18, right: 22, bottom: 18, left: 12 };
+        const chartWidth = width - pad.left - pad.right;
+        const chartHeight = height - pad.top - pad.bottom;
+
+        context.lineWidth = 1;
+        context.strokeStyle = "rgba(231,232,234,0.075)";
+        for (let row = 0; row <= 4; row += 1) {
+            const y = pad.top + (chartHeight * row / 4);
+            context.beginPath();
+            context.moveTo(pad.left, y);
+            context.lineTo(width - pad.right, y);
+            context.stroke();
+        }
+        for (let column = 0; column <= 6; column += 1) {
+            const x = pad.left + (chartWidth * column / 6);
+            context.beginPath();
+            context.moveTo(x, pad.top);
+            context.lineTo(x, height - pad.bottom);
+            context.stroke();
+        }
+
+        const series = [
+            { values: [0.08, 0.14, 0.29, 0.36, 0.57, 0.72, 0.94], color: "#d1a67d", width: 2.4 },
+            { values: [0.12, 0.2, 0.24, 0.43, 0.49, 0.68, 0.81], color: "#c0c4c9", width: 1.6 },
+            { values: [0.05, 0.1, 0.18, 0.26, 0.39, 0.51, 0.66], color: "#717981", width: 1.35 }
+        ];
+        const chartProgress = easeOut(clamp01((progress - 0.08) / 0.82));
+
+        series.forEach((line, lineIndex) => {
+            const maxSegment = (line.values.length - 1) * clamp01((chartProgress - lineIndex * 0.06) / (1 - lineIndex * 0.06));
+            context.beginPath();
+            line.values.forEach((value, index) => {
+                if (index > Math.ceil(maxSegment)) return;
+                let plottedValue = value;
+                if (index === Math.ceil(maxSegment) && index > maxSegment && index > 0) {
+                    const fraction = maxSegment - Math.floor(maxSegment);
+                    plottedValue = line.values[index - 1] + (value - line.values[index - 1]) * fraction;
+                }
+                const plottedIndex = Math.min(index, maxSegment);
+                const x = pad.left + chartWidth * (plottedIndex / (line.values.length - 1));
+                const y = pad.top + chartHeight * (1 - plottedValue);
+                if (index === 0) context.moveTo(x, y);
+                else context.lineTo(x, y);
+            });
+            context.strokeStyle = line.color;
+            context.lineWidth = line.width;
+            context.lineCap = "round";
+            context.lineJoin = "round";
+            context.stroke();
+
+            if (maxSegment > 0.02) {
+                const baseIndex = Math.min(Math.floor(maxSegment), line.values.length - 2);
+                const fraction = maxSegment - baseIndex;
+                const value = line.values[baseIndex] + (line.values[baseIndex + 1] - line.values[baseIndex]) * fraction;
+                const x = pad.left + chartWidth * (Math.min(maxSegment, line.values.length - 1) / (line.values.length - 1));
+                const y = pad.top + chartHeight * (1 - value);
+                context.beginPath();
+                context.arc(x, y, lineIndex === 0 ? 4 : 3, 0, Math.PI * 2);
+                context.fillStyle = line.color;
+                context.fill();
+            }
+        });
+    }
+
+    function render() {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
+        progress = prefersReducedMotion ? 1 : clamp01(-rect.top / distance);
+        if (!prefersReducedMotion) {
+            sticky.classList.toggle("is-scroll-pinned", rect.top <= 0 && rect.bottom >= window.innerHeight);
+            sticky.classList.toggle("is-scroll-complete", rect.bottom < window.innerHeight);
+        }
+        sticky.style.setProperty("--metrics-progress", progress.toFixed(4));
+
+        metricItems.forEach((item, index) => {
+            const localProgress = easeOut((progress - (0.09 + index * 0.13)) / 0.2);
+            const valueNode = item.querySelector("[data-metric-value]");
+            const labelNode = item.querySelector("[data-metric-label]");
+            const target = Number(valueNode?.dataset.metricValue || 0);
+            const suffix = valueNode?.dataset.metricSuffix || "";
+            const visibleValue = Math.round(target * localProgress);
+            if (valueNode) {
+                valueNode.textContent = `${new Intl.NumberFormat("en-US").format(visibleValue)}${suffix}`;
+            }
+            if (labelNode) {
+                const fullLabel = labelNode.dataset.metricLabel || "";
+                const typedProgress = easeOut((localProgress - 0.28) / 0.72);
+                const visibleCharacters = Math.round(fullLabel.length * typedProgress);
+                labelNode.textContent = visibleCharacters ? fullLabel.slice(0, visibleCharacters) : "\u00a0";
+            }
+            item.style.setProperty("--metric-progress", localProgress.toFixed(4));
+        });
+        drawChart();
+        frameRequested = false;
+    }
+
+    function requestRender() {
+        if (frameRequested) return;
+        frameRequested = true;
+        window.requestAnimationFrame(render);
+    }
+
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender);
+    requestRender();
+}
+
+function loadDeferredScript(src, globalName) {
+    if (globalName && typeof window[globalName] !== "undefined") return Promise.resolve();
+
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) {
+        return new Promise((resolve, reject) => {
+            existing.addEventListener("load", resolve, { once: true });
+            existing.addEventListener("error", reject, { once: true });
+        });
+    }
+
+    return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.addEventListener("load", resolve, { once: true });
+        script.addEventListener("error", () => reject(new Error(`Failed to load ${src}`)), { once: true });
+        document.head.appendChild(script);
+    });
+}
+
+function setupWorldStory() {
+    const section = document.getElementById("world-story");
+    if (!section) return;
+
+    let hasStarted = false;
+    const initialize = async () => {
+        if (hasStarted) return;
+        hasStarted = true;
+        section.classList.add("is-loading");
+
+        try {
+            await Promise.all([
+                loadDeferredScript("/assets/vendor/d3.v7.min.js", "d3"),
+                loadDeferredScript("/assets/vendor/topojson-client.min.js", "topojson")
+            ]);
+            await initializeWorldStory(section);
+        } catch (error) {
+            console.warn("World story could not initialize.", error);
+        } finally {
+            section.classList.remove("is-loading");
+        }
+    };
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        initialize();
+        return;
+    }
+
+    const loadObserver = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        loadObserver.disconnect();
+        initialize();
+    }, { rootMargin: "1200px 0px" });
+    loadObserver.observe(section);
+}
+
+async function initializeWorldStory(section) {
+    const sticky = section?.querySelector(".world-story-sticky");
+    const canvas = document.getElementById("storyGlobeCanvas");
+    const beats = Array.from(section?.querySelectorAll("[data-world-beat]") || []);
+    const cityButtons = Array.from(section?.querySelectorAll("[data-world-city]") || []);
+    const cityStatus = section?.querySelector(".world-city-status");
+    if (!section || !sticky || !canvas || !beats.length || typeof d3 === "undefined" || typeof topojson === "undefined") return;
+
+    document.body.classList.add("scroll-stories-ready");
+    const context = canvas.getContext("2d");
+    const clamp01 = value => Math.max(0, Math.min(1, value));
+    const smoothstep = value => {
+        const t = clamp01(value);
+        return t * t * (3 - 2 * t);
+    };
+    let progress = prefersReducedMotion ? 0.72 : 0;
+    let worldData = null;
+    let land = null;
+    let borders = null;
+    let landDots = null;
+    let isVisible = false;
+    let lastFrame = 0;
+    let animationFrame = 0;
+    let activeCityIndex = 0;
+    const cities = [
+        { key: "new-delhi", name: "New Delhi", note: "Home", coordinates: [77.2090, 28.6139], stop: 0.06 },
+        { key: "chennai", name: "Chennai", note: "College", coordinates: [80.2707, 13.0827], stop: 0.22 },
+        { key: "minneapolis", name: "Minneapolis", note: "Current home", coordinates: [-93.2650, 44.9778], stop: 0.38 },
+        { key: "dubai", name: "Dubai", note: "Second home", coordinates: [55.2708, 25.2048], stop: 0.54 },
+        { key: "miami", name: "Miami", note: "Internship location", coordinates: [-80.1918, 25.7617], stop: 0.70 },
+        { key: "nyc", name: "NYC", note: "Future home", coordinates: [-74.0060, 40.7128], stop: 0.86 }
+    ];
+
+    try {
+        worldData = await fetch("/assets/data/countries-110m.json").then(response => {
+            if (!response.ok) throw new Error(`World geometry failed to load (${response.status})`);
+            return response.json();
+        });
+        land = topojson.feature(worldData, worldData.objects.land || worldData.objects.countries);
+        borders = topojson.mesh(worldData, worldData.objects.countries, (a, b) => a !== b);
+
+        const points = [];
+        for (let latitude = -84; latitude <= 84; latitude += 3.2) {
+            for (let longitude = -178; longitude <= 178; longitude += 3.2) {
+                const jittered = [longitude + Math.sin(latitude * 1.9) * 0.65, latitude + Math.cos(longitude * 1.7) * 0.45];
+                if (d3.geoContains(land, jittered)) points.push(jittered);
+            }
+        }
+        landDots = { type: "MultiPoint", coordinates: points };
+    } catch (error) {
+        console.warn(error);
+    }
+
+    const projection = d3.geoOrthographic().clipAngle(90).precision(0.3);
+    const path = d3.geoPath(projection, context);
+    const graticule = d3.geoGraticule10();
+    const sphere = { type: "Sphere" };
+
+    function beatProgress(value, enterStart, enterEnd, exitStart, exitEnd) {
+        const enter = smoothstep((value - enterStart) / (enterEnd - enterStart));
+        const exit = smoothstep((value - exitStart) / (exitEnd - exitStart));
+        return { opacity: clamp01(enter * (1 - exit)), enter, exit };
+    }
+
+    function cityRotation(value) {
+        let start = cities[0];
+        let end = cities[cities.length - 1];
+        for (let index = 0; index < cities.length - 1; index += 1) {
+            if (value <= cities[index + 1].stop) {
+                start = cities[index];
+                end = cities[index + 1];
+                break;
+            }
+        }
+        const local = smoothstep((value - start.stop) / Math.max(end.stop - start.stop, 0.001));
+        const startLon = -start.coordinates[0];
+        const endLon = -end.coordinates[0];
+        const lonDistance = ((endLon - startLon + 540) % 360) - 180;
+        return [
+            startLon + lonDistance * local,
+            -start.coordinates[1] + (-end.coordinates[1] + start.coordinates[1]) * local,
+            0
+        ];
+    }
+
+    function setActiveCity(index) {
+        if (index === activeCityIndex && cityStatus?.dataset.cityReady === "true") return;
+        activeCityIndex = index;
+        const city = cities[index];
+        cityButtons.forEach(button => {
+            const isActive = button.dataset.worldCity === city.key;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-current", isActive ? "location" : "false");
+        });
+        if (cityStatus) {
+            cityStatus.dataset.cityReady = "true";
+            cityStatus.innerHTML = `<strong>${city.name}</strong><span>${city.note}</span>`;
+        }
+    }
+
+    function updateProgress() {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
+        progress = prefersReducedMotion ? 0.72 : clamp01(-rect.top / distance);
+        if (!prefersReducedMotion) {
+            sticky.classList.toggle("is-scroll-pinned", rect.top <= 0 && rect.bottom >= window.innerHeight);
+            sticky.classList.toggle("is-scroll-complete", rect.bottom < window.innerHeight);
+        }
+        sticky.style.setProperty("--world-progress", progress.toFixed(4));
+        const nearestCityIndex = cities.reduce((bestIndex, city, index) => (
+            Math.abs(progress - city.stop) < Math.abs(progress - cities[bestIndex].stop) ? index : bestIndex
+        ), 0);
+        setActiveCity(nearestCityIndex);
+
+        const timing = [
+            beatProgress(progress, 0.015, 0.12, 0.30, 0.43),
+            beatProgress(progress, 0.31, 0.42, 0.60, 0.71),
+            beatProgress(progress, 0.62, 0.74, 0.94, 1)
+        ];
+        beats.forEach((beat, index) => {
+            const state = timing[index];
+            const y = (1 - state.enter) * 68 - state.exit * 54;
+            beat.style.setProperty("--beat-opacity", (prefersReducedMotion ? 1 : state.opacity).toFixed(4));
+            beat.style.setProperty("--beat-y", `${y.toFixed(2)}px`);
+            beat.style.setProperty("--beat-scale", (0.975 + state.opacity * 0.025).toFixed(4));
+        });
+    }
+
+    function drawGlobe(timestamp = 0) {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = Math.max(1, Math.round(rect.width));
+        const height = Math.max(1, Math.round(rect.height));
+        const pixelWidth = Math.round(width * dpr);
+        const pixelHeight = Math.round(height * dpr);
+        if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+            canvas.width = pixelWidth;
+            canvas.height = pixelHeight;
+        }
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.clearRect(0, 0, width, height);
+
+        lastFrame = timestamp;
+
+        const narrow = width < 768;
+        const moveLeft = smoothstep((progress - 0.24) / 0.28);
+        const returnCenter = smoothstep((progress - 0.62) / 0.25);
+        const centerRatio = narrow
+            ? 0.52
+            : 0.64 - moveLeft * 0.24 + returnCenter * 0.11;
+        const centerX = width * centerRatio;
+        const centerY = height * (narrow ? 0.52 : 0.51);
+        const radius = Math.min(width, height) * (narrow ? 0.43 : 0.39) * (0.92 + smoothstep(progress / 0.2) * 0.08);
+        const rotation = cityRotation(progress);
+        if (!prefersReducedMotion) rotation[0] += Math.sin(timestamp * 0.00018) * 1.15;
+        projection.translate([centerX, centerY]).scale(radius).rotate(rotation);
+
+        const halo = context.createRadialGradient(centerX, centerY, radius * 0.55, centerX, centerY, radius * 1.45);
+        halo.addColorStop(0, "rgba(184,137,98,0.075)");
+        halo.addColorStop(0.62, "rgba(184,137,98,0.025)");
+        halo.addColorStop(1, "rgba(16,18,20,0)");
+        context.fillStyle = halo;
+        context.fillRect(0, 0, width, height);
+
+        context.beginPath();
+        path(sphere);
+        context.fillStyle = "#171a1e";
+        context.fill();
+        context.strokeStyle = "rgba(231,232,234,0.19)";
+        context.lineWidth = 1;
+        context.stroke();
+
+        context.beginPath();
+        path(graticule);
+        context.strokeStyle = "rgba(231,232,234,0.075)";
+        context.lineWidth = 0.65;
+        context.stroke();
+
+        if (land) {
+            context.beginPath();
+            path(land);
+            const landGradient = context.createLinearGradient(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+            landGradient.addColorStop(0, "#5d6267");
+            landGradient.addColorStop(0.55, "#85796e");
+            landGradient.addColorStop(1, "#4f555b");
+            context.fillStyle = landGradient;
+            context.fill();
+        }
+
+        if (landDots) {
+            context.beginPath();
+            path.pointRadius(narrow ? 0.72 : 0.82)(landDots);
+            context.fillStyle = "rgba(231,232,234,0.42)";
+            context.fill();
+        }
+
+        if (borders) {
+            context.beginPath();
+            path(borders);
+            context.strokeStyle = "rgba(231,232,234,0.22)";
+            context.lineWidth = 0.45;
+            context.stroke();
+        }
+
+        context.save();
+        context.beginPath();
+        path({ type: "LineString", coordinates: cities.map(city => city.coordinates) });
+        context.strokeStyle = "rgba(209,166,125,0.58)";
+        context.lineWidth = narrow ? 1.25 : 1.55;
+        context.setLineDash([4, 7]);
+        context.stroke();
+        context.setLineDash([]);
+
+        const globeCenter = [-rotation[0], -rotation[1]];
+        cities.forEach((city, index) => {
+            if (d3.geoDistance(city.coordinates, globeCenter) > Math.PI / 2) return;
+            const point = projection(city.coordinates);
+            if (!point) return;
+            const isActive = index === activeCityIndex;
+            if (isActive) {
+                context.beginPath();
+                context.arc(point[0], point[1], 11 + Math.sin(timestamp * 0.004) * 1.5, 0, Math.PI * 2);
+                context.strokeStyle = "rgba(209,166,125,0.42)";
+                context.lineWidth = 1.2;
+                context.stroke();
+            }
+            context.beginPath();
+            context.arc(point[0], point[1], isActive ? 4.8 : 2.7, 0, Math.PI * 2);
+            context.fillStyle = isActive ? "#d1a67d" : "rgba(231,232,234,0.72)";
+            context.fill();
+            if (isActive && !narrow) {
+                context.font = '500 11px "IBM Plex Mono", monospace';
+                const labelWidth = context.measureText(city.name.toUpperCase()).width + 20;
+                const labelX = Math.min(width - labelWidth - 12, point[0] + 14);
+                const labelY = Math.max(22, point[1] - 15);
+                context.fillStyle = "rgba(20,22,25,0.9)";
+                context.fillRect(labelX, labelY - 15, labelWidth, 24);
+                context.fillStyle = "#e7e8ea";
+                context.fillText(city.name.toUpperCase(), labelX + 10, labelY + 1);
+            }
+        });
+        context.restore();
+
+        const fadeIn = smoothstep(progress / 0.07);
+        const fadeOut = 1 - smoothstep((progress - 0.91) / 0.09);
+        canvas.style.opacity = (prefersReducedMotion ? 0.82 : Math.max(0.12, fadeIn * fadeOut)).toFixed(3);
+    }
+
+    function animate(timestamp) {
+        if (!isVisible) {
+            animationFrame = 0;
+            return;
+        }
+        updateProgress();
+        drawGlobe(timestamp);
+        animationFrame = window.requestAnimationFrame(animate);
+    }
+
+    function startAnimation() {
+        if (prefersReducedMotion || animationFrame) return;
+        animationFrame = window.requestAnimationFrame(animate);
+    }
+
+    function stopAnimation() {
+        if (!animationFrame) return;
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+    }
+
+    if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(entries => {
+            const nextVisible = entries.some(entry => entry.isIntersecting);
+            if (nextVisible === isVisible) return;
+            isVisible = nextVisible;
+            if (isVisible) startAnimation();
+            else stopAnimation();
+        }, { rootMargin: "100% 0px" });
+        observer.observe(section);
+    } else {
+        isVisible = true;
+    }
+
+    const handleResize = () => {
+        updateProgress();
+        if (isVisible || prefersReducedMotion) drawGlobe(lastFrame);
+    };
+    cityButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const cityIndex = cities.findIndex(city => city.key === button.dataset.worldCity);
+            if (cityIndex < 0) return;
+            const distance = Math.max(section.offsetHeight - window.innerHeight, 1);
+            const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+            window.scrollTo({
+                top: sectionTop + distance * cities[cityIndex].stop,
+                behavior: prefersReducedMotion ? "auto" : "smooth"
+            });
+        });
+    });
+    window.addEventListener("resize", handleResize);
+    updateProgress();
+    drawGlobe(0);
+    if (prefersReducedMotion) {
+        return;
+    } else if (isVisible) {
+        startAnimation();
+    }
+}
+
+function setupVentureCapitalBills() {
+    const ventureCards = Array.from(document.querySelectorAll(".venture-grid > .venture-card"));
+    const backlogCards = Array.from(document.querySelectorAll(".venture-backlog .project-box.card"));
+    if (!ventureCards.length && !backlogCards.length) return;
+
+    ventureCards.forEach((card, index) => {
+        const visual = card.querySelector(".venture-visual");
+        const body = card.querySelector(".venture-body");
+        if (!visual || !body || card.classList.contains("venture-flip-step")) return;
+
+        const title = card.querySelector(".venture-header h3")?.textContent?.trim() || "Venture thesis";
+        const stageLabel = card.querySelector(".venture-badge")?.textContent?.trim() || "Venture exploration";
+        const summary = body.querySelector(".llm-summary")?.textContent?.trim() || "A venture thesis in active exploration.";
+        const marketSignalElement = body.querySelector(".market-signal");
+        const marketSignalSummary = marketSignalElement?.cloneNode(true);
+        marketSignalSummary?.querySelectorAll(".market-signal-proof").forEach(proof => proof.remove());
+        const marketSignal = marketSignalSummary?.textContent?.replace(/^Market signal:\s*/i, "")?.trim() || "A market signal worth testing.";
+
+        const overlay = visual.querySelector(".venture-overlay");
+        overlay?.setAttribute("aria-hidden", "true");
+        overlay?.querySelectorAll("a").forEach(link => link.setAttribute("tabindex", "-1"));
+
+        const flipInner = document.createElement("div");
+        flipInner.className = "venture-flip-inner";
+        const front = document.createElement("div");
+        front.className = "venture-flip-face venture-flip-front";
+        const frontMeta = document.createElement("div");
+        frontMeta.className = "venture-flip-front-meta";
+        frontMeta.innerHTML = `
+            <div class="venture-bill-masthead">
+                <span>CA / IDEA CAPITAL</span>
+                <span>LAB ${String(index + 1).padStart(2, "0")}</span>
+                <span>$</span>
+            </div>
+            <div class="venture-bill-content">
+                <div class="venture-bill-seal" aria-hidden="true"><b>CA</b><small>VENTURE NOTE</small></div>
+                <div class="venture-bill-copy">
+                    <span class="venture-bill-stage">${stageLabel}</span>
+                    <h2>${title}</h2>
+                    <p>${summary}</p>
+                </div>
+            </div>
+            <div class="venture-bill-footer">
+                <span>MARKET SIGNAL</span>
+                <strong>${marketSignal}</strong>
+                <small>SCROLL TO INSPECT</small>
+            </div>`;
+        front.append(visual, frontMeta);
+
+        const back = document.createElement("div");
+        back.className = "venture-flip-face venture-flip-back";
+        const backRail = document.createElement("div");
+        backRail.className = "venture-flip-back-rail";
+        backRail.innerHTML = `<span>VENTURE ${String(index + 1).padStart(2, "0")}</span><b>THESIS / EVIDENCE</b><small>SCROLL TO CONTINUE</small>`;
+        back.append(backRail, body);
+        back.inert = true;
+        flipInner.append(front, back);
+        card.appendChild(flipInner);
+        card.classList.add("venture-flip-step");
+        card.dataset.ventureIndex = String(index);
+        card.dataset.ventureTitle = title;
+    });
+
+    const ventureGrid = ventureCards[0]?.parentElement;
+    if (ventureGrid) {
+        ventureGrid.classList.add("venture-scroll-deck");
+        ventureGrid.style.setProperty("--venture-count", String(ventureCards.length));
+        ventureGrid.style.setProperty("--venture-deck-height", `${Math.max(620, ventureCards.length * 92 + 90)}svh`);
+
+        const deckStage = document.createElement("div");
+        deckStage.className = "venture-deck-stage";
+        const deckHeading = document.createElement("header");
+        deckHeading.className = "venture-deck-heading";
+        deckHeading.innerHTML = `<span>EXPLORATION ARCHIVE</span><h2>Ideas that shaped the thesis</h2><p>CA · PRODUCT AND VENTURE LAB</p>`;
+        const deckStack = document.createElement("div");
+        deckStack.className = "venture-deck-stack";
+        ventureCards.forEach(card => deckStack.appendChild(card));
+        const deckFooter = document.createElement("footer");
+        deckFooter.className = "venture-deck-footer";
+        deckFooter.innerHTML = `
+            <span class="venture-deck-current">01</span>
+            <i><b></b></i>
+            <span class="venture-deck-total">${String(ventureCards.length).padStart(2, "0")}</span>
+            <strong class="venture-deck-active-title">${ventureCards[0]?.dataset.ventureTitle || "Venture note"}</strong>`;
+        deckStage.append(deckHeading, deckStack, deckFooter);
+        ventureGrid.appendChild(deckStage);
+    }
+
+    backlogCards.forEach((card, index) => {
+        const body = card.querySelector(".card-body");
+        if (!body || body.querySelector(".venture-note-strip")) return;
+        const strip = document.createElement("div");
+        strip.className = "venture-note-strip";
+        strip.setAttribute("aria-hidden", "true");
+        strip.innerHTML = `<span>CA</span><b>WATCHLIST NOTE</b><small>LAB ${String(ventureCards.length + index + 1).padStart(2, "0")}</small>`;
+        body.prepend(strip);
+    });
+
+    const allCards = [...ventureCards, ...backlogCards];
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        allCards.forEach(card => card.classList.add("is-capital-visible"));
+    } else {
+        const capitalObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-capital-visible");
+                capitalObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.18, rootMargin: "0px 0px -7% 0px" });
+        allCards.forEach(card => capitalObserver.observe(card));
+    }
+
+    if (!ventureCards.length || !ventureGrid) return;
+    const deckCurrent = ventureGrid.querySelector(".venture-deck-current");
+    const deckProgress = ventureGrid.querySelector(".venture-deck-footer i b");
+    const deckActiveTitle = ventureGrid.querySelector(".venture-deck-active-title");
+    let ventureFrameRequested = false;
+    const renderVentureFlips = () => {
+        if (prefersReducedMotion) {
+            ventureCards.forEach(card => {
+                card.style.setProperty("--venture-flip", "1");
+                card.classList.add("is-venture-back");
+                card.inert = false;
+                card.setAttribute("aria-hidden", "false");
+                const front = card.querySelector(".venture-flip-front");
+                const back = card.querySelector(".venture-flip-back");
+                if (front) front.inert = true;
+                if (back) back.inert = false;
+            });
+            ventureFrameRequested = false;
+            return;
+        }
+        const rect = ventureGrid.getBoundingClientRect();
+        const travel = Math.max(ventureGrid.offsetHeight - window.innerHeight, 1);
+        const deckProgressValue = Math.max(0, Math.min(1, -rect.top / travel));
+        const rawPosition = deckProgressValue * (ventureCards.length - 0.12);
+        const activeIndex = Math.min(ventureCards.length - 1, Math.floor(rawPosition));
+        const phase = activeIndex === ventureCards.length - 1
+            ? Math.min(0.64, rawPosition - activeIndex)
+            : rawPosition - activeIndex;
+        const smoothstep = value => {
+            const clamped = Math.max(0, Math.min(1, value));
+            return clamped * clamped * (3 - 2 * clamped);
+        };
+        const flipProgress = smoothstep((phase - 0.12) / 0.34);
+        const exitProgress = smoothstep((phase - 0.68) / 0.3);
+
+        ventureCards.forEach((card, index) => {
+            const inner = card.querySelector(".venture-flip-inner");
+            if (!inner) return;
+            const relativeIndex = index - activeIndex;
+            const isActive = index === activeIndex;
+            let x = 0;
+            let y = 0;
+            let rotation = 0;
+            let scale = 1;
+            let opacity = 1;
+
+            if (relativeIndex < 0) {
+                x = -118;
+                y = -8;
+                rotation = -7;
+                opacity = 0;
+            } else if (isActive) {
+                x = -118 * exitProgress;
+                y = -8 * exitProgress;
+                rotation = -7 * exitProgress;
+                opacity = 1 - exitProgress * 0.82;
+            } else {
+                const depth = Math.min(3.2, Math.max(0, relativeIndex - exitProgress));
+                const direction = index % 2 === 0 ? -1 : 1;
+                x = depth * 1.55;
+                y = depth * 11;
+                rotation = direction * depth * 0.9;
+                scale = 1 - depth * 0.018;
+                opacity = 1 - depth * 0.14;
+            }
+
+            const cardFlip = isActive ? flipProgress : 0;
+            const isBack = isActive && cardFlip >= 0.5;
+            card.style.setProperty("--venture-flip", cardFlip.toFixed(4));
+            card.style.setProperty("--deck-x", `${x.toFixed(3)}%`);
+            card.style.setProperty("--deck-y", `${y.toFixed(2)}px`);
+            card.style.setProperty("--deck-rotate", `${rotation.toFixed(3)}deg`);
+            card.style.setProperty("--deck-scale", scale.toFixed(4));
+            card.style.setProperty("--deck-opacity", opacity.toFixed(4));
+            card.style.setProperty("--deck-z", String(ventureCards.length - Math.max(0, relativeIndex)));
+            card.classList.toggle("is-venture-back", isBack);
+            const front = card.querySelector(".venture-flip-front");
+            const back = card.querySelector(".venture-flip-back");
+            card.inert = !isActive;
+            card.setAttribute("aria-hidden", isActive ? "false" : "true");
+            if (front) front.inert = isActive ? isBack : true;
+            if (back) back.inert = isActive ? !isBack : true;
+        });
+
+        if (deckCurrent) deckCurrent.textContent = String(activeIndex + 1).padStart(2, "0");
+        if (deckProgress) deckProgress.style.transform = `scaleX(${((activeIndex + Math.min(phase, 0.98)) / ventureCards.length).toFixed(4)})`;
+        if (deckActiveTitle) deckActiveTitle.textContent = ventureCards[activeIndex]?.dataset.ventureTitle || "Venture note";
+        ventureFrameRequested = false;
+    };
+    const requestVentureRender = () => {
+        if (ventureFrameRequested) return;
+        ventureFrameRequested = true;
+        window.requestAnimationFrame(renderVentureFlips);
+    };
+    window.addEventListener("scroll", requestVentureRender, { passive: true });
+    window.addEventListener("resize", requestVentureRender);
+    requestVentureRender();
+}
+
+setupVentureCapitalBills();
+setupMetricsStory();
+setupWorldStory();
 setupHeroGlobe();
 
 // Header background + text color shift on scroll
@@ -1602,7 +3140,9 @@ const TILE_SECTIONS = [
         metric: "New posts",
         tone: "accent",
         x: 16,
-        y: 16
+        y: 20,
+        z: 34,
+        cluster: "Research"
     },
     {
         title: "Experience",
@@ -1611,7 +3151,9 @@ const TILE_SECTIONS = [
         metric: "Industry + Research",
         tone: "primary",
         x: 48,
-        y: 16
+        y: 14,
+        z: 56,
+        cluster: "Evidence"
     },
     {
         title: "Projects",
@@ -1620,16 +3162,20 @@ const TILE_SECTIONS = [
         metric: "12+ builds",
         tone: "primary",
         x: 78,
-        y: 20
+        y: 24,
+        z: 82,
+        cluster: "Builds"
     },
     {
-        title: "The Lab",
-        description: "A space to explore and visibilize future ideas pre-implementation.",
+        title: "Product and Venture Lab",
+        description: "Theses, problem explorations, prototypes, and archived directions labeled by maturity.",
         href: "/ideas/",
-        metric: "Idea backlog",
+        metric: "Staged exploration",
         tone: "accent",
         x: 28,
-        y: 54
+        y: 58,
+        z: 72,
+        cluster: "Venture"
     },
     {
         title: "Coursework",
@@ -1638,7 +3184,9 @@ const TILE_SECTIONS = [
         metric: "MS + B.Tech",
         tone: "neutral",
         x: 58,
-        y: 52
+        y: 52,
+        z: 44,
+        cluster: "Academic"
     },
     {
         title: "Project Reports",
@@ -1647,33 +3195,47 @@ const TILE_SECTIONS = [
         metric: "Deep dives",
         tone: "accent",
         x: 78,
-        y: 58
+        y: 66,
+        z: 62,
+        cluster: "Evidence"
     },
     {
         title: "Resume",
-        description: "Role-specific resume downloads for targeted applications.",
-        href: "/resumes/",
-        metric: "6 roles",
+        description: "Current master resume across data science, analytics, applied AI, and responsible AI.",
+        href: "/assets/Chinmay_Arora_Master_Resume.pdf",
+        newTab: true,
+        metric: "Current PDF",
         tone: "neutral",
         x: 10,
-        y: 74
+        y: 78,
+        z: 26,
+        cluster: "Profile"
     }
 ];
 
 function renderTiles() {
     const grid = document.getElementById("tilesGrid");
     if (!grid) return;
-    grid.innerHTML = TILE_SECTIONS.map((tile, idx) => `
-      <a class="scatter-node scatter-${tile.tone}" href="${tile.href}"
-        style="left:${tile.x}%; top:${tile.y}%; --node-delay:${idx * 40}ms;">
-        <span class="scatter-blob" aria-hidden="true"></span>
-        <span class="scatter-label">
-          <span class="tile-metric">${tile.metric}</span>
-          <span class="tile-title">${tile.title}</span>
-          <span class="tile-desc">${tile.description}</span>
-        </span>
-      </a>
-    `).join("");
+    const nodes = TILE_SECTIONS.map((tile, idx) => `
+        <a class="scatter-node scatter-${tile.tone}" href="${tile.href}" ${tile.newTab ? 'target="_blank" rel="noopener"' : ""}
+          style="left:${tile.x}%; top:${tile.y}%; --z:${tile.z}; --node-scale:${0.88 + tile.z / 420}; --node-delay:${idx * 40}ms;">
+          <span class="scatter-depth-line" aria-hidden="true"></span>
+          <span class="scatter-blob" aria-hidden="true"></span>
+          <span class="scatter-label">
+            <span class="tile-metric">${tile.cluster} · ${tile.metric}</span>
+            <span class="tile-title">${tile.title}</span>
+            <span class="tile-desc">${tile.description}</span>
+          </span>
+        </a>
+      `).join("");
+    grid.innerHTML = `
+      <div class="scatter-plane" aria-hidden="true">
+        <span class="scatter-axis axis-x">Build depth</span>
+        <span class="scatter-axis axis-y">Public evidence</span>
+        <span class="scatter-axis axis-z">Career signal</span>
+      </div>
+      ${nodes}
+    `;
     applyStagger(grid.querySelectorAll(".scatter-node"));
     bindScatterMotion(grid);
 }
@@ -1697,13 +3259,15 @@ function bindScatterMotion(container) {
             const strength = Math.max(0, 140 - dist) / 140;
             const offsetX = (dx / dist) * strength * 10;
             const offsetY = (dy / dist) * strength * 10;
-            node.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            node.style.setProperty("--mx", `${offsetX}px`);
+            node.style.setProperty("--my", `${offsetY}px`);
         });
     };
 
     const reset = () => {
         nodes.forEach(node => {
-            node.style.transform = "";
+            node.style.setProperty("--mx", "0px");
+            node.style.setProperty("--my", "0px");
         });
     };
 

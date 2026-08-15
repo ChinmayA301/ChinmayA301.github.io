@@ -7,6 +7,7 @@ import time
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
 import yaml
@@ -17,21 +18,49 @@ from pinecone_text.sparse import BM25Encoder
 ROOT = Path(__file__).resolve().parent.parent
 POSTS_DIR = ROOT / "_posts"
 DEFAULT_DATA_DIR = ROOT / "data"
-SITE_URL = "https://chinmayarora.com"
 APP_SITE_URL = "https://app.chinmayarora.com"
 DEFAULT_EMBED_MODEL = "models/gemini-embedding-001"
 SUMMARY_MODEL = "models/gemini-2.5-flash"
-CHUNK_WORDS = 50
+CHUNK_WORDS = 220
 EMBED_BATCH_SIZE = 20
-API_CALL_DELAY_SECONDS = 5
-RATE_LIMIT_RETRY_SECONDS = 20
-MAX_RETRIES = 4
+API_CALL_DELAY_SECONDS = 20
+RATE_LIMIT_RETRY_SECONDS = 45
+MAX_RETRIES = 2
+DEFAULT_MAX_INGEST_DOCUMENTS = 240
+MAX_CHUNKS_PER_TITLE = {
+    "page": 3,
+    "blog": 2,
+    "project": 2,
+    "report": 2,
+    "experience": 2,
+    "skills": 2,
+    "coursework": 2,
+    "resume": 2,
+    "lab": 2,
+    "data": 1,
+}
+SOURCE_QUOTAS = {
+    "project": 60,
+    "experience": 28,
+    "skills": 18,
+    "coursework": 28,
+    "report": 28,
+    "page": 32,
+    "resume": 10,
+    "blog": 72,
+    "lab": 28,
+    "data": 16,
+}
+PORTFOLIO_HOSTS = {
+    "app.chinmayarora.com",
+    "chinmayarora.com",
+    "www.chinmayarora.com",
+}
 PAGE_PATHS = [
     Path("index.html"),
     Path("experience/index.html"),
     Path("projects/index.html"),
     Path("reports/index.html"),
-    Path("resumes/index.html"),
     Path("coursework/index.html"),
     Path("ideas/index.html"),
     Path("blog/index.html"),
@@ -126,6 +155,69 @@ def parse_optional_int(value: str | None) -> int | None:
     return parsed if parsed > 0 else None
 
 
+def parse_bool(value: str | None) -> bool:
+    return (value or "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def normalize_public_url(value: Any, fallback_path: str = "/") -> str:
+    raw_value = str(value or "").strip()
+    if not raw_value:
+        raw_value = fallback_path
+
+    if raw_value.startswith("/"):
+        path = raw_value
+    else:
+        parsed = urlparse(raw_value)
+        if parsed.scheme and parsed.netloc:
+            host = parsed.netloc.lower()
+            if host in PORTFOLIO_HOSTS:
+                path = parsed.path or "/"
+                if parsed.query:
+                    path = f"{path}?{parsed.query}"
+                if parsed.fragment:
+                    path = f"{path}#{parsed.fragment}"
+            else:
+                return raw_value
+        else:
+            path = f"/{raw_value.lstrip('/')}"
+
+    if not path.startswith("/"):
+        path = f"/{path}"
+    return f"{APP_SITE_URL}{path}"
+
+
+def post_url_from_front_matter(front_matter: dict[str, Any], slug: str) -> str:
+    canonical_url = front_matter.get("canonical_url")
+    if canonical_url:
+        return normalize_public_url(canonical_url, f"/blog/{slug}/")
+
+    permalink = front_matter.get("permalink")
+    if permalink:
+        return normalize_public_url(permalink, f"/blog/{slug}/")
+
+    return normalize_public_url(f"/blog/{slug}/")
+
+
+def sanitize_dense_vector(values: list[Any]) -> list[float]:
+    return [float(value) for value in values]
+
+
+def sanitize_sparse_vector(vector: Any) -> dict[str, list[float] | list[int]]:
+    indices = vector.get("indices", []) if isinstance(vector, dict) else []
+    values = vector.get("values", []) if isinstance(vector, dict) else []
+    sanitized_pairs = []
+    for index, value in zip(indices, values):
+        numeric_value = float(value)
+        if numeric_value == 0:
+            continue
+        sanitized_pairs.append((int(index), numeric_value))
+    sanitized_pairs.sort(key=lambda item: item[0])
+    return {
+        "indices": [index for index, _ in sanitized_pairs],
+        "values": [value for _, value in sanitized_pairs],
+    }
+
+
 def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
 
@@ -218,7 +310,42 @@ def embed_batch(
         values = embedding.get("values")
         if not values:
             raise RuntimeError("Gemini batch embedding returned no values.")
-        vectors.append(values)
+        vectors.append(sanitize_dense_vector(values))
+    return vectors
+
+
+def embed_documents(
+    client: httpx.Client,
+    api_key: str,
+    model: str,
+    documents: list[dict[str, Any]],
+    output_dimensionality: int | None,
+) -> list[list[float]]:
+    try:
+        return embed_batch(
+            client,
+            api_key,
+            model,
+            [{"title": doc["title"], "text": doc["fulltext"]} for doc in documents],
+            output_dimensionality,
+        )
+    except Exception as exc:
+        if is_rate_limit_error(exc):
+            raise
+        if len(documents) == 1:
+            raise
+
+    vectors: list[list[float]] = []
+    for document in documents:
+        vectors.extend(
+            embed_batch(
+                client,
+                api_key,
+                model,
+                [{"title": document["title"], "text": document["fulltext"]}],
+                output_dimensionality,
+            )
+        )
     return vectors
 
 
@@ -289,9 +416,9 @@ def page_url_for_path(path: Path) -> str:
     if relative_path.name == "index.html":
         parent = relative_path.parent.as_posix()
         if not parent or parent == ".":
-            return f"{APP_SITE_URL}/"
-        return f"{APP_SITE_URL}/{parent}/"
-    return f"{APP_SITE_URL}/{relative_path.as_posix()}"
+            return normalize_public_url("/")
+        return normalize_public_url(f"/{parent}/")
+    return normalize_public_url(f"/{relative_path.as_posix()}")
 
 
 def build_page_documents() -> list[dict[str, Any]]:
@@ -315,7 +442,7 @@ def build_page_documents() -> list[dict[str, Any]]:
 
         title = extractor.title or path.parent.name.replace("-", " ").title() or "Page"
         summary = extractor.meta_description or summarize_chunk(extractor.text)
-        url = extractor.canonical_url or page_url_for_path(path)
+        url = normalize_public_url(extractor.canonical_url or page_url_for_path(path), page_url_for_path(path))
         source_text = " ".join(part for part in [title, summary, extractor.text] if part)
         chunks = chunk_text(source_text)
         if not chunks:
@@ -344,7 +471,7 @@ def build_blog_documents() -> list[dict[str, Any]]:
         front_matter, body = parse_front_matter(path.read_text(encoding="utf-8"))
         slug = path.stem.split("-", 3)[-1]
         title = front_matter.get("title") or slug.replace("-", " ").title()
-        url = front_matter.get("canonical_url") or f"{SITE_URL}/blog/{slug}/"
+        url = post_url_from_front_matter(front_matter, slug)
         date = str(front_matter.get("date", "")).strip()
         description = str(front_matter.get("description", "")).strip()
         summary = str(front_matter.get("summary", "")).strip()
@@ -389,7 +516,7 @@ def build_lab_documents(lab_path: Path) -> list[dict[str, Any]]:
     documents = []
     for item in payload:
         title = item["title"]
-        url = item["url"]
+        url = normalize_public_url(item.get("url"), "/ideas/")
         source_text = " ".join(
             [
                 title,
@@ -418,10 +545,16 @@ def infer_type_from_filename(path: Path) -> str:
     name = path.stem.lower()
     if "lab" in name or "idea" in name:
         return "lab"
-    if "project" in name or "report" in name or "coursework" in name:
-        return "project"
     if "experience" in name:
         return "experience"
+    if "skill" in name:
+        return "skills"
+    if "coursework" in name:
+        return "coursework"
+    if "report" in name:
+        return "report"
+    if "project" in name:
+        return "project"
     if "resume" in name:
         return "resume"
     return "data"
@@ -477,6 +610,8 @@ def build_data_documents(data_dir: Path) -> list[dict[str, Any]]:
     documents = []
     seen_urls: set[tuple[str, str]] = set()
     for path in sorted(data_dir.glob("*.json")):
+        if path.name == "aegis_rag_context.json":
+            continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(payload, list):
             continue
@@ -487,7 +622,7 @@ def build_data_documents(data_dir: Path) -> list[dict[str, Any]]:
                 continue
 
             title = item.get("title") or item.get("role") or f"{path.stem}-{idx}"
-            url = item.get("url") or item.get("link") or f"{SITE_URL}/{path.stem.replace('_', '-')}/"
+            url = normalize_public_url(item.get("url") or item.get("link"), f"/{path.stem.replace('_', '-')}/")
             dedupe_key = (title, url)
             if dedupe_key in seen_urls:
                 continue
@@ -525,57 +660,197 @@ def build_data_documents(data_dir: Path) -> list[dict[str, Any]]:
     return documents
 
 
+def build_context_file_documents(context_file: Path) -> list[dict[str, Any]]:
+    payload = json.loads(context_file.read_text(encoding="utf-8"))
+    if not isinstance(payload, list):
+        raise RuntimeError(f"Manual context file must contain a JSON list: {context_file}")
+
+    documents = []
+    for idx, item in enumerate(payload):
+        if not isinstance(item, dict):
+            continue
+
+        title = item.get("title") or f"{context_file.stem}-{idx}"
+        url = normalize_public_url(item.get("url") or item.get("link"), "/")
+        source_text = text_from_json_item(item)
+        if not source_text.strip():
+            continue
+
+        for chunk_index, chunk in enumerate(chunk_text(source_text)):
+            documents.append(
+                {
+                    "id": f"{context_file.stem}-{slugify(title)}-{chunk_index}",
+                    "title": title,
+                    "url": url,
+                    "type": item.get("type") or "manual_context",
+                    "date": str(item.get("date", "")).strip(),
+                    "tags": item.get("tags", []),
+                    "summary": item.get("summary") or item.get("description") or summarize_chunk(chunk),
+                    "chunk_text": chunk,
+                    "fulltext": f"{title}\n{chunk}",
+                }
+            )
+    return documents
+
+
+def document_priority(document: dict[str, Any]) -> int:
+    searchable = " ".join(
+        str(document.get(key, ""))
+        for key in ("title", "summary", "url", "type", "chunk_text")
+    ).lower()
+    score = {
+        "project": 92,
+        "experience": 90,
+        "skills": 86,
+        "report": 82,
+        "coursework": 76,
+        "page": 72,
+        "resume": 68,
+        "blog": 62,
+        "lab": 56,
+        "data": 24,
+    }.get(str(document.get("type", "")).lower(), 20)
+    if any(token in searchable for token in ["result", "improved", "reduced", "delivered", "deployed", "validated"]):
+        score += 22
+    if any(char.isdigit() for char in searchable):
+        score += 12
+    if any(token in searchable for token in ["evaluation", "benchmark", "experiment", "calibration", "data quality"]):
+        score += 16
+    if any(token in searchable for token in ["python", "sql", "machine learning", "analytics", "rag", "power bi"]):
+        score += 10
+    if "app.chinmayarora.com" in searchable:
+        score += 8
+    return score
+
+
+def prioritize_documents(documents: list[dict[str, Any]], max_documents: int) -> list[dict[str, Any]]:
+    ranked = sorted(
+        documents,
+        key=lambda document: (
+            -document_priority(document),
+            str(document.get("type", "")),
+            str(document.get("title", "")),
+            str(document.get("id", "")),
+        ),
+    )
+
+    title_counts: dict[tuple[str, str], int] = {}
+    breadth_limited = []
+    for document in ranked:
+        source_type = str(document.get("type", "data")).lower()
+        title_key = (source_type, str(document.get("title", "")).lower())
+        title_limit = MAX_CHUNKS_PER_TITLE.get(source_type, 1)
+        if title_counts.get(title_key, 0) >= title_limit:
+            continue
+        title_counts[title_key] = title_counts.get(title_key, 0) + 1
+        breadth_limited.append(document)
+
+    if len(breadth_limited) <= max_documents:
+        return breadth_limited
+
+    selected = []
+    selected_ids: set[str] = set()
+    for source_type, quota in SOURCE_QUOTAS.items():
+        source_documents = [
+            document
+            for document in breadth_limited
+            if str(document.get("type", "data")).lower() == source_type
+        ]
+        for document in source_documents[:quota]:
+            if len(selected) >= max_documents:
+                return selected
+            document_id = str(document.get("id", ""))
+            selected.append(document)
+            selected_ids.add(document_id)
+
+    for document in breadth_limited:
+        if len(selected) >= max_documents:
+            break
+        document_id = str(document.get("id", ""))
+        if document_id in selected_ids:
+            continue
+        selected.append(document)
+        selected_ids.add(document_id)
+    return selected
+
+
+def quota_skip_enabled() -> bool:
+    return parse_bool(os.getenv("ALLOW_INGEST_QUOTA_SKIP", "true"))
+
+
 def main() -> None:
     load_dotenv(Path(__file__).resolve().parent / ".env")
 
     gemini_api_key = require_env("GEMINI_API_KEY")
     pinecone_api_key = require_env("PINECONE_API_KEY")
     pinecone_host = require_env("PINECONE_HOST")
-    pinecone_index_name = require_env("PINECONE_INDEX")
-    pinecone_namespace = os.getenv("PINECONE_NAMESPACE", "portfolio")
+    pinecone_index_name = os.getenv("PINECONE_INDEX") or "portfolio-index"
+    pinecone_namespace = os.getenv("PINECONE_NAMESPACE") or "portfolio"
+    reset_namespace = parse_bool(os.getenv("PINECONE_RESET_NAMESPACE"))
     data_dir = Path(os.getenv("DATA_DIR", str(DEFAULT_DATA_DIR))).resolve()
     embed_model = os.getenv("GEMINI_EMBED_MODEL", DEFAULT_EMBED_MODEL)
     embed_dimensions = parse_optional_int(os.getenv("GEMINI_EMBED_DIMENSIONS"))
+    max_documents = parse_optional_int(os.getenv("MAX_INGEST_DOCUMENTS")) or DEFAULT_MAX_INGEST_DOCUMENTS
+    manual_context_file = os.getenv("MANUAL_CONTEXT_FILE")
 
-    documents = build_page_documents() + build_blog_documents() + build_data_documents(data_dir)
+    if manual_context_file:
+        documents = build_context_file_documents(Path(manual_context_file).resolve())
+    else:
+        documents = build_page_documents() + build_blog_documents() + build_data_documents(data_dir)
     if not documents:
         raise RuntimeError("No documents were generated for ingestion.")
+    original_document_count = len(documents)
+    documents = prioritize_documents(documents, max_documents)
+    if len(documents) != original_document_count:
+        print(f"Prioritized {len(documents)} of {original_document_count} generated documents for ingestion.")
     corpus = [doc["chunk_text"] for doc in documents]
     bm25 = BM25Encoder().fit(corpus)
 
     vectors = []
     with httpx.Client(timeout=30.0) as gemini_client:
-        for start in range(0, len(documents), EMBED_BATCH_SIZE):
-            batch_docs = documents[start:start + EMBED_BATCH_SIZE]
-            dense_vectors = embed_batch(
-                gemini_client,
-                gemini_api_key,
-                embed_model,
-                [{"title": doc["title"], "text": doc["fulltext"]} for doc in batch_docs],
-                embed_dimensions,
-            )
-            for document, dense_vector in zip(batch_docs, dense_vectors):
-                sparse_vector = bm25.encode_documents(document["chunk_text"])
-                vectors.append(
-                    {
-                        "id": document["id"],
-                        "values": dense_vector,
-                        "sparse_values": sparse_vector,
-                        "metadata": {
-                            "title": document["title"],
-                            "url": document["url"],
-                            "type": document["type"],
-                            "source": document["type"],
-                            "date": document.get("date", ""),
-                            "tags": document.get("tags", []),
-                            "summary": document.get("summary", ""),
-                            "chunk_text": document["chunk_text"],
-                        },
-                    }
+        try:
+            for start in range(0, len(documents), EMBED_BATCH_SIZE):
+                batch_docs = documents[start:start + EMBED_BATCH_SIZE]
+                dense_vectors = embed_documents(
+                    gemini_client,
+                    gemini_api_key,
+                    embed_model,
+                    batch_docs,
+                    embed_dimensions,
                 )
+                for document, dense_vector in zip(batch_docs, dense_vectors):
+                    sparse_vector = sanitize_sparse_vector(bm25.encode_documents(document["chunk_text"]))
+                    vectors.append(
+                        {
+                            "id": document["id"],
+                            "values": dense_vector,
+                            "sparse_values": sparse_vector,
+                            "metadata": {
+                                "title": document["title"],
+                                "url": document["url"],
+                                "type": document["type"],
+                                "source": document["type"],
+                                "date": document.get("date", ""),
+                                "tags": document.get("tags", []),
+                                "summary": document.get("summary", ""),
+                                "chunk_text": document["chunk_text"],
+                            },
+                        }
+                    )
+        except Exception as exc:
+            if is_rate_limit_error(exc) and quota_skip_enabled():
+                print(
+                    "::warning::Gemini embedding quota is currently rate-limited. "
+                    "Skipped Pinecone update and left the existing portfolio index intact."
+                )
+                return
+            raise
 
         client = Pinecone(api_key=pinecone_api_key)
         index = client.Index(host=pinecone_host)
+        if reset_namespace:
+            index.delete(delete_all=True, namespace=pinecone_namespace)
+            print(f"Cleared existing vectors in namespace '{pinecone_namespace}'.")
 
         batch_size = 50
         for idx in range(0, len(vectors), batch_size):

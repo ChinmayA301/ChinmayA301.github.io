@@ -1,83 +1,25 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- assign core_pages = "/|1.0|weekly,/blog/|0.9|weekly,/experience/|0.9|monthly,/projects/|0.9|monthly,/ideas/|0.9|monthly,/coursework/|0.8|monthly,/reports/|0.8|monthly,/ideas/aegis-ai-strategy/|0.8|monthly,/ideas/public-infrastructure-copilot/|0.8|monthly,/ideas/compliance-twin/|0.8|monthly,/ideas/operator-memory-cloud/|0.8|monthly,/ideas/civic-procurement-graph/|0.8|monthly,/ideas/research-commercialization-studio/|0.8|monthly,/ideas/visual-overlay-ai/|0.8|monthly,/ideas/ad-delivery-systems/|0.8|monthly" | split: "," -%}
+{%- for item in core_pages %}
+  {%- assign page_parts = item | split: "|" %}
   <url>
-    <loc>https://app.chinmayarora.com/</loc>
-    <priority>1.0</priority>
+    <loc>{{ page_parts[0] | absolute_url }}</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+    <changefreq>{{ page_parts[2] }}</changefreq>
+    <priority>{{ page_parts[1] }}</priority>
   </url>
+{%- endfor %}
+{%- for post in site.posts %}
   <url>
-    <loc>https://app.chinmayarora.com/experience/</loc>
-    <priority>0.9</priority>
+    <loc>{{ post.url | absolute_url }}</loc>
+    <lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>{% if post.visibility_priority %}{{ post.visibility_priority }}{% else %}0.8{% endif %}</priority>
   </url>
-  <url>
-    <loc>https://app.chinmayarora.com/projects/</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/ideas/</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/coursework/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/reports/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/resumes/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/blog/</loc>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/ideas/aegis-ai-strategy/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/ideas/public-infrastructure-copilot/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/ideas/compliance-twin/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/ideas/operator-memory-cloud/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/ideas/civic-procurement-graph/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/ideas/research-commercialization-studio/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/blog/welcome-to-the-blog/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/blog/segmentation/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/blog/bo-graph/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/blog/virality-bo/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://app.chinmayarora.com/blog/context-passport/</loc>
-    <priority>0.8</priority>
-  </url>
+{%- endfor %}
 </urlset>

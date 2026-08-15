@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import math
 import re
@@ -13,6 +15,8 @@ ALLOWED_ORIGINS = {
     "https://app.chinmayarora.com",
     "https://chinmayarora.com",
 }
+APP_SITE_URL = "https://app.chinmayarora.com"
+AEGIS_LIVE_URL = "https://aegisai-5wz.pages.dev"
 CORS_HEADERS = {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
@@ -20,17 +24,39 @@ CORS_HEADERS = {
     "Vary": "Origin",
 }
 KEYWORD_BOOSTS = {
-    "ra": 3.5,
-    "aegis": 4.0,
-    "audit": 3.0,
-    "auditing": 3.0,
-    "governance": 2.8,
-    "govtech": 2.6,
-    "minnesota": 2.5,
-    "hennepin": 2.8,
-    "segmentation": 2.4,
-    "rag": 2.4,
-    "compliance": 2.8,
+    "analytics": 1.45,
+    "automation": 1.35,
+    "customer": 1.25,
+    "data": 1.35,
+    "efficiency": 1.35,
+    "growth": 1.25,
+    "operations": 1.45,
+    "platform": 1.25,
+    "product": 1.35,
+    "risk": 1.35,
+    "strategy": 1.35,
+}
+SOURCE_WEIGHTS = {
+    "project": 0.08,
+    "experience": 0.09,
+    "skills": 0.06,
+    "coursework": 0.055,
+    "report": 0.06,
+    "blog": 0.03,
+    "page": 0.01,
+    "resume": 0.02,
+    "profile": 0.02,
+    "lab": 0.02,
+    "manual_context": 0.015,
+}
+MATCH_STOPWORDS = {
+    "about", "after", "again", "against", "also", "and", "any", "are", "because", "been", "being",
+    "before", "between", "both", "build", "built", "but", "company", "could", "current", "data", "does", "each", "for", "from",
+    "further", "had", "has", "have", "having", "how", "into", "its", "more", "most", "other", "our",
+    "out", "over", "recent", "same", "should", "some", "such", "than", "that", "the", "their", "them",
+    "then", "there", "these", "they", "this", "those", "through", "under", "using", "very", "was", "were",
+    "what", "when", "where", "which", "while", "who", "will", "with", "work", "would", "your",
+    "challenge", "challenges", "priority", "priorities", "responsibilities", "signal", "signals", "support",
 }
 EMBED_MODEL_ALIASES = {
     "models/text-embedding-004": "models/gemini-embedding-001",
@@ -47,6 +73,95 @@ GENERATE_MODEL_ALIASES = {
     "models/gemini-2.5-flash": "models/gemini-2.5-flash",
     "gemini-2.5-flash": "models/gemini-2.5-flash",
 }
+CURATED_CONTEXT_MATCHES = [
+    {
+        "id": "manual-operations-control-tower",
+        "score": 0.7,
+        "source": "project",
+        "title": "Operations Control Tower",
+        "url": "https://github.com/ChinmayA301/Operations-Control-Tower",
+        "summary": (
+            "Converted 98k real orders into a validated star schema, executive KPI layer, supplier-risk score, "
+            "and intervention-ready operations views."
+        ),
+        "tags": ["Analytics Engineering", "SQL", "Operations", "BI", "Data Quality"],
+    },
+    {
+        "id": "manual-polyrag",
+        "score": 0.7,
+        "source": "project",
+        "title": "PolyRAG: Multi-Model Governance RAG",
+        "url": "https://chinmaya301-polyrag.hf.space",
+        "summary": (
+            "Citation-grounded retrieval system with shared evidence, multi-model comparison, OCR fallback, "
+            "evaluation, FastAPI, Docker, and a hosted demo."
+        ),
+        "tags": ["RAG", "AI Engineering", "Retrieval", "Evaluation", "FastAPI"],
+    },
+    {
+        "id": "manual-marketmaker",
+        "score": 0.7,
+        "source": "experience",
+        "title": "Data Science / ML Internship at MarketMakerCRE",
+        "url": f"{APP_SITE_URL}/experience/",
+        "summary": (
+            "Built Python scraping and ETL pipelines that improved commercial-real-estate data acquisition speed "
+            "4x, then applied explainable ML and deployed FastAPI services."
+        ),
+        "tags": ["Python", "ETL", "Machine Learning", "FastAPI", "Real Estate"],
+    },
+    {
+        "id": "manual-responsible-ml",
+        "score": 0.7,
+        "source": "project",
+        "title": "Healthcare Readmission Risk with Fairness & Calibration",
+        "url": "https://github.com/ChinmayA301/Risk-Prediction-with-Fairness-Geography",
+        "summary": (
+            "Leakage-controlled healthcare benchmark with calibration, subgroup error analysis, SHAP, Fairlearn, "
+            "and an evidence-based recommendation not to deploy the model as-is."
+        ),
+        "tags": ["Responsible ML", "Healthcare", "Fairness", "Calibration", "Model Evaluation"],
+    },
+    {
+        "id": "manual-confetti",
+        "score": 0.7,
+        "source": "experience",
+        "title": "Data Analyst / Marketing Analytics Internship at Confetti AI",
+        "url": f"{APP_SITE_URL}/experience/",
+        "summary": "Ran A/B tests, engagement analysis, and campaign reporting that improved targeted conversion by about 25%.",
+        "tags": ["Experimentation", "Marketing Analytics", "A/B Testing", "Product Analytics"],
+    },
+    {
+        "id": "manual-finance-bi",
+        "score": 0.7,
+        "source": "experience",
+        "title": "Financial Analytics & BI Consulting",
+        "url": f"{APP_SITE_URL}/experience/",
+        "summary": (
+            "Built Power BI, SQL, and Excel finance workflows that improved reporting speed by about 40% and "
+            "reduced manual reconciliation errors by about 20%."
+        ),
+        "tags": ["Power BI", "SQL", "Finance", "Automation", "KPI Design"],
+    },
+    {
+        "id": "manual-career-audit",
+        "score": 0.7,
+        "source": "blog",
+        "title": "Data Science Career Audit",
+        "url": f"{APP_SITE_URL}/blog/data-science-career-audit/",
+        "summary": "Analyzed 728k public job postings plus a 2026 snapshot to measure how AI is changing data-science role expectations.",
+        "tags": ["NLP", "Labor Market", "Research", "Data Science", "AI Strategy"],
+    },
+    {
+        "id": "manual-aegis-platform",
+        "score": 0.7,
+        "source": "project",
+        "title": "Aegis AI Governance & Readiness Platform",
+        "url": AEGIS_LIVE_URL,
+        "summary": "Readiness scorecards, risk registers, human-review gates, monitoring logic, and evidence trails for safer AI adoption.",
+        "tags": ["AI Governance", "Compliance", "Audit Readiness", "Responsible AI"],
+    },
+]
 
 
 def build_cors_headers(origin: str | None) -> dict[str, str]:
@@ -64,8 +179,113 @@ def json_response(payload: dict[str, Any], status: int = 200, origin: str | None
     return Response(json.dumps(payload), status=status, headers=headers)
 
 
+def normalize_match_url(title: str | None, url: str | None) -> str:
+    title_text = (title or "").lower()
+    raw_url = (url or "").strip()
+    if "aegis" in title_text:
+        return AEGIS_LIVE_URL
+    if not raw_url:
+        return APP_SITE_URL
+
+    parsed = urlparse(raw_url)
+    if parsed.netloc in {"chinmayarora.com", "www.chinmayarora.com"}:
+        path = parsed.path or "/"
+        suffix = ""
+        if parsed.query:
+            suffix += f"?{parsed.query}"
+        if parsed.fragment:
+            suffix += f"#{parsed.fragment}"
+        return f"{APP_SITE_URL}{path}{suffix}"
+    return raw_url
+
+
+def curated_context_matches(query_text: str = "") -> list[dict[str, Any]]:
+    return rerank_and_diversify_matches([dict(match) for match in CURATED_CONTEXT_MATCHES], query_text, limit=6)
+
+
 def tokenize(text: str) -> list[str]:
     return re.findall(r"[a-z0-9][a-z0-9\-\+\.]{1,}", text.lower())
+
+
+def meaningful_tokens(text: str) -> set[str]:
+    return {
+        token
+        for token in tokenize(text)
+        if token not in MATCH_STOPWORDS and len(token) > 2 and not token.isdigit()
+    }
+
+
+def match_searchable_text(match: dict[str, Any]) -> str:
+    tags = match.get("tags") or []
+    if isinstance(tags, str):
+        tags = [tags]
+    return " ".join(
+        str(value or "")
+        for value in [match.get("title"), match.get("summary"), " ".join(str(tag) for tag in tags)]
+    )
+
+
+def rerank_and_diversify_matches(
+    matches: list[dict[str, Any]],
+    query_text: str,
+    limit: int = 8,
+) -> list[dict[str, Any]]:
+    query_tokens = meaningful_tokens(query_text)
+    ranked: list[dict[str, Any]] = []
+    evidence_terms = {
+        "auc", "benchmark", "built", "calibration", "deployed", "evaluation", "improved", "reduced",
+        "result", "results", "tested", "validated",
+    }
+
+    for original in dedupe_matches(matches):
+        item = dict(original)
+        source = str(item.get("source") or "portfolio").lower()
+        searchable_text = match_searchable_text(item)
+        candidate_tokens = meaningful_tokens(searchable_text)
+        all_candidate_tokens = set(tokenize(searchable_text))
+        shared_tokens = sorted(
+            query_tokens & candidate_tokens,
+            key=lambda token: (-KEYWORD_BOOSTS.get(token, 1.0), token),
+        )
+        raw_score = float(item.get("score") or 0)
+        overlap_bonus = min(sum(0.012 * KEYWORD_BOOSTS.get(token, 1.0) for token in shared_tokens), 0.09)
+        has_metric = bool(re.search(r"(?:\b\d+(?:\.\d+)?%|\b\d+(?:\.\d+)?x\b|\b\d{2,}[km]?\b)", searchable_text.lower()))
+        evidence_bonus = 0.025 if all_candidate_tokens & evidence_terms else 0
+        if has_metric:
+            evidence_bonus += 0.015
+        relevance_score = raw_score + SOURCE_WEIGHTS.get(source, 0.02) + overlap_bonus + evidence_bonus
+
+        item["retrieval_score"] = round(raw_score, 6)
+        item["score"] = round(relevance_score, 6)
+        if shared_tokens:
+            item["match_reason"] = f"Matches company signals around {', '.join(shared_tokens[:3])}."
+        else:
+            item["match_reason"] = f"Strong {source.replace('_', ' ')} evidence for the identified priorities."
+        ranked.append(item)
+
+    ranked.sort(key=lambda item: item.get("score") or 0, reverse=True)
+    selected: list[dict[str, Any]] = []
+    source_counts: Counter[str] = Counter()
+    selected_ids: set[str] = set()
+
+    for item in ranked:
+        source = str(item.get("source") or "portfolio").lower()
+        if source_counts[source] >= 2:
+            continue
+        selected.append(item)
+        selected_ids.add(str(item.get("id") or f"{item.get('title')}|{item.get('url')}"))
+        source_counts[source] += 1
+        if len(selected) >= limit:
+            return selected
+
+    for item in ranked:
+        item_id = str(item.get("id") or f"{item.get('title')}|{item.get('url')}")
+        if item_id in selected_ids:
+            continue
+        selected.append(item)
+        if len(selected) >= limit:
+            break
+    return selected
 
 
 def sparse_vector_from_text(text: str) -> dict[str, list[float]]:
@@ -163,11 +383,12 @@ async def post_json(url: str, headers: dict[str, str], payload: dict[str, Any], 
 
 def build_fallback_pitch(visitor_name: str, company_name: str, job_title: str, research_packet: dict[str, Any]) -> str:
     pitch = (
-        f"Hi {visitor_name}, it looks like {company_name} is navigating modernization, governance, and data-operations "
-        f"pressure. My work in AI audit, public-sector analytics, and venture design is directly relevant for a {job_title} "
-        f"trying to turn fragmented systems into measurable decision support."
+        f"Hi {visitor_name}, I would start by identifying {company_name}'s highest-cost decision, data, product, or "
+        f"operational bottleneck for a {job_title}. My portfolio spans analytics engineering, applied ML, RAG, "
+        f"experimentation, responsible AI, product systems, and research, so I would match the strongest tested work "
+        f"to that priority rather than forcing a single solution."
     ).strip()
-    return trim_to_complete_sentence(pitch, limit=700)
+    return trim_to_complete_sentence(pitch, limit=850)
 
 
 def build_grounded_fallback_pitch(
@@ -178,25 +399,30 @@ def build_grounded_fallback_pitch(
     matches: list[dict[str, Any]],
 ) -> str:
     top_match = matches[0] if matches else {}
-    top_title = top_match.get("title") or "my public-sector AI work"
-    top_source = top_match.get("source") or "portfolio"
-    summary = top_match.get("summary") or ""
-    summary_clause = f" {summary}" if summary else ""
+    second_match = matches[1] if len(matches) > 1 else {}
+    top_title = top_match.get("title") or "my applied data and AI portfolio"
+    second_title = second_match.get("title")
+    research_findings = research_packet.get("findings") or []
+    research_signal = (research_findings[0].get("snippet") or "").strip() if research_findings else ""
+    if len(research_signal) > 150:
+        research_signal = research_signal[:147].rstrip() + "..."
+    priority_clause = f" One current signal is: {research_signal}" if research_signal else ""
+    evidence_clause = f" and {second_title}" if second_title else ""
     pitch = (
-        f"Hi {visitor_name}, it looks like {company_name} is dealing with modernization and governance pressure. "
-        f"My {top_source} work on {top_title} is directly relevant for a {job_title} trying to operationalize safer, "
-        f"more measurable AI and digital transformation decisions.{summary_clause}"
+        f"Hi {visitor_name}, I mapped {company_name}'s current signals to the strongest relevant evidence in my "
+        f"portfolio: {top_title}{evidence_clause}. Those examples show how I frame the operating problem, build the "
+        f"data or AI system, and test whether it improves the decision for a {job_title}.{priority_clause}"
     ).strip()
-    return trim_to_complete_sentence(pitch, limit=700)
+    return trim_to_complete_sentence(pitch, limit=850)
 
 
 def clean_pitch_text(text: str) -> str:
     cleaned = " ".join((text or "").split()).strip()
     cleaned = cleaned.strip("\"' ")
-    return trim_to_complete_sentence(cleaned, limit=700)
+    return trim_to_complete_sentence(cleaned, limit=850)
 
 
-def trim_to_complete_sentence(text: str, limit: int = 700) -> str:
+def trim_to_complete_sentence(text: str, limit: int = 850) -> str:
     cleaned = " ".join((text or "").split()).strip()
     if len(cleaned) <= limit:
         return cleaned
@@ -256,7 +482,7 @@ class Default(WorkerEntrypoint):
             return json_response(
                 {
                     "status": "ok",
-                    "service": "aegis-consultative-rag",
+                    "service": "cai-portfolio-architect",
                 },
                 origin=origin,
             )
@@ -299,11 +525,23 @@ class Default(WorkerEntrypoint):
             except Exception as exc:
                 if is_gemini_quota_error(str(exc)):
                     retrieval_degraded = True
-                    matches = []
+                    fallback_query = " ".join(
+                        [
+                            company_name,
+                            job_title,
+                            *[
+                                f"{item.get('title', '')} {item.get('snippet', '')}"
+                                for item in research_packet.get("findings", [])
+                            ],
+                        ]
+                    )
+                    matches = curated_context_matches(fallback_query)
                 else:
                     raise RuntimeError(f"retrieval_phase failed: {type(exc).__name__}: {exc}") from exc
 
-            if matches:
+            if matches and retrieval_degraded:
+                pitch = build_grounded_fallback_pitch(visitor_name, company_name, job_title, research_packet, matches)
+            elif matches:
                 try:
                     pitch = await self.generate_pitch(visitor_name, company_name, job_title, research_packet, matches)
                 except Exception as exc:
@@ -322,11 +560,13 @@ class Default(WorkerEntrypoint):
             "mode": research_packet["mode"],
             "research": research_packet["findings"],
             "portfolio_match_count": len(matches),
-            "portfolio_matches": matches[:4],
+            "portfolio_matches": matches[:6],
             "pitch": pitch,
         }
         if retrieval_degraded:
-            payload["notice"] = "Portfolio retrieval is temporarily rate-limited. Returning a research-based pitch."
+            payload["notice"] = (
+                "Portfolio retrieval is temporarily rate-limited. Returning a diversified set of curated portfolio evidence."
+            )
         if debug_enabled(self.env):
             payload["retrieval_debug"] = {
                 "namespace": self.env.PINECONE_NAMESPACE,
@@ -342,12 +582,13 @@ class Default(WorkerEntrypoint):
             raise ValueError("Missing SERPER_API_KEY secret.")
 
         queries = [
-            f"{company_name} AI governance digital backlog data platform challenge",
-            f"{company_name} compliance automation risk audit transformation",
-            f"{company_name} {job_title} priorities data AI modernization",
+            f"{company_name} 2026 strategic priorities challenges annual report technology operations growth",
+            f"{company_name} recent news product customer data AI efficiency risk priorities",
+            f"{company_name} {job_title} responsibilities priorities hiring transformation analytics",
         ]
 
         findings: list[dict[str, str]] = []
+        seen_links: set[str] = set()
         for query in queries:
             try:
                 payload = await post_json(
@@ -366,17 +607,22 @@ class Default(WorkerEntrypoint):
                 snippet = (item.get("snippet") or "").strip()
                 if not snippet:
                     continue
+                link = (item.get("link") or "").strip()
+                if link and link in seen_links:
+                    continue
+                if link:
+                    seen_links.add(link)
                 findings.append(
                     {
                         "query": query,
                         "title": item.get("title", ""),
-                        "link": item.get("link", ""),
+                        "link": link,
                         "snippet": snippet,
                     }
                 )
 
         if findings:
-            return {"mode": "company_research", "findings": findings[:5]}
+            return {"mode": "company_research", "findings": findings[:6]}
 
         fallback = {
             "query": f"{job_title} solution mapping fallback",
@@ -384,7 +630,9 @@ class Default(WorkerEntrypoint):
             "link": "",
             "snippet": (
                 f"No verified company-specific research was found. Personalize the pitch for a {job_title} who likely "
-                "cares about AI governance, operational analytics, RAG systems, and measurable implementation outcomes."
+                "cares about the company's highest-priority growth, customer, operating, data, product, risk, or "
+                "technology constraint. Select the strongest portfolio evidence for that constraint without assuming "
+                "the answer must be an AI-governance project."
             ),
         }
         return {"mode": "general_expert", "findings": [fallback]}
@@ -417,8 +665,12 @@ class Default(WorkerEntrypoint):
         retrieval_brief = (
             f"Visitor {visitor_name} from {company_name} with role focus {job_title}. "
             f"Company research summary: {research_text}. "
-            "Retrieve portfolio projects, lab ventures, and blog insights that solve governance, audit, RAG, "
-            "segmentation, public-sector analytics, or AI operations pain points."
+            "Identify the company's highest-priority pain points, then retrieve the strongest relevant evidence from "
+            "Chinmay's complete body of work: shipped and evaluated projects, professional experience, technical "
+            "skills, coursework, research studies, blog explorations, analytics systems, applied AI, and lab ventures. "
+            "Prefer concrete outcomes and directly transferable methods. Do not default to Aegis or governance unless "
+            "the company evidence makes governance a leading priority. Return distinct work rather than repeated chunks "
+            "from one project."
         )
 
         dense_vector = await self.embed_text(retrieval_brief, gemini_api_key, embed_model, embed_dimensions)
@@ -436,7 +688,7 @@ class Default(WorkerEntrypoint):
                     "namespace": pinecone_namespace,
                     "vector": dense_vector,
                     "sparseVector": sparse_vector,
-                    "topK": 6,
+                    "topK": 24,
                     "includeMetadata": True,
                 },
                 "Pinecone query",
@@ -454,7 +706,7 @@ class Default(WorkerEntrypoint):
                 {
                     "namespace": pinecone_namespace,
                     "vector": dense_vector,
-                    "topK": 6,
+                    "topK": 24,
                     "includeMetadata": True,
                 },
                 "Pinecone dense query",
@@ -469,12 +721,13 @@ class Default(WorkerEntrypoint):
                     "score": match.get("score"),
                     "source": metadata.get("source"),
                     "title": metadata.get("title"),
-                    "url": metadata.get("url"),
+                    "url": normalize_match_url(metadata.get("title"), metadata.get("url")),
                     "summary": metadata.get("summary") or metadata.get("description"),
                     "tags": metadata.get("tags", []),
                 }
             )
-        return dedupe_matches(matches)
+        match_query = f"{company_name} {job_title} {research_text}"
+        return rerank_and_diversify_matches(matches, match_query, limit=8)
 
     async def generate_pitch(
         self,
@@ -496,7 +749,7 @@ class Default(WorkerEntrypoint):
         )
         matches_block = "\n".join(
             f"- [{item.get('source')}] {item.get('title')}: {item.get('summary')} ({item.get('url')})"
-            for item in matches[:5]
+            for item in matches[:8]
         )
 
         prompt = f"""
@@ -513,10 +766,15 @@ Research findings:
 Portfolio matches:
 {matches_block}
 
-Write a personalized outbound-style pitch under 100 words.
+Write a personalized consultative pitch under 120 words.
 Requirements:
-- Explicitly connect the company's likely problem to Chinmay's solution.
-- Mention at least one relevant project, one lab venture, or one blog insight when supported by the matches.
+- Lead with the one or two highest-priority company pain points supported by the research findings.
+- Connect those pain points to the strongest one or two portfolio matches, regardless of whether they are projects,
+  professional experience, coursework, research, technical writing, or venture work.
+- Prefer evidence with concrete outcomes, evaluation, deployment, or directly transferable methods.
+- Do not mention Aegis unless it genuinely ranks among the strongest matches for the company evidence.
+- Do not repeat the same project family or force governance, public-sector, or RAG language into every pitch.
+- Explain why the selected evidence transfers to this company instead of merely listing titles.
 - If research mode is general_expert, speak to the visitor's job_title priorities instead of pretending company-specific facts.
 - Sound concise, credible, and consultative.
 - Return plain text only, as one complete paragraph.
@@ -570,7 +828,7 @@ Requirements:
                 "generationConfig": {
                     "temperature": 0.55,
                     "topP": 0.9,
-                    "maxOutputTokens": 180,
+                    "maxOutputTokens": 190,
                 },
             },
             "Gemini generate",

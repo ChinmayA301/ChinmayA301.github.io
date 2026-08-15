@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Data and Analytics",
+    "summary": "Python, SQL, statistical analysis, experimentation, KPI design, dimensional modeling, business intelligence, and geospatial analysis backed by operations, finance, marketing, and public-sector work.",
+    "evidence": [
+      "Operations Control Tower",
+      "Financial Analytics and BI Consulting",
+      "Confetti AI experimentation",
+      "Public-sector analytics"
+    ],
+    "url": "/projects/?path=analytics"
+  },
+  {
+    "title": "Machine Learning and Evaluation",
+    "summary": "Regression, classification, calibration, feature engineering, SHAP, subgroup analysis, temporal validation, robustness testing, and honest deployment recommendations.",
+    "evidence": [
+      "Healthcare Readmission Risk with Fairness and Calibration",
+      "Tabular ML Benchmark",
+      "Longitudinal Diabetes Risk Modeling",
+      "SKM Football Analytics"
+    ],
+    "url": "/projects/?path=data-science"
+  },
+  {
+    "title": "Applied AI Engineering",
+    "summary": "RAG, embeddings, vector retrieval, document ingestion, OCR, model comparison, FastAPI, Docker, grounding, citation evaluation, and human-review workflows.",
+    "evidence": [
+      "PolyRAG",
+      "Financial Document Intelligence",
+      "AI Survey and Interviewing Tool",
+      "MarketMakerCRE production workflows"
+    ],
+    "url": "/projects/?path=applied-ai"
+  },
+  {
+    "title": "Responsible AI and Decision Governance",
+    "summary": "Fairness evaluation, model cards, human review, auditability, risk registers, deployment gates, evidence trails, readiness assessment, and monitoring design.",
+    "evidence": [
+      "Healthcare fairness evaluation",
+      "Aegis AI Governance and Readiness",
+      "Public-Sector AI Readiness and Efficiency Evaluation",
+      "PolyRAG evaluation"
+    ],
+    "url": "/projects/?path=responsible-ai"
+  },
+  {
+    "title": "Product, Research, and Venture Architecture",
+    "summary": "Problem framing, opportunity research, product requirements, prototyping, stakeholder interviews, workflow design, technical diligence, and evidence-backed venture exploration.",
+    "evidence": [
+      "TransferSignal",
+      "SignalGraph",
+      "Decision Intelligence",
+      "Product and Venture Lab"
+    ],
+    "url": "/ideas/"
+  }
+]

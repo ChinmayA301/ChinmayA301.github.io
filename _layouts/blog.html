@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="{{ page.url | absolute_url }}">
-  <link rel="stylesheet" href="{{ '/css/style.css?v=20260403c' | relative_url }}">
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('blog-theme');
+      const defaultTheme = savedTheme === 'dark' ? 'dark' : 'light';
+      document.documentElement.classList.toggle('theme-light', defaultTheme === 'light');
+      document.documentElement.setAttribute('data-theme', defaultTheme);
+    })();
+  </script>
+  <link rel="stylesheet" href="{{ '/css/style.css?v=20260716d' | relative_url }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,23 +26,31 @@
       transform: none !important;
     }
   </style>
-  {% seo %}
+  {% include seo-head.html %}
+  {% unless page.hide_blog_schema %}{% include schema-blog.html %}{% endunless %}
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260813b' | relative_url }}">
 </head>
-<body class="blog-theme">
+<body class="blog-theme blog-index-page{% if page.body_class %} {{ page.body_class }}{% endif %}">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-orb orb-3" aria-hidden="true"></div>
 
-  <header class="section pb-0">
+  <header class="section blog-edition-header pb-0">
     <div class="container">
-      <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
-        <a class="navbar-brand fw-bold" href="{{ '/' | relative_url }}">CA</a>
-        <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to light mode">Light Mode</button>
+      <div class="blog-edition-utility">
+        <a class="blog-monogram" href="{{ '/' | relative_url }}" aria-label="Back to portfolio home">CA</a>
+        <p class="blog-edition-stamp"><span>Independent notes</span><span>Minneapolis · {{ 'now' | date: '%Y' }}</span></p>
+        <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to dark mode">Dark Mode</button>
       </div>
-      <h1 class="section-title">{{ page.title }}</h1>
-      {% if page.description %}
-      <p class="section-text">{{ page.description }}</p>
-      {% endif %}
+      <div class="blog-masthead-rule" aria-hidden="true"></div>
+      <div class="blog-masthead-grid">
+        <p class="blog-masthead-label">Research · Systems · Culture</p>
+        <h1 class="section-title blog-masthead-title">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="section-text blog-masthead-deck">{{ page.description }}</p>
+        {% endif %}
+      </div>
+      <div class="blog-masthead-rule blog-masthead-rule-double" aria-hidden="true"></div>
     </div>
   </header>
 
@@ -51,6 +66,8 @@
       <p class="mb-0 mt-1">
         <a href="{{ '/blog/' | relative_url }}">Blog</a> |
         <a href="{{ '/projects/' | relative_url }}">Projects</a> |
+        <a href="{{ '/intelligence/' | relative_url }}">Intelligence</a> |
+        <a href="{{ '/blog/privacy/' | relative_url }}">Privacy</a> |
         <a class="blog-footer-muted" href="{{ '/llms.txt' | relative_url }}" aria-label="View llms.txt">llms.txt</a>
       </p>
     </div>
@@ -81,6 +98,29 @@
       localStorage.setItem(themeKey, nextTheme);
       setTheme(nextTheme);
     });
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const newspaperSheets = Array.from(document.querySelectorAll('.newspaper-sheet'));
+
+    newspaperSheets.forEach((sheet, index) => {
+      sheet.style.setProperty('--sheet-order', index % 8);
+    });
+
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      document.documentElement.classList.add('newspaper-motion');
+      const sheetObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-printed');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.14, rootMargin: '0px 0px -5% 0px' });
+
+      newspaperSheets.forEach((sheet) => sheetObserver.observe(sheet));
+    } else {
+      newspaperSheets.forEach((sheet) => sheet.classList.add('is-printed'));
+    }
   </script>
+  <script src="{{ '/js/blog.js?v=20260717e' | relative_url }}"></script>
 </body>
 </html>

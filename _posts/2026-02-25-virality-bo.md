@@ -2,7 +2,7 @@
 layout: post
 title: "Engineering Virality with Bayesian Optimization"
 date: 2026-02-25
-description: "From predicting trends to optimizing them — a big-idea exploration of Bayesian Optimization in social influence systems."
+description: "A Bayesian optimization study of virality and influence maximization, testing how sequential search, diffusion models, and graph-aware seed selection compare with simple network heuristics."
 summary: "What if trends were not just forecasted but engineered? This article explores how Bayesian Optimization transforms virality into a sequential decision-making problem."
 tags:
   - bayesian optimization
@@ -16,6 +16,10 @@ tags:
 # SEO: Meta Tags
 og_image: "/assets/images/bo-virality.png"
 canonical_url: "https://app.chinmayarora.com/blog/virality-bo/"
+content_type: "research_study"
+content_label: "Research Study"
+search_phrase: "Bayesian optimization for virality and influence systems"
+positioning_note: "This is a speculative modeling concept for influence systems, not a growth-hacking playbook."
 ---
 
 ## The Core Question
@@ -24,7 +28,7 @@ Most AI systems ask:
 
 > *Can we predict what will go viral?*
 
-Prediction assumes trends are passive — something we observe after they emerge.
+Prediction assumes trends are passive - something we observe after they emerge.
 
 But trends are not passive.
 
@@ -55,7 +59,7 @@ Data → Model → Prediction
 
 Decision → Propagation → Feedback → Optimization → Better Decision
 
-The shift is subtle — but profound.
+The shift is subtle - but profound.
 
 We move from observing trends to engineering them.
 
@@ -88,7 +92,7 @@ Influencers and network structure drive spread:
 - high-degree nodes  
 - algorithmic boosts  
 
-Amplification introduces uncertainty — exactly what BO exploits.
+Amplification introduces uncertainty - exactly what BO exploits.
 
 ---
 
@@ -149,7 +153,7 @@ Expected influence:
 
 Estimated using Monte Carlo simulations.
 
-Each evaluation is expensive — which is exactly where BO shines.
+Each evaluation is expensive - which is exactly where BO shines.
 
 ---
 
@@ -199,20 +203,20 @@ Optimization becomes intelligent exploration.
 flowchart LR
   %% Time-layered IC spread (t0 -> t1 -> t2 -> t3)
 
-  subgraph T0["t0 — seeds"]
+  subgraph T0["t0 - seeds"]
     direction TB
     S1((S1)):::seed
     S2((S2)):::seed
   end
 
-  subgraph T1["t1 — newly activated"]
+  subgraph T1["t1 - newly activated"]
     direction TB
     A1((A1)):::active
     A2((A2)):::active
     A3((A3)):::active
   end
 
-  subgraph T2["t2 — newly activated"]
+  subgraph T2["t2 - newly activated"]
     direction TB
     B1((B1)):::active
     B2((B2)):::active
@@ -220,7 +224,7 @@ flowchart LR
     B4((B4)):::active
   end
 
-  subgraph T3["t3 — newly activated"]
+  subgraph T3["t3 - newly activated"]
     direction TB
     C1((C1)):::active
     C2((C2)):::active
@@ -266,7 +270,7 @@ flowchart TB
   %% "Heatmap-style" BO convergence (Mermaid can't render true heatmaps,
   %% so we approximate with a colored grid + a trajectory overlay)
 
-  subgraph H["Search Space Heatmap (approx) — BO converges toward higher values"]
+  subgraph H["Search Space Heatmap (approx) - BO converges toward higher values"]
     direction TB
 
     %% Row 1 (low to medium)
@@ -344,7 +348,7 @@ A simple baseline for trend seeding is **random selection**:
 - run the propagation simulation (IC / Monte Carlo)
 - record reach / engagement / virality
 
-This is appealing because it is easy and unbiased — but it is extremely inefficient in large combinatorial spaces.
+This is appealing because it is easy and unbiased - but it is extremely inefficient in large combinatorial spaces.
 
 Bayesian Optimization (BO) improves over random by **learning from every evaluation** and deciding where to test next using a surrogate model + acquisition function. In high-noise propagation problems, this often yields stronger performance under a fixed evaluation budget.
 
@@ -484,6 +488,77 @@ A realistic target framing for synthetic IC experiments:
 
 ---
 
+## Real-Graph Research Artifact: Higgs Retweet Network
+
+The synthetic IC figures above explain the optimization intuition. The research-artifact version uses the SNAP Higgs retweet graph: **223,833 nodes**, **308,596 edges**, and a seed budget of **k = 20**.
+
+![Convergence trace showing Bayesian Optimization finding high-spread seeds faster than random search on the Higgs retweet graph.](/assets/blog/bo_convergence.png)
+
+*Real data: BO reaches the high-spread region in fewer evaluations than random search, while top-degree remains an extremely strong baseline.*
+
+![Grouped bar chart showing rule-tuning, naive free-node selection, and constrained free-node selection across the same graph and objective.](/assets/blog/bo_freenode_progression.png)
+
+*The actual lesson is structural: the search-space design decides whether BO refines a strong heuristic, collapses, or finds a better diverse subset.*
+
+![Bar chart and diversity line showing constrained free-node BO achieving the best spread and the most useful seed diversity.](/assets/blog/bo_freenode_synthesis.png)
+
+*Diversity only pays when it is constrained to nodes that can actually carry a cascade.*
+
+For the full build log and limitations, see [Influence Maximization using BO](/blog/influence-maximization-using-bo/).
+
+---
+
+## Approach B: The Same Network, Different People
+
+There is a methodological weakness in the experiment above.
+
+The Higgs topology is real. The behavior moving through it is not.
+
+Independent Cascade models commonly give every eligible edge the same activation probability, or draw those probabilities from an arbitrary distribution. That is useful for isolating graph structure. It also assumes that everybody is equally likely to activate on every kind of content.
+
+They are not.
+
+A technically literate node should not respond to an ML paper in the same way it responds to a sports clip. A highly social, video-oriented node may reverse that ordering. So Approach B replaces the single global probability with a topic-conditional one:
+
+'logit p(u → v | c) = logit p₀ + β₁ affinity(v,c) + β₂ share(v) + β₃ similarity(u,v,c)'
+
+The persona signals come from the [public MatrAIx release](https://huggingface.co/datasets/MatrAIx2026/MatrAIx_Persona_1M_Public_Release), which exposes 1,290 categorical dimensions spanning technical familiarity, interests, psychology, lifestyle, and media behavior. The first implementation builds two deliberately different content profiles:
+
+- an **ML paper**, using machine-learning familiarity, technology and science interest, technical literacy, need for cognition, and reading preference;
+- a **sports clip**, using sports interest, sports exposure, video preference, excitement seeking, and social-media attitude.
+
+BO now searches over four interpretable weights: topology, topic affinity, sharing propensity, and neighborhood redundancy. The question becomes more specific:
+
+> **Which structurally strong nodes are plausible first adopters for this particular content?**
+
+### The conditioning problem is part of the model
+
+There is no identity join between a MatrAIx persona and an anonymous Higgs node. Randomly sampling 223,833 global personas would not recreate Twitter's user distribution during the July 2012 Higgs discovery. Pretending otherwise would turn synthetic enrichment into fake ground truth.
+
+So the implementation treats persona assignment as an explicit sensitivity parameter. It runs three assumptions about how strongly a node's observed graph activity aligns with a sampled persona's platform-fit score:
+
+- `0.00`: random assignment;
+- `0.35`: weak alignment;
+- `0.70`: strong-alignment stress test.
+
+A result that disappears across this grid is assumption-sensitive, not robust.
+
+The initial audit of the 999-row decoded public sample found 665 age-eligible records and an effective sample size of 652.8 after soft conditioning. The requested fields are usable but incomplete: coverage ranges from 18.0% to 77.0%. The ML-paper and sports-clip affinity scores are meaningfully distinct in the sample (correlation = -0.225). That is enough to run the mechanism as a synthetic sensitivity experiment. It is **not** evidence about the actual preferences of Higgs users.
+
+### Three-tier provenance
+
+| Layer | What it is | What can be claimed |
+|---|---|---|
+| Network | Real [SNAP Higgs retweet topology](https://snap.stanford.edu/data/higgs/web/twitter-higgs.html) | The edges and graph structure are observed data |
+| People and behavior | Synthetic persona-to-node assignments and assumed activation coefficients | A controlled modeling scenario, not reconstructed user behavior |
+| Method | Heterogeneous IC simulation, Monte Carlo evaluation, and Gaussian-process BO | A reproducible topic-conditional influence-maximization method |
+
+Even a human-grounded MatrAIx record becomes synthetic metadata once it is assigned to an anonymous graph node. The honest output is therefore a robustness study over assumptions, not a claim that the model discovered who those Twitter users really were.
+
+The implementation, conditioning audit, tests, and reporting contract are in the [Approach B research artifact](https://github.com/ChinmayA301/blog-artifacts/tree/codex/persona-conditioned-bo/virality-bayesian-optimization). The full 223,833-node performance result is intentionally not reported until the cached Higgs graph is supplied and every conditioning value is run.
+
+---
+
 ## Why This Is Innovative
 
 Bayesian Optimization is commonly used for:
@@ -581,7 +656,7 @@ This equation approximates the **expected influence spread** under the Independe
 
 Because influence propagation is stochastic, we simulate it multiple times and average the results. This gives us a stable estimate of expected virality.
 
-Each evaluation is computationally expensive — making Bayesian Optimization ideal.
+Each evaluation is computationally expensive - making Bayesian Optimization ideal.
 
 ---
 
@@ -589,7 +664,7 @@ Each evaluation is computationally expensive — making Bayesian Optimization id
 
 'ViralityScore(x) = Σ_i w_i · f_i(x)'
 
-Virality is not a single signal — it is a weighted combination of measurable engagement features:
+Virality is not a single signal - it is a weighted combination of measurable engagement features:
 
 - (f_i(x)) = engagement feature (e.g., share velocity, clustering coefficient, watch-time retention)
 - (w_i) = learned importance weight
@@ -622,7 +697,7 @@ Bayesian Optimization does not optimize the true function directly. It optimizes
 
 - f(x⁺) = best observed value so far
 
-EI chooses strategies expected to outperform the current best — balancing exploration and exploitation.
+EI chooses strategies expected to outperform the current best - balancing exploration and exploitation.
 
 ---
 
@@ -707,7 +782,7 @@ Rather than predicting trends passively, this framework:
 3. Learns from outcomes  
 4. Improves future decisions  
 
-The mathematics is not just descriptive — it is prescriptive.
+The mathematics is not just descriptive - it is prescriptive.
 
 It enables AI to navigate social systems intelligently.
 
@@ -727,7 +802,7 @@ This is where sequential decision-making and BO begin to merge.
 
 ---
 
-## The Big Idea — Final Thought
+## The Big Idea - Final Thought
 
 Most systems try to predict trends after they happen.
 
@@ -755,4 +830,4 @@ It’s about learning how to move through the space.
 ## Author Note
 
 Written as part of my exploration in **AI for Sequential Decision Making**  
-MS Data Science — University of Minnesota
+MS Data Science - University of Minnesota
