@@ -236,6 +236,13 @@
             "AI Strategy",
             "Analytics Engineering",
             "Executive Dashboards"
+        ],
+        "link": "https://decision-intelligence-azmg.vercel.app/",
+        "links": [
+            {
+                "label": "Open live app",
+                "url": "https://decision-intelligence-azmg.vercel.app/"
+            }
         ]
     },
     {
@@ -338,8 +345,12 @@
             "Probabilistic Modeling",
             "Research"
         ],
-        "link": "https://github.com/ChinmayA301/skm-football",
+        "link": "https://skm-football.streamlit.app/",
         "links": [
+            {
+                "label": "Open live app",
+                "url": "https://skm-football.streamlit.app/"
+            },
             {
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/skm-football"
