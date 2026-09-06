@@ -23,6 +23,15 @@ const CONSULT_STATUS_STEPS = [
     "Synthesizing a concise pitch..."
 ];
 
+const LIVE_SHOWCASE_PROJECTS = [
+    { title: "Aegis AI Governance & Readiness Platform", tone: "governance", mark: "AEGIS", label: "Readiness / governance" },
+    { title: "SKM Football Analytics", tone: "football", mark: "SKM", label: "Football / event intelligence" },
+    { title: "Decision Intelligence", tone: "decision", mark: "DI", label: "Scenarios / decision systems" },
+    { title: "Wax Seal Trust Provenance", tone: "provenance", mark: "WAX", label: "Trust / provenance" },
+    { title: "TransferSignal", tone: "transfer", mark: "TS", label: "Football / source reliability" },
+    { title: "PolyRAG: Multi-Model Governance RAG", tone: "retrieval", mark: "RAG", label: "Retrieval / model comparison" }
+];
+
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener("click", (e) => {
@@ -93,10 +102,46 @@ window.addEventListener("load", () => {
 updateScrollProgress();
 updateHeroMediaReveal();
 
+function setupHeroTextMotion() {
+    const heroCopy = document.querySelector("[data-hero-copy]");
+    if (!heroCopy) return;
+
+    if (prefersReducedMotion) {
+        heroCopy.classList.add("is-hero-intro");
+        return;
+    }
+
+    document.documentElement.classList.add("hero-text-motion-ready", "copy-shade-ready");
+    window.requestAnimationFrame(() => heroCopy.classList.add("is-hero-intro"));
+
+    let frame = null;
+    const updateScrollTone = () => {
+        const progress = Math.max(0, Math.min(window.scrollY / Math.max(window.innerHeight * 0.72, 1), 1));
+        heroCopy.style.setProperty("--hero-scroll", progress.toFixed(3));
+        frame = null;
+    };
+    const requestToneUpdate = () => {
+        if (frame !== null) return;
+        frame = window.requestAnimationFrame(updateScrollTone);
+    };
+
+    heroCopy.addEventListener("pointermove", event => {
+        const rect = heroCopy.getBoundingClientRect();
+        const pointer = Math.max(0, Math.min((event.clientX - rect.left) / Math.max(rect.width, 1), 1));
+        heroCopy.style.setProperty("--hero-pointer", pointer.toFixed(3));
+    }, { passive: true });
+    heroCopy.addEventListener("pointerleave", () => heroCopy.style.setProperty("--hero-pointer", "0.18"));
+    window.addEventListener("scroll", requestToneUpdate, { passive: true });
+    window.addEventListener("resize", requestToneUpdate);
+    updateScrollTone();
+}
+
+setupHeroTextMotion();
+
 // Pointer-responsive light, kept subtle and disabled on touch/reduced motion.
 if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
     document.addEventListener("pointermove", event => {
-        const target = event.target.closest(".interactive-surface, .project-box, .capability-card, .credential-card, .highlight-card");
+        const target = event.target.closest(".interactive-surface, .project-box, .live-project-card, .technical-project-card, .capability-card, .credential-card, .highlight-card");
         if (!target) return;
         const rect = target.getBoundingClientRect();
         target.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
@@ -1068,12 +1113,158 @@ async function loadAiBenchmarkPulse() {
     }
 }
 
+function projectImplementationUrl(project) {
+    const github = (project.links || []).find(item => item?.label?.toLowerCase().includes("github") && item.url);
+    return github?.url || project.link || (project.links || []).find(item => item?.url)?.url || "/projects/";
+}
+
+function compactProjectCopy(value, maxLength = 170) {
+    const copy = String(value || "").trim();
+    if (copy.length <= maxLength) return copy;
+    const clipped = copy.slice(0, maxLength - 1).replace(/\s+\S*$/, "");
+    return `${clipped}…`;
+}
+
+function projectDomain(url) {
+    try {
+        return new URL(url).hostname.replace(/^www\./, "");
+    } catch (_error) {
+        return "live project";
+    }
+}
+
+function renderLiveProjects(projects) {
+    const grid = document.getElementById("liveProjectsGrid");
+    if (!grid) return;
+
+    const records = LIVE_SHOWCASE_PROJECTS
+        .map(config => {
+            const project = projects.find(item => item.title === config.title);
+            if (!project?.link || !/^https?:\/\//i.test(project.link)) return null;
+            return { ...config, project };
+        })
+        .filter(Boolean);
+
+    grid.innerHTML = records.map(({ project, tone, mark, label }, index) => {
+        const reason = compactProjectCopy(project.why || project.description, 150);
+        const domain = projectDomain(project.link);
+        return `
+            <a class="live-project-card stagger-item" data-live-tone="${escapeHtml(tone)}" href="${escapeHtml(project.link)}" target="_blank" rel="noopener" aria-label="Open ${escapeHtml(project.title)} live app">
+                <span class="live-project-browser" aria-hidden="true">
+                    <span class="live-browser-dots"><i></i><i></i><i></i></span>
+                    <span>${escapeHtml(domain)}</span>
+                    <span class="live-browser-index">0${index + 1}</span>
+                </span>
+                <span class="live-project-canvas" aria-hidden="true">
+                    <span class="live-project-gridlines"></span>
+                    <span class="live-project-orbit live-project-orbit--one"></span>
+                    <span class="live-project-orbit live-project-orbit--two"></span>
+                    <span class="live-project-mark">${escapeHtml(mark)}</span>
+                    <span class="live-project-label">${escapeHtml(label)}</span>
+                </span>
+                <span class="live-project-meta">
+                    <span class="live-project-meta-copy">
+                        <strong>${escapeHtml(project.title)}</strong>
+                        <small>${escapeHtml(reason)}</small>
+                    </span>
+                    <span class="live-project-status"><i aria-hidden="true"></i> Live build</span>
+                </span>
+                <span class="live-project-hover">
+                    <span>${escapeHtml(reason)}</span>
+                    <strong>Open live application</strong>
+                </span>
+            </a>
+        `;
+    }).join("");
+
+    applyStagger(grid.querySelectorAll(".live-project-card"));
+}
+
+function setupFeaturedProjectRail(grid) {
+    const previous = document.getElementById("featuredProjectPrevious");
+    const next = document.getElementById("featuredProjectNext");
+    const current = document.getElementById("featuredProjectCurrent");
+    const total = document.getElementById("featuredProjectTotal");
+    const cards = [...grid.querySelectorAll(".technical-project-card")];
+    if (!cards.length) return;
+
+    if (total) total.textContent = String(cards.length).padStart(2, "0");
+    let activeIndex = 0;
+    let frame = null;
+
+    const updateState = () => {
+        const center = grid.scrollLeft + (grid.clientWidth / 2);
+        activeIndex = cards.reduce((best, card, index) => {
+            const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+            return Math.abs(cardCenter - center) < Math.abs((cards[best].offsetLeft + cards[best].offsetWidth / 2) - center)
+                ? index
+                : best;
+        }, 0);
+        if (current) current.textContent = String(activeIndex + 1).padStart(2, "0");
+        if (previous) previous.disabled = activeIndex === 0;
+        if (next) next.disabled = activeIndex === cards.length - 1;
+        frame = null;
+    };
+
+    const scrollToCard = index => {
+        const target = cards[Math.max(0, Math.min(index, cards.length - 1))];
+        target?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest", inline: "center" });
+    };
+
+    previous?.addEventListener("click", () => scrollToCard(activeIndex - 1));
+    next?.addEventListener("click", () => scrollToCard(activeIndex + 1));
+    grid.addEventListener("scroll", () => {
+        if (frame !== null) return;
+        frame = window.requestAnimationFrame(updateState);
+    }, { passive: true });
+    grid.addEventListener("keydown", event => {
+        if (event.key === "ArrowRight") {
+            event.preventDefault();
+            scrollToCard(activeIndex + 1);
+        }
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            scrollToCard(activeIndex - 1);
+        }
+    });
+    updateState();
+}
+
+function renderFeaturedProjectRail(projects) {
+    const grid = document.getElementById("featuredProjectsGrid");
+    if (!grid) return;
+
+    grid.innerHTML = projects.map((project, index) => {
+        const implementationUrl = projectImplementationUrl(project);
+        const context = compactProjectCopy(project.problem || project.description, 150);
+        const result = compactProjectCopy(project.result, 160);
+        const tags = (project.tags || []).slice(0, 3);
+        return `
+            <article class="technical-project-card" data-project-index="${index}">
+                <div class="technical-project-index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</div>
+                <div class="technical-project-copy">
+                    <h3>${escapeHtml(project.title)}</h3>
+                    <p>${escapeHtml(context)}</p>
+                    ${result ? `<p class="technical-project-result"><strong>Result</strong>${escapeHtml(result)}</p>` : ""}
+                </div>
+                <div class="technical-project-footer">
+                    <div class="technical-project-tags">${tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
+                    <a href="${escapeHtml(implementationUrl)}" target="_blank" rel="noopener">Explore implementation</a>
+                </div>
+            </article>
+        `;
+    }).join("");
+
+    setupFeaturedProjectRail(grid);
+}
+
 // Render Projects from JSON
 async function loadProjects() {
     const grid = document.getElementById("projectsGrid");
     const featuredGrid = document.getElementById("featuredProjectsGrid");
+    const liveGrid = document.getElementById("liveProjectsGrid");
     const intelligenceGrid = document.getElementById("portfolioIntelligence");
-    if (!grid && !featuredGrid && !intelligenceGrid) return;
+    if (!grid && !featuredGrid && !liveGrid && !intelligenceGrid) return;
     try {
         const projects = await loadJsonWithOverrides("projects", "data/projects.json");
         projectCache = Array.isArray(projects) ? [...projects].sort((a, b) => {
@@ -1084,18 +1275,17 @@ async function loadProjects() {
             renderProjects(projectCache);
             buildProjectFilters(projectCache);
         }
+        if (liveGrid) renderLiveProjects(projectCache);
         if (intelligenceGrid) renderPortfolioIntelligence(projectCache);
         if (featuredGrid) {
             const featuredProjects = projectCache
                 .filter(project => project.featured)
                 .sort((a, b) => (a.featured_order || 99) - (b.featured_order || 99));
-            renderProjects(featuredProjects, {
-                gridId: "featuredProjectsGrid",
-                columnClass: "featured-project-slot"
-            });
+            renderFeaturedProjectRail(featuredProjects);
         }
     } catch (e) {
         if (grid) grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
+        if (liveGrid) liveGrid.innerHTML = `<p class="text-danger small">Could not load live applications.</p>`;
         if (featuredGrid) featuredGrid.innerHTML = `<p class="text-danger small">Could not load selected work.</p>`;
         if (intelligenceGrid) intelligenceGrid.innerHTML = `<p class="text-danger small">Could not load portfolio intelligence.</p>`;
         console.error("Projects load error:", e);
