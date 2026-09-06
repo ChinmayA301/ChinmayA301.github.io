@@ -568,7 +568,7 @@
             }
         }
     </style>
-    <link rel="stylesheet" href="/css/editorial.css?v=20260905a" />
+    <link rel="stylesheet" href="/css/editorial.css?v=20260905b" />
 </head>
 
 <body>
@@ -793,20 +793,11 @@
                     <a href="/projects/" class="btn btn-outline-light btn-sm">Explore all projects</a>
                 </div>
             </div>
-            <div class="selected-work-window">
-                <div class="selected-work-toolbar">
-                    <p><span id="featuredProjectCurrent">01</span> / <span id="featuredProjectTotal">05</span></p>
-                    <div class="selected-work-controls" aria-label="Browse selected technical work">
-                        <button id="featuredProjectPrevious" type="button" aria-label="Previous project">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
-                        </button>
-                        <button id="featuredProjectNext" type="button" aria-label="Next project">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
-                        </button>
-                    </div>
-                </div>
-                <div id="featuredProjectsGrid" class="featured-portfolio-grid" aria-live="polite" tabindex="0"></div>
-            </div>
+        </div>
+        <div class="selected-work-marquee" aria-label="Selected technical work moving continuously from right to left">
+            <div id="featuredProjectsGrid" class="featured-portfolio-grid"></div>
+        </div>
+        <div class="container">
             <div class="role-paths" aria-label="Role-specific portfolio paths">
                 <span>View by role</span>
                 <a href="/projects/?path=data-science">Data Science</a>
@@ -1122,7 +1113,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="/js/script.js?v=20260905a" defer></script>
+    <script src="/js/script.js?v=20260905b" defer></script>
 </body>
 
 </html>

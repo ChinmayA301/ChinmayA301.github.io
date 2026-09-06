@@ -24,12 +24,12 @@ const CONSULT_STATUS_STEPS = [
 ];
 
 const LIVE_SHOWCASE_PROJECTS = [
-    { title: "Aegis AI Governance & Readiness Platform", tone: "governance", mark: "AEGIS", label: "Readiness / governance" },
-    { title: "SKM Football Analytics", tone: "football", mark: "SKM", label: "Football / event intelligence" },
-    { title: "Decision Intelligence", tone: "decision", mark: "DI", label: "Scenarios / decision systems" },
-    { title: "Wax Seal Trust Provenance", tone: "provenance", mark: "WAX", label: "Trust / provenance" },
-    { title: "TransferSignal", tone: "transfer", mark: "TS", label: "Football / source reliability" },
-    { title: "PolyRAG: Multi-Model Governance RAG", tone: "retrieval", mark: "RAG", label: "Retrieval / model comparison" }
+    { title: "Aegis AI Governance & Readiness Platform", tone: "governance", mark: "AEGIS", label: "Readiness / governance", embed: true },
+    { title: "SKM Football Analytics", tone: "football", mark: "SKM", label: "Football / event intelligence", embed: false },
+    { title: "Decision Intelligence", tone: "decision", mark: "DI", label: "Scenarios / decision systems", embed: true },
+    { title: "Wax Seal Trust Provenance", tone: "provenance", mark: "WAX", label: "Trust / provenance", embed: true },
+    { title: "TransferSignal", tone: "transfer", mark: "TS", label: "Football / source reliability", embed: false },
+    { title: "PolyRAG: Multi-Model Governance RAG", tone: "retrieval", mark: "RAG", label: "Retrieval / model comparison", embed: true }
 ];
 
 // Smooth scrolling
@@ -1133,6 +1133,36 @@ function projectDomain(url) {
     }
 }
 
+function setupLiveProjectPreviews(grid) {
+    const frames = [...grid.querySelectorAll("iframe[data-live-preview-src]")];
+    if (!frames.length) return;
+
+    const canLoadPreviews = window.matchMedia("(min-width: 768px)").matches
+        && !navigator.connection?.saveData;
+    if (!canLoadPreviews) return;
+
+    const loadFrame = frame => {
+        if (frame.src) return;
+        frame.addEventListener("load", () => frame.closest(".live-project-card")?.classList.add("is-preview-loaded"), { once: true });
+        frame.src = frame.dataset.livePreviewSrc;
+    };
+
+    if (!("IntersectionObserver" in window)) {
+        frames.forEach(loadFrame);
+        return;
+    }
+
+    const previewObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            loadFrame(entry.target);
+            previewObserver.unobserve(entry.target);
+        });
+    }, { rootMargin: "180px 0px", threshold: 0.04 });
+
+    frames.forEach(frame => previewObserver.observe(frame));
+}
+
 function renderLiveProjects(projects) {
     const grid = document.getElementById("liveProjectsGrid");
     if (!grid) return;
@@ -1145,22 +1175,26 @@ function renderLiveProjects(projects) {
         })
         .filter(Boolean);
 
-    grid.innerHTML = records.map(({ project, tone, mark, label }, index) => {
+    grid.innerHTML = records.map(({ project, tone, mark, label, embed }, index) => {
         const reason = compactProjectCopy(project.why || project.description, 150);
         const domain = projectDomain(project.link);
         return `
-            <a class="live-project-card stagger-item" data-live-tone="${escapeHtml(tone)}" href="${escapeHtml(project.link)}" target="_blank" rel="noopener" aria-label="Open ${escapeHtml(project.title)} live app">
+            <article class="live-project-card stagger-item" data-live-tone="${escapeHtml(tone)}" data-live-preview="${embed ? "embedded" : "poster"}">
                 <span class="live-project-browser" aria-hidden="true">
                     <span class="live-browser-dots"><i></i><i></i><i></i></span>
                     <span>${escapeHtml(domain)}</span>
                     <span class="live-browser-index">0${index + 1}</span>
                 </span>
                 <span class="live-project-canvas" aria-hidden="true">
-                    <span class="live-project-gridlines"></span>
-                    <span class="live-project-orbit live-project-orbit--one"></span>
-                    <span class="live-project-orbit live-project-orbit--two"></span>
-                    <span class="live-project-mark">${escapeHtml(mark)}</span>
-                    <span class="live-project-label">${escapeHtml(label)}</span>
+                    <span class="live-project-poster">
+                        <span class="live-project-gridlines"></span>
+                        <span class="live-project-orbit live-project-orbit--one"></span>
+                        <span class="live-project-orbit live-project-orbit--two"></span>
+                        <span class="live-project-mark">${escapeHtml(mark)}</span>
+                        <span class="live-project-label">${escapeHtml(label)}</span>
+                    </span>
+                    ${embed ? `<iframe class="live-project-frame" data-live-preview-src="${escapeHtml(project.link)}" loading="lazy" tabindex="-1" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" referrerpolicy="no-referrer" title="${escapeHtml(project.title)} live application preview"></iframe>` : ""}
+                    <span class="live-project-preview-shade"></span>
                 </span>
                 <span class="live-project-meta">
                     <span class="live-project-meta-copy">
@@ -1173,89 +1207,67 @@ function renderLiveProjects(projects) {
                     <span>${escapeHtml(reason)}</span>
                     <strong>Open live application</strong>
                 </span>
-            </a>
-        `;
-    }).join("");
-
-    applyStagger(grid.querySelectorAll(".live-project-card"));
-}
-
-function setupFeaturedProjectRail(grid) {
-    const previous = document.getElementById("featuredProjectPrevious");
-    const next = document.getElementById("featuredProjectNext");
-    const current = document.getElementById("featuredProjectCurrent");
-    const total = document.getElementById("featuredProjectTotal");
-    const cards = [...grid.querySelectorAll(".technical-project-card")];
-    if (!cards.length) return;
-
-    if (total) total.textContent = String(cards.length).padStart(2, "0");
-    let activeIndex = 0;
-    let frame = null;
-
-    const updateState = () => {
-        const center = grid.scrollLeft + (grid.clientWidth / 2);
-        activeIndex = cards.reduce((best, card, index) => {
-            const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
-            return Math.abs(cardCenter - center) < Math.abs((cards[best].offsetLeft + cards[best].offsetWidth / 2) - center)
-                ? index
-                : best;
-        }, 0);
-        if (current) current.textContent = String(activeIndex + 1).padStart(2, "0");
-        if (previous) previous.disabled = activeIndex === 0;
-        if (next) next.disabled = activeIndex === cards.length - 1;
-        frame = null;
-    };
-
-    const scrollToCard = index => {
-        const target = cards[Math.max(0, Math.min(index, cards.length - 1))];
-        target?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest", inline: "center" });
-    };
-
-    previous?.addEventListener("click", () => scrollToCard(activeIndex - 1));
-    next?.addEventListener("click", () => scrollToCard(activeIndex + 1));
-    grid.addEventListener("scroll", () => {
-        if (frame !== null) return;
-        frame = window.requestAnimationFrame(updateState);
-    }, { passive: true });
-    grid.addEventListener("keydown", event => {
-        if (event.key === "ArrowRight") {
-            event.preventDefault();
-            scrollToCard(activeIndex + 1);
-        }
-        if (event.key === "ArrowLeft") {
-            event.preventDefault();
-            scrollToCard(activeIndex - 1);
-        }
-    });
-    updateState();
-}
-
-function renderFeaturedProjectRail(projects) {
-    const grid = document.getElementById("featuredProjectsGrid");
-    if (!grid) return;
-
-    grid.innerHTML = projects.map((project, index) => {
-        const implementationUrl = projectImplementationUrl(project);
-        const context = compactProjectCopy(project.problem || project.description, 150);
-        const result = compactProjectCopy(project.result, 160);
-        const tags = (project.tags || []).slice(0, 3);
-        return `
-            <article class="technical-project-card" data-project-index="${index}">
-                <div class="technical-project-index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</div>
-                <div class="technical-project-copy">
-                    <h3>${escapeHtml(project.title)}</h3>
-                    <p>${escapeHtml(context)}</p>
-                    ${result ? `<p class="technical-project-result"><strong>Result</strong>${escapeHtml(result)}</p>` : ""}
-                </div>
-                <div class="technical-project-footer">
-                    <div class="technical-project-tags">${tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
-                    <a href="${escapeHtml(implementationUrl)}" target="_blank" rel="noopener">Explore implementation</a>
-                </div>
+                <a class="live-project-hit" href="${escapeHtml(project.link)}" target="_blank" rel="noopener" aria-label="Open ${escapeHtml(project.title)} live app"></a>
             </article>
         `;
     }).join("");
 
-    setupFeaturedProjectRail(grid);
+    applyStagger(grid.querySelectorAll(".live-project-card"));
+    setupLiveProjectPreviews(grid);
+}
+
+function setupFeaturedProjectMarquee(grid) {
+    const primarySet = grid.querySelector(".technical-project-set:not([aria-hidden])");
+    const track = grid.querySelector(".technical-project-track");
+    if (!primarySet || !track) return;
+
+    let resizeFrame = null;
+    const updateSpeed = () => {
+        const distance = primarySet.getBoundingClientRect().width;
+        track.style.setProperty("--technical-marquee-duration", `${Math.max(34, distance / 46).toFixed(2)}s`);
+        resizeFrame = null;
+    };
+
+    window.addEventListener("resize", () => {
+        if (resizeFrame !== null) return;
+        resizeFrame = window.requestAnimationFrame(updateSpeed);
+    }, { passive: true });
+    updateSpeed();
+}
+
+function renderFeaturedProjectMarquee(projects) {
+    const grid = document.getElementById("featuredProjectsGrid");
+    if (!grid) return;
+
+    const renderSet = isDuplicate => projects.map((project, index) => {
+        const implementationUrl = projectImplementationUrl(project);
+        const context = compactProjectCopy(project.problem || project.description, 112);
+        const result = compactProjectCopy(project.result, 92);
+        const tags = (project.tags || []).slice(0, 2);
+        return `
+            <a class="technical-project-card" data-project-index="${index}" href="${escapeHtml(implementationUrl)}" target="_blank" rel="noopener"${isDuplicate ? " tabindex=\"-1\"" : ""} aria-label="Explore ${escapeHtml(project.title)} implementation">
+                <span class="technical-project-index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+                <span class="technical-project-copy">
+                    <h3>${escapeHtml(project.title)}</h3>
+                    <p>${escapeHtml(context)}</p>
+                </span>
+                ${result ? `<span class="technical-project-result"><strong>Result</strong>${escapeHtml(result)}</span>` : ""}
+                <span class="technical-project-footer">
+                    <span class="technical-project-tags">${tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</span>
+                    <span class="technical-project-cta">View work</span>
+                </span>
+            </a>
+        `;
+    }).join("");
+
+    grid.innerHTML = `
+        <div class="technical-project-track">
+            <div class="technical-project-set">${renderSet(false)}</div>
+            <div class="technical-project-set" aria-hidden="true">${renderSet(true)}</div>
+        </div>
+    `;
+
+    setupFeaturedProjectMarquee(grid);
 }
 
 // Render Projects from JSON
@@ -1281,7 +1293,7 @@ async function loadProjects() {
             const featuredProjects = projectCache
                 .filter(project => project.featured)
                 .sort((a, b) => (a.featured_order || 99) - (b.featured_order || 99));
-            renderFeaturedProjectRail(featuredProjects);
+            renderFeaturedProjectMarquee(featuredProjects);
         }
     } catch (e) {
         if (grid) grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
