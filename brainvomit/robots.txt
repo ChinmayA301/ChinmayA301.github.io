@@ -1,0 +1,9 @@
+---
+layout: null
+permalink: /robots.txt
+sitemap: false
+---
+User-agent: *
+Allow: /
+
+Sitemap: https://brainvomit.blog/sitemap.xml

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">From browser web to agent web</title>
+  <desc id="desc">A comparison between a human-operated browser workflow and an agent-mediated workflow.</desc>
+  <rect width="1200" height="630" fill="#17191d"/>
+  <text x="600" y="62" fill="#e4e7ec" font-family="Arial, sans-serif" font-size="24" letter-spacing="4" text-anchor="middle">FROM BROWSER WEB TO AGENT WEB</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="90" y="112" width="430" height="378" rx="18" fill="#252a31" stroke="#727b89" stroke-width="2"/>
+    <text x="305" y="162" fill="#e4e7ec" font-size="30" text-anchor="middle">Browser web</text>
+    <text x="305" y="215" fill="#aeb7c5" font-size="22" text-anchor="middle">Human searches</text>
+    <text x="305" y="270" fill="#aeb7c5" font-size="22" text-anchor="middle">Human compares pages</text>
+    <text x="305" y="325" fill="#aeb7c5" font-size="22" text-anchor="middle">Human fills forms</text>
+    <text x="305" y="380" fill="#aeb7c5" font-size="22" text-anchor="middle">Human authorizes action</text>
+    <rect x="680" y="112" width="430" height="378" rx="18" fill="#2b3038" stroke="#d3955f" stroke-width="3"/>
+    <text x="895" y="162" fill="#f1d4bb" font-size="30" text-anchor="middle">Agent web</text>
+    <text x="895" y="215" fill="#d5d9df" font-size="22" text-anchor="middle">Intent is expressed</text>
+    <text x="895" y="270" fill="#d5d9df" font-size="22" text-anchor="middle">Agents discover capabilities</text>
+    <text x="895" y="325" fill="#d5d9df" font-size="22" text-anchor="middle">Terms and evidence are exchanged</text>
+    <text x="895" y="380" fill="#d5d9df" font-size="22" text-anchor="middle">Authority gates execution</text>
+  </g>
+  <path d="M545 302h110" stroke="#d3955f" stroke-width="6" stroke-linecap="round"/>
+  <path d="m640 286 22 16-22 16" fill="none" stroke="#d3955f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600" y="553" fill="#aeb7c5" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">The interface shifts; the need for consent, provenance, and review does not.</text>
+</svg>

@@ -1,0 +1,8 @@
+---
+layout: null
+permalink: /_redirects
+sitemap: false
+---
+/blog / 301
+/blog/ / 301
+/blog/* /:splat 301

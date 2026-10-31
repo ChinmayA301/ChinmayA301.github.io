@@ -504,7 +504,7 @@ The synthetic IC figures above explain the optimization intuition. The research-
 
 *Diversity only pays when it is constrained to nodes that can actually carry a cascade.*
 
-For the full build log and limitations, see [Influence Maximization using BO](/blog/influence-maximization-using-bo/).
+For the full build log and limitations, see [Influence Maximization using BO](/blog/influence-maximization-bayesian-optimization-higgs/).
 
 ---
 

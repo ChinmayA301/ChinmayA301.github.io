@@ -463,8 +463,8 @@ It is also about controlling imagination.
 
 ## Related posts
 
-- [Reimagining the Attention Economy: Platform-Led Entertainment and Personalized Demand](/blog/reimagining-attention-economy/)
-- [Personalized Ad Delivery Systems and the Future of Entertainment Distribution](/blog/personalized-ad-delivery-systems/)
+- [Beyond the Attention Economy: Rebuilding Reward Around Contribution, Trust, and Real-World Outcomes](/blog/beyond-the-attention-economy/)
+- [Personalized Ad Delivery Systems and the Future of Entertainment Distribution](/ideas/ad-delivery-systems/)
 - [The Success Directory: A Decision Intelligence Framework for High-Stakes, Ambiguous Choices](/blog/success-directory-decision-intelligence/)
 - [Tracking AI-Generated Content: Simple, Practical Systems for Text, Images, Code, and Execution Patterns](/blog/tracking-ai-generated-content/)
 

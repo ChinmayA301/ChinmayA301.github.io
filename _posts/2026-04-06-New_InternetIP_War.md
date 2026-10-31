@@ -6,7 +6,7 @@ author: "Chinmay Arora"
 description: "An exploratory technical essay on the emerging protocol stack for agentic systems - how A2A, ACP, UCP, and ATXP signal a shift from human-click web flows to interoperable, transactable AI agents."
 categories: [AI, Internet-Infrastructure, Protocols]
 tags: [A2A, ACP, UCP, ATXP, Agentic-AI, Interoperability, AI-Commerce, AI-Payments, Internet-Protocols, Developer-Infrastructure]
-og_image: "/assets/images/agent-protocol-stack.png"
+og_image: "/assets/images/default-og.png"
 canonical_url: "https://app.chinmayarora.com/blog/agent-protocol-stack/"
 permalink: /blog/agent-protocol-stack/
 
@@ -414,7 +414,7 @@ It is the beginning of a protocol transition.
 
 ## 11) Suggested Figures for the Post
 
-![Agent protocol stack](/assets/images/agent-protocol-stack.png)
+![Agent protocol stack](/assets/images/agent-protocol-stack.svg)
 
 **Figure idea:**  
 A four-layer diagram:
@@ -426,7 +426,7 @@ A four-layer diagram:
 
 ---
 
-![From browser web to agent web](/assets/images/browser-web-to-agent-web.png)
+![From browser web to agent web](/assets/images/browser-web-to-agent-web.svg)
 
 **Figure idea:**  
 A left-to-right transition graphic:

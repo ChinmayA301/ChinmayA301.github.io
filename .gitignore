@@ -8,6 +8,8 @@
 !.env.example
 __pycache__/
 *.pyc
+_site/
+_site_brainvomit/
 
 # Hosted independently through Sites; the portfolio embeds its production URL.
 /dashboards/metric-substitution-audit/

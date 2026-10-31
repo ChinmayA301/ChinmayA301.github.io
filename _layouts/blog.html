@@ -28,6 +28,7 @@
   </style>
   {% include seo-head.html %}
   {% unless page.hide_blog_schema %}{% include schema-blog.html %}{% endunless %}
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | absolute_url }}">
   <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260813b' | relative_url }}">
 </head>
 <body class="blog-theme blog-index-page{% if page.body_class %} {{ page.body_class }}{% endif %}">
@@ -38,7 +39,11 @@
   <header class="section blog-edition-header pb-0">
     <div class="container">
       <div class="blog-edition-utility">
+        {% if site.brainvomit_mode %}
+        <a class="blog-monogram" href="{{ site.portfolio_url }}/" aria-label="Open Chinmay Arora's portfolio">CA</a>
+        {% else %}
         <a class="blog-monogram" href="{{ '/' | relative_url }}" aria-label="Back to portfolio home">CA</a>
+        {% endif %}
         <p class="blog-edition-stamp"><span>Independent notes</span><span>Minneapolis · {{ 'now' | date: '%Y' }}</span></p>
         <button id="themeToggle" class="blog-theme-toggle" type="button" aria-label="Switch to dark mode">Dark Mode</button>
       </div>
@@ -64,10 +69,10 @@
     <div class="container text-center small">
       <p class="mb-0">&copy; <span id="year"></span> Chinmay Arora. All Rights Reserved.</p>
       <p class="mb-0 mt-1">
-        <a href="{{ '/blog/' | relative_url }}">Blog</a> |
-        <a href="{{ '/projects/' | relative_url }}">Projects</a> |
-        <a href="{{ '/intelligence/' | relative_url }}">Intelligence</a> |
-        <a href="{{ '/blog/privacy/' | relative_url }}">Privacy</a> |
+        <a href="{{ site.blog_root | default: '/blog/' | relative_url }}">Blog</a> |
+        <a href="{{ site.portfolio_url | default: '' }}/projects/">Projects</a> |
+        <a href="{{ site.portfolio_url | default: '' }}/intelligence/">Intelligence</a> |
+        {% if site.brainvomit_mode %}<a href="{{ '/privacy/' | relative_url }}">Privacy</a>{% else %}<a href="{{ '/blog/privacy/' | relative_url }}">Privacy</a>{% endif %} |
         <a class="blog-footer-muted" href="{{ '/llms.txt' | relative_url }}" aria-label="View llms.txt">llms.txt</a>
       </p>
     </div>

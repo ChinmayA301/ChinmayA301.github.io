@@ -1,0 +1,20 @@
+---
+layout: null
+permalink: /llms.txt
+sitemap: false
+---
+# Brain Vomit
+
+> Technical essays, evidence audits, experiments, research explorations, and unfinished ideas by Chinmay Arora.
+
+## Canonical entry points
+
+- [Publication home]({{ '/' | absolute_url }}): Complete archive and publication overview.
+- [Privacy policy]({{ '/privacy/' | absolute_url }}): Information collection and service-provider details.
+- [Portfolio]({{ site.portfolio_url }}/): Chinmay Arora's projects, experience, and technical work.
+
+## Published writing
+{% for post in site.posts %}
+
+- [{{ post.title }}]({{ post.url | absolute_url }}): {{ post.description | default: post.summary | default: post.excerpt | strip_html | strip_newlines | truncate: 220 }}
+{% endfor %}

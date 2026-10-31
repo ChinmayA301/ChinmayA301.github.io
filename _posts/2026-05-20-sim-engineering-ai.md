@@ -521,10 +521,10 @@ Better judgment under constraint.
 ## Related posts
 
 - [The Success Directory: A Decision Intelligence Framework for High-Stakes, Ambiguous Choices](/blog/success-directory-decision-intelligence/)
-- [Aegis AI Strategy and Audit: OS for Companies](/blog/aegis-ai-strategy-audit/)
+- [Aegis AI Strategy and Audit: OS for Companies](/ideas/aegis-ai-strategy/)
 - [Tracking AI-Generated Content: Simple, Practical Systems for Text, Images, Code, and Execution Patterns](/blog/tracking-ai-generated-content/)
-- [Bayesian Optimization for High-Dimensional Sequential Decision-Making in Trend Forecasting Systems](/blog/bayesian-optimization-trend-forecasting/)
-- [Optimizing Trend Seeding Strategies via Bayesian Optimization in Social Networks](/blog/trend-seeding-bayesian-optimization/)
+- [Bayesian Optimization for High-Dimensional Sequential Decision-Making in Trend Forecasting Systems](/blog/virality-bo/)
+- [Optimizing Trend Seeding Strategies via Bayesian Optimization in Social Networks](/blog/influence-maximization-bayesian-optimization-higgs/)
 
 ---
 

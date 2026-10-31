@@ -5,7 +5,7 @@ description: What Brain Vomit collects, why it is collected, where it goes, and 
 permalink: /blog/privacy/
 body_class: blog-privacy-page
 hide_blog_schema: true
-last_modified_at: 2026-08-13
+last_modified_at: 2026-10-30
 ---
 
 <article class="privacy-notice" aria-label="Brain Vomit privacy policy">
@@ -20,11 +20,11 @@ last_modified_at: 2026-08-13
       <dl>
         <div>
           <dt>Effective</dt>
-          <dd>August 13, 2026</dd>
+          <dd>October 30, 2026</dd>
         </div>
         <div>
           <dt>Scope</dt>
-          <dd>Brain Vomit pages at app.chinmayarora.com/blog/</dd>
+          <dd>{% if site.brainvomit_mode %}Brain Vomit pages at brainvomit.blog{% else %}Brain Vomit pages at app.chinmayarora.com/blog/{% endif %}</dd>
         </div>
         <div>
           <dt>Controller</dt>
@@ -98,9 +98,16 @@ last_modified_at: 2026-08-13
             <p>The newsletter form uses Google Apps Script and stores signup records in a private Google Sheet. Privacy emails sent to the listed Gmail address are also processed and stored through Google’s email service. Google handles related account, service, and network data under its own privacy terms.</p>
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
           </div>
+          {% if site.brainvomit_mode %}
+          <div role="listitem">
+            <h3>Cloudflare</h3>
+            <p>Cloudflare Pages hosts and delivers the blog. Cloudflare may process network and request information needed to provide, secure, and troubleshoot the service.</p>
+            <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare Privacy Policy</a>
+          </div>
+          {% endif %}
           <div role="listitem">
             <h3>GitHub and Giscus</h3>
-            <p>GitHub Pages hosts the blog. Giscus connects public comments to GitHub Discussions. Your use of those services, including GitHub authentication, is also governed by GitHub’s privacy terms.</p>
+            <p>{% unless site.brainvomit_mode %}GitHub Pages hosts the blog. {% endunless %}GitHub stores the publication source and public discussions. Giscus connects comments to GitHub Discussions. Your use of those services, including GitHub authentication, is also governed by GitHub’s privacy terms.</p>
             <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub Privacy Statement</a>
           </div>
           <div role="listitem">

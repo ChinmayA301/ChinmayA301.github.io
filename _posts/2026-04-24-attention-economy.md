@@ -588,6 +588,6 @@ That is not just a product opportunity.
 It is a different social contract for the AI era.
 
 ## Related Work
-- [Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment](/blog/segmentation-ai-link/)
+- [Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment](/blog/segmentation/)
 - [The Success Directory: A Decision Intelligence Framework for High-Stakes, Ambiguous Choices](/blog/success-directory-decision-intelligence/)
-- [Aegis: Building the Operating System for Responsible AI Adoption](/blog/aegis-ai-governance-framework/)
+- [Aegis: Building the Operating System for Responsible AI Adoption](/ideas/aegis-ai-strategy/)

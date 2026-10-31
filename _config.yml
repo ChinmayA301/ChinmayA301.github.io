@@ -21,6 +21,9 @@ exclude:
   - VISIBILITY.md
   - audit_output
   - scripts
+  - brainvomit
+  - _config.brainvomit.yml
+  - wrangler.brainvomit.jsonc
 
 defaults:
   - scope:

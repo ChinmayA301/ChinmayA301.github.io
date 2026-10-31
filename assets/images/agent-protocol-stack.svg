@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Agent protocol stack</title>
+  <desc id="desc">A layered diagram connecting human intent, agent coordination, transactions, trust, and infrastructure.</desc>
+  <rect width="1200" height="630" fill="#17191d"/>
+  <g fill="none" stroke="#aeb7c5" stroke-width="2">
+    <rect x="120" y="78" width="960" height="82" rx="12" fill="#2b3038"/>
+    <rect x="160" y="190" width="880" height="82" rx="12" fill="#252a31"/>
+    <rect x="200" y="302" width="800" height="82" rx="12" fill="#20242a"/>
+    <rect x="240" y="414" width="720" height="82" rx="12" fill="#1c2025"/>
+  </g>
+  <g fill="#e4e7ec" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="600" y="62" font-size="22" letter-spacing="4">THE AGENT INTERNET</text>
+    <text x="600" y="128" font-size="28">Human intent and delegated authority</text>
+    <text x="600" y="240" font-size="28">Agent discovery and coordination</text>
+    <text x="600" y="352" font-size="28">Transactions, identity, and trust</text>
+    <text x="600" y="464" font-size="28">Models, tools, data, and infrastructure</text>
+  </g>
+  <path d="M600 160v30m0 82v30m0 82v30" stroke="#d3955f" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="600" cy="542" r="8" fill="#d3955f"/>
+  <text x="600" y="580" fill="#aeb7c5" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">Pages become capabilities · clicks become negotiated actions</text>
+</svg>

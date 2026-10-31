@@ -564,8 +564,8 @@ Practical trust.
 
 - [Simulation Engineering AI: Testing Decisions Before Reality Gets Expensive](/blog/simulation-engineering-ai/)
 - [The Success Directory: A Decision Intelligence Framework for High-Stakes, Ambiguous Choices](/blog/success-directory-decision-intelligence/)
-- [Aegis AI Strategy and Audit: OS for Companies](/blog/aegis-ai-strategy-audit/)
-- [AI Phone Co-Pilot for Seniors: Guided Interfaces for Everyday Digital Tasks](/blog/ai-phone-copilot-seniors/)
+- [Aegis AI Strategy and Audit: OS for Companies](/ideas/aegis-ai-strategy/)
+- [AI Phone Co-Pilot for Seniors: Guided Interfaces for Everyday Digital Tasks](/ideas/)
 
 ---
 

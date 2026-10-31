@@ -1,0 +1,72 @@
+title: Brain Vomit
+description: >-
+  Brain Vomit is Chinmay Arora's independent publication for technical essays,
+  evidence audits, experiments, research explorations, and unfinished ideas.
+url: "https://brainvomit.blog"
+baseurl: ""
+brainvomit_mode: true
+blog_root: "/"
+portfolio_url: "https://app.chinmayarora.com"
+permalink: /:title/
+plugins: []
+
+# Cloudflare Pages builds only the publication from the shared portfolio source.
+# The custom plugin rewrites legacy /blog/... permalinks to root-level URLs.
+include:
+  - brainvomit
+
+exclude:
+  - index.html
+  - CNAME
+  - Readme.md
+  - VISIBILITY.md
+  - audit_output
+  - scripts
+  - docs
+  - data
+  - upload
+  - reports
+  - resumes
+  - coursework
+  - projects
+  - experience
+  - intelligence
+  - ideas
+  - job-agent
+  - aegis-backend
+  - robots.txt
+  - llms.txt
+  - sitemap.xml
+  - assets/blog/2026-06-29-proximized-data-research-blog.md
+  - Gemfile.lock
+  - wrangler.brainvomit.jsonc
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author: Chinmay Arora
+  - scope:
+      path: "assets"
+    values:
+      sitemap: false
+  - scope:
+      path: "blog-artifacts"
+    values:
+      sitemap: false
+
+seo:
+  type: Blog
+  name: Brain Vomit
+  links:
+    - https://www.linkedin.com/in/chinmay-arora-27682211b/
+    - https://github.com/ChinmayA301
+    - https://app.chinmayarora.com/
+
+social:
+  name: Chinmay Arora
+  links:
+    - https://www.linkedin.com/in/chinmay-arora-27682211b/
+    - https://github.com/ChinmayA301

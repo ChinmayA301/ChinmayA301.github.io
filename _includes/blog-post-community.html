@@ -33,7 +33,8 @@
       data-repo-id="R_kgDONppHIw"
       data-category="General"
       data-category-id="DIC_kwDONppHI84DBahe"
-      data-mapping="pathname"
+      data-mapping="{% if site.brainvomit_mode %}specific{% else %}pathname{% endif %}"
+      {% if site.brainvomit_mode %}data-term="{{ page.legacy_url | default: page.url }}"{% endif %}
       data-strict="1"
       data-reactions-enabled="1"
       data-emit-metadata="0"
