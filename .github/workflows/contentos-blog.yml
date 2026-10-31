@@ -1,0 +1,38 @@
+name: Notify ContentOS of published blog posts
+on:
+  push:
+    branches: [main]
+    paths: ['_posts/**']
+  workflow_dispatch:
+    inputs:
+      post_path:
+        description: 'One published _posts/filename.md to verify and deliver (no archive backfill)'
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  notify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      - name: Test article catalog and notification contract
+        run: python3 scripts/test_contentos_blog.py
+      - name: Build expected public article revisions
+        run: bash scripts/build_brainvomit.sh
+      - name: Verify deployed revision and send signed event
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          POST_PATH: ${{ inputs.post_path }}
+          CONTENTOS_BLOG_WEBHOOK_URL: ${{ vars.CONTENTOS_BLOG_WEBHOOK_URL }}
+          CONTENTOS_BLOG_WEBHOOK_SECRET: ${{ secrets.CONTENTOS_BLOG_WEBHOOK_SECRET }}
+        run: python3 scripts/notify_contentos.py
