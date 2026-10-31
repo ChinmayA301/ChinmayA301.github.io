@@ -1,7 +1,7 @@
 [
     {
-        "title": "AI Research Consultant",
-        "org": "CURA / Hennepin County Digital Experience",
+        "title": "Graduate Research Assistant — Data Science & AI Strategy",
+        "org": "University of Minnesota CURA / Hennepin County Partnership",
         "time": "May 2025 - Jan 2026",
         "location": "Minneapolis, MN",
         "bullets": [
@@ -11,14 +11,14 @@
         ]
     },
     {
-        "title": "Founder / Builder",
+        "title": "Independent Applied AI Researcher & Engineer",
         "org": "Aegis AI",
         "time": "2025 - Present",
         "location": "Minneapolis, MN / Remote",
         "bullets": [
-            "Designed an AI governance and audit-readiness platform spanning readiness scorecards, risk registers, pilot gates, ROI logic, monitoring, and post-deployment evidence trails.",
-            "Connected governance requirements to implementation patterns across OCR, RAG, LLM orchestration, dashboard reporting, and human-in-the-loop control design.",
-            "Built public assessment and prototype surfaces while keeping private implementation details and regulated-workflow assumptions separated from public portfolio material."
+            "Developed an extensible AI evaluation engine with configurable claims, model and HTTP target adapters, confidence-interval reporting, baseline comparisons, and reproducible manifests.",
+            "Implemented deployment evidence gates connecting human authorization requirements to measured results, insufficient-evidence outcomes, and tamper-evident evidence bundles.",
+            "Connected readiness assessment and governance requirements to evaluation, source traceability, human review, and implementation planning; public research prototypes are distinguished from customer deployments."
         ]
     },
     {
@@ -50,6 +50,16 @@
         "bullets": [
             "Ran A/B tests, engagement analysis, and campaign reporting that improved targeted conversion by about 25%.",
             "Built KPI dashboards and partnered with product and DevOps teams on data-backed personalization and feature-performance analysis."
+        ]
+    },
+    {
+        "title": "Data & AI Solutions Intern",
+        "org": "Luthra Corporate Advisors",
+        "time": "Dec 2021 - Aug 2023",
+        "location": "New Delhi, India",
+        "bullets": [
+            "Prototyped an internal semantic-search assistant with embeddings and Pinecone, returning source context and confidence cues for review.",
+            "Supported finance and operations through Python/SQL automation, reporting workflows, and dashboard-based decision support."
         ]
     },
     {

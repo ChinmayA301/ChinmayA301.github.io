@@ -23,9 +23,14 @@
   },
   {
     "title": "Applied AI Engineering",
-    "summary": "RAG, embeddings, vector retrieval, document ingestion, OCR, model comparison, FastAPI, Docker, grounding, citation evaluation, and human-review workflows.",
+    "summary": "Retrieval, structured model outputs, versioned context, persistent agent workflows, execution traces, API integration, camera interfaces, FastAPI, Docker, and human-review controls.",
     "evidence": [
       "PolyRAG",
+      "Semantic Studio",
+      "Venture Command",
+      "ContentOS",
+      "StepLens",
+      "Locstack",
       "Financial Document Intelligence",
       "AI Survey and Interviewing Tool",
       "MarketMakerCRE production workflows"
@@ -34,10 +39,12 @@
   },
   {
     "title": "Responsible AI and Decision Governance",
-    "summary": "Fairness evaluation, model cards, human review, auditability, risk registers, deployment gates, evidence trails, readiness assessment, and monitoring design.",
+    "summary": "Fairness evaluation, model cards, human authorization, executable evidence gates, exact-content approval, source-revision checks, risk registers, and reproducible reporting.",
     "evidence": [
       "Healthcare fairness evaluation",
       "Aegis AI Governance and Readiness",
+      "Aegis Conformance",
+      "ContentOS approval controls",
       "Public-Sector AI Readiness and Efficiency Evaluation",
       "PolyRAG evaluation"
     ],
@@ -50,6 +57,8 @@
       "TransferSignal",
       "SignalGraph",
       "Decision Intelligence",
+      "Visual Operations OS",
+      "Intermission",
       "Product and Venture Lab"
     ],
     "url": "/ideas/"
