@@ -5,7 +5,7 @@ description: What Brain Vomit collects, why it is collected, where it goes, and 
 permalink: /blog/privacy/
 body_class: blog-privacy-page
 hide_blog_schema: true
-last_modified_at: 2026-10-30
+last_modified_at: 2026-10-31
 ---
 
 <article class="privacy-notice" aria-label="Brain Vomit privacy policy">
@@ -20,7 +20,7 @@ last_modified_at: 2026-10-30
       <dl>
         <div>
           <dt>Effective</dt>
-          <dd>October 30, 2026</dd>
+          <dd>October 31, 2026</dd>
         </div>
         <div>
           <dt>Scope</dt>
@@ -95,8 +95,13 @@ last_modified_at: 2026-10-30
         <div class="privacy-service-list" role="list">
           <div role="listitem">
             <h3>Google</h3>
-            <p>The newsletter form uses Google Apps Script and stores signup records in a private Google Sheet. Privacy emails sent to the listed Gmail address are also processed and stored through Google’s email service. Google handles related account, service, and network data under its own privacy terms.</p>
+            <p>The newsletter form uses Google Apps Script and stores signup records in a private Google Sheet. Google handles related account, service, and network data under its own privacy terms.</p>
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
+          </div>
+          <div role="listitem">
+            <h3>Porkbun</h3>
+            <p>Porkbun provides forwarding for <a href="mailto:contact@brainvomit.blog">contact@brainvomit.blog</a>. Messages sent there are routed to my private inbox, and Porkbun processes the addressing and delivery information needed to forward them.</p>
+            <a href="https://porkbun.com/legal/agreement/privacy_policy" target="_blank" rel="noopener noreferrer">Porkbun Privacy Policy</a>
           </div>
           {% if site.brainvomit_mode %}
           <div role="listitem">
@@ -166,7 +171,7 @@ last_modified_at: 2026-10-30
 
       <section id="contact" class="privacy-contact">
         <h2>Questions or requests</h2>
-        <p>Email <a href="mailto:chinmayarora2001@gmail.com?subject=Brain%20Vomit%20privacy%20request">chinmayarora2001@gmail.com</a> with the subject “Brain Vomit privacy request.” Include enough detail for me to locate the relevant signup or comment, but do not email passwords or identity documents unless I specifically explain why verification is necessary.</p>
+        <p>Email <a href="mailto:contact@brainvomit.blog?subject=Brain%20Vomit%20privacy%20request">contact@brainvomit.blog</a> with the subject “Brain Vomit privacy request.” Include enough detail for me to locate the relevant signup or comment, but do not email passwords or identity documents unless I specifically explain why verification is necessary.</p>
       </section>
     </div>
   </div>
