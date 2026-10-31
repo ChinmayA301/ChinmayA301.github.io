@@ -13,4 +13,6 @@ bundle exec jekyll build \
 # the publication. Remove them from the deploy artifact without touching source.
 find "$OUTPUT_DIR/assets" -maxdepth 1 -type f -iname '*.pdf' -delete
 
+python3 scripts/build_contentos_catalog.py "$OUTPUT_DIR"
+
 python3 scripts/validate_brainvomit_build.py "$OUTPUT_DIR"
