@@ -15,6 +15,7 @@ include:
   - brainvomit
 
 exclude:
+  - PRODUCT.md
   - index.html
   - CNAME
   - Readme.md

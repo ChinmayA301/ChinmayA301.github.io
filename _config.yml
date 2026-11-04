@@ -17,6 +17,7 @@ plugins:
   - jekyll-sitemap
 
 exclude:
+  - PRODUCT.md
   - Readme.md
   - VISIBILITY.md
   - audit_output
