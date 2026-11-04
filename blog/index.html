@@ -46,59 +46,75 @@ permalink: /blog/
 {% include blog-newsletter.html %}
 
 <section id="reading-room" class="blog-reading-room" data-reading-room aria-labelledby="reading-room-heading">
-  <header class="blog-reading-room-header">
-    <h2 id="reading-room-heading" data-topic-heading>Fresh from the press</h2>
-    <p class="section-text" data-topic-description>Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches.</p>
-
-    <nav class="blog-topic-index" aria-label="Filter stories by topic">
-      <button type="button" class="blog-topic-button is-active" data-topic-filter="latest" data-topic-title="Fresh from the press" data-topic-description="Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches." aria-pressed="true">
-        <span>Latest</span><span data-topic-count>7</span>
-      </button>
-      {% for topic in site.data.blog_topics.topics %}
-      <button type="button" class="blog-topic-button" data-topic-filter="{{ topic.id }}" data-topic-title="{{ topic.title | escape }}" data-topic-description="{{ topic.description | escape }}" aria-pressed="false">
-        <span>{{ topic.label }}</span><span data-topic-count></span>
-      </button>
-      {% endfor %}
-      <button type="button" class="blog-topic-button" data-topic-filter="all" data-topic-title="The complete archive" data-topic-description="Every published piece in reverse chronology. Research studies, evidence audits, case studies, and unfinished ideas live together here." aria-pressed="false">
-        <span>All stories</span><span data-topic-count>{{ site.posts | size }}</span>
-      </button>
-    </nav>
-
-    <p class="blog-topic-status" data-topic-status aria-live="polite">Showing the seven newest stories.</p>
-  </header>
-
-  <div class="blog-story-ledger">
-    <div class="blog-story-ledger-heading" aria-hidden="true">
-      <span>Story</span><span>Filed</span>
+  <div class="blog-reading-room-intro">
+    <div class="blog-reading-room-copy">
+      <h2 id="reading-room-heading" data-topic-heading>Fresh from the press</h2>
+      <p class="section-text" data-topic-description>Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches.</p>
     </div>
-    <ol class="blog-story-list" itemscope itemtype="https://schema.org/ItemList">
-      {% for post in site.posts %}
-      {% assign topic_id = site.data.blog_topics.post_topics[post.url] | default: "people-society" %}
-      <li data-story-item data-topic="{{ topic_id }}" data-story-order="{{ forloop.index0 }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <meta itemprop="position" content="{{ forloop.index }}">
-        <details class="newspaper-story-row" data-story-row itemscope itemtype="https://schema.org/BlogPosting">
-          <summary>
-            <span class="newspaper-story-number" aria-hidden="true">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
-            <span class="newspaper-story-headline" itemprop="headline">{{ post.title }}</span>
-            <span class="newspaper-story-meta">
-              <time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%b %-d, %Y" }}</time>
-              <span>{{ post.content_label | default: post.content_type | default: "Essay" | replace: "_", " " }}</span>
-            </span>
-            <span class="newspaper-story-mark" aria-hidden="true"></span>
-          </summary>
-          <div class="newspaper-story-reveal">
-            <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 240 }}</p>
-            <div class="newspaper-story-actions">
-              <a href="{{ post.url | relative_url }}" itemprop="url">Read the story</a>
-              {% if post.categories.size > 0 %}
-              <span>{{ post.categories | join: " · " | replace: "-", " " }}</span>
-              {% endif %}
+    <div class="blog-paper-stack" aria-hidden="true">
+      <span><small>Ideas</small><strong>People &amp; Society</strong><i></i></span>
+      <span><small>Field notes</small><strong>Data &amp; Decisions</strong><i></i></span>
+      <span><small>Builds</small><strong>AI Engineering</strong><i></i></span>
+      <span><small>Signals</small><strong>Business &amp; Markets</strong><i></i></span>
+      <span><small>Evidence</small><strong>Health &amp; Policy</strong><i></i></span>
+    </div>
+  </div>
+
+  <div class="blog-reading-room-grid">
+    <header class="blog-reading-room-header">
+      <h3>Choose a section</h3>
+      <p class="section-text">Use the index to narrow the edition. Hover or open a headline for the short version before you commit.</p>
+
+      <nav class="blog-topic-index" aria-label="Filter stories by topic">
+        <button type="button" class="blog-topic-button is-active" data-topic-filter="latest" data-topic-title="Fresh from the press" data-topic-description="Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches." aria-pressed="true">
+          <span>Latest</span><span data-topic-count>7</span>
+        </button>
+        {% for topic in site.data.blog_topics.topics %}
+        <button type="button" class="blog-topic-button" data-topic-filter="{{ topic.id }}" data-topic-title="{{ topic.title | escape }}" data-topic-description="{{ topic.description | escape }}" aria-pressed="false">
+          <span>{{ topic.label }}</span><span data-topic-count></span>
+        </button>
+        {% endfor %}
+        <button type="button" class="blog-topic-button" data-topic-filter="all" data-topic-title="The complete archive" data-topic-description="Every published piece in reverse chronology. Research studies, evidence audits, case studies, and unfinished ideas live together here." aria-pressed="false">
+          <span>All stories</span><span data-topic-count>{{ site.posts | size }}</span>
+        </button>
+      </nav>
+
+      <p class="blog-topic-status" data-topic-status aria-live="polite">Showing the seven newest stories.</p>
+    </header>
+
+    <div class="blog-story-ledger">
+      <div class="blog-story-ledger-heading" aria-hidden="true">
+        <span>Story</span><span>Filed</span>
+      </div>
+      <ol class="blog-story-list" itemscope itemtype="https://schema.org/ItemList">
+        {% for post in site.posts %}
+        {% assign topic_id = site.data.blog_topics.post_topics[post.url] | default: "people-society" %}
+        <li data-story-item data-topic="{{ topic_id }}" data-story-order="{{ forloop.index0 }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <meta itemprop="position" content="{{ forloop.index }}">
+          <details class="newspaper-story-row" data-story-row itemscope itemtype="https://schema.org/BlogPosting">
+            <summary>
+              <span class="newspaper-story-number" aria-hidden="true">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+              <span class="newspaper-story-headline" itemprop="headline">{{ post.title }}</span>
+              <span class="newspaper-story-meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%b %-d, %Y" }}</time>
+                <span>{{ post.content_label | default: post.content_type | default: "Essay" | replace: "_", " " }}</span>
+              </span>
+              <span class="newspaper-story-mark" aria-hidden="true"></span>
+            </summary>
+            <div class="newspaper-story-reveal">
+              <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 240 }}</p>
+              <div class="newspaper-story-actions">
+                <a href="{{ post.url | relative_url }}" itemprop="url">Read the story</a>
+                {% if post.categories.size > 0 %}
+                <span>{{ post.categories | join: " · " | replace: "-", " " }}</span>
+                {% endif %}
+              </div>
             </div>
-          </div>
-        </details>
-      </li>
-      {% endfor %}
-    </ol>
-    <p class="blog-empty-topic" data-topic-empty hidden>No stories are filed at this desk yet.</p>
+          </details>
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="blog-empty-topic" data-topic-empty hidden>No stories are filed at this desk yet.</p>
+    </div>
   </div>
 </section>
