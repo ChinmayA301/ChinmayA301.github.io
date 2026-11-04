@@ -49,7 +49,7 @@ permalink: /blog/
   <div class="blog-reading-room-intro">
     <div class="blog-reading-room-copy">
       <h2 id="reading-room-heading" data-topic-heading>Fresh from the press</h2>
-      <p class="section-text" data-topic-description>Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches.</p>
+      <p class="section-text" data-topic-description hidden></p>
     </div>
     <div class="blog-paper-stack" aria-hidden="true">
       <span><small>Ideas</small><strong>People &amp; Society</strong><i></i></span>
@@ -66,7 +66,7 @@ permalink: /blog/
       <p class="section-text">Use the index to narrow the edition. Hover or open a headline for the short version before you commit.</p>
 
       <nav class="blog-topic-index" aria-label="Filter stories by topic">
-        <button type="button" class="blog-topic-button is-active" data-topic-filter="latest" data-topic-title="Fresh from the press" data-topic-description="Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches." aria-pressed="true">
+        <button type="button" class="blog-topic-button is-active" data-topic-filter="latest" data-topic-title="Fresh from the press" data-topic-description="" aria-pressed="true">
           <span>Latest</span><span data-topic-count>7</span>
         </button>
         {% for topic in site.data.blog_topics.topics %}

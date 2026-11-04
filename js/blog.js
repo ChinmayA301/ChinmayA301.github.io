@@ -185,7 +185,11 @@
       });
 
       if (topicHeading) topicHeading.textContent = activeButton.dataset.topicTitle || 'The reading room';
-      if (topicDescription) topicDescription.textContent = activeButton.dataset.topicDescription || '';
+      if (topicDescription) {
+        const description = activeButton.dataset.topicDescription || '';
+        topicDescription.textContent = description;
+        topicDescription.hidden = !description;
+      }
       if (topicStatus) {
         const noun = visibleCount === 1 ? 'story' : 'stories';
         topicStatus.textContent = `Showing ${visibleCount} ${noun} from ${storyItems.length} published pieces.`;
