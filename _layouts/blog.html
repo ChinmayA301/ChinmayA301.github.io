@@ -29,7 +29,7 @@
   {% include seo-head.html %}
   {% unless page.hide_blog_schema %}{% include schema-blog.html %}{% endunless %}
   <link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | absolute_url }}">
-  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20260813b' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/editorial.css?v=20261104a' | relative_url }}">
 </head>
 <body class="blog-theme blog-index-page{% if page.body_class %} {{ page.body_class }}{% endif %}">
   <div class="bg-orb orb-1" aria-hidden="true"></div>
@@ -105,28 +105,13 @@
       setTheme(nextTheme);
     });
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const newspaperSheets = Array.from(document.querySelectorAll('.newspaper-sheet'));
+    const newspaperSheets = Array.from(document.querySelectorAll('.newspaper-story-row'));
 
     newspaperSheets.forEach((sheet, index) => {
       sheet.style.setProperty('--sheet-order', index % 8);
+      sheet.classList.add('is-printed');
     });
-
-    if (!reducedMotion && 'IntersectionObserver' in window) {
-      document.documentElement.classList.add('newspaper-motion');
-      const sheetObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-printed');
-          observer.unobserve(entry.target);
-        });
-      }, { threshold: 0.14, rootMargin: '0px 0px -5% 0px' });
-
-      newspaperSheets.forEach((sheet) => sheetObserver.observe(sheet));
-    } else {
-      newspaperSheets.forEach((sheet) => sheet.classList.add('is-printed'));
-    }
   </script>
-  <script src="{{ '/js/blog.js?v=20260717e' | relative_url }}"></script>
+  <script src="{{ '/js/blog.js?v=20261104a' | relative_url }}"></script>
 </body>
 </html>

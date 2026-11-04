@@ -132,4 +132,93 @@
     });
     window.addEventListener('load', syncGiscusTheme, { once: true });
   }
+
+  const readingRoom = document.querySelector('[data-reading-room]');
+  if (readingRoom) {
+    const topicButtons = Array.from(readingRoom.querySelectorAll('[data-topic-filter]'));
+    const storyItems = Array.from(readingRoom.querySelectorAll('[data-story-item]'));
+    const storyRows = storyItems.map((item) => item.querySelector('[data-story-row]')).filter(Boolean);
+    const topicHeading = readingRoom.querySelector('[data-topic-heading]');
+    const topicDescription = readingRoom.querySelector('[data-topic-description]');
+    const topicStatus = readingRoom.querySelector('[data-topic-status]');
+    const emptyState = readingRoom.querySelector('[data-topic-empty]');
+    const latestLimit = 7;
+    const hoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+    const matchesTopic = (item, topic) => {
+      if (topic === 'all') return true;
+      if (topic === 'latest') return Number(item.dataset.storyOrder) < latestLimit;
+      return item.dataset.topic === topic;
+    };
+
+    const updateCounts = () => {
+      topicButtons.forEach((button) => {
+        const topic = button.dataset.topicFilter;
+        const count = storyItems.filter((item) => matchesTopic(item, topic)).length;
+        const countNode = button.querySelector('[data-topic-count]');
+        if (countNode) countNode.textContent = String(count).padStart(2, '0');
+      });
+    };
+
+    const activateTopic = (topic, updateUrl = true) => {
+      const activeButton = topicButtons.find((button) => button.dataset.topicFilter === topic) || topicButtons[0];
+      const activeTopic = activeButton.dataset.topicFilter;
+      let visibleCount = 0;
+
+      topicButtons.forEach((button) => {
+        const selected = button === activeButton;
+        button.classList.toggle('is-active', selected);
+        button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      });
+
+      storyItems.forEach((item) => {
+        const visible = matchesTopic(item, activeTopic);
+        const row = item.querySelector('[data-story-row]');
+        if (row) row.open = false;
+        item.hidden = !visible;
+        if (visible) {
+          item.style.setProperty('--visible-order', visibleCount);
+          item.classList.remove('is-entering');
+          window.requestAnimationFrame(() => item.classList.add('is-entering'));
+          visibleCount += 1;
+        }
+      });
+
+      if (topicHeading) topicHeading.textContent = activeButton.dataset.topicTitle || 'The reading room';
+      if (topicDescription) topicDescription.textContent = activeButton.dataset.topicDescription || '';
+      if (topicStatus) {
+        const noun = visibleCount === 1 ? 'story' : 'stories';
+        topicStatus.textContent = `Showing ${visibleCount} ${noun} from ${storyItems.length} published pieces.`;
+      }
+      if (emptyState) emptyState.hidden = visibleCount !== 0;
+
+      if (updateUrl && window.history?.replaceState) {
+        const url = new URL(window.location.href);
+        if (activeTopic === 'latest') url.searchParams.delete('topic');
+        else url.searchParams.set('topic', activeTopic);
+        window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+      }
+    };
+
+    topicButtons.forEach((button) => {
+      button.addEventListener('click', () => activateTopic(button.dataset.topicFilter));
+    });
+
+    storyRows.forEach((row) => {
+      row.addEventListener('pointerenter', () => {
+        if (hoverQuery.matches) row.open = true;
+      });
+      row.addEventListener('pointerleave', () => {
+        if (hoverQuery.matches && !row.contains(document.activeElement)) row.open = false;
+      });
+      row.addEventListener('focusout', (event) => {
+        if (!row.contains(event.relatedTarget) && hoverQuery.matches) row.open = false;
+      });
+    });
+
+    updateCounts();
+    const requestedTopic = new URL(window.location.href).searchParams.get('topic');
+    const knownTopic = topicButtons.some((button) => button.dataset.topicFilter === requestedTopic);
+    activateTopic(knownTopic ? requestedTopic : 'latest', false);
+  }
 })();

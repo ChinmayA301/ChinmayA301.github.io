@@ -6,22 +6,20 @@ permalink: /blog/
 ---
 <section class="blog-mini-hero newspaper-front" aria-labelledby="blog-overview">
   <div class="newspaper-front-copy">
-  <p class="eyebrow mb-2">Studies and Ideas</p>
-  <h2 id="blog-overview" class="h2 mb-2">Brain vomit, refined just enough to be useful.</h2>
-  <p class="section-text mb-4">My writing space for evidence audits, experiments, research exploration, opinion, and curiosity. Also random thoughts and procrastinations.</p>
-  <div class="d-flex flex-wrap gap-2">
-    {% assign latest_post = site.posts.first %}
-    {% if latest_post %}
-    <a class="btn btn-primary btn-sm" href="{{ latest_post.url | relative_url }}">Read Latest Post</a>
-    {% endif %}
-    {% if site.brainvomit_mode %}
-    <a class="navbar-brand fw-bold blog-home-ca" href="{{ site.portfolio_url }}/" aria-label="Open Chinmay Arora's portfolio">CA</a>
-    <a class="btn btn-outline-light btn-sm" href="{{ site.portfolio_url }}/projects/">See Related Projects</a>
-    {% else %}
-    <a class="navbar-brand fw-bold blog-home-ca" href="{{ '/' | relative_url }}" aria-label="Back to portfolio home">CA</a>
-    <a class="btn btn-outline-light btn-sm" href="{{ '/projects/' | relative_url }}">See Related Projects</a>
-    {% endif %}
-  </div>
+    <h2 id="blog-overview" class="h2 mb-2">Brain vomit, refined just enough to be useful.</h2>
+    <p class="section-text mb-4">My writing space for evidence audits, experiments, research exploration, opinion, and curiosity. Also random thoughts and procrastinations.</p>
+    <div class="d-flex flex-wrap gap-3">
+      {% assign latest_post = site.posts.first %}
+      {% if latest_post %}
+      <a class="btn btn-primary btn-sm" href="{{ latest_post.url | relative_url }}">Read the newest story</a>
+      {% endif %}
+      <a class="btn btn-outline-light btn-sm" href="#reading-room">Browse by topic</a>
+      {% if site.brainvomit_mode %}
+      <a class="btn btn-outline-light btn-sm" href="{{ site.portfolio_url }}/projects/">See related projects</a>
+      {% else %}
+      <a class="btn btn-outline-light btn-sm" href="{{ '/projects/' | relative_url }}">See related projects</a>
+      {% endif %}
+    </div>
   </div>
   <aside class="newspaper-front-folio" aria-label="Publication note">
     <span>Brain Vomit</span>
@@ -30,107 +28,77 @@ permalink: /blog/
   </aside>
 </section>
 
-<section aria-label="Blog stats" class="blog-stat-grid mt-4">
-  <article class="blog-stat">
-    <p class="blog-stat-value">{{ site.posts | size }}</p>
-    <p class="blog-stat-label mb-0">Published posts</p>
-  </article>
-  <article class="blog-stat">
-    <p class="blog-stat-value">{{ site.posts | where: "content_type", "research_study" | size }}</p>
-    <p class="blog-stat-label mb-0">Research studies</p>
-  </article>
-  <article class="blog-stat">
-    <p class="blog-stat-value">{{ site.posts | where: "content_type", "concept_note" | size }}</p>
-    <p class="blog-stat-label mb-0">Active explorations</p>
-  </article>
-</section>
+<dl aria-label="Publication index" class="blog-issue-ledger">
+  <div>
+    <dt>In the archive</dt>
+    <dd>{{ site.posts | size }} stories</dd>
+  </div>
+  <div>
+    <dt>Evidence-bearing</dt>
+    <dd>{{ site.posts | where: "content_type", "research_study" | size }} studies</dd>
+  </div>
+  <div>
+    <dt>Still taking shape</dt>
+    <dd>{{ site.posts | where: "content_type", "concept_note" | size }} explorations</dd>
+  </div>
+</dl>
 
 {% include blog-newsletter.html %}
 
-{% assign study_posts = site.posts | where: "content_type", "research_study" %}
-{% if study_posts.size > 0 %}
-<section aria-labelledby="research-studies" class="mt-5 blog-index-group blog-index-studies newspaper-department">
-  <header class="newspaper-department-header">
-    <p class="newspaper-department-kicker">Department 01 / Evidence</p>
-    <h2 id="research-studies" class="h3 mb-3">Research Studies & Evidence Audits</h2>
-    <p class="section-text">These posts contain an identifiable evidence trail: a dataset or public-source corpus, a method or analytical procedure, reported findings, and explicit limitations.</p>
-  </header>
-  <ol class="blog-list" itemscope itemtype="https://schema.org/ItemList">
-    {% for post in study_posts %}
-    <li class="blog-card newspaper-sheet" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <meta itemprop="position" content="{{ forloop.index }}">
-      <article itemscope itemtype="https://schema.org/BlogPosting">
-        <p class="newspaper-sheet-folio"><span>Evidence desk</span><span>No. {{ forloop.index }}</span></p>
-        <h3 class="h5 mb-1"><a href="{{ post.url | relative_url }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a></h3>
-        <div class="blog-card-meta">
-          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: "Research Study" }}</span>
-          {% if post.search_phrase %}
-          <span class="blog-search-phrase">{{ post.search_phrase }}</span>
-          {% endif %}
-        </div>
-        <p class="small text-muted mb-2"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %-d, %Y" }}</time></p>
-        <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p>
-      </article>
-    </li>
-    {% endfor %}
-  </ol>
-</section>
-{% endif %}
+<section id="reading-room" class="blog-reading-room" data-reading-room aria-labelledby="reading-room-heading">
+  <header class="blog-reading-room-header">
+    <h2 id="reading-room-heading" data-topic-heading>Fresh from the press</h2>
+    <p class="section-text" data-topic-description>Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches.</p>
 
-{% assign concept_posts = site.posts | where: "content_type", "concept_note" %}
-{% if concept_posts.size > 0 %}
-<section aria-labelledby="concept-notes" class="mt-5 blog-index-group blog-index-concepts newspaper-department">
-  <header class="newspaper-department-header">
-    <p class="newspaper-department-kicker">Department 02 / Explorations</p>
-    <h2 id="concept-notes" class="h3 mb-3">Project & Research Explorations</h2>
-    <p class="section-text">These posts document work I am actively developing: product directions, analytical frameworks, metrics, systems, and future research paths. They may use sources or illustrative artifacts, while stating clearly when empirical validation is still in progress.</p>
-  </header>
-  <ol class="blog-list" itemscope itemtype="https://schema.org/ItemList">
-    {% for post in concept_posts %}
-    <li class="blog-card newspaper-sheet" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <meta itemprop="position" content="{{ forloop.index }}">
-      <article itemscope itemtype="https://schema.org/BlogPosting">
-        <p class="newspaper-sheet-folio"><span>Ideas desk</span><span>No. {{ forloop.index }}</span></p>
-        <h3 class="h5 mb-1"><a href="{{ post.url | relative_url }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a></h3>
-        <div class="blog-card-meta">
-          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: "Project Exploration" }}</span>
-          {% if post.search_phrase %}
-          <span class="blog-search-phrase">{{ post.search_phrase }}</span>
-          {% endif %}
-        </div>
-        <p class="small text-muted mb-2"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %-d, %Y" }}</time></p>
-        <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p>
-      </article>
-    </li>
-    {% endfor %}
-  </ol>
-</section>
-{% endif %}
+    <nav class="blog-topic-index" aria-label="Filter stories by topic">
+      <button type="button" class="blog-topic-button is-active" data-topic-filter="latest" data-topic-title="Fresh from the press" data-topic-description="Seven recent pieces, without making you decode the whole archive first. Choose a topic when something catches." aria-pressed="true">
+        <span>Latest</span><span data-topic-count>7</span>
+      </button>
+      {% for topic in site.data.blog_topics.topics %}
+      <button type="button" class="blog-topic-button" data-topic-filter="{{ topic.id }}" data-topic-title="{{ topic.title | escape }}" data-topic-description="{{ topic.description | escape }}" aria-pressed="false">
+        <span>{{ topic.label }}</span><span data-topic-count></span>
+      </button>
+      {% endfor %}
+      <button type="button" class="blog-topic-button" data-topic-filter="all" data-topic-title="The complete archive" data-topic-description="Every published piece in reverse chronology. Research studies, evidence audits, case studies, and unfinished ideas live together here." aria-pressed="false">
+        <span>All stories</span><span data-topic-count>{{ site.posts | size }}</span>
+      </button>
+    </nav>
 
-<section aria-labelledby="latest-posts" class="mt-5 newspaper-department newspaper-all-posts">
-  <header class="newspaper-department-header">
-    <p class="newspaper-department-kicker">Complete archive / Reverse chronology</p>
-    <h2 id="latest-posts" class="h3 mb-3">All Posts</h2>
+    <p class="blog-topic-status" data-topic-status aria-live="polite">Showing the seven newest stories.</p>
   </header>
-  <ol class="blog-list" itemscope itemtype="https://schema.org/ItemList">
-    {% for post in site.posts %}
-    <li class="blog-card newspaper-sheet" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <meta itemprop="position" content="{{ forloop.index }}">
-      <article itemscope itemtype="https://schema.org/BlogPosting">
-        <p class="newspaper-sheet-folio"><span>Archive</span><span>No. {{ forloop.index }}</span></p>
-        <h3 class="h5 mb-1"><a href="{{ post.url | relative_url }}" itemprop="url"><span itemprop="headline">{{ post.title }}</span></a></h3>
-        {% if post.content_type %}
-        <div class="blog-card-meta">
-          <span class="blog-type-badge blog-type-{{ post.content_type | slugify }}">{{ post.content_label | default: post.content_type | replace: "_", " " }}</span>
-          {% if post.search_phrase %}
-          <span class="blog-search-phrase">{{ post.search_phrase }}</span>
-          {% endif %}
-        </div>
-        {% endif %}
-        <p class="small text-muted mb-2"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %-d, %Y" }}</time></p>
-        <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p>
-      </article>
-    </li>
-    {% endfor %}
-  </ol>
+
+  <div class="blog-story-ledger">
+    <div class="blog-story-ledger-heading" aria-hidden="true">
+      <span>Story</span><span>Filed</span>
+    </div>
+    <ol class="blog-story-list" itemscope itemtype="https://schema.org/ItemList">
+      {% for post in site.posts %}
+      {% assign topic_id = site.data.blog_topics.post_topics[post.url] | default: "people-society" %}
+      <li data-story-item data-topic="{{ topic_id }}" data-story-order="{{ forloop.index0 }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <meta itemprop="position" content="{{ forloop.index }}">
+        <details class="newspaper-story-row" data-story-row itemscope itemtype="https://schema.org/BlogPosting">
+          <summary>
+            <span class="newspaper-story-number" aria-hidden="true">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+            <span class="newspaper-story-headline" itemprop="headline">{{ post.title }}</span>
+            <span class="newspaper-story-meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%b %-d, %Y" }}</time>
+              <span>{{ post.content_label | default: post.content_type | default: "Essay" | replace: "_", " " }}</span>
+            </span>
+            <span class="newspaper-story-mark" aria-hidden="true"></span>
+          </summary>
+          <div class="newspaper-story-reveal">
+            <p itemprop="description">{{ post.description | default: post.excerpt | strip_html | truncate: 240 }}</p>
+            <div class="newspaper-story-actions">
+              <a href="{{ post.url | relative_url }}" itemprop="url">Read the story</a>
+              {% if post.categories.size > 0 %}
+              <span>{{ post.categories | join: " · " | replace: "-", " " }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </details>
+      </li>
+      {% endfor %}
+    </ol>
+    <p class="blog-empty-topic" data-topic-empty hidden>No stories are filed at this desk yet.</p>
+  </div>
 </section>
