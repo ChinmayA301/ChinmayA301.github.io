@@ -62,7 +62,7 @@ last_modified_at: 2026-11-05
         <h2>Information collected</h2>
 
         <h3>Newsletter signups</h3>
-        <p>The blog-update and AI/venture newsletters have separate signup forms. Submitting either form requests only that subscription; joining both requires a separate request for each. Brevo receives your email address to confirm ownership and manage the chosen subscription. The signup service keeps the selected stream, source page, timestamp, request status and salted hashes for duplicate and abuse prevention, rather than a raw copy of your email address. The form also contains an invisible anti-spam field; legitimate visitors are not expected to complete it.</p>
+        <p>The brain-dump early list and weekly AI/venture newsletter have separate signup forms. The brain-dump form sends your email address, source page and consent choice to the existing Google Apps Script and Google Sheet for a future first issue, with no fixed cadence promised. It does not enroll you in the AI/venture newsletter. The AI/venture form uses Brevo to confirm email ownership and manage that subscription when signup is available. Its signup service keeps the selected stream, source page, timestamp, request status and salted hashes for duplicate and abuse prevention, rather than a raw copy of your email address. Both forms contain an invisible anti-spam field; legitimate visitors are not expected to complete it.</p>
 
         <h3>Public comments and reactions</h3>
         <p>Post discussions are provided by Giscus and stored in this site’s public GitHub Discussions. If you participate, your GitHub username, profile information, comment, reactions, timestamps, and other information GitHub associates with that activity may be visible publicly. Do not include private or sensitive information in a comment.</p>
@@ -100,7 +100,7 @@ last_modified_at: 2026-11-05
           </div>
           <div role="listitem">
             <h3>Google</h3>
-            <p>The older newsletter-interest form used Google Apps Script and a private Google Sheet. Those historical interest records are not automatically enrolled in the new AI/venture newsletter. Google handles related account, service, and network data under its own privacy terms.</p>
+            <p>The brain-dump early-list form uses Google Apps Script and the existing private Google Sheet. Its records remain separate from the weekly AI/venture signup and are not automatically enrolled in that newsletter. Google handles related account, service, and network data under its own privacy terms.</p>
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
           </div>
           <div role="listitem">
@@ -137,7 +137,7 @@ last_modified_at: 2026-11-05
 
       <section id="storage">
         <h2>Storage, retention, and security</h2>
-        <p>Current subscription records are managed in Brevo while the subscription is active; suppression records may remain to honor an unsubscribe. Historical interest records remain in a private Google Sheet until deleted or reviewed for their original consent. The signup service retains hashed request records for up to 30 days; shorter-lived counters limit abuse. Direct emails are kept only as long as needed to handle the conversation and any related obligations.</p>
+        <p>Brain-dump early-list records, including new signups, remain in the existing private Google Sheet until deleted or reviewed for their original consent. Confirmed Brevo subscription records are managed there while the subscription is active; suppression records may remain to honor an unsubscribe. The signup service retains hashed request records for up to 30 days; shorter-lived counters limit abuse. Direct emails are kept only as long as needed to handle the conversation and any related obligations.</p>
         <p>Public comments remain in GitHub Discussions until you delete them through GitHub, I remove them as a moderator, or GitHub removes them under its policies. Theme preference data stays in your browser until you clear it. Hosting and delivery providers set their own retention periods for technical logs.</p>
         <p>I use reasonable safeguards appropriate for a small personal publication, including restricted access to subscriber records and HTTPS in transit. No internet service or storage system can guarantee absolute security.</p>
       </section>
