@@ -7594,3 +7594,10 @@ html[data-theme="light"] .giscus-frame {
         color: var(--paper);
     }
 }
+
+/* Newsletter preferences extend the publication's existing paper/ink form. */
+.blog-newsletter-form input:focus-visible { outline: 2px solid var(--news-accent); outline-offset: 3px; }
+.blog-newsletter-copy h2 { letter-spacing: -.03em !important; }
+.blog-connected-links { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1.2rem; margin: 1rem 0; padding: 0; list-style: none; }
+
+.blog-newsletter-copy .newsletter-related { margin-top: 1.25rem; font: inherit; font-size: .95rem; line-height: 1.6; }

@@ -5,7 +5,7 @@ description: What Brain Vomit collects, why it is collected, where it goes, and 
 permalink: /blog/privacy/
 body_class: blog-privacy-page
 hide_blog_schema: true
-last_modified_at: 2026-10-31
+last_modified_at: 2026-11-05
 ---
 
 <article class="privacy-notice" aria-label="Brain Vomit privacy policy">
@@ -20,7 +20,7 @@ last_modified_at: 2026-10-31
       <dl>
         <div>
           <dt>Effective</dt>
-          <dd>October 31, 2026</dd>
+          <dd>November 5, 2026</dd>
         </div>
         <div>
           <dt>Scope</dt>
@@ -54,7 +54,7 @@ last_modified_at: 2026-10-31
     <div class="privacy-copy">
       <section id="scope">
         <h2>The short version</h2>
-        <p>This policy explains how the <em>Brain Vomit</em> blog collects and handles information when you read a post, join the future newsletter, use the public comment thread, or contact me about the blog. “I,” “me,” and “my” refer to Chinmay Arora.</p>
+        <p>This policy explains how the <em>Brain Vomit</em> blog collects and handles information when you read a post, subscribe to email updates, use the public comment thread, or contact me about the blog. “I,” “me,” and “my” refer to Chinmay Arora.</p>
         <p>The blog is a personal publishing project. It does not run ads, build advertising profiles, or use analytics tools to follow readers across the web. Some basic technical information is still processed by the companies that host the site and deliver its fonts, scripts, and public-comment feature.</p>
       </section>
 
@@ -62,7 +62,7 @@ last_modified_at: 2026-10-31
         <h2>Information collected</h2>
 
         <h3>Newsletter signups</h3>
-        <p>If you join the future newsletter, the signup records your email address, submission time, the page where you signed up, a consent indicator, and an internal signup status. The form also contains an invisible anti-spam field; legitimate visitors are not expected to complete it.</p>
+        <p>The blog-update and AI/venture newsletters have separate signup forms. Submitting either form requests only that subscription; joining both requires a separate request for each. Brevo receives your email address to confirm ownership and manage the chosen subscription. The signup service keeps the selected stream, source page, timestamp, request status and salted hashes for duplicate and abuse prevention, rather than a raw copy of your email address. The form also contains an invisible anti-spam field; legitimate visitors are not expected to complete it.</p>
 
         <h3>Public comments and reactions</h3>
         <p>Post discussions are provided by Giscus and stored in this site’s public GitHub Discussions. If you participate, your GitHub username, profile information, comment, reactions, timestamps, and other information GitHub associates with that activity may be visible publicly. Do not include private or sensitive information in a comment.</p>
@@ -80,7 +80,7 @@ last_modified_at: 2026-10-31
       <section id="use">
         <h2>How the information is used</h2>
         <ul>
-          <li>To maintain the newsletter interest list and send future issues or necessary list-related messages.</li>
+          <li>To send the weekly AI and venture digest and/or new-blog notifications you explicitly select, plus necessary confirmation and subscription-management messages.</li>
           <li>To display, moderate, and respond to public comments.</li>
           <li>To remember your chosen color theme.</li>
           <li>To operate, secure, troubleshoot, and protect the blog from spam or abuse.</li>
@@ -94,8 +94,13 @@ last_modified_at: 2026-10-31
         <h2>Where information goes</h2>
         <div class="privacy-service-list" role="list">
           <div role="listitem">
+            <h3>Brevo</h3>
+            <p>Brevo processes email addresses, subscription confirmations, list membership and unsubscribe or delivery status to manage the newsletters you choose. Each subscription uses a separate list.</p>
+            <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank" rel="noopener noreferrer">Brevo Privacy Policy</a>
+          </div>
+          <div role="listitem">
             <h3>Google</h3>
-            <p>The newsletter form uses Google Apps Script and stores signup records in a private Google Sheet. Google handles related account, service, and network data under its own privacy terms.</p>
+            <p>The older newsletter-interest form used Google Apps Script and a private Google Sheet. Those historical interest records are not automatically enrolled in the new AI/venture newsletter. Google handles related account, service, and network data under its own privacy terms.</p>
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>
           </div>
           <div role="listitem">
@@ -132,21 +137,21 @@ last_modified_at: 2026-10-31
 
       <section id="storage">
         <h2>Storage, retention, and security</h2>
-        <p>Newsletter records are stored in a private Google Sheet and retained while the list remains active or until you unsubscribe or request deletion, unless a longer period is reasonably necessary for legal, security, or recordkeeping purposes. Direct emails are kept only as long as needed to handle the conversation and any related obligations.</p>
+        <p>Current subscription records are managed in Brevo while the subscription is active; suppression records may remain to honor an unsubscribe. Historical interest records remain in a private Google Sheet until deleted or reviewed for their original consent. The signup service retains hashed request records for up to 30 days; shorter-lived counters limit abuse. Direct emails are kept only as long as needed to handle the conversation and any related obligations.</p>
         <p>Public comments remain in GitHub Discussions until you delete them through GitHub, I remove them as a moderator, or GitHub removes them under its policies. Theme preference data stays in your browser until you clear it. Hosting and delivery providers set their own retention periods for technical logs.</p>
-        <p>I use reasonable safeguards appropriate for a small personal publication, including private access to the signup sheet and HTTPS in transit. No internet service or storage system can guarantee absolute security.</p>
+        <p>I use reasonable safeguards appropriate for a small personal publication, including restricted access to subscriber records and HTTPS in transit. No internet service or storage system can guarantee absolute security.</p>
       </section>
 
       <section id="transfers">
         <h2>International processing</h2>
-        <p>The blog is operated from the United States. Google, GitHub, Giscus, and content-delivery providers may process information in the United States and other countries where they operate. Those locations may have privacy rules that differ from those where you live.</p>
+        <p>The blog is operated from the United States. Brevo, Cloudflare, Google, GitHub, Giscus, and content-delivery providers may process information in the United States and other countries where they operate. Those locations may have privacy rules that differ from those where you live.</p>
       </section>
 
       <section id="rights">
         <h2>Your choices and privacy rights</h2>
         <p>Depending on where you live, you may have rights to request access to, correction of, deletion of, restriction of, or a portable copy of personal information, and to object to certain processing. You may also withdraw consent where consent is the basis for processing.</p>
         <ul>
-          <li><strong>Newsletter:</strong> email me to unsubscribe, update your address, or delete the signup record.</li>
+          <li><strong>Newsletter:</strong> use the unsubscribe link in an email for that subscription, or email me to update your address or request deletion. Blog updates and AI/venture news are separate subscriptions.</li>
           <li><strong>Public comments:</strong> edit or delete your comment through GitHub, or ask me to moderate the related discussion.</li>
           <li><strong>Theme:</strong> change the theme with the page control or clear this site’s local storage in your browser.</li>
           <li><strong>Complaints:</strong> you may contact your local data-protection authority where that right applies.</li>

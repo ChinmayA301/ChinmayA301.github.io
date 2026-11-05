@@ -2,11 +2,29 @@
   const forms = Array.from(document.querySelectorAll('[data-blog-form]'));
 
   forms.forEach((form) => {
+    const isContentOS = form.dataset.formMode === 'contentos';
+    if (isContentOS) {
+      fetch(form.dataset.statusUrl, { signal: AbortSignal.timeout(10000) })
+        .then((response) => response.ok ? response.json() : Promise.reject())
+        .then((data) => {
+          const ready = data.streams?.[form.dataset.stream] === true;
+          form.dataset.ready = ready ? 'true' : 'false';
+          const button = form.querySelector('button[type="submit"]');
+          button.disabled = !ready;
+          button.textContent = ready ? 'Subscribe' : 'Signup opens soon';
+          form.querySelector('.blog-form-status').textContent = ready ? '' : 'The newsletter is being connected. Please check back soon.';
+        })
+        .catch(() => {
+          form.querySelector('button[type="submit"]').textContent = 'Signup unavailable';
+          form.querySelector('.blog-form-status').textContent = 'Could not connect to signup. Reload this page to try again.';
+        });
+    }
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const status = form.querySelector('.blog-form-status');
       const button = form.querySelector('button[type="submit"]');
       const defaultLabel = button?.textContent || 'Submit';
+      if (isContentOS && form.dataset.ready !== 'true') return;
 
       if (status) status.textContent = 'Sending…';
       if (button) {
@@ -15,6 +33,20 @@
       }
 
       try {
+        if (isContentOS) {
+          const data = new FormData(form);
+          const response = await fetch(form.action, {
+            method: 'POST', signal: AbortSignal.timeout(25000),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: data.get('email'), preferences: data.getAll('preferences'),
+              source_page: data.get('source_page'), website: data.get('website'), consent: true })
+          });
+          const result = await response.json();
+          if (!response.ok) { status.textContent = result.error || 'Could not send the request. Please try later.'; return; }
+          status.textContent = result.message;
+          form.reset();
+          return;
+        }
         const isGoogleSheetForm = form.dataset.formMode === 'google-sheets';
         if (isGoogleSheetForm) {
           const frameName = `newsletter-submit-${Date.now()}`;
