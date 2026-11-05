@@ -493,19 +493,26 @@ A realistic target framing for synthetic IC experiments:
 
 The synthetic IC figures above explain the optimization intuition. The research-artifact version uses the SNAP Higgs retweet graph: **223,833 nodes**, **308,596 edges**, and a seed budget of **k = 20**.
 
-![Convergence trace showing Bayesian Optimization finding high-spread seeds faster than random search on the Higgs retweet graph.](/assets/blog/bo_convergence.png)
+> **Correction, November 2026.** An earlier version of this section said BO beat
+> the top-degree heuristic on the Higgs graph by a few percent. That came from a
+> bug: the graph's edges pointed against the direction information flows. After
+> fixing it and rerunning with matched controls, **BO does not beat top-degree on
+> this graph.** Top-degree is effectively optimal, and CELF selects the same 20
+> accounts. The synthetic-IC figures above are a separate illustration and were not affected.
 
-*Real data: BO reaches the high-spread region in fewer evaluations than random search, while top-degree remains an extremely strong baseline.*
+![Convergence trace showing BO and random search on the Higgs retweet graph, both approaching the top-degree plateau.](/assets/blog/bo_convergence.png)
 
-![Grouped bar chart showing rule-tuning, naive free-node selection, and constrained free-node selection across the same graph and objective.](/assets/blog/bo_freenode_progression.png)
+*Real data: BO reaches the top-degree plateau in fewer evaluations than random search (about 6 vs 12 to get within 1%), but the plateau is top-degree itself.*
 
-*The actual lesson is structural: the search-space design decides whether BO refines a strong heuristic, collapses, or finds a better diverse subset.*
+![Grouped bar chart comparing top-degree, random search, and BO across four search spaces on the same objective.](/assets/blog/bo_freenode_progression.png)
 
-![Bar chart and diversity line showing constrained free-node BO achieving the best spread and the most useful seed diversity.](/assets/blog/bo_freenode_synthesis.png)
+*The search-space design decides whether BO can reach the baseline. It matches it in small degree-anchored spaces, gets within about 1% in a constrained subset space, and collapses in a naive 120-D space. It never exceeds it.*
 
-*Diversity only pays when it is constrained to nodes that can actually carry a cascade.*
+![Dot plot of constrained free-node runs: BO clusters just below top-degree and well above random search.](/assets/blog/bo_freenode_synthesis.png)
 
-For the full build log and limitations, see [Influence Maximization using BO](/blog/influence-maximization-bayesian-optimization-higgs/).
+*In the constrained 13-D space, BO clearly beats random search with the same budget but still finishes about 1.2% below top-degree.*
+
+On real graphs, the "BO beats random" intuition holds only when the search space is hard but well-posed. Beating a strong heuristic is a separate question, and on this graph the answer is no. For the full build log, corrections and limitations, see [Influence Maximization using BO](/blog/influence-maximization-bayesian-optimization-higgs/).
 
 ---
 
