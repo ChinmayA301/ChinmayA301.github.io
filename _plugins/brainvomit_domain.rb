@@ -26,6 +26,12 @@ module BrainVomit
         case page.path
         when "blog/index.html"
           rewrite_page(site, page, "/", "/blog/")
+        when "blog/newsletter.html"
+          rewrite_page(site, page, "/newsletter/", "/blog/newsletter/")
+        when "blog/newsletter-ai.html"
+          rewrite_page(site, page, "/newsletter/ai/", "/blog/newsletter/ai/")
+        when "blog/newsletter-confirmed.html"
+          rewrite_page(site, page, "/newsletter/confirmed/", "/blog/newsletter/confirmed/")
         when "blog/privacy.md"
           rewrite_page(site, page, "/privacy/", "/blog/privacy/")
         end

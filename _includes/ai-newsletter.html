@@ -1,0 +1,21 @@
+<section class="blog-newsletter" id="ai-newsletter" aria-labelledby="ai-newsletter-heading-{{ page.url | slugify }}">
+  <div class="blog-newsletter-copy">
+    <h2 id="ai-newsletter-heading-{{ page.url | slugify }}">What’s Up With AI?</h2>
+    <p>One weekly email: AI and venture news, useful releases, and networking events worth knowing about.</p>
+    <p class="newsletter-related">Follow the daily conversation on <a href="https://www.threads.com/@whatsupwithai.news">Threads</a> and <a href="https://x.com/Ch_Aurora3">X</a>. For new articles, use the <a href="{{ '/blog/newsletter/' | relative_url }}">separate blog signup</a>.</p>
+  </div>
+  <form class="blog-newsletter-form" action="https://contentos-meta-connect.chinmayarora30.workers.dev/newsletter/subscribe/ai"
+    method="POST" data-blog-form data-form-mode="contentos" data-stream="ai_venture_weekly" data-status-url="https://contentos-meta-connect.chinmayarora30.workers.dev/newsletter/status">
+    <input type="hidden" name="source_page" value="{{ page.url | absolute_url }}">
+    <label class="blog-form-honeypot" aria-hidden="true"><span>Website</span><input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+    <input type="hidden" name="preferences" value="ai_venture_weekly">
+    <label for="ai-newsletter-email-{{ page.url | slugify }}">Email address</label>
+    <div class="blog-newsletter-control">
+      <input id="ai-newsletter-email-{{ page.url | slugify }}" type="email" name="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
+      <button type="submit" disabled>Checking signup…</button>
+    </div>
+    <p class="blog-form-note">By subscribing, you choose the weekly AI and venture digest. Confirm your address before updates start. Unsubscribe from the email footer. {% if site.brainvomit_mode %}<a href="{{ '/privacy/' | relative_url }}">Privacy</a>{% else %}<a href="{{ '/blog/privacy/' | relative_url }}">Privacy</a>{% endif %}</p>
+    <p class="blog-form-status" role="status" aria-live="polite">Checking whether signup is open…</p>
+    <noscript><p>Email signup needs JavaScript. You can also <a href="mailto:contact@brainvomit.blog?subject=Newsletter">get in touch</a>.</p></noscript>
+  </form>
+</section>
