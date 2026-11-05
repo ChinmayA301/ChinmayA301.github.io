@@ -2,19 +2,32 @@
 layout: post
 title: "I Didn't Have Culture Shock. I Had Social Shock."
 subtitle: "Off the boat, apparently."
+date: 2026-11-04 19:20:00 -0600
 author: "Chinmay Arora"
 description: "I moved from Delhi expecting an unfamiliar culture. I found references I already understood and social rooms in which nobody understood me. Cultural fluency was not the same as belonging."
 summary: "The internet can make two places culturally adjacent without making their people socially legible to one another. This is a personal essay about moving from an urban, Westernized Indian background and discovering that recognition, history, and access do not travel with cultural fluency."
 tags: [Immigration, India, Belonging, Identity, Internet Culture, Personal Essay]
 categories: [Opinion, Personal Essay]
 content_type: "opinion"
-content_label: "Working Draft"
+content_label: "Personal Essay"
+search_phrase: "Indian immigrant cultural fluency social belonging"
 reading_time: "9 min read"
+permalink: /blog/culture-shock-social-shock/
+canonical_url: "https://app.chinmayarora.com/blog/culture-shock-social-shock/"
+og_image: "/assets/images/og-culture-shock-social-shock.png"
+image_alt: "A young Indian man recognizes the music, sport, and humor in a crowded Western bar but stands between groups with established histories."
 lang: "en"
 toc: true
-draft: true
-editorial_status: "Working personal essay. Preserve the urban, Westernized Delhi specificity; do not present it as a universal Indian immigrant experience."
+featured: false
+draft: false
+schema_type: "Article"
+keywords: "Indian immigrant, culture shock, social belonging, Delhi, identity, immigration, personal essay"
+last_modified_at: 2026-11-04
 ---
+
+![A young Indian man recognizes the music, sport, and humor in a crowded Western bar but stands between groups with established histories.](/assets/images/og-culture-shock-social-shock.png)
+
+*He recognizes the match, the song, and the joke. What has not travelled with him is shared history. Illustration generated for this essay.*
 
 ## I knew the joke
 

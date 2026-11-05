@@ -1,19 +1,32 @@
 ---
 layout: post
 title: "Too Many Lives to Live, Not Enough Time to Figure Out Which One"
+date: 2026-11-04 19:15:00 -0600
 author: "Chinmay Arora"
 description: "The freedom I wanted as a child arrived with calendars, consequences, and the knowledge that choosing one life means leaving several others untouched."
 summary: "Your mid-twenties are sold as the years when you build an adult life. They are also the years when you are still discovering what that life should contain. Freedom expands at the same moment time begins to feel expensive."
 tags: [Twenties, Identity, India, Ambition, Choice, Personal Essay]
 categories: [Opinion, Personal Essay]
 content_type: "opinion"
-content_label: "Working Draft"
+content_label: "Personal Essay"
+search_phrase: "twenties freedom choice unlived lives personal essay"
 reading_time: "8 min read"
+permalink: /blog/too-many-lives-to-live/
+canonical_url: "https://app.chinmayarora.com/blog/too-many-lives-to-live/"
+og_image: "/assets/images/og-too-many-lives-to-live.png"
+image_alt: "A young Indian man ties his football boot in a sunlit apartment among a dusty guitar, unfinished laptop project, messages, and travel bag."
 lang: "en"
 toc: true
-draft: true
-editorial_status: "Working personal essay. Keep the experience specific; do not universalize childhood in India."
+featured: false
+draft: false
+schema_type: "Article"
+keywords: "twenties, freedom, choice, India, unlived lives, adulthood, personal essay"
+last_modified_at: 2026-11-04
 ---
+
+![A young Indian man ties his football boot in a sunlit apartment among a dusty guitar, unfinished laptop project, messages, and travel bag.](/assets/images/og-too-many-lives-to-live.png)
+
+*The guitar, project, messages, and travel bag remain in the room. Choosing football for one morning does not erase them. Illustration generated for this essay.*
 
 ## Saturday morning, four possible lives
 

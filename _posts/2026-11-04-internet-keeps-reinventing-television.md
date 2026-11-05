@@ -2,19 +2,32 @@
 layout: post
 title: "The Internet Keeps Reinventing Television"
 subtitle: "And every time it does, we find somewhere new to be unserious."
+date: 2026-11-04 19:10:00 -0600
 author: "Chinmay Arora"
 description: "Internet entertainment begins loose, strange, and intimate. Then audiences arrive, money follows, studios form, and the medium rediscovers television—while the weirdness escapes somewhere else."
 summary: "This is not a literal cycle and television never fully disappears. It is a recurring lifecycle: informal creator formats attract an audience, professionalize, and become repeatable programming. The question is where experimentation goes after the format hardens."
 tags: [Internet Culture, Television, YouTube, Streaming, Creator Economy, Opinion]
 categories: [Opinion, Media Culture]
 content_type: "opinion"
-content_label: "Working Draft"
+content_label: "Opinion Essay"
+search_phrase: "internet entertainment lifecycle creators studios television"
 reading_time: "8 min read"
+permalink: /blog/internet-keeps-reinventing-television/
+canonical_url: "https://app.chinmayarora.com/blog/internet-keeps-reinventing-television/"
+og_image: "/assets/images/og-internet-reinventing-television.png"
+image_alt: "An improvised phone sketch expands through a small crew into a television-scale studio while another creator finds a new corner to experiment."
 lang: "en"
 toc: true
-draft: true
-editorial_status: "Working opinion draft. Verify named examples and add primary sources before publication."
+featured: false
+draft: false
+schema_type: "Article"
+keywords: "internet television, YouTube, livestreaming, creator economy, entertainment formats, media lifecycle"
+last_modified_at: 2026-11-04
 ---
+
+![An improvised phone sketch expands through a small crew into a television-scale studio while another creator finds a new corner to experiment.](/assets/images/og-internet-reinventing-television.png)
+
+*A loose experiment acquires a crew, a set, and a repeatable format. At the edge of the studio, somebody starts making the next strange thing. Illustration generated for this essay.*
 
 ## The television in my hand
 
