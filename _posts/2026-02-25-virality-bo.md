@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Engineering Virality with Bayesian Optimization"
+topic: data-decisions
 date: 2026-02-25
 description: "A Bayesian optimization study of virality and influence maximization, testing how sequential search, diffusion models, and graph-aware seed selection compare with simple network heuristics."
 summary: "What if trends were not just forecasted but engineered? This article explores how Bayesian Optimization transforms virality into a sequential decision-making problem."

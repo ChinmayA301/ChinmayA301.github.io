@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Successful India™"
+topic: governance-trust
 date: 2026-07-23
 author: "Chinmay Arora"
 

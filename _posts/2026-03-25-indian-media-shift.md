@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Indian Media Strategy Shift: Why the Next Growth Curve May Depend on Genre, Structure, and Cultural Repackaging"
+topic: media-culture
 date: 2026-04-03
 author: "Chinmay Arora"
 

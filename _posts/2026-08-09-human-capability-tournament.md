@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Best Human in the World Does Not Exist"
+topic: data-decisions
 date: 2026-08-09
 author: "Chinmay Arora"
 description: "Prime Human v0.1 turns a broad-capability tournament into an inspectable measurement proposal: a public taxonomy, floor-gated scoring, a live sensitivity simulator, and explicit failure conditions."

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Interactive Cultural Timeline Map: Visualizing the Movement of Civilizations, Ideas, and Influence Across Time"
+topic: interfaces-futures
 date: 2026-04-03
 author: "Chinmay Arora"
 

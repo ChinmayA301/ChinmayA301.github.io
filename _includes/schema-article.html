@@ -1,5 +1,6 @@
 {%- assign schema_blog_path = site.blog_root | default: '/blog/' -%}
 {%- assign schema_blog_url = schema_blog_path | absolute_url -%}
+{%- assign schema_topic = site.data.blog_topics.topics | where: "id", page.topic | first -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -32,7 +33,8 @@
   "isPartOf": {
     "@type": "Blog",
     "@id": "{{ schema_blog_url }}#blog"
-  }{% if page.categories %},
+  }{% if schema_topic %},
+  "articleSection": {{ schema_topic.label | jsonify }}{% elsif page.categories %},
   "articleSection": {{ page.categories | jsonify }}{% endif %}{% if page.content_type %},
   "genre": {{ page.content_label | default: page.content_type | jsonify }}{% endif %}
 }

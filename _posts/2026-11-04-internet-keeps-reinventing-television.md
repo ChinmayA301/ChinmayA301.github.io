@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Internet Keeps Reinventing Television"
+topic: media-culture
 subtitle: "And every time it does, we find somewhere new to be unserious."
 date: 2026-11-04 19:10:00 -0600
 author: "Chinmay Arora"

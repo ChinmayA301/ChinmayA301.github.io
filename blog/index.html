@@ -88,7 +88,7 @@ permalink: /blog/
       </div>
       <ol class="blog-story-list" itemscope itemtype="https://schema.org/ItemList">
         {% for post in site.posts %}
-        {% assign topic_id = site.data.blog_topics.post_topics[post.url] | default: "people-society" %}
+        {% assign topic_id = post.topic | default: "unfiled" %}
         <li data-story-item data-topic="{{ topic_id }}" data-story-order="{{ forloop.index0 }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
           <meta itemprop="position" content="{{ forloop.index }}">
           <details class="newspaper-story-row" data-story-row itemscope itemtype="https://schema.org/BlogPosting">

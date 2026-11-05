@@ -727,6 +727,7 @@ def build_blog_documents() -> list[dict[str, Any]]:
         date = str(front_matter.get("date", "")).strip()
         description = str(front_matter.get("description", "")).strip()
         summary = str(front_matter.get("summary", "")).strip()
+        topic = str(front_matter.get("topic", "")).strip()
         categories = front_matter.get("categories") or []
         tags = front_matter.get("tags") or []
         if isinstance(categories, str):
@@ -740,6 +741,7 @@ def build_blog_documents() -> list[dict[str, Any]]:
                     date,
                     description,
                     summary,
+                    topic.replace("-", " "),
                     " ".join(categories),
                     " ".join(tags),
                     body,
@@ -754,6 +756,7 @@ def build_blog_documents() -> list[dict[str, Any]]:
                     "url": url,
                     "type": "blog",
                     "date": date,
+                    "topic": topic,
                     "tags": tags,
                     "summary": summary or description or summarize_chunk(chunk),
                     "chunk_text": chunk,
@@ -1118,6 +1121,7 @@ def main() -> None:
                         "type": document["type"],
                         "source": document["type"],
                         "date": document.get("date", ""),
+                        "topic": document.get("topic", ""),
                         "tags": document.get("tags", []),
                         "summary": document.get("summary", ""),
                         "chunk_text": document["chunk_text"],

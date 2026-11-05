@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Project Restub: Turning Cigarette Waste into Bricks Through Social Entrepreneurship"
+topic: people-society
 date: 2026-05-19
 author: "Chinmay Arora"
 

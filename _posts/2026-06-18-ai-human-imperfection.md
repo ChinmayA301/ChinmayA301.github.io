@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "AI and Human Imperfection: Detecting the Pattern Breakers"
+topic: governance-trust
 date: 2026-06-16
 author: "Chinmay Arora"
 

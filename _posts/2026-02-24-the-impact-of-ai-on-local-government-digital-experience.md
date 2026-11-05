@@ -2,6 +2,7 @@
 
 layout: post
 title: "AI in Local Government DX: A Technical Deep Dive into Governance, Auditing, and Operationalization"
+topic: governance-trust
 date: 2026-02-24
 author: "Chinmay Arora"
 description: "A technical exploration of how to operationalize AI in local government through risk tiering, audit logs, success metrics, and defensible governance workflows."

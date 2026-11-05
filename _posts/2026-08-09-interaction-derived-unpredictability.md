@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Randomness Problem Nobody Seems Comfortable Talking About"
+topic: ai-engineering
 date: 2026-08-09
 author: "Chinmay Arora"
 description: "A method-first research exploration of whether heterogeneous distributed interaction can preserve unpredictability when individual entropy sources or trust assumptions fail."

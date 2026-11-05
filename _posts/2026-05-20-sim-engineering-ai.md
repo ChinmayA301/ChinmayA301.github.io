@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Simulation Engineering AI: Testing Decisions Before Reality Gets Expensive"
+topic: ai-engineering
 date: 2026-05-19
 author: "Chinmay Arora"
 

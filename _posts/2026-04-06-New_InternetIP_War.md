@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Internet’s Next Protocol Layer: A2A, ACP, UCP, ATXP and the Shift from Pages to Agents"
+topic: ai-engineering
 date: 2026-04-06
 author: "Chinmay Arora"
 description: "An exploratory technical essay on the emerging protocol stack for agentic systems - how A2A, ACP, UCP, and ATXP signal a shift from human-click web flows to interoperable, transactable AI agents."

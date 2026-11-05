@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "AI Localisation for Media: Building Culturally Intelligent Global Content Pipelines"
+topic: media-culture
 date: 2026-04-03
 author: "Chinmay Arora"
 

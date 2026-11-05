@@ -1,5 +1,6 @@
 ---
 title: "Welcome to the Blog"
+topic: people-society
 description: "A guide to how Chinmay Arora's technical blog uses BLUF summaries, structured evidence, internal links, and metadata to help readers, search engines, and AI systems find useful work."
 bluf: "Every post starts with key decisions first, then implementation detail, so both humans and LLMs can parse quickly."
 tldr:

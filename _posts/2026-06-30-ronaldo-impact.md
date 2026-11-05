@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data"
+topic: people-society
 date: 2026-07-07
 author: "Chinmay Arora"
 

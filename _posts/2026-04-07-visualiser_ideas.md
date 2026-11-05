@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "From Severance-Style Segmentation to a Subcontinent Geo-Visualizer: Designing Richer Human and Spatial Intelligence Systems"
+topic: interfaces-futures
 date: 2026-04-03
 author: "Chinmay Arora"
 

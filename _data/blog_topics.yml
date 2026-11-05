@@ -6,7 +6,7 @@ topics:
   - id: governance-trust
     label: Governance & Trust
     title: Governance, public systems, and trust
-    description: Policy, privacy, evidence, public-sector technology, and the practical machinery required to make consequential systems reviewable.
+    description: Policy, privacy, provenance, public-sector technology, and the practical machinery required to make consequential systems reviewable.
   - id: data-decisions
     label: Data & Decisions
     title: Data, measurement, and decisions
@@ -14,56 +14,12 @@ topics:
   - id: media-culture
     label: Media & Culture
     title: Media, culture, and influence
-    description: How stories, platforms, localization, and cultural exports change behavior—and how data might help us see those effects without flattening them.
+    description: How stories, platforms, creators, localization, and cultural exports change behavior—and how data might help us see those effects without flattening them.
   - id: people-society
     label: People & Society
-    title: People, performance, and society
-    description: Football, health, human capability, social enterprise, and other attempts to measure or improve messy real-world outcomes.
+    title: People, identity, and society
+    description: Personal essays on identity, migration, ambition, health, sport, social enterprise, and the pressure of building a life among messy real-world systems.
   - id: interfaces-futures
     label: Interfaces & Futures
     title: Interfaces, maps, and possible futures
-    description: Spatial computing, visualization, new software interfaces, and speculative tools that make complex systems easier to inspect.
-
-post_topics:
-  "/engineering-agent-workflows/": ai-engineering
-  "/interaction-derived-unpredictability/": ai-engineering
-  "/financial-balance-sheet-rag/": ai-engineering
-  "/simulation-engineering-ai/": ai-engineering
-  "/tracking-ai-generated-content/": ai-engineering
-  "/upe-computer-vision-biomedical-ai/": ai-engineering
-  "/agent-protocol-stack/": ai-engineering
-  "/context-passport/": ai-engineering
-
-  "/behavioral-policy-conformance-enterprise-ai/": governance-trust
-  "/succesful-india/": governance-trust
-  "/ai-governance-privacy-trust-layer/": governance-trust
-  "/signalgraph-github-fake-star-economy/": governance-trust
-  "/wax-seal-cybersecurity/": governance-trust
-  "/the-impact-of-ai-on-local-government-digital-experience/": governance-trust
-  "/segmentation/": governance-trust
-
-  "/human-capability-tournament/": data-decisions
-  "/data-science-career-audit/": data-decisions
-  "/ai-forecast-numbers/": data-decisions
-  "/success-directory-decision-intelligence/": data-decisions
-  "/virality-bo/": data-decisions
-  "/influence-maximization-bayesian-optimization-higgs/": data-decisions
-  "/bo-graph/": data-decisions
-
-  "/cultural-impact-media/": media-culture
-  "/ai-human-imperfection/": media-culture
-  "/american-media-global-power-correlation/": media-culture
-  "/ai-localisation-for-media/": media-culture
-  "/indian-media-strategy-shift/": media-culture
-
-  "/ronaldo-impact/": people-society
-  "/satiation-adjusted/": people-society
-  "/project-restub-enactus-social-entrepreneurship/": people-society
-  "/beyond-the-attention-economy/": people-society
-  "/successful-key-moment-metric/": people-society
-  "/welcome-to-the-blog/": people-society
-
-  "/end-programming-primary-interface/": interfaces-futures
-  "/text-to-ar-human-centered-standard/": interfaces-futures
-  "/severance-segmentation-and-subcontinent-geoviz/": interfaces-futures
-  "/interactive-cultural-timeline-map/": interfaces-futures
+    description: Spatial computing, visualization, personal AI, new software interfaces, and speculative tools that make complex systems easier to inspect and operate.

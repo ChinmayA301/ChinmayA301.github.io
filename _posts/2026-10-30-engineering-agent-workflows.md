@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Engineering Agent Workflows with Persistent State and Human Review"
+topic: ai-engineering
 date: 2026-10-30 09:00:00 -0500
 author: "Chinmay Arora"
 description: "Implementation notes from Venture Command, ContentOS, and Aegis: versioned context, validated plans, exact-content approval, recoverable jobs, and evaluation evidence."

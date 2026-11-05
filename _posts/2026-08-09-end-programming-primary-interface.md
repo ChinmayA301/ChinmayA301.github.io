@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The End of Programming as the Primary Interface"
+topic: interfaces-futures
 date: 2026-08-09
 author: "Chinmay Arora"
 description: "A research exploration of software built from inspectable intent graphs, semantic diffs, observed mismatches, behavioral evidence, and human approval while source code becomes a generated implementation artifact."

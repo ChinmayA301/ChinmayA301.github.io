@@ -2,6 +2,7 @@
 
 layout: post
 title: "Segmentation for Public Sector DX: From Lived Experience Signals to Safer AI Deployment"
+topic: governance-trust
 date: 2026-02-24
 author: "Chinmay Arora"
 description: "A technical perspective on building resident/customer segmentation that supports equitable digital experience and becomes the measurement backbone for responsible AI integration."

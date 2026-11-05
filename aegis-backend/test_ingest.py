@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import importlib.util
+import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 import httpx
 
@@ -57,6 +59,27 @@ class FakeIndex:
 
 
 class IngestionCacheTests(unittest.TestCase):
+    def test_blog_topic_is_searchable_and_preserved_as_metadata(self):
+        with tempfile.TemporaryDirectory() as temp:
+            posts_dir = Path(temp)
+            (posts_dir / "2026-11-04-example.md").write_text(
+                """---
+title: Example article
+topic: interfaces-futures
+tags: [Personal AI]
+---
+The article body.
+""",
+                encoding="utf-8",
+            )
+
+            with patch.object(ingest, "POSTS_DIR", posts_dir):
+                documents = ingest.build_blog_documents()
+
+        self.assertEqual(len(documents), 1)
+        self.assertEqual(documents[0]["topic"], "interfaces-futures")
+        self.assertIn("interfaces futures", documents[0]["chunk_text"])
+
     def test_embedding_fingerprint_changes_with_content(self):
         original = document("doc-1", "alpha")
         changed = document("doc-1", "beta")

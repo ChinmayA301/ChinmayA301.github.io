@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "I Didn't Have Culture Shock. I Had Social Shock."
+topic: people-society
 subtitle: "Off the boat, apparently."
 date: 2026-11-04 19:20:00 -0600
 author: "Chinmay Arora"

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Successful Key Moment (SKM): A Football Metric for Real Match Influence"
+topic: data-decisions
 date: 2026-04-03
 author: "Chinmay Arora"
 

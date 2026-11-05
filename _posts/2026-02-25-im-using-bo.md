@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Influence Maximization using BO"
+topic: data-decisions
 subtitle: "What actually decides whether an optimizer beats a heuristic isn't the optimizer - it's the search space you hand it."
 date: 2026-02-25
 author: "Chinmay Arora"

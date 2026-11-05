@@ -1,6 +1,8 @@
 name: CAI Portfolio Ingestion
 
 on:
+  schedule:
+    - cron: '20 8 * * *'
   push:
     branches:
       - main

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Where Do the AI Numbers Actually Come From? Opening the Models Behind the Forecasts"
+topic: data-decisions
 date: 2026-06-12
 author: "Chinmay Arora"
 

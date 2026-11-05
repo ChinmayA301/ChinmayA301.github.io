@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Claude Memory changes the game - but the real unlock is portable, user-owned memory"
+topic: ai-engineering
 date: 2026-03-04
 author: "Chinmay Arora"
 description: "Claude’s Memory + import flow is a major validation of a bigger shift: the next battleground isn’t model quality, it’s continuity. This post breaks down the remaining gap - portable, user-owned memory with provenance, diffs, privacy scopes, and token-aware context packing."

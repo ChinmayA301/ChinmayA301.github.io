@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Too Many Lives to Live, Not Enough Time to Figure Out Which One"
+topic: people-society
 date: 2026-11-04 19:15:00 -0600
 author: "Chinmay Arora"
 description: "The freedom I wanted as a child arrived with calendars, consequences, and the knowledge that choosing one life means leaving several others untouched."

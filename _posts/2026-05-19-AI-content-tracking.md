@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Tracking AI-Generated Content: Simple, Practical Systems for Text, Images, Code, and Execution Patterns"
+topic: governance-trust
 date: 2026-05-19
 author: "Chinmay Arora"
 

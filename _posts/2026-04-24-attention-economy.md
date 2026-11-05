@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Beyond the Attention Economy: Rebuilding Reward Around Contribution, Trust, and Real-World Outcomes"
+topic: people-society
 date: 2026-04-24
 author: "Chinmay Arora"
 

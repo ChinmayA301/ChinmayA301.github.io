@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Financial Balance-Sheet RAG: Building Citation-Grounded Document Intelligence"
+topic: ai-engineering
 date: 2026-07-22
 author: "Chinmay Arora"
 description: "A financial document RAG case study showing how FinBizInfo combines OCR, retrieval, structured extraction, ratio checks, and source citations for reviewable balance-sheet analysis."

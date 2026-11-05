@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "AI Builders Are the New Starving Artists"
+topic: media-culture
 date: 2026-11-04
 author: "Chinmay Arora"
 description: "AI does not turn every software builder into an artist. It does place more builders inside an old artistic predicament: making has become easier, while attention, judgment, distribution, and a living remain scarce."

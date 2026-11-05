@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Software Should Be a Command, Not a Product"
+topic: interfaces-futures
 date: 2026-11-04
 author: "Chinmay Arora"
 description: "Why are people still opening five applications to complete one ordinary task? The next software interface should begin with authorized intent, assemble the capabilities and interface the job requires, and return a result that can be inspected."

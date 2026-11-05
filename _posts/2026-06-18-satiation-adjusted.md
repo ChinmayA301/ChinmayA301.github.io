@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Satiation-Adjusted Serving System: Nutrition Labels Built Around Real Meals, Not Legal Portions"
+topic: people-society
 date: 2026-06-16
 author: "Chinmay Arora"
 

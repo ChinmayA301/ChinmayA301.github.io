@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Success Directory: A Decision Intelligence Framework for High-Stakes, Ambiguous Choices"
+topic: data-decisions
 date: 2026-04-24
 author: "Chinmay Arora"
 

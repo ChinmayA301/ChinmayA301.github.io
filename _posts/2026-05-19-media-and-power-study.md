@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "American Media and Global Power: A Correlational Study of Culture, Influence, and Superpower Rise"
+topic: media-culture
 date: 2026-05-19
 author: "Chinmay Arora"
 

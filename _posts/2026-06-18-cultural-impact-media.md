@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Measuring the Cultural Impact of Media: From Dialogue to Tourism, Fashion, Food, and Public Opinion"
+topic: media-culture
 date: 2026-06-16
 author: "Chinmay Arora"
 

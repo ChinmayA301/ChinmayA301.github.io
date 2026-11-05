@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Personal Intelligence Arrives as Permission, Not AGI"
+topic: interfaces-futures
 date: 2026-11-04
 author: "Chinmay Arora"
 description: "The components of a persistent personal intelligence already exist across connected context, health data, wearable perception, memory, and tool use. The discontinuity is not intelligence alone; it is delegated authority."

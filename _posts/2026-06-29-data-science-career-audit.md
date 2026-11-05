@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Data Science as a Career Was Made Up. The Work Was Not."
+topic: data-decisions
 date: 2026-06-29
 author: "Chinmay Arora"
 

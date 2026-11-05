@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "REA Is Not Really About Reverse Engineering"
+topic: ai-engineering
 date: 2026-11-04
 author: "Chinmay Arora"
 description: "Reverse Engineer Anything is a signal that software boundaries are weakening: agents can inspect useful behavior, extract evidence, and rebuild authorized capabilities while semantic models become the missing layer between intent and implementation."

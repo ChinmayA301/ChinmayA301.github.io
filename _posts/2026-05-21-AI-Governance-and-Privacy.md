@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "AI Governance and Privacy: Building the Trust Layer for High-Risk AI Adoption"
+topic: governance-trust
 date: 2026-05-19
 author: "Chinmay Arora"
 

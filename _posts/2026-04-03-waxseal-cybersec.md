@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Wax Seal Cybersecurity: Designing Trust, Provenance, and Tamper Evidence from an Old Idea"
+topic: governance-trust
 date: 2026-04-03
 author: "Chinmay Arora"
 
