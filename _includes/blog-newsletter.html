@@ -1,21 +1,27 @@
-<section class="blog-newsletter" id="newsletter" aria-labelledby="newsletter-heading-{{ page.url | slugify }}">
+<section class="blog-newsletter" id="newsletter" aria-labelledby="newsletter-heading">
   <div class="blog-newsletter-copy">
-    <h2 id="newsletter-heading-{{ page.url | slugify }}">Get the next brain dump.</h2>
-    <p>A note when a new Brain Vomit article goes live. Just the writing, straight to your inbox.</p>
-    <p class="newsletter-related">Looking for the weekly AI and venture digest? <a href="{{ '/blog/newsletter/ai/' | relative_url }}">Subscribe to What’s Up With AI</a>.</p>
+    <p class="blog-community-kicker">Newsletter, eventually</p>
+    <h2 id="newsletter-heading">Get the next brain dump.</h2>
+    <p>No fixed cadence yet. Leave your email for the first issue when it exists.</p>
+    <p class="newsletter-related">For the separate weekly AI and venture digest, <a href="{{ '/blog/newsletter/ai/' | relative_url }}">join What’s Up With AI</a>.</p>
   </div>
-  <form class="blog-newsletter-form" action="https://contentos-meta-connect.chinmayarora30.workers.dev/newsletter/subscribe/blog"
-    method="POST" data-blog-form data-form-mode="contentos" data-stream="blog_updates" data-status-url="https://contentos-meta-connect.chinmayarora30.workers.dev/newsletter/status">
+  <form class="blog-newsletter-form"
+    action="https://script.google.com/macros/s/AKfycbwq0MIbBiyg6A7oI_e1rWpXSKmT5AA64Nf2Ut4pSzGWnOQ7bTd0tTqHcP8ToMeQnUg/exec"
+    method="POST" data-blog-form data-form-mode="google-sheets"
+    data-success-message="Your signup request is on its way. Email delivery is still being connected.">
     <input type="hidden" name="source_page" value="{{ page.url | absolute_url }}">
-    <label class="blog-form-honeypot" aria-hidden="true"><span>Website</span><input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-    <input type="hidden" name="preferences" value="blog_updates">
+    <input type="hidden" name="consent" value="Yes">
+    <label class="blog-form-honeypot" aria-hidden="true">
+      <span>Website</span>
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </label>
     <label for="newsletter-email-{{ page.url | slugify }}">Email address</label>
     <div class="blog-newsletter-control">
-      <input id="newsletter-email-{{ page.url | slugify }}" type="email" name="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
-      <button type="submit" disabled>Checking signup…</button>
+      <input id="newsletter-email-{{ page.url | slugify }}" type="email" name="email" autocomplete="email"
+        placeholder="you@example.com" maxlength="254" required>
+      <button type="submit">Join the future issue</button>
     </div>
-    <p class="blog-form-note">By subscribing, you choose new-blog email updates. Confirm your address before updates start. Unsubscribe from the email footer. {% if site.brainvomit_mode %}<a href="{{ '/privacy/' | relative_url }}">Privacy</a>{% else %}<a href="{{ '/blog/privacy/' | relative_url }}">Privacy</a>{% endif %}</p>
-    <p class="blog-form-status" role="status" aria-live="polite">Checking whether signup is open…</p>
-    <noscript><p>Email signup needs JavaScript. You can also <a href="mailto:contact@brainvomit.blog?subject=Newsletter">get in touch</a>.</p></noscript>
+    <p class="blog-form-note">One list. No schedule. Unsubscribe whenever. {% if site.brainvomit_mode %}<a href="{{ '/privacy/' | relative_url }}">How your email is handled.</a>{% else %}<a href="{{ '/blog/privacy/' | relative_url }}">How your email is handled.</a>{% endif %}</p>
+    <p class="blog-form-status" role="status" aria-live="polite"></p>
   </form>
 </section>
