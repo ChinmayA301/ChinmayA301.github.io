@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
+import random
 import re
 import time
 from html.parser import HTMLParser
@@ -22,10 +24,13 @@ APP_SITE_URL = "https://app.chinmayarora.com"
 DEFAULT_EMBED_MODEL = "models/gemini-embedding-001"
 SUMMARY_MODEL = "models/gemini-2.5-flash"
 CHUNK_WORDS = 220
-EMBED_BATCH_SIZE = 20
-API_CALL_DELAY_SECONDS = 20
-RATE_LIMIT_RETRY_SECONDS = 45
-MAX_RETRIES = 2
+DEFAULT_EMBED_BATCH_SIZE = 8
+DEFAULT_API_CALL_DELAY_SECONDS = 3.0
+DEFAULT_RATE_LIMIT_RETRY_SECONDS = 15.0
+DEFAULT_MAX_RETRY_DELAY_SECONDS = 120.0
+DEFAULT_MAX_RETRIES = 4
+PINECONE_FETCH_BATCH_SIZE = 100
+PINECONE_UPSERT_BATCH_SIZE = 50
 DEFAULT_MAX_INGEST_DOCUMENTS = 240
 MAX_CHUNKS_PER_TITLE = {
     "page": 3,
@@ -155,6 +160,19 @@ def parse_optional_int(value: str | None) -> int | None:
     return parsed if parsed > 0 else None
 
 
+def parse_optional_float(value: str | None) -> float | None:
+    if value is None:
+        return None
+    text = value.strip()
+    if not text:
+        return None
+    try:
+        parsed = float(text)
+    except ValueError:
+        return None
+    return parsed if parsed >= 0 else None
+
+
 def parse_bool(value: str | None) -> bool:
     return (value or "").strip().lower() in {"1", "true", "yes", "on"}
 
@@ -200,6 +218,154 @@ def post_url_from_front_matter(front_matter: dict[str, Any], slug: str) -> str:
 
 def sanitize_dense_vector(values: list[Any]) -> list[float]:
     return [float(value) for value in values]
+
+
+def embedding_fingerprint(
+    document: dict[str, Any],
+    model: str,
+    output_dimensionality: int | None,
+) -> str:
+    payload = {
+        "model": model,
+        "output_dimensionality": output_dimensionality,
+        "title": str(document.get("title", "")),
+        "fulltext": str(document.get("fulltext", "")),
+    }
+    serialized = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
+def vector_field(vector: Any, field: str, default: Any = None) -> Any:
+    if isinstance(vector, dict):
+        return vector.get(field, default)
+    return getattr(vector, field, default)
+
+
+def reusable_dense_embedding(
+    existing_vector: Any,
+    document: dict[str, Any],
+    model: str,
+    output_dimensionality: int | None,
+    *,
+    allow_legacy_metadata_match: bool = True,
+) -> list[float] | None:
+    if existing_vector is None:
+        return None
+
+    raw_values = vector_field(existing_vector, "values", []) or []
+    values = sanitize_dense_vector(list(raw_values))
+    if not values:
+        return None
+    if output_dimensionality and len(values) != output_dimensionality:
+        return None
+
+    metadata = vector_field(existing_vector, "metadata", {}) or {}
+    if not isinstance(metadata, dict):
+        return None
+
+    expected_fingerprint = embedding_fingerprint(document, model, output_dimensionality)
+    stored_fingerprint = str(metadata.get("embedding_fingerprint", "")).strip()
+    if stored_fingerprint:
+        return values if stored_fingerprint == expected_fingerprint else None
+
+    if not allow_legacy_metadata_match:
+        return None
+    if str(metadata.get("title", "")) != str(document.get("title", "")):
+        return None
+    if str(metadata.get("chunk_text", "")) != str(document.get("chunk_text", "")):
+        return None
+    return values
+
+
+def fetch_existing_vectors(
+    index: Any,
+    namespace: str,
+    document_ids: list[str],
+    batch_size: int = PINECONE_FETCH_BATCH_SIZE,
+) -> dict[str, Any]:
+    existing: dict[str, Any] = {}
+    for start in range(0, len(document_ids), batch_size):
+        ids = document_ids[start:start + batch_size]
+        if not ids:
+            continue
+        response = index.fetch(ids=ids, namespace=namespace)
+        response_vectors = vector_field(response, "vectors", {}) or {}
+        if isinstance(response_vectors, dict):
+            existing.update(response_vectors)
+    return existing
+
+
+def list_existing_vector_ids(index: Any, namespace: str) -> set[str]:
+    existing_ids: set[str] = set()
+    for page in index.list(namespace=namespace, limit=PINECONE_FETCH_BATCH_SIZE):
+        if isinstance(page, (list, tuple)):
+            items = page
+        else:
+            items = vector_field(page, "vectors", []) or []
+        for item in items:
+            vector_id = item if isinstance(item, str) else vector_field(item, "id", "")
+            if vector_id:
+                existing_ids.add(str(vector_id))
+    return existing_ids
+
+
+def reconcile_pinecone_index(
+    index: Any,
+    namespace: str,
+    vectors: list[dict[str, Any]],
+    *,
+    prune_stale: bool,
+    batch_size: int = PINECONE_UPSERT_BATCH_SIZE,
+) -> int:
+    current_ids = {str(vector["id"]) for vector in vectors}
+    stale_ids: set[str] = set()
+    if prune_stale:
+        try:
+            stale_ids = list_existing_vector_ids(index, namespace) - current_ids
+        except Exception as exc:
+            print(
+                "::warning::Could not list existing Pinecone vector IDs; "
+                f"stale-vector pruning was skipped without clearing the namespace: {exc}"
+            )
+
+    for idx in range(0, len(vectors), batch_size):
+        index.upsert(vectors=vectors[idx:idx + batch_size], namespace=namespace)
+
+    ordered_stale_ids = sorted(stale_ids)
+    for idx in range(0, len(ordered_stale_ids), batch_size):
+        index.delete(ids=ordered_stale_ids[idx:idx + batch_size], namespace=namespace)
+
+    return len(stale_ids)
+
+
+def partition_embeddings(
+    documents: list[dict[str, Any]],
+    existing_vectors: dict[str, Any],
+    model: str,
+    output_dimensionality: int | None,
+) -> tuple[dict[str, list[float]], list[dict[str, Any]], int]:
+    reused: dict[str, list[float]] = {}
+    pending: list[dict[str, Any]] = []
+    legacy_reuse_count = 0
+
+    for document in documents:
+        document_id = str(document["id"])
+        existing_vector = existing_vectors.get(document_id)
+        dense_embedding = reusable_dense_embedding(
+            existing_vector,
+            document,
+            model,
+            output_dimensionality,
+        )
+        if dense_embedding is None:
+            pending.append(document)
+            continue
+        metadata = vector_field(existing_vector, "metadata", {}) or {}
+        if not str(metadata.get("embedding_fingerprint", "")).strip():
+            legacy_reuse_count += 1
+        reused[document_id] = dense_embedding
+
+    return reused, pending, legacy_reuse_count
 
 
 def sanitize_sparse_vector(vector: Any) -> dict[str, list[float] | list[int]]:
@@ -350,24 +516,110 @@ def embed_documents(
 
 
 def is_rate_limit_error(exc: Exception) -> bool:
+    response = getattr(exc, "response", None)
+    if response is not None and getattr(response, "status_code", None) == 429:
+        return True
     message = str(exc).lower()
     return any(token in message for token in ["429", "rate limit", "resource_exhausted", "too many requests"])
 
 
-def call_gemini_with_backoff(fn):
+def is_retryable_gemini_error(exc: Exception) -> bool:
+    if is_rate_limit_error(exc):
+        return True
+    response = getattr(exc, "response", None)
+    status_code = getattr(response, "status_code", None)
+    if isinstance(status_code, int) and status_code in {500, 502, 503, 504}:
+        return True
+    return isinstance(exc, (httpx.TimeoutException, httpx.RequestError))
+
+
+def retry_after_seconds(exc: Exception) -> float | None:
+    response = getattr(exc, "response", None)
+    headers = getattr(response, "headers", None)
+    if not headers:
+        return None
+    raw_value = headers.get("Retry-After") or headers.get("retry-after")
+    if raw_value is None:
+        return None
+    try:
+        parsed = float(raw_value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed >= 0 else None
+
+
+def gemini_error_detail(exc: Exception) -> str:
+    response = getattr(exc, "response", None)
+    if response is None:
+        return str(exc)
+    try:
+        payload = response.json()
+    except Exception:
+        return str(exc)
+    error = payload.get("error", {}) if isinstance(payload, dict) else {}
+    if not isinstance(error, dict):
+        return str(exc)
+    status = str(error.get("status", "")).strip()
+    message = str(error.get("message", "")).strip()
+    return ": ".join(part for part in [status, message] if part) or str(exc)
+
+
+def call_gemini_with_backoff(
+    fn,
+    *,
+    max_retries: int | None = None,
+    base_delay_seconds: float | None = None,
+    max_delay_seconds: float | None = None,
+    success_delay_seconds: float | None = None,
+    sleep_fn=time.sleep,
+    random_fn=random.uniform,
+):
+    max_retries = max_retries or parse_optional_int(os.getenv("GEMINI_MAX_RETRIES")) or DEFAULT_MAX_RETRIES
+    if base_delay_seconds is None:
+        base_delay_seconds = (
+            parse_optional_float(os.getenv("GEMINI_RETRY_BASE_SECONDS"))
+            if os.getenv("GEMINI_RETRY_BASE_SECONDS") is not None
+            else DEFAULT_RATE_LIMIT_RETRY_SECONDS
+        )
+    if max_delay_seconds is None:
+        max_delay_seconds = (
+            parse_optional_float(os.getenv("GEMINI_RETRY_MAX_SECONDS"))
+            if os.getenv("GEMINI_RETRY_MAX_SECONDS") is not None
+            else DEFAULT_MAX_RETRY_DELAY_SECONDS
+        )
+    if success_delay_seconds is None:
+        success_delay_seconds = (
+            parse_optional_float(os.getenv("GEMINI_API_CALL_DELAY_SECONDS"))
+            if os.getenv("GEMINI_API_CALL_DELAY_SECONDS") is not None
+            else DEFAULT_API_CALL_DELAY_SECONDS
+        )
+
+    base_delay_seconds = DEFAULT_RATE_LIMIT_RETRY_SECONDS if base_delay_seconds is None else base_delay_seconds
+    max_delay_seconds = DEFAULT_MAX_RETRY_DELAY_SECONDS if max_delay_seconds is None else max_delay_seconds
+    success_delay_seconds = DEFAULT_API_CALL_DELAY_SECONDS if success_delay_seconds is None else success_delay_seconds
+
     last_error = None
-    for attempt in range(1, MAX_RETRIES + 1):
+    for attempt in range(1, max_retries + 1):
         try:
             result = fn()
-            time.sleep(API_CALL_DELAY_SECONDS)
+            if success_delay_seconds > 0:
+                sleep_fn(success_delay_seconds)
             return result
         except Exception as exc:
             last_error = exc
-            if not is_rate_limit_error(exc) or attempt == MAX_RETRIES:
+            if not is_retryable_gemini_error(exc) or attempt == max_retries:
                 raise
-            wait_seconds = RATE_LIMIT_RETRY_SECONDS * attempt
-            print(f"Gemini rate limit hit. Waiting {wait_seconds}s before retry {attempt + 1}/{MAX_RETRIES}...")
-            time.sleep(wait_seconds)
+            server_delay = retry_after_seconds(exc)
+            exponential_delay = min(base_delay_seconds * (2 ** (attempt - 1)), max_delay_seconds)
+            wait_floor = max(server_delay or 0.0, exponential_delay)
+            jitter = random_fn(0.0, min(max(wait_floor * 0.2, 0.0), 10.0))
+            wait_seconds = min(wait_floor + jitter, max_delay_seconds)
+            detail = gemini_error_detail(exc)
+            print(
+                f"Gemini request failed with a retryable error ({detail}). "
+                f"Waiting {wait_seconds:.1f}s before retry {attempt + 1}/{max_retries}..."
+            )
+            sleep_fn(wait_seconds)
     raise last_error
 
 
@@ -786,10 +1038,13 @@ def main() -> None:
     pinecone_host = require_env("PINECONE_HOST")
     pinecone_index_name = os.getenv("PINECONE_INDEX") or "portfolio-index"
     pinecone_namespace = os.getenv("PINECONE_NAMESPACE") or "portfolio"
-    reset_namespace = parse_bool(os.getenv("PINECONE_RESET_NAMESPACE"))
+    prune_stale_vectors = parse_bool(os.getenv("PINECONE_PRUNE_STALE_VECTORS")) or parse_bool(
+        os.getenv("PINECONE_RESET_NAMESPACE")
+    )
     data_dir = Path(os.getenv("DATA_DIR", str(DEFAULT_DATA_DIR))).resolve()
     embed_model = os.getenv("GEMINI_EMBED_MODEL", DEFAULT_EMBED_MODEL)
     embed_dimensions = parse_optional_int(os.getenv("GEMINI_EMBED_DIMENSIONS"))
+    embed_batch_size = parse_optional_int(os.getenv("GEMINI_EMBED_BATCH_SIZE")) or DEFAULT_EMBED_BATCH_SIZE
     max_documents = parse_optional_int(os.getenv("MAX_INGEST_DOCUMENTS")) or DEFAULT_MAX_INGEST_DOCUMENTS
     manual_context_file = os.getenv("MANUAL_CONTEXT_FILE")
 
@@ -806,11 +1061,26 @@ def main() -> None:
     corpus = [doc["chunk_text"] for doc in documents]
     bm25 = BM25Encoder().fit(corpus)
 
-    vectors = []
+    client = Pinecone(api_key=pinecone_api_key)
+    index = client.Index(host=pinecone_host)
+    document_ids = [str(document["id"]) for document in documents]
+    existing_vectors = fetch_existing_vectors(index, pinecone_namespace, document_ids)
+    dense_vectors_by_id, pending_documents, legacy_reuse_count = partition_embeddings(
+        documents,
+        existing_vectors,
+        embed_model,
+        embed_dimensions,
+    )
+    print(
+        f"Reusing {len(dense_vectors_by_id)} existing dense embeddings "
+        f"({legacy_reuse_count} migrated from legacy metadata); "
+        f"embedding {len(pending_documents)} new or changed documents."
+    )
+
     with httpx.Client(timeout=30.0) as gemini_client:
         try:
-            for start in range(0, len(documents), EMBED_BATCH_SIZE):
-                batch_docs = documents[start:start + EMBED_BATCH_SIZE]
+            for start in range(0, len(pending_documents), embed_batch_size):
+                batch_docs = pending_documents[start:start + embed_batch_size]
                 dense_vectors = embed_documents(
                     gemini_client,
                     gemini_api_key,
@@ -819,46 +1089,60 @@ def main() -> None:
                     embed_dimensions,
                 )
                 for document, dense_vector in zip(batch_docs, dense_vectors):
-                    sparse_vector = sanitize_sparse_vector(bm25.encode_documents(document["chunk_text"]))
-                    vectors.append(
-                        {
-                            "id": document["id"],
-                            "values": dense_vector,
-                            "sparse_values": sparse_vector,
-                            "metadata": {
-                                "title": document["title"],
-                                "url": document["url"],
-                                "type": document["type"],
-                                "source": document["type"],
-                                "date": document.get("date", ""),
-                                "tags": document.get("tags", []),
-                                "summary": document.get("summary", ""),
-                                "chunk_text": document["chunk_text"],
-                            },
-                        }
-                    )
+                    dense_vectors_by_id[str(document["id"])] = dense_vector
         except Exception as exc:
             if is_rate_limit_error(exc) and quota_skip_enabled():
                 print(
                     "::warning::Gemini embedding quota is currently rate-limited. "
-                    "Skipped Pinecone update and left the existing portfolio index intact."
+                    f"Could not embed {len(pending_documents)} new or changed documents; "
+                    "skipped Pinecone reconciliation and left the existing portfolio index intact."
                 )
                 return
             raise
 
-        client = Pinecone(api_key=pinecone_api_key)
-        index = client.Index(host=pinecone_host)
-        if reset_namespace:
-            index.delete(delete_all=True, namespace=pinecone_namespace)
-            print(f"Cleared existing vectors in namespace '{pinecone_namespace}'.")
+        vectors = []
+        for document in documents:
+            document_id = str(document["id"])
+            dense_vector = dense_vectors_by_id.get(document_id)
+            if dense_vector is None:
+                raise RuntimeError(f"No dense embedding available for document: {document_id}")
+            sparse_vector = sanitize_sparse_vector(bm25.encode_documents(document["chunk_text"]))
+            vectors.append(
+                {
+                    "id": document_id,
+                    "values": dense_vector,
+                    "sparse_values": sparse_vector,
+                    "metadata": {
+                        "title": document["title"],
+                        "url": document["url"],
+                        "type": document["type"],
+                        "source": document["type"],
+                        "date": document.get("date", ""),
+                        "tags": document.get("tags", []),
+                        "summary": document.get("summary", ""),
+                        "chunk_text": document["chunk_text"],
+                        "embedding_model": embed_model,
+                        "embedding_dimensions": len(dense_vector),
+                        "embedding_fingerprint": embedding_fingerprint(
+                            document,
+                            embed_model,
+                            embed_dimensions,
+                        ),
+                    },
+                }
+            )
 
-        batch_size = 50
-        for idx in range(0, len(vectors), batch_size):
-            index.upsert(vectors=vectors[idx:idx + batch_size], namespace=pinecone_namespace)
+        stale_count = reconcile_pinecone_index(
+            index,
+            pinecone_namespace,
+            vectors,
+            prune_stale=prune_stale_vectors,
+        )
 
         print(
             f"Upserted {len(vectors)} vectors to Pinecone index '{pinecone_index_name}' "
-            f"using host '{pinecone_host}' in namespace '{pinecone_namespace}'."
+            f"using host '{pinecone_host}' in namespace '{pinecone_namespace}'; "
+            f"pruned {stale_count} stale vectors after the replacement set was accepted."
         )
         try:
             print(summarize_run(gemini_client, gemini_api_key, pinecone_index_name, pinecone_namespace, documents))

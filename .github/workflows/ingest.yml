@@ -21,9 +21,14 @@ on:
       - 'aegis-backend/pyproject.toml'
   workflow_dispatch:
 
+concurrency:
+  group: portfolio-ingestion
+  cancel-in-progress: true
+
 jobs:
   ingest:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: aegis-backend
@@ -41,6 +46,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-ingest.txt
 
+      - name: Test ingestion cache and retry behavior
+        run: python -m unittest test_ingest.py
+
       - name: Run Ingestion Script
         env:
           PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
@@ -50,8 +58,13 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_EMBED_MODEL: models/gemini-embedding-001
           GEMINI_EMBED_DIMENSIONS: 1024
+          GEMINI_EMBED_BATCH_SIZE: 8
+          GEMINI_API_CALL_DELAY_SECONDS: 3
+          GEMINI_MAX_RETRIES: 4
+          GEMINI_RETRY_BASE_SECONDS: 15
+          GEMINI_RETRY_MAX_SECONDS: 120
           MAX_INGEST_DOCUMENTS: 240
-          ALLOW_INGEST_QUOTA_SKIP: false
-          PINECONE_RESET_NAMESPACE: true
+          ALLOW_INGEST_QUOTA_SKIP: true
+          PINECONE_PRUNE_STALE_VECTORS: true
           DATA_DIR: ../data
         run: python ingest.py
