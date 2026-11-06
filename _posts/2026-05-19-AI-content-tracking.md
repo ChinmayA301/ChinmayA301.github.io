@@ -574,6 +574,6 @@ Practical trust.
 
 - GitHub profile: https://github.com/ChinmayA301
 - Portfolio / The Lab: https://app.chinmayarora.com
-- Project repository: https://github.com/ChinmayA301/ai-content-provenance-layer
+- Companion code: not yet published
 - Possible MVP: browser extension or LMS plugin for document provenance, draft history, paste-event tracking, source validation, and AI-assistance disclosure
 - Possible implementation stack: Python, FastAPI, React, browser extension APIs, GitHub Actions, metadata parsers, C2PA tooling, document diffing

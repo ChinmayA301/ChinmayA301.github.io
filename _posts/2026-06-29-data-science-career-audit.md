@@ -6,7 +6,7 @@ date: 2026-06-29
 author: "Chinmay Arora"
 
 description: "A source-backed descriptive audit of data science as a labor-market category - real BLS/HAI/McKinsey/WEF figures plus 700k+ real job postings - separating the synthetic job title from the durable work."
-summary: "Data science boomed as a job title because companies had too much data and too little clarity. This audit treats the title as a dataset: it uses public labor-market figures (BLS, Stanford HAI, McKinsey, WEF) plus 728k real 2023 job postings and a 2026 snapshot to show a contradiction - the occupation is still projected to grow ~11x faster than all occupations, while its procedural workflow (SQL, cleaning, dashboards, standard models) is exactly what AI is compressing. GenAI/LLM language went from ~0.1% of 2023 data postings to ~27% of a 2026 snapshot. The argument is precise: the title is synthetic, but the value - problem framing, domain judgment, validation, decision design - is real. Descriptive only; no causal claims."
+summary: "Data science boomed as a job title because companies had too much data and too little clarity. This audit treats the title as a dataset: it uses public labor-market figures (BLS, Stanford HAI, McKinsey, WEF) plus 728k real 2023 job postings and a 2026 snapshot to show a contradiction - the occupation is still projected to grow ~11x faster than all occupations, while its procedural workflow (SQL, cleaning, dashboards, standard models) is exactly what AI is compressing. GenAI/LLM language appears in ~27% of a 2026 snapshot of data postings and was already rising within 2023. The argument is precise: the title is synthetic, but the value - problem framing, domain judgment, validation, decision design - is real. Descriptive only; no causal claims."
 
 categories: [Data-Science, Labor-Market, Applied-Research]
 tags: [Data-Science, Labor-Market, Job-Postings, NLP, GenAI, AI-and-Work, Career, Descriptive-Audit, BLS]
@@ -21,19 +21,21 @@ featured: false
 draft: false
 schema_type: "Article"
 keywords: "data science career, data science labor market, is data science dead, BLS data scientist, AI job automation, GenAI job postings, data science skills, job posting NLP, descriptive audit"
-last_modified_at: 2026-06-29
+last_modified_at: 2026-11-05
 content_type: "research_study"
 content_label: "Research Study"
 search_phrase: "data science labor market audit"
 positioning_note: "Descriptive study using public labor-market sources, 728k 2023 job postings, and a separate 2026 snapshot; cross-source comparisons are directional and not causal."
 ---
 
+> **Correction, November 2026.** An audit found two errors, now fixed. The receipts table reported a "31.1% GenAI share of US private AI investment", which divided *global* GenAI investment by *US* AI investment; it now reports the global GenAI figure on its own. And the post presented the 2023 GenAI rate (~0.1%) as evidence that GenAI language was absent; the 2023 skill vocabulary cannot detect that language well enough to support that, so the 2023 level is now described as an instrument floor.
+
 ## Key takeaways
 
 - "Data scientist" is a synthetic labor-market title - a bundle of statistics, programming, dashboards, ML, and business translation - not a discovered discipline. The work predates the title.
 - The occupation is still growing: BLS projects 34% growth for data scientists, 2024–2034 (~11x all occupations). Data science is not "dead."
 - But the bundle is being unbundled. Across 728k real 2023 postings, "Data Analyst," "Data Engineer," and "Data Scientist" are near-equal in volume and ask for completely different stacks.
-- GenAI/LLM language went from ~0.1% of 2023 data postings to ~27% of a 2026 snapshot (directional, cross-source). The procedural layer is being automated.
+- GenAI/LLM language was already rising within 2023 (about 1.7x from the first half to the second, on one instrument) and appears in ~27% of a 2026 snapshot of data postings. The 2023 and 2026 figures come from different instruments, so they show direction, not a measured jump. The procedural layer is being automated.
 - The pressure is uneven. External payroll research (Stanford, 2025) shows early-career workers (22–25) in the most AI-exposed jobs down ~13% in relative employment while senior peers held steady. The entry rung is the most exposed.
 - The durable value moves up: problem framing, domain judgment, causal reasoning, validation, decision design. The title was the bundle; the value was never the title.
 - This is a descriptive, source-backed audit - no causal claims, no fitted regression.
@@ -68,7 +70,7 @@ Two layers, both reproducible from the [companion repo](https://github.com/Chinm
 | Growth vs. all occupations (3.1%) | ~10.97x |
 | Median pay, 2024 (BLS) | $112,590 |
 | Org AI adoption, 2023 → 2024 (Stanford HAI) | 55% → 78% |
-| GenAI share of US private AI investment (HAI) | 31.1% |
+| Global private investment in GenAI, 2024 (HAI) | $33.9B |
 | Orgs reviewing *all* GenAI output before use (McKinsey) | 27% |
 | Employers expecting AI to transform their business by 2030 (WEF) | 86% |
 
@@ -132,7 +134,7 @@ Three near-equal "data" titles, each doing meaningfully different work. The shar
 | SQL | 47% | 47% | 62% | 25% |
 | R | 15% | 35% | 7% | 11% |
 | Excel | 34% | 10% | 4% | 4% |
-| Tableau / Power BI / dashboards | 55% | 27% | 20% | 7% |
+| Excel / Tableau / Power BI / Looker / dashboards (composite) | 55% | 27% | 20% | 7% |
 | Spark | 3% | 15% | 30% | 19% |
 | AWS | 5% | 16% | 35% | 27% |
 | Airflow | 1% | 3% | 15% | 8% |
@@ -211,11 +213,11 @@ The central point: AI does not kill data science. It kills the parts that were a
 
 Here is the cleanest real finding in the whole audit.
 
-In 2023, across 728k data-role postings, GenAI / LLM language - "generative AI," "LLM," "GPT," "RAG," "LangChain," "prompt engineering," "AI agents," "vector database" - appears in about **0.1%** of postings. It is essentially absent. But even inside 2023 it is moving: the monthly mention rate roughly doubles from **0.10% in the first half** to **0.17% in the second half** of the year. Small, but the slope is up.
+In 2023, across 728k data-role postings, GenAI / LLM language - "generative AI," "LLM," "GPT," "RAG," "LangChain," "prompt engineering," "AI agents," "vector database" - appears in about **0.1%** of postings. That level is not evidence that GenAI was absent. The 2023 dataset records skills from a controlled vocabulary that also returns "nlp" at 0% for every role, so it largely cannot express this language at all; the 0.1% is a floor set by the instrument. What the same instrument *can* show is movement: the monthly mention rate rises about 1.7x, from **0.10% in the first half** to **0.17% in the second half** of the year. Small, but the slope is up.
 
 By the ~June 2026 snapshot, GenAI / LLM language appears in roughly **27%** of data-role postings.
 
-**Read that carefully, because the honest version is less explosive than the headline.** The 2023 number comes from a controlled skill vocabulary; the 2026 number comes from free-text descriptions in a *different* dataset. The two base rates are not directly comparable, so the jump is **directional, not a precise 270x.** What I'll stand behind: GenAI language was a rounding error in data postings two years ago, was already accelerating within 2023, and is now a routine line item. The direction is not in doubt. The exact multiplier is.
+**Read that carefully, because the honest version is less explosive than the headline.** The 2023 number comes from a controlled skill vocabulary; the 2026 number comes from free-text descriptions in a *different* dataset. The two base rates are not directly comparable, so there is **no honest multiplier here, not 270x and not any other.** What I'll stand behind: within 2023, on one consistent instrument, GenAI language was rising; and by 2026 it is a routine line item in roughly a quarter of data postings. The direction is not in doubt. The size of the change is unmeasured.
 
 This is the awkward part for the field. Data science was sold on automation, prediction, optimization, and clean presentation. Generative AI shows up and says "I do those too." A career built around automation cannot be morally surprised when automation reaches the career. That doesn't make every data scientist replaceable. It makes the **generic** version replaceable - and adds a new column to the job description for everyone else.
 
@@ -275,7 +277,7 @@ The title was always a market bundle. The value was never the title.
 
 - **Type of study:** descriptive, source-backed audit. No model is fit. No causal effect is estimated. The regression and DAG in Sections 4 and 11 are explicitly labeled as conceptual.
 - **Macro figures:** BLS Occupational Outlook Handbook (Data Scientists), BLS employment-projections overview, Stanford HAI AI Index 2025, McKinsey State of AI 2025, WEF Future of Jobs 2025.
-- **Job postings:** `lukebarousse/data_jobs` (≈785k postings, 2023, controlled skill vocabulary) and `NextGig-Rocks/global-job-postings-multi-ats` (≈113k global postings, ~June 2026, free text).
+- **Job postings:** `lukebarousse/data_jobs` (≈785k postings in the file, 728,481 after filtering to data-family titles, 2023, controlled skill vocabulary) and `NextGig-Rocks/global-job-postings-multi-ats` (≈113k global postings, ~June 2026, free text).
 - **Entry-level effect:** Stanford Digital Economy Lab, *Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence* (Brynjolfsson, Chandar, Chen, 2025). The job-posting layer here does *not* establish the entry-level effect; it's cited from that payroll study, and my own seniority check is reported as a null.
 - **The big caveat:** the 2023 → 2026 GenAI comparison crosses two sources with different extraction methods (controlled skill list vs. free-text descriptions) and very different sample sizes (728k vs. ~888 data roles). It is directional only. The statistically robust GenAI result is the *within-2023* monthly trend.
 
