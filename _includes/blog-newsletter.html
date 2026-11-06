@@ -21,7 +21,11 @@
         placeholder="you@example.com" maxlength="254" required>
       <button type="submit">Join the future issue</button>
     </div>
-    <p class="blog-form-note">One list. No schedule. Unsubscribe whenever. {% if site.brainvomit_mode %}<a href="{{ '/privacy/' | relative_url }}">How your email is handled.</a>{% else %}<a href="{{ '/blog/privacy/' | relative_url }}">How your email is handled.</a>{% endif %}</p>
+    <label class="blog-form-note">
+      <input type="checkbox" name="blog_updates" value="Yes">
+      Also email me when a new Brain Vomit article is published. I’ll confirm this choice by email.
+    </label>
+    <p class="blog-form-note">Unsubscribe whenever. {% if site.brainvomit_mode %}<a href="{{ '/privacy/' | relative_url }}">How your email is handled.</a>{% else %}<a href="{{ '/blog/privacy/' | relative_url }}">How your email is handled.</a>{% endif %}</p>
     <p class="blog-form-status" role="status" aria-live="polite"></p>
   </form>
 </section>
