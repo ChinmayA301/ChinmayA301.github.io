@@ -3,6 +3,7 @@ layout: post
 title: "Cristiano Ronaldo and Portugal: Impact, Tradeoffs, and the Context Problem in Football Data"
 topic: people-society
 date: 2026-07-07
+last_modified_at: 2026-11-05
 author: "Chinmay Arora"
 
 description: "A Ronaldo-Portugal football analytics note using public event data, World Cup examples, physical-output reporting, screenshot-bias framing, and tactical AI to show why incomplete context is incomplete data."
@@ -44,7 +45,7 @@ The updated evidence points to a more precise conclusion:
 
 > Ronaldo is now a high-value, high-tradeoff player: elite box gravity and shot generation on one side, reduced pressing and repeated mobility on the other. The pressing cost is real, but raw pressure volume alone is a weak explanation of team outcomes.
 
-I ran a public-data MVP using StatsBomb open event data across 43 player-team-competition-season rows and 11 elite forwards. The naive pressure-only model barely explained team points (`R2 = 0.017`, `p = 0.403`). Adding attacking output and team-context variables improved model fit, while the pressure coefficient itself stayed unstable and statistically weak.
+I ran a public-data MVP using StatsBomb open event data across 43 player-team-competition-season rows and 11 elite forwards. The naive pressure-only model barely explained team points (`R2 = 0.017`, adjusted `R2 = -0.007`, `p = 0.403`). Adding attacking output barely helped once model size is accounted for (adjusted `R2 = 0.048`). Adding team context raised fit mainly through team xG difference, which is close to the outcome itself. The pressure coefficient stayed unstable and statistically weak throughout, though with 43 rows the study has little power to rule out a modest effect.
 
 That does not mean pressing does not matter.
 
@@ -63,6 +64,8 @@ That is the standard this debate needs.
 ![Forward role quadrant](/assets/blog/forward-role-quadrant.png)
 
 ---
+
+> **Correction, November 2026.** The pressing models were re-run from StatsBomb open data and the published coefficients reproduce exactly. An audit found the write-up overstated what they show: it reported unadjusted R² while adding predictors, credited "team context" for a fit gain that mostly comes from team xG difference, and read the wrong coefficient in the interaction model. Section 10 now reports adjusted R², the interaction term, and the study's design limits.
 
 ## 1. The Hook: Ronaldo, Knockout Goals, and Post-Event Storytelling
 
@@ -522,7 +525,7 @@ team points per match ~ forward pressures per 90
 Result:
 
 ```text
-R2 = 0.017
+R2 = 0.017   (adjusted R2 = -0.007)
 pressure coefficient = -0.0193
 p = 0.403
 ```
@@ -546,7 +549,7 @@ team points per match ~ pressures per 90
 Result:
 
 ```text
-R2 = 0.161
+R2 = 0.161   (adjusted R2 = 0.048)
 pressure coefficient = -0.0009
 p = 0.971
 ```
@@ -573,12 +576,13 @@ team points per match ~ pressures per 90
 Result:
 
 ```text
-R2 = 0.364
+R2 = 0.364   (adjusted R2 = 0.258)
 pressure coefficient = 0.0186
 p = 0.523
+xG difference coefficient = 0.532, p = 0.023
 ```
 
-Model fit improved, but the individual pressure coefficient still was not statistically meaningful.
+Model fit improved, but read that carefully. The only predictor that reached significance was team xG difference, and a team's xG difference is close to a direct measure of whether it wins. Most of the gain in fit comes from adding a near-outcome variable, not from anything learned about forwards. The individual pressure coefficient still was not statistically meaningful.
 
 ![Forward pressing in team style context](/assets/blog/team_style_interaction.png)
 
@@ -597,16 +601,18 @@ team points per match ~ pressures per 90 * team PPDA-style proxy
 Result:
 
 ```text
-R2 = 0.365
-pressure coefficient = -0.0106
-p = 0.916
+R2 = 0.365   (adjusted R2 = 0.238)
+pressure x team-style interaction = 0.0136
+interaction p = 0.762
 ```
 
-The interaction model did not rescue the raw pressure number.
+The interaction model did not rescue the raw pressure number. The test that matters here is the interaction term, and it is near zero (p = 0.76). The main-effect pressure coefficient in this model, -0.0106 (p = 0.92), is the effect at a team-style value of zero, so it should not be read on its own.
 
 The disciplined conclusion is:
 
-> In this public-data MVP, raw forward pressure volume is a weak standalone predictor of team points. Adding attacking output and team-context proxies improves model fit, while the pressure coefficient itself remains unstable and not statistically meaningful.
+> In this public-data MVP, raw forward pressure volume is a weak standalone predictor of team points. Adding team-context proxies improves fit, mostly through team xG difference, while the pressure coefficient itself remains unstable and not statistically meaningful.
+
+Two design limits sit under that conclusion. The 43 rows are not comparable units: some are full La Liga seasons and some are single Champions League finals, where points per match is 0 or 3 from one game, and all are weighted equally. And the same 11 forwards and their teams appear repeatedly, which the standard errors do not account for. With 43 rows, "not significant" means the study cannot detect an effect of this size, not that there is none.
 
 That supports the anti-lazy version of the Ronaldo argument.
 
@@ -983,7 +989,7 @@ The better conclusion is:
 
 The updated pressing study sharpens that conclusion.
 
-Raw forward pressing volume did not explain team outcomes well on its own. Adding attacking output and team-context proxies improved model fit. The pressure coefficient remained unstable and not statistically meaningful.
+Raw forward pressing volume did not explain team outcomes well on its own. Adding team-context proxies improved model fit, mostly through team xG difference. The pressure coefficient remained unstable and not statistically meaningful, in a sample too small to rule out a modest effect.
 
 That means the winning line is still:
 

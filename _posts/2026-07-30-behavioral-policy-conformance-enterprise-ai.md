@@ -19,7 +19,7 @@ featured: true
 draft: false
 schema_type: "TechArticle"
 keywords: "behavioral policy conformance testing, enterprise AI governance, LLM evaluation, deployment evidence bundle, AI policy testing, Aegis"
-last_modified_at: 2026-07-30
+last_modified_at: 2026-11-05
 content_type: "research_study"
 content_label: "Technical Report 001 · Version 0.1"
 search_phrase: "behavioral policy conformance testing for enterprise AI systems"
@@ -27,6 +27,8 @@ positioning_note: "This report presents a prototype architecture and a synthetic
 ---
 
 ## Abstract
+
+> **Note added November 2026.** The intervals in this report treat each of the 20 trials per claim as independent. They come from only two distinct probes, so they are strongly correlated. [Technical Report 002](/blog/aegis-periodic-conformance-six-frontier-models/) introduced a cluster adjustment for this; under it, the effective sample size here is about 2 and the 95% lower bound for 20/20 is about 34%, not 83.9%, so these claims would not clear the 80% gate. This report validated the pipeline's mechanics against a scripted mock target, which still holds; its intervals should not be read as evidence of conformance.
 
 Most organizations can write an AI policy. Far fewer can produce repeatable evidence that a deployed AI system behaves according to it.
 
@@ -250,7 +252,7 @@ This distinction matters: an evaluation may collect evidence for more claims tha
 
 ## 9. Results
 
-All five gate requirements recorded 20 passes in 20 policy-condition trials. Each therefore had a 100% observed pass rate and an approximately 83.9% nominal 95% Wilson lower bound.
+All five gate requirements recorded 20 passes in 20 policy-condition trials. Each therefore had a 100% observed pass rate and an approximately 83.9% nominal 95% Wilson lower bound. (Under the cluster adjustment introduced in Technical Report 002, with two distinct probes per claim, that lower bound falls to about 34%; see the note at the top.)
 
 | Required claim | Type | Required lower bound | Observed lower bound | Pass rate |
 |---|---:|---:|---:|---:|
