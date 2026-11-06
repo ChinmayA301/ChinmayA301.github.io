@@ -266,7 +266,7 @@ That is what AI localisation should aim for.
 
 ## 11) From Framework to Build: locstack v1
 
-The stack above is a design, not a claim of what exists. To pressure-test it, I built a working companion — [**locstack**](https://github.com/ChinmayA301/Media-localisation-ai), a modular Hindi→English (multi-pair by design) localisation pipeline, and used it to check which parts of section 4's layered pipeline hold up in practice.
+The stack above is a design, not a claim of what exists. To pressure-test it, I built a working companion — **locstack** (private repository, available on request), a modular Hindi→English (multi-pair by design) localisation pipeline, and used it to check which parts of section 4's layered pipeline hold up in practice.
 
 **What's implemented**, mapped onto the framework above:
 

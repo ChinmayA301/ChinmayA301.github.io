@@ -466,4 +466,4 @@ It does not tell people what to eat. It tells them what the label is hiding.
 
 - Related: `Public Health Data Science and Food Systems`  
 - Related: `Decision Intelligence for Everyday Choices`  
-- GitHub project placeholder: `github.com/ChinmayA301/satiation-adjusted-serving-system`
+- Companion code: not yet published

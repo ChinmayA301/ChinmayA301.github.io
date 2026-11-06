@@ -443,4 +443,4 @@ This project is about measuring the leak.
 
 - Related: `The Success Directory: Decision Intelligence for Ambiguous Choices`  
 - Related: `Media Worlds and Experience Rooms`  
-- GitHub project placeholder: `github.com/ChinmayA301/cultural-diffusion-index`
+- Companion code: not yet published

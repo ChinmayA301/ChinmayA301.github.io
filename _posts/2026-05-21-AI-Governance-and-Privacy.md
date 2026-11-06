@@ -999,9 +999,8 @@ This article is part of a three-part series on governance-layer AI: how systems 
 
 - Portfolio / The Lab: https://app.chinmayarora.com
 - GitHub profile: https://github.com/ChinmayA301
-- Aegis project repository: https://github.com/ChinmayA301/aegis-ai-governance
-- AI contract review prototype: https://github.com/ChinmayA301/ai-contract-risk-review
-- Responsible AI audit templates: https://github.com/ChinmayA301/responsible-ai-audit-templates
+- Aegis conformance engine: private repository (not yet public); its published results are in [Aegis Technical Report 002](/blog/aegis-periodic-conformance-six-frontier-models/)
+- AI contract review prototype and responsible-AI audit templates: not yet published
 - Related applied direction: AI readiness assessment, vendor risk review, privacy review automation, public-sector AI pilot governance, model monitoring, and executive decision memos
 
 ---

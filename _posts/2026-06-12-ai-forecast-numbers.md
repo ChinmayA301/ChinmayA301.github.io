@@ -24,20 +24,22 @@ draft: false
 
 schema_type: "Article"
 keywords: "AI revenue forecast, SpaceX valuation, DCF terminal value, AI bubble, circular financing, forecast accuracy, model risk"
-last_modified_at: 2026-06-12
+last_modified_at: 2026-11-05
 content_type: "research_study"
 content_label: "Research Study"
 search_phrase: "AI revenue forecast stress test"
 positioning_note: "Evidence audit using public filings, forecast arithmetic, historical comparisons, and explicit uncertainty; findings are time-bounded and not investment advice."
 ---
 
+> **Correction, November 2026.** An audit of this post found three problems, now fixed. The Monte Carlo had its multipliers centred below 1.0, so its "70% of outcomes fall below the headline" result was built into the assumptions; it is now centred at 1.0, and the headline sits near the median. The 2017 forecast comparison used the original $38.8B figure, which its publisher revised to $89.8B later that year; both are now shown. And the Goldman path's "nine-fold" jump runs from 2027, not 2028.
+>
 > **A note on timing**
 > Figures here are as of mid-June 2026, around the SPCX pre/early-listing window. These numbers - valuation, segment revenue, analyst fair values, financing arrangements - are days old and moving fast. Treat them as a snapshot, not a settled record; the argument is about how forecasts are built and checked, which outlasts any single day's figure.
 
 > **Key takeaways**
 > - A headline like "$322B by 2030" is not one estimate - it is a chain of stacked assumptions, each multiplying the uncertainty of the last.
 > - Roughly 60–80% of a high-growth valuation lives in terminal value, governed by a denominator where a 0.5% move swings value 10–20%.
-> - Past forecasts missed hard in *both* directions: they undershot AI capability by 6–8x, yet today's company-level revenue projections appear to overshoot monetization just as badly.
+> - Past forecasts missed hard in *both* directions: market forecasts undershot the AI market (by roughly 3–8x, depending on which vintage of the forecast you compare against) and expert panels undershot capability, yet today's company-level revenue projections may overshoot monetization.
 > - This is not a bubble verdict. It is an argument for instrumenting the hidden variables before treating a high-variance prediction as a planning number.
 
 It started with a number I couldn't place.
@@ -93,7 +95,7 @@ So when you see "$1.75 trillion," understand what it is mechanically: a near-ter
 
 The useful thing about the SpaceX figure is that, unlike most private-company projections, the S-1 gives us actuals to check it against.
 
-**The growth rate is extreme but precisely stated.** $3.2B → $322B is a 100.6x increase, a compound annual growth rate of about **151% per year sustained for five years**. Goldman's disclosed path is steeper in shape than that average implies: it rises **388% to $15.6B in 2026**, reaches **$34.5B in 2027**, then more than nine-folds between 2028 and 2030.
+**The growth rate is extreme but precisely stated.** $3.2B → $322B is a 100.6x increase, a compound annual growth rate of about **151% per year sustained for five years**. Goldman's disclosed path is steeper in shape than that average implies: it rises **388% to $15.6B in 2026**, reaches **$34.5B in 2027**, then rises more than nine-fold between 2027 and 2030. Goldman's 2028 and 2029 values are not published.
 
 ![Implied-CAGR waterfall showing the annual increments required for a 100x AI revenue build from $3.2B to $322B.](/assets/blog/forecast_cagr_waterfall.png)
 *A constant-CAGR decomposition shows what the 100x build mechanically requires: the largest dollar lift lands in the least testable out-year.*
@@ -119,10 +121,10 @@ Roughly two dollars lost per dollar of revenue. And the revenue base isn't even 
 correlated downside:  0.75 × 0.85 = 0.64  →  ~$205B
 ```
 
-![Monte Carlo simulation showing the $322B headline sitting in the upper tail of correlated 2030 AI revenue assumptions.](/assets/blog/forecast_monte_carlo.png)
-*Drivers move together, so the downside multiplies rather than subtracts. In this illustrative Monte Carlo, the headline sits above the median and about 70% of simulated outcomes fall below it.*
+![Monte Carlo simulation comparing correlated and independent 2030 AI revenue drivers, both centred on the $322B headline.](/assets/blog/forecast_monte_carlo.png)
+*Each multiplier is centred at 1.0, so the simulation assumes the forecast is unbiased. The headline sits near the median either way. What correlation changes is the range: the P10–P90 band widens from about $187–473B with independent drivers to about $154–563B with correlated ones, and the chance of landing 30% or more below the headline rises from about 20% to 26%. Illustrative priors, not a prediction.*
 
-If five independent drivers each have an 80% chance of hitting their assumed value, the joint probability all five land is `0.8^5 ≈ 0.33`. The base case is the *upper corner* of a distribution, not its center.
+A related trap: if the base case needs five independent drivers to each hit its assumed value, and each has an 80% chance of doing so, the joint probability that all five land is `0.8^5 ≈ 0.33`. A base case built from several individually likely assumptions can still be an unlikely joint outcome.
 
 **The independent check exists, and it's far below the ask.** This converts "I'm skeptical" into something verifiable: **Morningstar assigned SpaceX a fair value of $780 billion - under half the ~$1.75 trillion IPO valuation** - anchoring to Starlink and launch revenue and weighting the AI segment across scenarios, while calling xAI a "material threat of value destruction" with an "economic moat indeterminate." When the underwriter and an independent analyst differ by roughly **$1 trillion** on the same company, that gap *is* the uncertainty band the headline omits.
 
@@ -132,7 +134,7 @@ Here's where I expected to confirm the cynical story - "forecasters always overs
 
 Forecasts have missed hard in **both** directions.
 
-**They have wildly under-shot.** In 2017, a widely cited market report projected global AI revenue reaching **$38.8 billion by 2025**. Actual 2025 AI market estimates land around **$244B (Statista) to $298B (IDC)** - the 2017 forecast undershot reality by roughly **6 to 8x**. On capability it's starker still: in 2021, expert and superforecaster panels predicting ML benchmark performance underestimated progress so badly that the true result landed in the *far right tail* of their distributions - on the MATH benchmark, actual accuracy hit **50.3% against a 12.7% prediction**. The people whose job is calibrated forecasting weren't just wrong; they were wrong by margins their own confidence intervals had ruled out.
+**They have wildly under-shot.** In March 2017, Tractica projected global AI revenue reaching **$38.8 billion by 2025**, and revised that to **$89.8 billion** in December of the same year. Actual 2025 AI market estimates land around **$244B (Statista) to $298B (IDC)**, so the forecast undershot by roughly **6–8x** against the original figure and **about 3x** against the revision. The definitions also differ (Tractica counted AI software revenue; the 2025 totals are broader market estimates), which is the same TAM-definition problem as Layer 1, so treat the size of the miss as approximate. The direction is not in doubt. On capability it's starker still: in 2021, expert and superforecaster panels predicting ML benchmark performance underestimated progress so badly that the true result landed in the *far right tail* of their distributions - on the MATH benchmark, actual accuracy hit **50.3% against a 12.7% prediction**. The people whose job is calibrated forecasting weren't just wrong; they were wrong by margins their own confidence intervals had ruled out.
 
 **They have also wildly over-shot - at the company level, right now.** The same era's company-level revenue projections look very different from the market-level ones:
 
@@ -206,7 +208,7 @@ I'm genuinely curious where people who build or read these models would push bac
 
 ## Sources
 
-SpaceX S-1 / Financial Times reporting on the Goldman projection and xAI financials; Morningstar fair-value analysis; IDC, Statista, Gartner, and multiple research firms on AI market size; Damodaran and standard DCF references on terminal-value sensitivity; the MIT enterprise-AI pilot study; Bloomberg, Bernstein, and GMO reporting on circular financing; S&P Global, Bank of England, IMF, and WEF risk commentary; Jacob Steinhardt's benchmark-forecasting experiment. Figures as of mid-June 2026 and moving quickly.
+SpaceX S-1 / Financial Times reporting on the Goldman projection and xAI financials; Morningstar fair-value analysis; IDC, Statista, Gartner, and multiple research firms on AI market size; Tractica's [March 2017 forecast](https://www.globenewswire.com/de/news-release/2017/03/09/933837/0/en/Artificial-Intelligence-Market-Forecasts-2016-2025-Across-27-Industry-Sectors.html) and [December 2017 revision](https://www.businesswire.com/news/home/20171221005765/en/Artificial-Intelligence-Software-Market-Reach-89.8-Billion); Damodaran and standard DCF references on terminal-value sensitivity; the MIT enterprise-AI pilot study; Bloomberg, Bernstein, and GMO reporting on circular financing; S&P Global, Bank of England, IMF, and WEF risk commentary; Jacob Steinhardt's benchmark-forecasting experiment. Figures as of mid-June 2026 and moving quickly.
 
 *I'm a data scientist, not a financial advisor - this is analysis and exploration, not investment advice.*
 

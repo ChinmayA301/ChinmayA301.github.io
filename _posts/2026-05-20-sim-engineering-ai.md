@@ -533,7 +533,7 @@ Better judgment under constraint.
 
 - GitHub profile: https://github.com/ChinmayA301
 - Portfolio / The Lab: https://app.chinmayarora.com
-- Project repository: https://github.com/ChinmayA301/simulation-engineering-ai
+- Companion code: not yet published
 - Related applied direction: proxy-data simulation, public-sector AI pilots, synthetic service-request routing, trend diffusion simulation, logistics workflow optimization
 - Possible implementation stack: Python, FastAPI, SimPy, Mesa, Pandas, scikit-learn, SDV, Streamlit / React dashboard, Monte Carlo simulation, agent-based modeling
 

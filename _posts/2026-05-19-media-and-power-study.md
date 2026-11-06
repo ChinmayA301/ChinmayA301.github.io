@@ -475,6 +475,6 @@ It is also about controlling imagination.
 
 - GitHub profile: https://github.com/ChinmayA301
 - Portfolio / The Lab: https://app.chinmayarora.com
-- Project repository: https://github.com/ChinmayA301/us-media-global-power-study
+- Companion artifact (synthetic-data method demo, not a real-data study): https://github.com/ChinmayA301/blog-artifacts/tree/main/media-influence-causality
 - Possible dataset direction: media exports, box office share, music chart presence, platform ownership, trade centrality, GDP share, military presence, international student flows
 - Possible implementation stack: Python, Pandas, GeoPandas, NetworkX, World Bank API, OECD API, visualization dashboard

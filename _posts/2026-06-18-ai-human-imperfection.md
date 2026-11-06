@@ -417,4 +417,4 @@ That is the actual product insight: not “detect AI,” but **detect what AI re
 
 - Related: `Aegis AI Governance and Responsible Adoption`  
 - Related: `Creative Testing and AI Benchmarking`  
-- GitHub project placeholder: `github.com/ChinmayA301/human-imperfection-signal-lab`
+- Companion artifact (synthetic-data evaluation pipeline): https://github.com/ChinmayA301/blog-artifacts/tree/main/ai-human-detector
