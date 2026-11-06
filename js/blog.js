@@ -49,6 +49,7 @@
         }
         const isGoogleSheetForm = form.dataset.formMode === 'google-sheets';
         if (isGoogleSheetForm) {
+          const wantsBlogUpdates = new FormData(form).get('blog_updates') === 'Yes';
           const frameName = `newsletter-submit-${Date.now()}`;
           const responseFrame = document.createElement('iframe');
 
@@ -60,7 +61,11 @@
           form.target = frameName;
           HTMLFormElement.prototype.submit.call(form);
           form.reset();
-          if (status) status.textContent = form.dataset.successMessage || 'Thanks, your signup is on its way.';
+          if (status) {
+            status.textContent = wantsBlogUpdates
+              ? 'Signup request submitted. Check your inbox for a link to confirm blog updates.'
+              : form.dataset.successMessage || 'Thanks, your signup is on its way.';
+          }
           if (button) {
             button.disabled = false;
             button.textContent = defaultLabel;
