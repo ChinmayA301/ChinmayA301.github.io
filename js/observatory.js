@@ -68,12 +68,13 @@ function positionChart(positions) {
 function updateFreshness() {
   if (!data?.available) return;
   const sourceTs=kind==='seismic'?data.snapshots[0].generated_at:data.latest.source_ts;
+  const oldestSourceTs=kind==='transit'?Math.min(sourceTs,data.latest.vehicle_source_ts):sourceTs;
   const threshold=kind==='seismic'?8*3600_000:180_000;
   const failed=data.runs?.[0]?.status==='failed';
   const upstreamFailed=kind==='seismic'&&['failure','timed_out','cancelled','action_required'].includes(data.workflows?.find(r=>r.status==='completed')?.conclusion);
-  const stale=Date.now()-sourceTs>threshold || !!lastError || failed || upstreamFailed;
+  const stale=Date.now()-oldestSourceTs>threshold || !!lastError || failed || upstreamFailed;
   freshness.dataset.stale=String(stale);
-  freshness.textContent=`${lastError ? 'Refresh failed; retaining accepted data. ' : failed ? 'Latest collection attempt failed; retaining accepted data. ' : ''}${upstreamFailed?'Latest completed upstream model run failed. ':''}${Date.now()-sourceTs>threshold?'Source is stale. ':''}Source ${time(sourceTs)} · ${ago(sourceTs)} · Browser fetched ${time(lastFetched)}. ${kind==='seismic'?'Model pipeline: every 6 hours. Import check: every 15 minutes.':'Collector: every minute. Provider feed: every 5 seconds.'}`;
+  freshness.textContent=`${lastError ? 'Refresh failed; retaining accepted data. ' : failed ? 'Latest collection attempt failed; retaining accepted data. ' : ''}${upstreamFailed?'Latest completed upstream model run failed. ':''}${Date.now()-oldestSourceTs>threshold?'Source is stale. ':''}Source ${time(sourceTs)} · ${ago(sourceTs)} · Browser fetched ${time(lastFetched)}. ${kind==='seismic'?'Model pipeline: every 6 hours. Import check: every 15 minutes.':'Collector: every minute. Provider feed: every 5 seconds.'}`;
 }
 
 function renderSeismic() {
@@ -103,11 +104,13 @@ function renderTransit() {
   const tripCount=routes.reduce((n,r)=>n+r.n,0), covered=routes.reduce((n,r)=>n+r.with_delay,0);
   const mean=covered?routes.reduce((n,r)=>n+(r.mean_delay??0)*r.with_delay,0)/covered:null;
   const settled=data.evaluation.reduce((n,r)=>n+r.n,0);
+  const quality=data.latest.position_quality;
+  const locationNote=quality?`${num(quality.invalid_records)} failed location checks; ${num(quality.duplicate_records)} redundant and ${num(quality.conflicting_records)} conflicting records excluded. ${num(quality.duplicate_entity_ids)} repeated source IDs.`:`${num(data.latest.invalid_positions)} vehicle records excluded by location checks.`;
   const forecast=data.forecasts[0];
   const evaluationRows=data.evaluation.map(r=>[esc(r.model_version),num(r.n),`${fixed(r.baseline_mae)} s`,`${fixed(r.candidate_mae)} s`,esc(time(r.last_outcome))]);
   root.innerHTML=`<dl class="lab-metrics">${metric('Mean published delay',finite(mean)?`${fixed(mean/60)} min`:'—','Negative values indicate early estimates')}${metric('Trips with delay estimates',`${num(covered)} / ${num(tripCount)}`,'One upcoming stop event per trip')}${metric('Valid vehicle locations',num(positions.length),`${num(data.latest.invalid_positions)} rejected across the full feed`)}${metric('Settled forecasts',num(settled),'Matched future feed estimates; not actual arrivals')}</dl>
   <div class="lab-grid"><section class="lab-panel"><h2>Delay estimates over time</h2><p>Trip-weighted mean of published delay estimates, aggregated into two-minute bins. Gaps are left visible.</p><div id="delayChart" class="lab-chart"></div>${legend([{label:'Published delay · minutes',color:'#d1a67d'}])}<p>${data.history.length} observed time bins in the selected window.</p></section>
-  <section class="lab-panel"><h2>Vehicle positions</h2><p>Longitude and latitude from timestamped observations. No routes or locations are inferred.</p><div id="positionChart" class="lab-chart"></div></section></div>
+  <section class="lab-panel"><h2>Vehicle positions</h2><p>Longitude and latitude from timestamped observations. No routes or locations are inferred.</p><div id="positionChart" class="lab-chart"></div><p class="lab-note">Vehicle feed ${esc(time(data.latest.vehicle_source_ts))}. Across the full feed: ${esc(locationNote)}</p></section></div>
   <section class="lab-panel"><h2>Ten-minute forecast</h2>${forecast?`<p>Issued ${esc(time(forecast.issued_at))}; target ${esc(time(forecast.target_at))}. Persistence baseline: <strong>${fixed(forecast.persistence/60)} min</strong>. Candidate: <strong>${fixed(forecast.candidate/60)} min</strong>. Candidate version: ${esc(forecast.model_version)}.</p>`:'<p>No forecast is issued when fewer than two usable trip estimates are available for this selection.</p>'}
   ${evaluationRows.length?table('Prospective forecast evaluation · last 24 hours',['Candidate version','Matched n','Persistence MAE','Candidate MAE','Latest outcome'],evaluationRows):'<p class="lab-note">Outcome history is accumulating. Errors remain unavailable until a forecast is matched to a subsequent feed estimate at or just after its ten-minute target.</p>'}
   ${data.models.length?table('Ridge model held-out temporal evaluation',['Version','Training n','Test n','Persistence MAE','Ridge MAE'],data.models.map(m=>[esc(m.version),num(m.train_n),num(m.test_n),`${fixed(m.baseline_mae)} s`,`${fixed(m.test_mae)} s`])):'<p class="lab-note">The initial candidate is a fixed, damped trend rule. A route-specific ridge model is fitted only after at least 80 matched forecast records, with at least 40 training and 15 test cases after a ten-minute overlap purge. No trained-model result is claimed before those gates pass. Fitting checks up to 16 recently active groups, including the network rollup, every 30 minutes.</p>'}</section>

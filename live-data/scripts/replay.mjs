@@ -16,4 +16,5 @@ const labels=Object.fromEntries(record.latest.routes.map(r=>[r.route_id,r.label.
 const replay=parseTransit(pairs[0],pairs[1],labels,record.latest.fetched_at);
 for(const key of ['source_ts','vehicle_source_ts','input_trips','input_positions','invalid_positions','missing_delay','cancelled_trips','duplicate_trips','invalid_trips'])assert.deepEqual(replay[key],record.latest[key],key);
 assert.deepEqual(replay.routes,record.latest.routes);assert.deepEqual(replay.positions,record.latest.positions);
+if(record.latest.position_quality)assert.deepEqual(replay.position_quality,record.latest.position_quality);
 console.log(JSON.stringify({verified:'Persisted raw bytes reproduce the accepted normalized snapshot',snapshot:record.latest.id,source_time:new Date(record.latest.source_ts).toISOString(),trip_entities:replay.input_trips,valid_positions:replay.positions.length},null,2));

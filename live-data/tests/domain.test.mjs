@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import gtfs from 'gtfs-realtime-bindings';
+import fs from 'node:fs';
 import { parseTransit, parseSeismic, predictionFor, fitTemporalModel, HORIZON } from '../src/domain.ts';
 
 const now = Date.UTC(2026, 10, 12, 12, 0);
@@ -18,6 +19,40 @@ test('bad locations and missing or stale timestamps are rejected without synthet
   const noTimestamp = vehicle('missing'); delete noTimestamp.vehicle.timestamp;
   const result = parseTransit(feed([trip('a', 30)]), feed([vehicle('valid'), vehicle('zero', 0, 0), noTimestamp, vehicle('old', 44.98, -93.26, now / 1000 - 1000)]), {}, now);
   assert.equal(result.positions.length, 1); assert.equal(result.invalid_positions, 3);
+});
+test('recorded Metro Transit duplicate placeholder cannot hide its valid vehicle observation', () => {
+  const fixture = JSON.parse(fs.readFileSync(new URL('fixtures/metro-duplicate-vehicle.json', import.meta.url)));
+  const vehicleBytes = gtfs.transit_realtime.FeedMessage.encode(fixture.feed).finish();
+  const tripBytes = gtfs.transit_realtime.FeedMessage.encode({ header: fixture.feed.header, entity: [] }).finish();
+  const result = parseTransit(tripBytes, vehicleBytes, {}, Date.parse(fixture.captured_at));
+  assert.deepEqual(result.positions.map(p => p.vehicle_id), ['1855', '2029']);
+  const observed = fixture.feed.entity.find(e => e.vehicle.vehicle.id === '2029' && e.vehicle.timestamp);
+  assert.equal(result.positions[1].lat, observed.vehicle.position.latitude);
+  assert.equal(result.positions[1].lon, observed.vehicle.position.longitude);
+  assert.deepEqual(result.position_quality, { duplicate_entity_ids: 1, invalid_records: 1, duplicate_records: 0, conflicting_records: 0 });
+  assert.equal(result.invalid_positions, 1);
+  assert.equal(result.positions.length + result.invalid_positions, result.input_positions);
+});
+test('vehicle identities resolve by observation time; ambiguous conflicts are omitted regardless of order', () => {
+  const older = vehicle('v', 44.9, -93.2, now / 1000 - 30);
+  const newest = vehicle('v', 44.98, -93.26);
+  const otherEntity = structuredClone(newest); otherEntity.id = 'another-entity';
+  const conflict = vehicle('conflict', 44.9, -93.2), conflicting = vehicle('conflict', 44.8, -93.1);
+  const reusedId = vehicle('shared'); reusedId.vehicle.vehicle.id = 'different-vehicle';
+  const deleted = vehicle('deleted'); deleted.isDeleted = true;
+  const rows = [older, newest, otherEntity, conflict, conflicting, vehicle('shared'), reusedId, deleted];
+  for (const entities of [rows, [...rows].reverse()]) {
+    const result = parseTransit(feed([]), feed(entities), {}, now);
+    assert.deepEqual(result.positions, [{ route_key: '10|0', route_id: '10', vehicle_id: 'v', lat: Math.fround(44.98), lon: Math.fround(-93.26), observed_at: now }]);
+    assert.deepEqual(result.position_quality, { duplicate_entity_ids: 3, invalid_records: 1, duplicate_records: 2, conflicting_records: 4 });
+    assert.equal(result.positions.length + result.invalid_positions, rows.length);
+  }
+});
+test('vehicle age is bounded against the capture clock as well as the feed header', () => {
+  const header = { gtfsRealtimeVersion: '2.0', timestamp: now / 1000 - 120 };
+  const vehicles = gtfs.transit_realtime.FeedMessage.encode({ header, entity: [vehicle('too-old', 44.98, -93.26, now / 1000 - 240)] }).finish();
+  const result = parseTransit(feed([]), vehicles, {}, now);
+  assert.equal(result.positions.length, 0); assert.equal(result.invalid_positions, 1);
 });
 test('stale/future sources, duplicate identifiers, and differential feeds fail closed', () => {
   assert.throws(() => parseTransit(feed([]), feed([]), {}, now + 181_000), /Stale/);

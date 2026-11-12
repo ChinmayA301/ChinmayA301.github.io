@@ -1,10 +1,13 @@
 {
-  "captured_at": "2026-11-12T08:17:14.503Z",
+  "captured_at": "2026-11-12T10:03:31.203Z",
   "origin": "https://chinmay-live-data-lab.chinmayarora30.workers.dev",
   "checks": {
     "public_api": true,
     "seismic_metrics_match_pinned_upstream": true,
-    "distinct_successful_source_times": 12,
+    "distinct_successful_source_times": 2,
+    "latest_collector_attempt_succeeded": true,
+    "both_transit_feeds_fresh": true,
+    "vehicle_record_accounting": true,
     "invalid_selector_rejected": true,
     "public_writes_rejected": true,
     "forecast_issue_clock_separate_from_source_clock": true
@@ -16,14 +19,20 @@
     "source_url": "https://raw.githubusercontent.com/ChinmayA301/Live-Seismic-ML-Pipeline/043c939e1b3d892bfd7d7f263ad4a096d03fd6d1/reports/_metrics.json"
   },
   "transit": {
-    "source_time": "2026-11-12T08:17:00.000Z",
-    "fetched_at": "2026-11-12T08:17:12.903Z",
-    "accepted_route_directions": 4,
-    "valid_vehicle_positions": 3,
+    "source_time": "2026-11-12T10:03:05.000Z",
+    "fetched_at": "2026-11-12T10:03:13.680Z",
+    "accepted_route_directions": 70,
+    "valid_vehicle_positions": 20,
+    "position_quality": {
+      "duplicate_entity_ids": 6,
+      "invalid_records": 80,
+      "duplicate_records": 0,
+      "conflicting_records": 0
+    },
     "forecast_count": 1,
-    "settled_forecasts": 2,
+    "settled_forecasts": 29,
     "fitted_models": 0,
-    "archive_objects": 40
+    "archive_objects": 102
   },
   "limitations": [
     "This is a timestamped acceptance capture, not a continuously updated report.",

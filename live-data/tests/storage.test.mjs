@@ -79,6 +79,34 @@ test('a stale upstream feed is quarantined and cannot replace accepted state', a
   const attempts=db.db.prepare("SELECT status,message FROM runs WHERE pipeline='transit' ORDER BY started_at").all();
   assert.deepEqual(attempts.map(r=>r.status),['success','failed']);assert.match(attempts[1].message,/Stale/);
 });
+test('scheduled collection recovers from 522 and publishes valid positions despite recorded duplicate placeholders', async t => {
+  const fixture=JSON.parse(fs.readFileSync(new URL('fixtures/metro-duplicate-vehicle.json',import.meta.url)));
+  const now=Date.parse(fixture.captured_at),db=new SqliteD1(),env={DB:db};
+  t.mock.method(Date,'now',()=>now);
+  for(const [key,value] of [['route_labels',{fetched_at:now,labels:{'10':'Route 10','54':'Route 54'}}],['model_training',{trained_at:now}],['cleanup',{at:now}]])
+    db.db.prepare('INSERT INTO state VALUES(?,?,?)').run(key,now,JSON.stringify(value));
+  db.db.prepare('INSERT INTO runs VALUES(?,?,?,?,?,?,?,?,?,?)').run('seismic-fixture','seismic',now,now,'success',now,0,0,0,'Test fixture suppresses unrelated seismic network calls');
+  let positionCalls=0;
+  t.mock.method(globalThis,'fetch',async url=>{
+    if(url.endsWith('/vehiclepositions.pb')) {
+      if(++positionCalls===1)return new Response('temporary upstream timeout',{status:522});
+      return new Response(gtfs.transit_realtime.FeedMessage.encode(fixture.feed).finish());
+    }
+    assert(url.endsWith('/tripupdates.pb'));
+    return new Response(gtfs.transit_realtime.FeedMessage.encode({header:fixture.feed.header,entity:[]}).finish());
+  });
+  await collect(env,now);
+  const response=await worker.fetch(new Request('https://example.test/api/transit'),env);
+  const result=await response.json();
+  assert.equal(positionCalls,2);assert.equal(result.available,true);
+  assert.deepEqual(result.latest.positions.map(p=>p.vehicle_id),['1855','2029']);
+  assert.equal(result.latest.invalid_positions,1);
+  assert.equal(result.latest.position_quality.duplicate_entity_ids,1);
+  assert.equal(result.runs[0].status,'success');assert.equal(result.runs[0].accepted_rows,2);
+  assert.match(result.runs[0].message,/1 repeated vehicle entity IDs/);
+  assert.equal(db.db.prepare('SELECT COUNT(*) AS n FROM snapshots').get().n,1);
+  assert.equal(db.db.prepare('SELECT COUNT(*) AS n FROM raw_feeds').get().n,2);
+});
 test('the bounded fitting job persists and updates ridge candidates, then forecasts with their versions', async () => {
   const db=new SqliteD1();
   // Synthetic clocked fixtures exercise a future eligible model state without

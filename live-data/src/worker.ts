@@ -8,9 +8,26 @@ const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8', 'Acces
 const json = (value: unknown, status = 200) => Response.json(value, { status, headers: JSON_HEADERS });
 const sha256 = async (bytes: Uint8Array) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(b => b.toString(16).padStart(2, '0')).join('');
 
-export async function boundedFetch(url: string, limit = RAW_LIMIT): Promise<Uint8Array> {
-  const response = await fetch(url, { headers: { 'User-Agent': 'ChinmayLiveDataLab/1.0 (+https://app.chinmayarora.com/)' }, signal: AbortSignal.timeout(20_000) });
-  if (!response.ok) throw new Error(`Upstream HTTP ${response.status}: ${new URL(url).hostname}`);
+class RetryableUpstreamError extends Error {}
+export async function boundedFetch(url: string, limit = RAW_LIMIT, retry = false): Promise<Uint8Array> {
+  const attempts = retry ? 2 : 1;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try { return await fetchAttempt(url, limit, 20_000 / attempts); }
+    catch (error) {
+      if (attempt + 1 === attempts || !(error instanceof RetryableUpstreamError || error instanceof TypeError
+        || error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name))) throw error;
+    }
+  }
+  throw new Error('Upstream attempts exhausted');
+}
+async function fetchAttempt(url: string, limit: number, timeout: number): Promise<Uint8Array> {
+  const response = await fetch(url, { headers: { 'User-Agent': 'ChinmayLiveDataLab/1.0 (+https://app.chinmayarora.com/)' }, signal: AbortSignal.timeout(timeout) });
+  if (!response.ok) {
+    await response.body?.cancel();
+    const message = `Upstream HTTP ${response.status}: ${new URL(url).hostname}`;
+    if ([408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524].includes(response.status)) throw new RetryableUpstreamError(message);
+    throw new Error(message);
+  }
   if (Number(response.headers.get('Content-Length')) > limit) { await response.body?.cancel(); throw new Error('Upstream payload exceeds size contract'); }
   const reader = response.body?.getReader(); if (!reader) throw new Error('Empty upstream body');
   const chunks: Uint8Array[] = []; let size = 0;
@@ -94,7 +111,7 @@ async function collectTransit(db: D1Database, now: number) {
     labels = { fetched_at: now, labels: Object.fromEntries(routes.map(r => [r.route_id, r.route_label])) };
     await putState(db, 'route_labels', labels, now);
   }
-  const [trips, positions] = await Promise.all([boundedFetch(`${TRANSIT}/mtgtfs/tripupdates.pb`), boundedFetch(`${TRANSIT}/mtgtfs/vehiclepositions.pb`)]);
+  const [trips, positions] = await Promise.all([boundedFetch(`${TRANSIT}/mtgtfs/tripupdates.pb`, RAW_LIMIT, true), boundedFetch(`${TRANSIT}/mtgtfs/vehiclepositions.pb`, RAW_LIMIT, true)]);
   const fetchedAt = Date.now();
   let snapshot: TransitSnapshot;
   try { snapshot = parseTransit(trips, positions, labels.labels, fetchedAt); }
@@ -110,7 +127,7 @@ async function collectTransit(db: D1Database, now: number) {
   return { source_ts: snapshot.source_ts, input: snapshot.input_trips + snapshot.input_positions,
     accepted: snapshot.routes.reduce((n, r) => n + r.n, 0) + snapshot.positions.length,
     rejected: snapshot.invalid_trips + snapshot.duplicate_trips + snapshot.invalid_positions,
-    message: stored.duplicate ? 'Repeated or older source timestamp; kept last accepted snapshot' : `${snapshot.routes.length} route-directions; ${snapshot.missing_delay} trips without usable delay; ${snapshot.cancelled_trips} cancellations` };
+    message: stored.duplicate ? 'Repeated or older source timestamp; kept last accepted snapshot' : `${snapshot.routes.length} route-directions; ${snapshot.missing_delay} trips without usable delay; ${snapshot.cancelled_trips} cancellations; ${snapshot.positions.length} valid locations; ${snapshot.invalid_positions} excluded vehicle records; ${snapshot.position_quality?.duplicate_entity_ids ?? 0} repeated vehicle entity IDs` };
 }
 
 type CommitEntry = { sha: string; commit: { committer: { date: string } } };

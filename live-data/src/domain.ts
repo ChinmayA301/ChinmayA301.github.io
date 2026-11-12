@@ -15,7 +15,8 @@ export function quantile(values: number[], q: number): number | null {
 }
 export type RouteRow = { route_key: string; route_id: string; direction: number; label: string; n: number; with_delay: number; mean_delay: number | null; median_delay: number | null; p90_delay: number | null };
 export type Position = { route_key: string; route_id: string; vehicle_id: string; lat: number; lon: number; observed_at: number };
-export type TransitSnapshot = { source_ts: number; vehicle_source_ts: number; fetched_at: number; routes: RouteRow[]; positions: Position[]; input_trips: number; cancelled_trips: number; duplicate_trips: number; invalid_trips: number; missing_delay: number; input_positions: number; invalid_positions: number };
+export type PositionQuality = { duplicate_entity_ids: number; invalid_records: number; duplicate_records: number; conflicting_records: number };
+export type TransitSnapshot = { source_ts: number; vehicle_source_ts: number; fetched_at: number; routes: RouteRow[]; positions: Position[]; input_trips: number; cancelled_trips: number; duplicate_trips: number; invalid_trips: number; missing_delay: number; input_positions: number; invalid_positions: number; position_quality?: PositionQuality };
 export function networkRollup(routes: RouteRow[]): RouteRow {
   const n = routes.reduce((sum, row) => sum + row.n, 0), covered = routes.reduce((sum, row) => sum + row.with_delay, 0);
   return { route_key: 'all', route_id: 'all', direction: -1, label: 'All reporting route-directions', n,
@@ -23,19 +24,22 @@ export function networkRollup(routes: RouteRow[]): RouteRow {
     median_delay: null, p90_delay: null };
 }
 
-function checkedFeed(bytes: Uint8Array, now: number) {
+function checkedFeed(bytes: Uint8Array, now: number, strictEntityIds = true) {
   const message = gtfs.transit_realtime.FeedMessage.decode(bytes);
   const ts = Number(message.header.timestamp) * 1000;
   if (!Number.isFinite(ts) || ts < 946684800000 || ts > now + 30_000) throw new Error('Invalid or future source timestamp');
   if (now - ts > MAX_FEED_AGE) throw new Error(`Stale source feed (${Math.round((now - ts) / 1000)} seconds old)`);
   if (message.header.incrementality !== 0) throw new Error('Differential feeds require a separate state merger');
   const ids = message.entity.map(e => e.id);
-  if (new Set(ids).size !== ids.length) throw new Error('Duplicate feed entity identifiers');
+  if (strictEntityIds && new Set(ids).size !== ids.length) throw new Error('Duplicate feed entity identifiers');
   return { message, ts };
 }
 
 export function parseTransit(tripsBytes: Uint8Array, vehiclesBytes: Uint8Array, labels: Record<string, string>, now: number): TransitSnapshot {
-  const trips = checkedFeed(tripsBytes, now), vehicles = checkedFeed(vehiclesBytes, now);
+  // Metro Transit sometimes reuses a vehicle entity ID for an untimestamped
+  // (0,0) schedule placeholder and a real observation. Validate rows before
+  // resolving vehicle identities; retain the raw source and report anomalies.
+  const trips = checkedFeed(tripsBytes, now), vehicles = checkedFeed(vehiclesBytes, now, false);
   const grouped = new Map<string, { route_id: string; direction: number; n: number; delays: number[] }>();
   const seenTrips = new Set<string>();
   let cancelled = 0, duplicate = 0, invalid = 0, missing = 0;
@@ -71,21 +75,43 @@ export function parseTransit(tripsBytes: Uint8Array, vehiclesBytes: Uint8Array, 
     n: g.n, with_delay: g.delays.length, mean_delay: g.delays.length ? average(g.delays) : null,
     median_delay: quantile(g.delays, .5), p90_delay: quantile(g.delays, .9)
   })).sort((a, b) => a.route_key.localeCompare(b.route_key, undefined, { numeric: true }));
-  const positions: Position[] = [];
-  let invalidPositions = 0;
+  const candidates: (Position & { entity_id: string })[] = [];
+  const quality: PositionQuality = { duplicate_entity_ids: vehicles.message.entity.length - new Set(vehicles.message.entity.map(e => e.id)).size,
+    invalid_records: 0, duplicate_records: 0, conflicting_records: 0 };
   for (const entity of vehicles.message.entity) {
     const v = entity.vehicle, p = v?.position, trip = v?.trip;
     const observedAt = v?.timestamp ? Number(v.timestamp) * 1000 : NaN;
-    if (!v || !p || !trip?.routeId || !v.vehicle?.id || !finite(p.latitude) || !finite(p.longitude)
+    if (entity.isDeleted || !entity.id || !v || !p || !trip?.routeId || !v.vehicle?.id || !finite(p.latitude) || !finite(p.longitude)
       || p.latitude < 40 || p.latitude > 50 || p.longitude < -100 || p.longitude > -85
-      || !Number.isFinite(observedAt) || observedAt > now + 30_000 || vehicles.ts - observedAt > MAX_FEED_AGE) { invalidPositions++; continue; }
+      || !Number.isFinite(observedAt) || observedAt > now + 30_000
+      || now - observedAt > MAX_FEED_AGE || vehicles.ts - observedAt > MAX_FEED_AGE) { quality.invalid_records++; continue; }
     const dir = owns(trip, 'directionId') ? Number(trip.directionId) : -1;
-    positions.push({ route_key: `${trip.routeId}|${dir}`, route_id: trip.routeId, vehicle_id: v.vehicle.id,
+    candidates.push({ entity_id: entity.id, route_key: `${trip.routeId}|${dir}`, route_id: trip.routeId, vehicle_id: v.vehicle.id,
       lat: p.latitude, lon: p.longitude, observed_at: observedAt });
   }
+  const resolve = (rows: typeof candidates, key: 'entity_id' | 'vehicle_id') => {
+    const groups = new Map<string, typeof candidates>();
+    for (const row of rows) { const group = groups.get(row[key]) || []; group.push(row); groups.set(row[key], group); }
+    const accepted: typeof candidates = [];
+    for (const group of groups.values()) {
+      const newestAt = Math.max(...group.map(p => p.observed_at));
+      const newest = group.filter(p => p.observed_at === newestAt), chosen = newest[0];
+      // An entity cannot identify two vehicles. Equally recent, contradictory
+      // locations/routes are ambiguous: omit the group, never pick by feed order.
+      if (new Set(group.map(p => p.vehicle_id)).size > 1 || newest.some(p => p.lat !== chosen.lat || p.lon !== chosen.lon || p.route_key !== chosen.route_key)) {
+        quality.conflicting_records += group.length; continue;
+      }
+      quality.duplicate_records += group.length - 1;
+      accepted.push(chosen);
+    }
+    return accepted;
+  };
+  const positions: Position[] = resolve(resolve(candidates, 'entity_id'), 'vehicle_id')
+    .map(({ entity_id, ...position }) => position).sort((a, b) => a.vehicle_id.localeCompare(b.vehicle_id, undefined, { numeric: true }));
+  const invalidPositions = quality.invalid_records + quality.duplicate_records + quality.conflicting_records;
   return { source_ts: trips.ts, vehicle_source_ts: vehicles.ts, fetched_at: now, routes, positions,
     input_trips: trips.message.entity.length, cancelled_trips: cancelled, duplicate_trips: duplicate,
-    invalid_trips: invalid, missing_delay: missing, input_positions: vehicles.message.entity.length, invalid_positions: invalidPositions };
+    invalid_trips: invalid, missing_delay: missing, input_positions: vehicles.message.entity.length, invalid_positions: invalidPositions, position_quality: quality };
 }
 
 export type Prediction = { route_key: string; feature_ts: number; issued_at: number; target_at: number; current_delay: number; slope: number; persistence: number; candidate: number; model_version: string };
