@@ -49,8 +49,8 @@ export function parseTransit(tripsBytes: Uint8Array, vehiclesBytes: Uint8Array, 
     if (Number(trip.scheduleRelationship) === 3 || Number(trip.scheduleRelationship) === 7) { cancelled++; continue; }
     const identity = `${trip.startDate}|${trip.startTime || ''}|${trip.tripId}`;
     if (seenTrips.has(identity)) { duplicate++; continue; }
-    seenTrips.add(identity);
     if (owns(update, 'timestamp') && (Number(update.timestamp) * 1000 > now + 30_000 || trips.ts - Number(update.timestamp) * 1000 > MAX_FEED_AGE)) { invalid++; continue; }
+    seenTrips.add(identity);
     const direction = owns(trip, 'directionId') ? Number(trip.directionId) : -1;
     const key = `${trip.routeId}|${direction}`;
     const group = grouped.get(key) || { route_id: trip.routeId, direction, n: 0, delays: [] };

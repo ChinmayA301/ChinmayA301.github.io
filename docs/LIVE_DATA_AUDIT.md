@@ -81,3 +81,30 @@ Worker version `40fb31c8-1691-42cb-9f8f-306ed6705392` restored independent sched
 Nineteen domain/fetch/SQLite integration tests pass, including the real duplicate-placeholder regression, input-order independence, contradictory locations, deleted records, capture-clock age, bounded 522 retry, and the scheduled collector-to-public-API path. Browser inspection confirmed 20 plotted points, non-stale status, working route filtering (`54|0` showed the real vehicle `2029`), no horizontal overflow at the inspected desktop viewport, and no captured console warnings/errors. The portfolio preview image now shows this recovered live chart.
 
 This recovery does not backfill the missing observations during the outage. The existing history keeps that collection gap visible. Continued availability remains dependent on the upstream provider; these checks establish the observed recovery, not a guarantee against future outages.
+
+
+## Geographic view and follow-up audit — November 12, 2026
+
+Scope: new observatories, their ingestion/forecast contracts, project preview references, dashboard mocks, coursework/internal-work links, and the football build plan. This is a bounded implementation review, not certification of every older project or external deployment.
+
+Fixed findings:
+
+- **High:** a stale trip update entered the seen-trip set before timestamp validation and could suppress a valid later record. Identity admission now follows validation; a regression test verifies the surviving delay is the real valid record's value.
+- **Medium:** location-only route-directions were missing from the filter. Choices now include routes present only in vehicle observations.
+- **Medium:** the coordinate scatter lacked geographic context and a nonvisual equivalent. Added an attributed OpenStreetMap street map with real vehicle markers, keyboard activation, observation popups, zoom/fit controls, preserved view across refreshes, and a coordinate/time table. The original scatter remains available for comparison. No inferred paths or synthetic movements are drawn.
+- **Medium:** refreshes had no request deadline and did not set the loading state. Requests now have a 15-second timeout and an aria-busy state; retained data/error behavior remains available.
+- **Low:** unsupported history-window parameters silently selected six hours. The API now returns HTTP 400, covered by the integration test.
+
+Added a coverage bar graph for up to twelve route-directions with the largest reporting cohorts. Bars show usable delay estimates divided by reporting trips, with explicit counts and percentages; they do not rank service reliability. Full route estimates remain in the existing table.
+
+Portfolio review: all 50 project preview references resolve to local assets. The Luthra experience anchor exists in the renderer. County/Luthra/freight examples remain explicitly synthetic; their formulas and tables were inspected. The football plan remains a plan with provider-access, competition, budget, and evaluation gates. No new achievement or predictive-performance claims were added.
+
+Validation: 20 domain/fetch/SQLite tests, TypeScript and JavaScript syntax checks, Worker dry-run bundle, main Jekyll build and metadata/schema validation passed. Local desktop and 390px mobile browser inspection showed real map markers and loaded street tiles without horizontal overflow; keyboard activation opened a vehicle popup. The detector used degraded regex mode and flagged the incumbent Inter font; this is not a complete computed-contrast or accessibility certification.
+
+Leaflet 1.9.4 is vendored with its license. Tiles are requested directly by the browser for the current viewport, with visible OpenStreetMap attribution and standard HTTP caching; no bulk download or offline tile caching is provided. If tiles fail, markers and the coordinate table remain available and the map reports the failure. Upstream tile availability is an external dependency. Seismic maps were not fabricated: the inspected upstream repository exports aggregate reports rather than a public event-coordinate dataset.
+
+### Resumed operational check: D1 quota exhaustion
+
+At 20:53 UTC the public APIs returned 503. A direct read-only D1 query returned Cloudflare code 7500: the account's free daily row-read allowance was exhausted. This blocks both read APIs and collection until the quota resets at midnight UTC or the account plan changes. No billing change was made. The prior timestamped acceptance file is historical evidence, not a successful current acceptance check.
+
+The audit found a full-table history lookup without a leading indexed route key and an error-settlement UPDATE repeatedly scanning already matured forecasts. History lookup now uses the existing route/time index; error updates use only the primary keys of rows just settled via RETURNING. Training candidates now come from the latest snapshot, bounded to the network and fifteen groups with the most usable estimates, rather than repeatedly discovering active groups through all historical forecasts. Successful transit API responses are cached at the edge for their existing 15-second TTL. These changes need no database migration. SQLite query-plan regression checks verify indexed history and error-update access. The resulting 21-test suite passes. Actual post-reset read consumption and live recovery still require verification; no quota-sufficiency guarantee is claimed.

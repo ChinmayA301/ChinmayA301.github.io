@@ -1,10 +1,10 @@
 name: Live data observatory checks
 on:
   pull_request:
-    paths: ['live-data/**', 'observatories/**', 'css/observatory.css', 'js/observatory.js', '.github/workflows/live-data-checks.yml']
+    paths: ['live-data/**', 'observatories/**', 'css/observatory.css', 'js/observatory*.js', 'assets/vendor/leaflet/**', '.github/workflows/live-data-checks.yml']
   push:
     branches: [main]
-    paths: ['live-data/**', 'observatories/**', 'css/observatory.css', 'js/observatory.js', '.github/workflows/live-data-checks.yml']
+    paths: ['live-data/**', 'observatories/**', 'css/observatory.css', 'js/observatory*.js', 'assets/vendor/leaflet/**', '.github/workflows/live-data-checks.yml']
 permissions:
   contents: read
 jobs:

@@ -70,7 +70,7 @@ export async function storeTransit(db: D1Database, snapshot: TransitSnapshot, tr
     return { duplicate: true, id };
   }
   const [oldRows, modelRows] = await Promise.all([
-    db.prepare('SELECT route_key,source_ts,mean_delay FROM route_observations WHERE source_ts BETWEEN ? AND ? AND with_delay>=2').bind(snapshot.source_ts - 8 * 60_000, snapshot.source_ts - 120_000).all<{ route_key: string; source_ts: number; mean_delay: number }>(),
+    db.prepare('SELECT route_key,source_ts,mean_delay FROM route_observations WHERE route_key IN (SELECT value FROM json_each(?)) AND source_ts BETWEEN ? AND ? AND with_delay>=2').bind(JSON.stringify([...snapshot.routes.map(r => r.route_key), 'all']), snapshot.source_ts - 8 * 60_000, snapshot.source_ts - 120_000).all<{ route_key: string; source_ts: number; mean_delay: number }>(),
     db.prepare('SELECT * FROM models').all<FittedModel>()
   ]);
   const previous = new Map<string, { source_ts: number; mean_delay: number }>();
@@ -96,11 +96,12 @@ export async function storeTransit(db: D1Database, snapshot: TransitSnapshot, tr
 }
 
 export async function settlePredictions(db: D1Database, sourceTs: number) {
-  await db.prepare(`UPDATE predictions SET
+  const settled = await db.prepare(`UPDATE predictions SET
     observed=(SELECT o.mean_delay FROM route_observations o WHERE o.route_key=predictions.route_key AND o.with_delay>=2 AND o.source_ts BETWEEN predictions.target_at AND predictions.target_at+? ORDER BY o.source_ts LIMIT 1),
     observed_at=(SELECT o.source_ts FROM route_observations o WHERE o.route_key=predictions.route_key AND o.with_delay>=2 AND o.source_ts BETWEEN predictions.target_at AND predictions.target_at+? ORDER BY o.source_ts LIMIT 1)
-    WHERE observed_at IS NULL AND feature_ts IS NOT NULL AND target_at BETWEEN ? AND ?`).bind(MATCH_TOLERANCE, MATCH_TOLERANCE, sourceTs - 15 * 60_000, sourceTs).run();
-  await db.prepare('UPDATE predictions SET absolute_error_baseline=abs(observed-persistence),absolute_error_candidate=abs(observed-candidate) WHERE observed_at IS NOT NULL AND absolute_error_baseline IS NULL').run();
+    WHERE observed_at IS NULL AND feature_ts IS NOT NULL AND target_at BETWEEN ? AND ? RETURNING snapshot_id,route_key,observed_at`).bind(MATCH_TOLERANCE, MATCH_TOLERANCE, sourceTs - 15 * 60_000, sourceTs).all<{snapshot_id:string;route_key:string;observed_at:number|null}>();
+  const matched = settled.results.filter(r => r.observed_at !== null);
+  if (matched.length) await db.prepare("UPDATE predictions SET absolute_error_baseline=abs(observed-persistence),absolute_error_candidate=abs(observed-candidate) WHERE (snapshot_id,route_key) IN (SELECT json_extract(value,'$.snapshot_id'),json_extract(value,'$.route_key') FROM json_each(?))").bind(JSON.stringify(matched)).run();
 }
 
 async function collectTransit(db: D1Database, now: number) {
@@ -162,16 +163,16 @@ export async function trainModels(db: D1Database, now: number) {
   // Bound model-fitting memory: the network plus up to fifteen recently active
   // route-directions, each with at most 180 matured records from the last day.
   const rows = await db.prepare(`WITH active AS (
-    SELECT route_key,MAX(issued_at) AS recent FROM predictions
-    WHERE observed_at IS NOT NULL AND feature_ts IS NOT NULL AND issued_at>?
-    GROUP BY route_key ORDER BY CASE WHEN route_key='all' THEN 0 ELSE 1 END,recent DESC,route_key LIMIT 16
+    SELECT route_key FROM route_observations
+    WHERE snapshot_id=(SELECT id FROM snapshots ORDER BY source_ts DESC LIMIT 1)
+    ORDER BY CASE WHEN route_key='all' THEN 0 ELSE 1 END,with_delay DESC,route_key LIMIT 16
   ), ranked AS (
     SELECT p.route_key,p.issued_at,p.target_at,p.observed_at,p.current_delay,p.slope,p.observed,
       ROW_NUMBER() OVER (PARTITION BY p.route_key ORDER BY p.issued_at DESC) AS rownum
     FROM predictions p JOIN active a ON a.route_key=p.route_key
     WHERE p.observed_at IS NOT NULL AND p.feature_ts IS NOT NULL AND p.issued_at>?
   ) SELECT route_key,issued_at,target_at,observed_at,current_delay,slope,observed FROM ranked
-    WHERE rownum<=180 ORDER BY issued_at LIMIT 2880`).bind(now - 24 * 3600_000, now - 24 * 3600_000).all<MaturedRow & { route_key: string }>();
+    WHERE rownum<=180 ORDER BY issued_at LIMIT 2880`).bind(now - 24 * 3600_000).all<MaturedRow & { route_key: string }>();
   const grouped = new Map<string, MaturedRow[]>();
   for (const row of rows.results) { const group = grouped.get(row.route_key) || []; group.push(row); grouped.set(row.route_key, group); }
   const fitted = [...grouped.entries()].map(([key, group]) => fitTemporalModel(key, group, now)).filter((m): m is FittedModel => m !== null);
@@ -220,6 +221,7 @@ export async function collect(env: Env, now = Date.now()) {
 async function transitResponse(db: D1Database, url: URL) {
   const selected = url.searchParams.get('route') || 'all';
   if (selected !== 'all' && !/^[A-Za-z0-9_-]{1,30}\|-?\d$/.test(selected)) return json({ error: 'Invalid route selector' }, 400);
+  if (url.searchParams.has('window') && !['6h','24h'].includes(url.searchParams.get('window')!)) return json({ error: 'Invalid history window' }, 400);
   const hours = url.searchParams.get('window') === '24h' ? 24 : 6, now = Date.now();
   const latest = await state<TransitSnapshot & { id: string }>(db, 'transit_latest');
   if (!latest) return json({ available: false, message: 'Waiting for the first accepted feed snapshot', server_time: now });
@@ -243,13 +245,21 @@ async function transitResponse(db: D1Database, url: URL) {
 
 export default {
   async scheduled(_event, env, ctx) { ctx.waitUntil(collect(env)); },
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...JSON_HEADERS, 'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS' } });
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     if (!['GET', 'HEAD'].includes(request.method)) return json({ error: 'Read-only API' }, 405);
     try {
-      if (url.pathname === '/api/transit') return await transitResponse(env.DB, url);
+      if (url.pathname === '/api/transit') {
+        const cache = typeof caches !== 'undefined' ? caches.default : undefined;
+        const cacheKey = new Request(url.origin + url.pathname + '?route=' + encodeURIComponent(url.searchParams.get('route') || 'all') + '&window=' + encodeURIComponent(url.searchParams.get('window') || '6h'));
+        const cached = await cache?.match(cacheKey);
+        if (cached) return cached;
+        const response = await transitResponse(env.DB, url);
+        if (cache && response.ok && ctx) ctx.waitUntil(cache.put(cacheKey, response.clone()));
+        return response;
+      }
       if (url.pathname === '/api/transit/raw') {
         const kind = url.searchParams.get('kind'), id = url.searchParams.get('snapshot') || '';
         if (!['tripupdates','vehiclepositions'].includes(kind || '') || !/^\d{13}-[a-f0-9]{16}$/.test(id)) return json({ error: 'Invalid replay selector' }, 400);
@@ -276,7 +286,8 @@ export default {
       return json({ error: 'Unknown API route' }, 404);
     } catch (error) {
       console.error(JSON.stringify({ event: 'api_failure', path: url.pathname, message: error instanceof Error ? error.message : 'Unknown' }));
-      return json({ error: 'Stored data are temporarily unavailable. The client should retain its last accepted snapshot.' }, 503);
+      const quota = error instanceof Error && /(?:row read limit|daily.*limit|D1.*quota)/i.test(error.message);
+      return json({ error: quota ? 'The database daily read allowance is exhausted. Collection resumes after the midnight UTC quota reset.' : 'Stored data are temporarily unavailable. The client should retain its last accepted snapshot.' }, 503);
     }
   }
 } satisfies ExportedHandler<Env>;

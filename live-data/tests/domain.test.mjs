@@ -102,3 +102,12 @@ test('upstream seismic status and raw metrics must agree within printed rounding
   assert.throws(() => parseSeismic(metrics, status.replace('9,627', '10,000'), quality), /counts/);
   assert.throws(() => parseSeismic({ ...metrics, pi90_coverage_raw: 2 }, status, quality), /range/);
 });
+
+test('a stale trip record cannot suppress a valid record of the same trip', () => {
+  const stale = trip('same', 600, { timestamp: now / 1000 - 600 });
+  const valid = trip('same', 30); valid.id = 'fresh-entity';
+  const result = parseTransit(feed([stale, valid]), feed([]), {}, now);
+  assert.equal(result.invalid_trips, 1);
+  assert.equal(result.routes[0].n, 1);
+  assert.equal(result.routes[0].mean_delay, 30);
+});

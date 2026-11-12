@@ -107,3 +107,7 @@ Replay uses the **original capture time** for source-age validation; it does not
 The SQLite integration tests check atomicity, idempotency, raw replay, outcome timing, missing outcomes, and revision handling. Domain tests check missing/default protobuf fields, invalid locations/timestamps, cancellations, temporal leakage, and upstream report consistency. Real-feed and browser acceptance evidence is recorded in `../docs/LIVE_DATA_AUDIT.md`.
 
 The duplicate-placeholder regression fixture is a three-entity subset of a real feed captured on November 12, 2026; its source URL, capture time, and complete original payload hash are recorded in `tests/fixtures/metro-duplicate-vehicle.json`. Additional conflict and retry scenarios are explicitly test fixtures. Acceptance requires a successful latest attempt and fresh timestamps from both feeds; an old successful snapshot cannot make a failing collector pass.
+
+## Geographic view
+
+The transit page uses vendored Leaflet 1.9.4 and attributed OpenStreetMap street tiles. Only validated vehicle observations become markers; route selection also includes routes that have positions without current trip estimates. Popup content is set as text, and a coordinate/time table provides an accessible equivalent. Browser requests load only visible tiles using normal caching. A tile error leaves the observations available with an explicit status message. The route coverage graph reports usable estimates / reporting trips, rather than implying measured on-time service.

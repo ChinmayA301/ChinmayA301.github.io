@@ -1,3 +1,4 @@
+import { renderVehicleMap, disposeVehicleMap } from './observatory-map.js';
 const API = document.body.dataset.api || '';
 const kind = document.body.dataset.lab;
 const root = document.getElementById('labContent');
@@ -95,9 +96,11 @@ function renderSeismic() {
 
 function renderTransit() {
   const all=data.latest.routes;
+  const choices=[...all];
+  for(const p of data.latest.positions) if(!choices.some(r=>r.route_key===p.route_key)) choices.push({route_key:p.route_key,label:`Route ${p.route_id} · direction ${p.route_key.split('|')[1]} · locations only`});
   const previousSelection=selected;
-  routeSelect.innerHTML='<option value="all">All reporting route-directions</option>'+all.map(r=>`<option value="${esc(r.route_key)}">${esc(r.label)}</option>`).join('');
-  if(selected!=='all'&&!all.some(r=>r.route_key===selected)) routeSelect.insertAdjacentHTML('beforeend',`<option value="${esc(selected)}">${esc(selected)} · no current trips</option>`);
+  routeSelect.innerHTML='<option value="all">All reporting route-directions</option>'+choices.map(r=>`<option value="${esc(r.route_key)}">${esc(r.label)}</option>`).join('');
+  if(selected!=='all'&&!choices.some(r=>r.route_key===selected)) routeSelect.insertAdjacentHTML('beforeend',`<option value="${esc(selected)}">${esc(selected)} · no current trips</option>`);
   routeSelect.value=previousSelection;
   const routes=selected==='all'?all:all.filter(r=>r.route_key===selected);
   const positions=data.latest.positions.filter(p=>selected==='all'||p.route_key===selected);
@@ -108,9 +111,12 @@ function renderTransit() {
   const locationNote=quality?`${num(quality.invalid_records)} failed location checks; ${num(quality.duplicate_records)} redundant and ${num(quality.conflicting_records)} conflicting records excluded. ${num(quality.duplicate_entity_ids)} repeated source IDs.`:`${num(data.latest.invalid_positions)} vehicle records excluded by location checks.`;
   const forecast=data.forecasts[0];
   const evaluationRows=data.evaluation.map(r=>[esc(r.model_version),num(r.n),`${fixed(r.baseline_mae)} s`,`${fixed(r.candidate_mae)} s`,esc(time(r.last_outcome))]);
+  disposeVehicleMap();
   root.innerHTML=`<dl class="lab-metrics">${metric('Mean published delay',finite(mean)?`${fixed(mean/60)} min`:'—','Negative values indicate early estimates')}${metric('Trips with delay estimates',`${num(covered)} / ${num(tripCount)}`,'One upcoming stop event per trip')}${metric('Valid vehicle locations',num(positions.length),`${num(data.latest.invalid_positions)} rejected across the full feed`)}${metric('Settled forecasts',num(settled),'Matched future feed estimates; not actual arrivals')}</dl>
+  <section class="lab-panel"><div class="lab-map-heading"><div><h2>Vehicles across the Twin Cities</h2><p>Pan or zoom to explore. Select a vehicle for its route and observation time.</p></div><button id="fitVehicles" type="button">Fit vehicles</button></div><div id="vehicleMap" class="lab-map" role="region" aria-label="Geographic map of reported vehicle locations"></div><p id="mapStatus" class="lab-note" role="status"></p><details><summary>Inspect vehicle locations</summary>${table('Timestamped vehicle observations',['Vehicle','Route-direction','Latitude','Longitude','Observed'],positions.map(p=>[esc(p.vehicle_id),esc(p.route_key),fixed(p.lat,5),fixed(p.lon,5),esc(time(p.observed_at))]))}</details></section>
   <div class="lab-grid"><section class="lab-panel"><h2>Delay estimates over time</h2><p>Trip-weighted mean of published delay estimates, aggregated into two-minute bins. Gaps are left visible.</p><div id="delayChart" class="lab-chart"></div>${legend([{label:'Published delay · minutes',color:'#d1a67d'}])}<p>${data.history.length} observed time bins in the selected window.</p></section>
   <section class="lab-panel"><h2>Vehicle positions</h2><p>Longitude and latitude from timestamped observations. No routes or locations are inferred.</p><div id="positionChart" class="lab-chart"></div><p class="lab-note">Vehicle feed ${esc(time(data.latest.vehicle_source_ts))}. Across the full feed: ${esc(locationNote)}</p></section></div>
+  <section class="lab-panel"><h2>Published delay coverage</h2><p>Share of reporting trips with a usable delay estimate. Showing up to 12 route-directions with the most reporting trips in this selection.</p><ul class="lab-coverage">${[...routes].sort((a,b)=>b.n-a.n||a.route_key.localeCompare(b.route_key)).slice(0,12).map(r=>`<li><span>${esc(r.label)}</span><span class="coverage-track" aria-hidden="true"><span style="width:${r.n?r.with_delay/r.n*100:0}%"></span></span><span>${num(r.with_delay)} / ${num(r.n)} · ${r.n?pct(r.with_delay/r.n):'—'}</span></li>`).join('')||'<li>No reporting trips for this selection.</li>'}</ul></section>
   <section class="lab-panel"><h2>Ten-minute forecast</h2>${forecast?`<p>Issued ${esc(time(forecast.issued_at))}; target ${esc(time(forecast.target_at))}. Persistence baseline: <strong>${fixed(forecast.persistence/60)} min</strong>. Candidate: <strong>${fixed(forecast.candidate/60)} min</strong>. Candidate version: ${esc(forecast.model_version)}.</p>`:'<p>No forecast is issued when fewer than two usable trip estimates are available for this selection.</p>'}
   ${evaluationRows.length?table('Prospective forecast evaluation · last 24 hours',['Candidate version','Matched n','Persistence MAE','Candidate MAE','Latest outcome'],evaluationRows):'<p class="lab-note">Outcome history is accumulating. Errors remain unavailable until a forecast is matched to a subsequent feed estimate at or just after its ten-minute target.</p>'}
   ${data.models.length?table('Ridge model held-out temporal evaluation',['Version','Training n','Test n','Persistence MAE','Ridge MAE'],data.models.map(m=>[esc(m.version),num(m.train_n),num(m.test_n),`${fixed(m.baseline_mae)} s`,`${fixed(m.test_mae)} s`])):'<p class="lab-note">The initial candidate is a fixed, damped trend rule. A route-specific ridge model is fitted only after at least 80 matched forecast records, with at least 40 training and 15 test cases after a ten-minute overlap purge. No trained-model result is claimed before those gates pass. Fitting checks up to 16 recently active groups, including the network rollup, every 30 minutes.</p>'}</section>
@@ -119,26 +125,28 @@ function renderTransit() {
   <section class="lab-method"><h2>From source to decision</h2><ol><li>Independent one-minute collector</li><li>Timestamp and schema validation</li><li>Raw gzip snapshots and hashes</li><li>Atomic normalized writes</li><li>Forecast issue and later outcome matching</li><li>Read-only API and charts</li></ol><p><a href="https://svc.metrotransit.org/" target="_blank" rel="noopener">Metro Transit</a> publishes the source data. These are provider estimates, not independently observed arrival times. A changing mix of reporting trips can change the network mean. This prototype does not establish route-level service reliability or causal explanations for delays.</p><p>Empty feeds produce an empty current view. Stale or malformed feeds retain the last accepted snapshot and mark its age. Forecast matching requires the same route-direction within 90 seconds after the target; missing outcomes remain missing. Repeated snapshots do not duplicate observations. Raw feeds use a six-hour retention target and a 64 MiB cleanup budget, applied hourly; normalized history uses a seven-day retention target.</p></section>`;
   lineChart('delayChart',data.history.map(r=>({t:r.t,delay:r.delay_seconds/60})),[{key:'delay',label:'Delay (minutes)',color:'#d1a67d'}],'Published mean delay estimates by feed time',[Math.min(-1,...data.history.map(r=>r.delay_seconds/60)),Math.max(1,...data.history.map(r=>r.delay_seconds/60))],3*60_000);
   positionChart(positions);
+  renderVehicleMap(positions,selected,time,data.latest.vehicle_source_ts);
 }
 
 function render() {
   root.setAttribute('aria-busy','false');
-  if(!data?.available) { root.innerHTML='<p class="lab-empty">No accepted snapshot is available yet. The collector runs independently of this page; refresh again after its next successful run.</p>';freshness.textContent='Waiting for stored observations. No sample data are substituted.';return; }
+  if(!data?.available) { disposeVehicleMap(); root.innerHTML='<p class="lab-empty">No accepted snapshot is available yet. The collector runs independently of this page; refresh again after its next successful run.</p>';freshness.textContent='Waiting for stored observations. No sample data are substituted.';return; }
   if(kind==='seismic') renderSeismic();else renderTransit();updateFreshness();
 }
 async function load() {
-  const requestId=++generation;controller?.abort();controller=new AbortController();refresh.disabled=true;
+  const requestId=++generation;controller?.abort();controller=new AbortController();refresh.disabled=true;root.setAttribute('aria-busy','true');
+  const requestSignal=AbortSignal.any([controller.signal,AbortSignal.timeout(15_000)]);
   try {
     const query=kind==='transit'?`?route=${encodeURIComponent(selected)}&window=${windowValue}`:'';
-    const response=await fetch(`${API}/api/${kind}${query}`,{cache:'no-store',signal:controller.signal});
-    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const response=await fetch(`${API}/api/${kind}${query}`,{cache:'no-store',signal:requestSignal});
+    if(!response.ok){const failure=await response.json().catch(()=>({}));throw new Error(failure.error||`HTTP ${response.status}`);}
     const result=await response.json();if(requestId!==generation)return;
     if(!result||typeof result.available!=='boolean')throw new Error('Unexpected response schema');
     data=result;lastError='';lastFetched=Date.now();cache.set(`${selected}|${windowValue}`,{data,fetched:lastFetched});render();
   } catch(error) {
     if(error.name==='AbortError'||requestId!==generation)return;lastError=error.message;
     const previous=cache.get(`${selected}|${windowValue}`);if(previous){data=previous.data;lastFetched=previous.fetched;render();}
-    else {root.setAttribute('aria-busy','false');root.innerHTML='<p class="lab-empty">Stored data could not be loaded. Use “Refresh data” to retry. No substitute values are displayed.</p>';freshness.dataset.stale='true';freshness.textContent='Data connection unavailable.';}
+    else {disposeVehicleMap();root.setAttribute('aria-busy','false');root.innerHTML='<p class="lab-empty">Stored data could not be loaded. Use “Refresh data” to retry. No substitute values are displayed.</p>';freshness.dataset.stale='true';freshness.textContent=`Data connection unavailable. ${lastError}`;}
   } finally {if(requestId===generation)refresh.disabled=false;}
 }
 function changeSelection() {

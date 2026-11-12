@@ -9,6 +9,7 @@ const storeTransit = (db,snapshot,trips,positions,now) => writeTransit(db,snapsh
 class SqliteD1 {
   constructor() { this.db = new DatabaseSync(':memory:'); for (const name of ['0001_lab.sql','0002_quarantine.sql','0003_forecast_clocks.sql']) this.db.exec(fs.readFileSync(new URL('../migrations/'+name, import.meta.url), 'utf8')); }
   prepare(sql) {
+    (this.queries ||= []).push(sql);
     const stmt = this.db.prepare(sql); let args = [];
     const api = { bind(...values) { args = values.map(v => v instanceof ArrayBuffer ? new Uint8Array(v) : v); return api; },
       async run() { const r = stmt.run(...args); return { success: true, meta: { changes: r.changes } }; },
@@ -57,6 +58,7 @@ test('read-only API exposes empty state honestly and rejects invalid selectors o
   const empty = await worker.fetch(new Request('https://example.test/api/transit'), env);
   assert.equal(empty.status, 200); assert.equal((await empty.json()).available, false);
   assert.equal((await worker.fetch(new Request('https://example.test/api/transit?route=bad-selector'),env)).status,400);
+  assert.equal((await worker.fetch(new Request('https://example.test/api/transit?window=7d'),env)).status,400);
   assert.equal((await worker.fetch(new Request('https://example.test/api/transit',{method:'POST'}),env)).status,405);
   await trainModels(db,start);
   const training = JSON.parse(db.db.prepare("SELECT value FROM state WHERE key='model_training'").get().value);
@@ -125,4 +127,17 @@ test('the bounded fitting job persists and updates ridge candidates, then foreca
   const p=db.db.prepare("SELECT * FROM predictions WHERE route_key='all' ORDER BY issued_at DESC LIMIT 1").get();
   assert.equal(p.model_version,`ridge-v1-${start+205*60_000}`);assert.equal(p.feature_ts,ts);
   assert.equal(p.target_at-p.issued_at,600_000);
+});
+
+test('collector history and settlement use indexed keys instead of full growing-table scans', async () => {
+  const db=new SqliteD1();
+  await storeTransit(db,snapshot(start),bytes(start),bytes(start),start);
+  await storeTransit(db,snapshot(start+600_000),bytes(start+600_000),bytes(start+600_000),start+600_000);
+  const history=db.queries.find(sql=>sql.startsWith('SELECT route_key,source_ts,mean_delay'));
+  const historyPlan=db.db.prepare('EXPLAIN QUERY PLAN '+history).all('["10|0","all"]',start-600_000,start).map(r=>r.detail).join(' ');
+  assert.match(historyPlan,/SEARCH route_observations USING INDEX route_time/);
+  const errors=db.queries.find(sql=>sql.startsWith('UPDATE predictions SET absolute_error_baseline'));
+  const errorPlan=db.db.prepare('EXPLAIN QUERY PLAN '+errors).all('[]').map(r=>r.detail).join(' ');
+  assert.match(errorPlan,/SEARCH predictions USING (?:COVERING )?INDEX/);
+  assert.doesNotMatch(errorPlan,/SCAN predictions/);
 });

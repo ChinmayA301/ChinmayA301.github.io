@@ -31,3 +31,7 @@ Compact summaries, direct source links, real artifact previews, and topic filter
 ## Verification record
 
 Desktop and mobile browser inspection covered both live observatories, chart rendering, overflow, route selection, and history selection. The chart-label sizing and near-flat transit y-axis scale were corrected in the bounded confirmation pass. Detailed data/backend acceptance is in `docs/LIVE_DATA_AUDIT.md`.
+
+## Geographic transit inspection
+
+The map uses actual vehicle observations over attributed OpenStreetMap street tiles. Copper markers continue the chart palette; the light basemap preserves street-label legibility. The full-width map precedes detailed graphs, supports keyboard and touch controls, and has a coordinate-table equivalent. Coverage bars use reporting-trip denominators and show counts beside percentages.

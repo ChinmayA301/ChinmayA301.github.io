@@ -1,4 +1,16 @@
 /* The portfolio's editorial world, adapted for inspecting live data. */
+.lab-map { height: clamp(320px, 55vh, 540px); border-radius: 12px; background: #24292e; isolation: isolate; color-scheme: light; }
+.lab-map-heading { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.lab-map-heading p { color: var(--quiet); font-size: .85rem; }
+.lab-map .leaflet-popup-content { color: #222; font: 14px/1.5 system-ui,sans-serif; }
+.lab-map .leaflet-control-attribution { color: #222; background: #fff; }
+.lab-map .leaflet-control-attribution a { color: #07548c; }
+.lab-map .leaflet-control-zoom a { color: #222; min-width: 44px; height: 44px; line-height: 44px; }
+.lab-coverage { padding: 0; list-style: none; }
+.lab-coverage li { display: grid; grid-template-columns: minmax(130px,1fr) 2fr minmax(105px,1fr); gap: 1rem; align-items: center; margin-block: .8rem; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.coverage-track { background: var(--surface-1); height: 12px; }
+.coverage-track > span { display: block; height: 100%; background: var(--rust-bright); }
+@media(max-width:600px) { .lab-map-heading { align-items: start; } .lab-map-heading button { max-width: 100px; } .lab-coverage li { grid-template-columns: 1fr 1fr; gap: .5rem; } .coverage-track { grid-column: 1 / -1; grid-row: auto; order: 1; } }
 .lab-page { color-scheme: dark; margin: 0; background: var(--page); color: var(--paper); font-family: Inter, system-ui, sans-serif; }
 .lab-container { width: min(100% - 3rem, 1280px); margin-inline: auto; }
 .lab-nav { border-bottom: 1px solid var(--rule-strong); }
