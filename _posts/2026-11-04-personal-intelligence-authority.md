@@ -14,7 +14,7 @@ search_phrase: "personal intelligence architecture delegated authority and human
 positioning_note: "This essay connects released products, research prototypes, and a proposed architecture. A unified lifelong personal intelligence does not yet exist, and vendor or prototype capabilities should not be read as evidence of reliable autonomy."
 reading_time: "18 min read"
 permalink: /blog/personal-intelligence-authority/
-canonical_url: "https://app.chinmayarora.com/blog/personal-intelligence-authority/"
+canonical_url: "https://brainvomit.blog/personal-intelligence-authority/"
 og_image: "/assets/images/og-personal-intelligence-authority.png"
 image_alt: "A person at a kitchen table controls contextual data streams through concentric permission boundaries."
 lang: "en"

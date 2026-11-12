@@ -13,7 +13,7 @@ content_label: "Opinion Essay"
 search_phrase: "AI builders creator economy attention distribution"
 reading_time: "11 min read"
 permalink: /blog/ai-builders-starving-artists/
-canonical_url: "https://app.chinmayarora.com/blog/ai-builders-starving-artists/"
+canonical_url: "https://brainvomit.blog/ai-builders-starving-artists/"
 og_image: "/assets/images/og-ai-builders-starving-artists.png"
 image_alt: "An independent builder works late at a crowded apartment workbench between a laptop, handmade prototype, shipping supplies, and phone notifications."
 lang: "en"

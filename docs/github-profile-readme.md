@@ -51,7 +51,7 @@ I start with the user, workflow, value, data, and constraints. I then design and
 
 My [Product and Venture Lab](https://app.chinmayarora.com/ideas/) is organized around one thesis: AI becomes genuinely useful when context, authority, evidence, and human decision-making are connected. Aegis is the current independent product direction; StepLens is the longer-term interface opportunity. The remaining explorations are preserved as an honestly staged archive, not presented as simultaneous companies.
 
-Selected technical writing: [Enterprise AI and applied systems](https://app.chinmayarora.com/blog/) · [Portfolio intelligence](https://app.chinmayarora.com/intelligence/)
+Selected technical writing: [Enterprise AI and applied systems](https://brainvomit.blog/) · [Portfolio intelligence](https://app.chinmayarora.com/intelligence/)
 
 ## Contact
 

@@ -61,7 +61,7 @@
         "paths": ["applied-ai", "analytics"],
         "privacy": "Voice cloning and dubbing are not implemented. Cultural and cadence checks are advisory; no localisation-quality benchmark is claimed, and DRM-protected video capture is unsupported.",
         "tags": ["Media AI", "Subtitles", "Lyrics Adaptation", "Streaming"],
-        "links": [{"label": "Related Writing", "url": "/blog/ai-localisation-for-media/"}]
+        "links": [{"label": "Related Writing", "url": "https://brainvomit.blog/ai-localisation-for-media/"}]
     },
     {
         "title": "Text to Visual Breakdown",
@@ -175,7 +175,7 @@
         "paths": ["applied-ai", "responsible-ai"],
         "privacy": "Roles execute through one local supervisor. Parallel autonomous workers, external-bot dispatch, and continuous monitoring are not established capabilities.",
         "tags": ["Agent Orchestration", "Context Engineering", "Persistent State", "Human Review"],
-        "links": [{"label": "Engineering case study", "url": "/blog/engineering-agent-workflows/"}]
+        "links": [{"label": "Engineering case study", "url": "https://brainvomit.blog/engineering-agent-workflows/"}]
     },
     {
         "title": "ContentOS — Evidence and Editorial Workflows",
@@ -188,7 +188,7 @@
         "paths": ["applied-ai", "analytics", "responsible-ai"],
         "privacy": "Website analytics reads, Instagram test-account authentication, and synthetic media transport were verified. Production social publishing and unattended model-based production are not established.",
         "tags": ["Workflow Automation", "Approval Controls", "OAuth", "Analytics Engineering"],
-        "links": [{"label": "Engineering case study", "url": "/blog/engineering-agent-workflows/"}]
+        "links": [{"label": "Engineering case study", "url": "https://brainvomit.blog/engineering-agent-workflows/"}]
     },
     {
         "title": "Aegis Conformance — AI Evaluation and Evidence Engine",
@@ -201,7 +201,7 @@
         "paths": ["applied-ai", "responsible-ai", "data-science"],
         "privacy": "Synthetic fixtures exercise the pipeline. No published frontier-model ranking or accredited compliance certification is claimed.",
         "tags": ["AI Evaluation", "AI Assurance", "Evidence Gates", "Reproducibility"],
-        "links": [{"label": "Engineering case study", "url": "/blog/engineering-agent-workflows/"}, {"label": "Related Writing", "url": "/blog/behavioral-policy-conformance-enterprise-ai/"}]
+        "links": [{"label": "Engineering case study", "url": "https://brainvomit.blog/engineering-agent-workflows/"}, {"label": "Related Writing", "url": "https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/"}]
     },
     {
         "title": "Aegis AI Governance & Readiness Platform",
@@ -235,11 +235,11 @@
             },
             {
                 "label": "Related Writing",
-                "url": "/blog/behavioral-policy-conformance-enterprise-ai/"
+                "url": "https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/"
             },
             {
                 "label": "Governance Essay",
-                "url": "/blog/ai-governance-privacy-trust-layer/"
+                "url": "https://brainvomit.blog/ai-governance-privacy-trust-layer/"
             }
         ]
     },
@@ -561,7 +561,7 @@
             },
             {
                 "label": "Article",
-                "url": "/blog/successful-key-moment-metric/"
+                "url": "https://brainvomit.blog/successful-key-moment-metric/"
             }
         ]
     },
@@ -613,7 +613,7 @@
             },
             {
                 "label": "Related writing",
-                "url": "/blog/the-impact-of-ai-on-local-government-digital-experience/"
+                "url": "https://brainvomit.blog/the-impact-of-ai-on-local-government-digital-experience/"
             }
         ]
     },
@@ -640,7 +640,7 @@
             },
             {
                 "label": "Related Writing",
-                "url": "/blog/financial-balance-sheet-rag/"
+                "url": "https://brainvomit.blog/financial-balance-sheet-rag/"
             }
         ]
     },
@@ -684,7 +684,7 @@
             },
             {
                 "label": "Essay",
-                "url": "/blog/data-science-career-audit/"
+                "url": "https://brainvomit.blog/data-science-career-audit/"
             }
         ]
     },
@@ -711,7 +711,7 @@
             },
             {
                 "label": "Related Writing",
-                "url": "/blog/signalgraph-github-fake-star-economy/"
+                "url": "https://brainvomit.blog/signalgraph-github-fake-star-economy/"
             }
         ]
     },
@@ -742,7 +742,7 @@
             },
             {
                 "label": "Related Writing",
-                "url": "/blog/wax-seal-cybersecurity/"
+                "url": "https://brainvomit.blog/wax-seal-cybersecurity/"
             }
         ]
     },

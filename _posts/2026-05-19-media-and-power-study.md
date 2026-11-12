@@ -12,7 +12,7 @@ categories: [Media-Studies, Geopolitics, Applied-Research]
 tags: [American-Media, Soft-Power, Globalization, Cultural-Exports, Geopolitics, Correlation-Study, Superpowers, Media-Influence]
 
 permalink: /blog/american-media-global-power-correlation/
-canonical_url: "https://app.chinmayarora.com/blog/american-media-global-power-correlation/"
+canonical_url: "https://brainvomit.blog/american-media-global-power-correlation/"
 og_image: "/assets/images/us-media-global-power-cover.png"
 image_alt: "Exploratory world map showing flows of American media, culture, and geopolitical influence."
 

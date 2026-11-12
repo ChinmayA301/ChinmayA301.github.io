@@ -12,7 +12,7 @@ categories: [Visualization, Data-Science, GeoAI]
 tags: [Segmentation, Behavior-Modeling, Visualization, Geospatial, Human-Centered-AI, Subcontinent, Dashboard-Design, Research]
 
 permalink: /blog/severance-segmentation-and-subcontinent-geoviz/
-canonical_url: "https://app.chinmayarora.com/blog/severance-segmentation-and-subcontinent-geoviz/"
+canonical_url: "https://brainvomit.blog/severance-segmentation-and-subcontinent-geoviz/"
 og_image: "/assets/images/severance-geoviz-cover.png"
 image_alt: "Split visualization showing a layered user segmentation interface and a geospatial map of the Indian subcontinent."
 

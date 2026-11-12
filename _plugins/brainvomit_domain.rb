@@ -79,16 +79,22 @@ end
 
 Jekyll::Hooks.register %i[pages documents], :post_render do |item|
   site = item.site
-  next unless site.config["brainvomit_mode"] && item.output.is_a?(String)
+  next unless item.output.is_a?(String)
 
   portfolio_url = site.config.fetch("portfolio_url", "https://app.chinmayarora.com").sub(%r{/\z}, "")
   output = item.output
 
   output.gsub!("https://app.chinmayarora.com/blog/", "https://brainvomit.blog/")
-  output.gsub!(/(href|src|data-share-url)=(['"])\/blog\//, '\\1=\\2/')
+  if site.config["brainvomit_mode"]
+    output.gsub!(/(href|src|data-share-url)=(['"])\/blog\//, '\\1=\\2/')
+  else
+    output.gsub!(/(href|data-share-url)=(['"])\/blog\//, '\\1=\\2https://brainvomit.blog/')
+  end
 
-  %w[projects intelligence experience coursework reports resumes ideas].each do |section|
-    output.gsub!(/href=(['"])\/#{section}\//, "href=\\1#{portfolio_url}/#{section}/")
+  if site.config["brainvomit_mode"]
+    %w[projects intelligence experience coursework reports resumes ideas].each do |section|
+      output.gsub!(/href=(['"])\/#{section}\//, "href=\\1#{portfolio_url}/#{section}/")
+    end
   end
 
   item.output = output

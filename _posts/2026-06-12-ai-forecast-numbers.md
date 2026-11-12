@@ -12,7 +12,7 @@ categories: [AI, Finance, Forecasting]
 tags: [Forecasting, Valuation, DCF, Machine-Learning, AI-Economics, SpaceX, Uncertainty, Model-Risk]
 
 permalink: /blog/ai-forecast-numbers/
-canonical_url: "https://app.chinmayarora.com/blog/ai-forecast-numbers/"
+canonical_url: "https://brainvomit.blog/ai-forecast-numbers/"
 og_image: "/assets/blog/ai-forecasts-cover.png"
 image_alt: "Cover reading 'AI Forecasts Are Not Evidence' over a line chart with a wide uncertainty band."
 

@@ -12,7 +12,7 @@ categories: [Sports-Analytics, Data-Science, Applied-Research]
 tags: [Football, Sports-Analytics, Metrics, xG, Decision-Science, Modeling, Performance-Analysis]
 
 permalink: /blog/successful-key-moment-metric/
-canonical_url: "https://app.chinmayarora.com/blog/successful-key-moment-metric/"
+canonical_url: "https://brainvomit.blog/successful-key-moment-metric/"
 og_image: "/assets/images/skm-football-metric-cover.png"
 image_alt: "Exploratory diagram for the Successful Key Moment football metric linking actions, pressure, and downstream impact."
 

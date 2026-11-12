@@ -12,7 +12,7 @@ categories: [Data-Science, Labor-Market, Applied-Research]
 tags: [Data-Science, Labor-Market, Job-Postings, NLP, GenAI, AI-and-Work, Career, Descriptive-Audit, BLS]
 
 permalink: /blog/data-science-career-audit/
-canonical_url: "https://app.chinmayarora.com/blog/data-science-career-audit/"
+canonical_url: "https://brainvomit.blog/data-science-career-audit/"
 
 lang: "en"
 reading_time: "14 min"

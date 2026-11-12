@@ -1606,7 +1606,7 @@ async function loadCourseworkProjects() {
 async function loadFutureIdeas() {
     const grid = document.getElementById("futureIdeas");
     if (!grid) return;
-    const blogHomePath = "/blog/";
+    const blogHomePath = "https://brainvomit.blog/";
     try {
         const ideas = await loadJsonWithOverrides("future_ideas", "data/future_ideas.json");
         if (!ideas.length) {
@@ -3338,7 +3338,7 @@ const TILE_SECTIONS = [
     {
         title: "Blog",
         description: "BLUF-first technical posts with TL;DR and implementation details.",
-        href: "/blog/",
+        href: "https://brainvomit.blog/",
         metric: "New posts",
         tone: "accent",
         x: 16,

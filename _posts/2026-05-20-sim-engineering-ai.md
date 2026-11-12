@@ -12,7 +12,7 @@ categories: [Simulation, AI-Systems, Applied-Research]
 tags: [Simulation-Engineering, Synthetic-Data, Proxy-Data, AI-Testing, Digital-Twins, Decision-Intelligence, Agent-Based-Modeling, Applied-AI]
 
 permalink: /blog/simulation-engineering-ai/
-canonical_url: "https://app.chinmayarora.com/blog/simulation-engineering-ai/"
+canonical_url: "https://brainvomit.blog/simulation-engineering-ai/"
 og_image: "/assets/images/simulation-engineering-ai-cover.png"
 image_alt: "Architecture diagram showing real-world data, proxy data, synthetic simulation, validation loops, and decision outputs."
 

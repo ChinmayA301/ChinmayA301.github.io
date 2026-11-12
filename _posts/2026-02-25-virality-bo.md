@@ -16,7 +16,7 @@ tags:
 
 # SEO: Meta Tags
 og_image: "/assets/images/bo-virality.png"
-canonical_url: "https://app.chinmayarora.com/blog/virality-bo/"
+canonical_url: "https://brainvomit.blog/virality-bo/"
 content_type: "research_study"
 content_label: "Research Study"
 search_phrase: "Bayesian optimization for virality and influence systems"

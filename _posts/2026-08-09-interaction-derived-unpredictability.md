@@ -14,7 +14,7 @@ search_phrase: "interaction-derived unpredictability in distributed systems"
 positioning_note: "This is a threat model and experimental agenda, not a new randomness theorem. Its central constraint is explicit: interaction can combine, hide, and protect entropy, but cannot create information-theoretic entropy from fully known deterministic states."
 reading_time: "13 min read"
 permalink: /blog/interaction-derived-unpredictability/
-canonical_url: "https://app.chinmayarora.com/blog/interaction-derived-unpredictability/"
+canonical_url: "https://brainvomit.blog/interaction-derived-unpredictability/"
 og_image: "/assets/images/og-interaction-derived-unpredictability.png"
 image_alt: "Distributed randomness testbed with an oscilloscope, source hardware, commitments, and networked nodes."
 lang: "en"

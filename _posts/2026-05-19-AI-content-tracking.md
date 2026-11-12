@@ -12,7 +12,7 @@ categories: [AI-Safety, Content-Provenance, Applied-Research]
 tags: [AI-Generated-Content, Watermarking, Provenance, Metadata, AI-Detection, Education-Tech, Social-Media, Code-Integrity]
 
 permalink: /blog/tracking-ai-generated-content/
-canonical_url: "https://app.chinmayarora.com/blog/tracking-ai-generated-content/"
+canonical_url: "https://brainvomit.blog/tracking-ai-generated-content/"
 og_image: "/assets/images/ai-content-tracking-cover.png"
 image_alt: "Layered architecture diagram for tracking AI-generated content across text, image, code, and execution workflows."
 

@@ -18,12 +18,12 @@ This file tracks visibility work that cannot be completed purely from repo code.
 2. Submit `https://app.chinmayarora.com/sitemap.xml`.
 3. Use URL Inspection and request indexing for:
    - `https://app.chinmayarora.com/`
-   - `https://app.chinmayarora.com/blog/`
+   - `https://brainvomit.blog/`
    - `https://app.chinmayarora.com/projects/`
    - `https://app.chinmayarora.com/ideas/`
    - `https://app.chinmayarora.com/ideas/aegis-ai-strategy/`
-   - `https://app.chinmayarora.com/blog/ai-governance-privacy-trust-layer/`
-   - `https://app.chinmayarora.com/blog/data-science-career-audit/`
+   - `https://brainvomit.blog/ai-governance-privacy-trust-layer/`
+   - `https://brainvomit.blog/data-science-career-audit/`
 4. Add the same site and sitemap in Bing Webmaster Tools.
 5. Add the portfolio URL to LinkedIn contact info and GitHub profile README.
 

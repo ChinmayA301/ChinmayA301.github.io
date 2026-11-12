@@ -9,7 +9,7 @@ summary: "FinBizInfo is a financial document intelligence prototype for extracti
 categories: [AI-Engineering, Financial-NLP, Applied-Research]
 tags: [RAG, Financial-NLP, OCR, Document-Intelligence, Evaluation, FinBizInfo, AI-Governance]
 permalink: /blog/financial-balance-sheet-rag/
-canonical_url: "https://app.chinmayarora.com/blog/financial-balance-sheet-rag/"
+canonical_url: "https://brainvomit.blog/financial-balance-sheet-rag/"
 og_image: "/assets/images/og-finbizinfo-rag.png"
 image_alt: "Financial statements moving through OCR, retrieval, validation, and citation-grounded analysis."
 lang: "en"

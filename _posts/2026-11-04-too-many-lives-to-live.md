@@ -13,7 +13,7 @@ content_label: "Personal Essay"
 search_phrase: "twenties freedom choice unlived lives personal essay"
 reading_time: "8 min read"
 permalink: /blog/too-many-lives-to-live/
-canonical_url: "https://app.chinmayarora.com/blog/too-many-lives-to-live/"
+canonical_url: "https://brainvomit.blog/too-many-lives-to-live/"
 og_image: "/assets/images/og-too-many-lives-to-live.png"
 image_alt: "A young Indian man ties his football boot in a sunlit apartment among a dusty guitar, unfinished laptop project, messages, and travel bag."
 lang: "en"

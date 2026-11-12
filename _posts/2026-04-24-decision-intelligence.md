@@ -12,7 +12,7 @@ categories: [Decision-Intelligence, Data-Science, Applied-Research]
 tags: [Decision-Science, Causal-AI, IRL, Reference-Class-Forecasting, Bayesian-Reasoning, LLM-Applications, Strategy, Product-Design]
 
 permalink: /blog/success-directory-decision-intelligence/
-canonical_url: "https://app.chinmayarora.com/blog/success-directory-decision-intelligence/"
+canonical_url: "https://brainvomit.blog/success-directory-decision-intelligence/"
 og_image: "/assets/images/success-directory-cover.png"
 image_alt: "Architecture diagram for the Success Directory Decision Intelligence framework linking Framer, Retriever, Critic, and Synthesizer modules."
 

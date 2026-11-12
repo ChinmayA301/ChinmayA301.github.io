@@ -12,7 +12,7 @@ categories: [Cybersecurity, Systems-Design, Applied-Research]
 tags: [Cybersecurity, Identity, Provenance, Authentication, Tamper-Evidence, Human-Centered-Security, Trust-Systems]
 
 permalink: /blog/wax-seal-cybersecurity/
-canonical_url: "https://app.chinmayarora.com/blog/wax-seal-cybersecurity/"
+canonical_url: "https://brainvomit.blog/wax-seal-cybersecurity/"
 og_image: "/assets/images/og-wax-seal.png"
 image_alt: "Digital security exploration inspired by wax seals, combining provenance, tamper evidence, and symbolic authentication."
 

@@ -13,7 +13,7 @@ content_label: "Opinion Essay"
 search_phrase: "software as command intent driven universal execution layer"
 reading_time: "15 min read"
 permalink: /blog/software-command-not-product/
-canonical_url: "https://app.chinmayarora.com/blog/software-command-not-product/"
+canonical_url: "https://brainvomit.blog/software-command-not-product/"
 og_image: "/assets/images/og-software-command-not-product.png"
 image_alt: "A person routes one instruction through transparent modules for context, planning, permissions, tools, and verification instead of operating many applications."
 lang: "en"

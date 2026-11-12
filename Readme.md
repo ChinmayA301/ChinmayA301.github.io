@@ -10,7 +10,7 @@ This repository powers Chinmay Arora's technical portfolio, research writing, pr
 - Projects: https://app.chinmayarora.com/projects/
 - Experience: https://app.chinmayarora.com/experience/
 - The Lab: https://app.chinmayarora.com/ideas/
-- Blog: https://app.chinmayarora.com/blog/
+- Blog: https://brainvomit.blog/
 - LLM summary: https://app.chinmayarora.com/llms.txt
 - Sitemap: https://app.chinmayarora.com/sitemap.xml
 
@@ -23,12 +23,12 @@ This repository powers Chinmay Arora's technical portfolio, research writing, pr
 
 ## Project Writing
 
-- [Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems](https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/)
-- [Aegis AI governance and privacy trust layer](https://app.chinmayarora.com/blog/ai-governance-privacy-trust-layer/)
-- [SignalGraph and GitHub fake-star detection](https://app.chinmayarora.com/blog/signalgraph-github-fake-star-economy/)
-- [Wax Seal digital provenance and tamper evidence](https://app.chinmayarora.com/blog/wax-seal-cybersecurity/)
-- [Bayesian optimization on the Higgs retweet graph](https://app.chinmayarora.com/blog/influence-maximization-bayesian-optimization-higgs/)
-- [FinBizInfo financial balance-sheet RAG](https://app.chinmayarora.com/blog/financial-balance-sheet-rag/)
+- [Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems](https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/)
+- [Aegis AI governance and privacy trust layer](https://brainvomit.blog/ai-governance-privacy-trust-layer/)
+- [SignalGraph and GitHub fake-star detection](https://brainvomit.blog/signalgraph-github-fake-star-economy/)
+- [Wax Seal digital provenance and tamper evidence](https://brainvomit.blog/wax-seal-cybersecurity/)
+- [Bayesian optimization on the Higgs retweet graph](https://brainvomit.blog/influence-maximization-bayesian-optimization-higgs/)
+- [FinBizInfo financial balance-sheet RAG](https://brainvomit.blog/financial-balance-sheet-rag/)
 
 ## AI assistance and verification
 

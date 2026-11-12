@@ -9,7 +9,7 @@ summary: "This report proposes a deterministic evidence-generation protocol arou
 categories: [AI-Governance, Applied-Research, LLM-Evaluation]
 tags: [Aegis, AI-Governance, Policy-Conformance, LLM-Evaluation, Responsible-AI, Deployment-Evidence, Wilson-Interval]
 permalink: /blog/behavioral-policy-conformance-enterprise-ai/
-canonical_url: "https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/"
+canonical_url: "https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/"
 og_image: "/assets/images/og-aegis-ai-governance.png"
 image_alt: "Aegis AI governance workflow connecting policy claims, behavioral evaluation, evidence, and deployment authorization."
 lang: "en"

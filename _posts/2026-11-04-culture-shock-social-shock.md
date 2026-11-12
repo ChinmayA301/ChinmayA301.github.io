@@ -14,7 +14,7 @@ content_label: "Personal Essay"
 search_phrase: "Indian immigrant cultural fluency social belonging"
 reading_time: "9 min read"
 permalink: /blog/culture-shock-social-shock/
-canonical_url: "https://app.chinmayarora.com/blog/culture-shock-social-shock/"
+canonical_url: "https://brainvomit.blog/culture-shock-social-shock/"
 og_image: "/assets/images/og-culture-shock-social-shock.png"
 image_alt: "A young Indian man recognizes the music, sport, and humor in a crowded Western bar but stands between groups with established histories."
 lang: "en"

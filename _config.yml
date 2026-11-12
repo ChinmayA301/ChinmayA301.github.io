@@ -4,6 +4,7 @@ description: >-
   Chinmay Arora's portfolio and research notes on AI engineering, stateful agent workflows, data science, AI governance, retrieval, evaluation, and analytics engineering.
 baseurl: ""
 url: "https://app.chinmayarora.com"
+blog_root: "https://brainvomit.blog/"
 default_og_image: "/assets/images/default-og.png"
 lang: en_US
 timezone: America/Chicago

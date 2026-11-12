@@ -14,7 +14,7 @@ search_phrase: "open measurement standard for broad human capability"
 positioning_note: "Real scoring code, synthetic data, and no human subjects. The taxonomy, weights, floors, task forms, and title remain unvalidated proposals."
 reading_time: "16 min read"
 permalink: /blog/human-capability-tournament/
-canonical_url: "https://app.chinmayarora.com/blog/human-capability-tournament/"
+canonical_url: "https://brainvomit.blog/human-capability-tournament/"
 og_image: "/assets/images/og-human-capability-tournament.png"
 image_alt: "Arena floor divided into physical, analytical, construction, and team capability stations."
 lang: "en"

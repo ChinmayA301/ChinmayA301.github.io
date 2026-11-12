@@ -8,12 +8,12 @@
 - [Projects](https://app.chinmayarora.com/projects/): Public and privacy-safe project index. Public repos are linked; private work is described at product/outcome level only.
 - [Experience](https://app.chinmayarora.com/experience/): Work and education timeline.
 - [The Lab](https://app.chinmayarora.com/ideas/): Venture and product concept showcase.
-- [Blog](https://app.chinmayarora.com/blog/): Technical essays on AI systems, governance, retrieval, evaluation, and strategy.
+- [Blog](https://brainvomit.blog/): Technical essays on AI systems, governance, retrieval, evaluation, and strategy.
 - [Coursework](https://app.chinmayarora.com/coursework/): MS and B.Tech academic project work linked to public repositories where available.
 
 ## Highlighted Work
 
-- [Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems](https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/): A synthetic end-to-end validation of the Aegis evidence protocol, connecting atomic policy claims, repeated trials, a control condition, confidence bounds, human authorization thresholds, and a sealed deployment evidence bundle. It does not claim real-model conformance or regulatory compliance.
+- [Technical Report 001: Behavioral Policy Conformance Testing for Enterprise AI Systems](https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/): A synthetic end-to-end validation of the Aegis evidence protocol, connecting atomic policy claims, repeated trials, a control condition, confidence bounds, human authorization thresholds, and a sealed deployment evidence bundle. It does not claim real-model conformance or regulatory compliance.
 - [Aegis AI Governance & Readiness](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): Highlighted governance workstream covering readiness scorecards, risk registers, human-review gates, audit evidence, monitoring, and executive-ready AI adoption artifacts. Live surfaces: [Aegis app](https://aegisai-5wz.pages.dev) and [readiness survey](https://aegis-survey.vercel.app).
 - [PolyRAG](https://github.com/ChinmayA301/PolyRAG): Multi-model RAG over public AI-governance documents with citation-grounded answers, FAISS retrieval, OCR fallback, FastAPI, Docker, and a hosted Hugging Face demo at https://chinmaya301-polyrag.hf.space.
 - [Operations Control Tower](https://github.com/ChinmayA301/Operations-Control-Tower): Operations analytics on real Olist data with SQL star schema, supplier risk score, Great Expectations checks, and Looker Studio-ready marts.
@@ -52,10 +52,10 @@ The Lab is Chinmay Arora's founder exploration dossier. It connects the work thr
 Relevant public writing and surfaces:
 
 - [Aegis AI Strategy](https://app.chinmayarora.com/ideas/aegis-ai-strategy/): AI governance and readiness workstream.
-- [Text-to-AR Utility Systems](https://app.chinmayarora.com/blog/text-to-ar-human-centered-standard/): Human-centered AR and spatial interface framing.
-- [Simulation Engineering for AI](https://app.chinmayarora.com/blog/simulation-engineering-ai/): Proxy data, simulation, and decision systems under imperfect information.
-- [Successful Key Moment Metric](https://app.chinmayarora.com/blog/successful-key-moment-metric/): Football intelligence and sports analytics framing.
-- [Satiation-Adjusted Nutrition](https://app.chinmayarora.com/blog/satiation-adjusted/): Food, serving-size, and consumer behavior systems.
+- [Text-to-AR Utility Systems](https://brainvomit.blog/text-to-ar-human-centered-standard/): Human-centered AR and spatial interface framing.
+- [Simulation Engineering for AI](https://brainvomit.blog/simulation-engineering-ai/): Proxy data, simulation, and decision systems under imperfect information.
+- [Successful Key Moment Metric](https://brainvomit.blog/successful-key-moment-metric/): Football intelligence and sports analytics framing.
+- [Satiation-Adjusted Nutrition](https://brainvomit.blog/satiation-adjusted/): Food, serving-size, and consumer behavior systems.
 
 ## Blog Positioning
 
@@ -73,17 +73,17 @@ High-signal research/concept clusters:
 
 Selected essays that support the project claims:
 
-- [The End of Programming as the Primary Interface](https://app.chinmayarora.com/blog/end-programming-primary-interface/): Independent research exploration of versioned intent graphs, generated implementations, behavioral evidence, and human approval as a possible interface above source code.
-- [The Randomness Problem Nobody Seems Comfortable Talking About](https://app.chinmayarora.com/blog/interaction-derived-unpredictability/): Independent cryptography research agenda for heterogeneous entropy, commit-reveal protocols, selective-abort analysis, assumption lattices, and publicly verifiable failure boundaries.
-- [The Best Human in the World Does Not Exist](https://app.chinmayarora.com/blog/human-capability-tournament/): Independent measurement proposal for floor-gated broad capability, transfer under interference, accessibility, validation, and open community trials.
-- [Behavioral Policy Conformance Testing for Enterprise AI Systems](https://app.chinmayarora.com/blog/behavioral-policy-conformance-enterprise-ai/): Technical Report 001 on repeated policy testing and deployment evidence bundles, with synthetic results and explicit limitations.
-- [AI in Local Government DX](https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/): Governance, auditability, risk tiering, and operational AI implementation in local government.
-- [AI Governance and Privacy](https://app.chinmayarora.com/blog/AI-Governance-and-Privacy/): Trust layer for high-risk AI adoption, vendor risk, and governance controls.
-- [Public Sector Segmentation](https://app.chinmayarora.com/blog/segmentation/): Resident/customer segmentation as a safer AI deployment backbone.
-- [Context Passport](https://app.chinmayarora.com/blog/context-passport/): Portable AI memory, provenance, diffs, privacy scopes, and context packing.
-- [SignalGraph](https://app.chinmayarora.com/blog/fake-star/): Replacing raw GitHub stars with credibility-adjusted open-source signals.
-- [Wax Seal Cybersecurity](https://app.chinmayarora.com/blog/waxseal-cybersec/): Trust, provenance, and tamper-evidence framing for digital systems.
-- [Data Science Career Audit](https://app.chinmayarora.com/blog/data-science-career-audit/): Source-backed labor-market analysis of data science, AI pressure, and durable role signals.
+- [The End of Programming as the Primary Interface](https://brainvomit.blog/end-programming-primary-interface/): Independent research exploration of versioned intent graphs, generated implementations, behavioral evidence, and human approval as a possible interface above source code.
+- [The Randomness Problem Nobody Seems Comfortable Talking About](https://brainvomit.blog/interaction-derived-unpredictability/): Independent cryptography research agenda for heterogeneous entropy, commit-reveal protocols, selective-abort analysis, assumption lattices, and publicly verifiable failure boundaries.
+- [The Best Human in the World Does Not Exist](https://brainvomit.blog/human-capability-tournament/): Independent measurement proposal for floor-gated broad capability, transfer under interference, accessibility, validation, and open community trials.
+- [Behavioral Policy Conformance Testing for Enterprise AI Systems](https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/): Technical Report 001 on repeated policy testing and deployment evidence bundles, with synthetic results and explicit limitations.
+- [AI in Local Government DX](https://brainvomit.blog/the-impact-of-ai-on-local-government-digital-experience/): Governance, auditability, risk tiering, and operational AI implementation in local government.
+- [AI Governance and Privacy](https://brainvomit.blog/AI-Governance-and-Privacy/): Trust layer for high-risk AI adoption, vendor risk, and governance controls.
+- [Public Sector Segmentation](https://brainvomit.blog/segmentation/): Resident/customer segmentation as a safer AI deployment backbone.
+- [Context Passport](https://brainvomit.blog/context-passport/): Portable AI memory, provenance, diffs, privacy scopes, and context packing.
+- [SignalGraph](https://brainvomit.blog/fake-star/): Replacing raw GitHub stars with credibility-adjusted open-source signals.
+- [Wax Seal Cybersecurity](https://brainvomit.blog/waxseal-cybersec/): Trust, provenance, and tamper-evidence framing for digital systems.
+- [Data Science Career Audit](https://brainvomit.blog/data-science-career-audit/): Source-backed labor-market analysis of data science, AI pressure, and durable role signals.
 
 ## Current Positioning
 

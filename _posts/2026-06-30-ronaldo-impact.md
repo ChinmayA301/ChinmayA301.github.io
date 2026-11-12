@@ -1005,7 +1005,7 @@ Everything else is just a number pretending to be an argument.
 
 ## Sources and Further Reading
 
-- Original post: https://app.chinmayarora.com/blog/ronaldo-impact/
+- Original post: https://brainvomit.blog/ronaldo-impact/
 - Current GitHub post: https://github.com/ChinmayA301/ChinmayA301.github.io/blob/main/_posts/2026-06-30-ronaldo-impact.md
 - Study artifact: `football-pressing-context/` in `ChinmayA301/blog-artifacts`
 - StatsBomb open data: https://github.com/statsbomb/open-data

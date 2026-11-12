@@ -12,7 +12,7 @@ categories: [Social-Entrepreneurship, Sustainability, Undergraduate-Projects, Pr
 tags: [Enactus, Enactus-SRM, Project-Restub, Sustainability, Circular-Economy, Cigarette-Waste, Brick-Making, Social-Impact, FlyLife, Drone-Delivery, COVID-Response, E-Commerce]
 
 permalink: /blog/project-restub-enactus-social-entrepreneurship/
-canonical_url: "https://app.chinmayarora.com/blog/project-restub-enactus-social-entrepreneurship/"
+canonical_url: "https://brainvomit.blog/project-restub-enactus-social-entrepreneurship/"
 
 lang: en
 reading_time: 8 min

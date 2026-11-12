@@ -14,7 +14,7 @@ search_phrase: "REA reverse engineering and software as generated utility"
 positioning_note: "This essay interprets public product behavior and first-party documentation. Repository stars and vendor-reported usage measure attention and platform activity, not scientific validation or production quality."
 reading_time: "16 min read"
 permalink: /blog/rea-software-becomes-next/
-canonical_url: "https://app.chinmayarora.com/blog/rea-software-becomes-next/"
+canonical_url: "https://brainvomit.blog/rea-software-becomes-next/"
 og_image: "/assets/images/og-rea-software-becomes-next.png"
 image_alt: "An engineer decomposes a packaged application into inspectable capabilities and recomposes them as an operational workflow."
 lang: "en"

@@ -14,7 +14,7 @@ search_phrase: "intent graphs and observed behavior as an interface for AI-gener
 positioning_note: "This essay proposes an interface and research agenda. It does not claim that natural language can replace specifications, tests, source code, or engineering judgment."
 reading_time: "24 min read"
 permalink: /blog/end-programming-primary-interface/
-canonical_url: "https://app.chinmayarora.com/blog/end-programming-primary-interface/"
+canonical_url: "https://brainvomit.blog/end-programming-primary-interface/"
 og_image: "/assets/images/og-end-programming-interface.png"
 image_alt: "Warehouse operators inspect a workflow graph beside a live loading line."
 lang: "en"

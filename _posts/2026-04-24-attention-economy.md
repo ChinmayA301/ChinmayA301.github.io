@@ -12,7 +12,7 @@ categories: [AI-Strategy, Decision-Science, Future-of-Work]
 tags: [Attention-Economy, AI, Social-Media, LifeOS, Contribution, Reputation, Capitalism, Product-Strategy, Trust-Systems, Future-Platforms]
 
 permalink: /blog/beyond-the-attention-economy/
-canonical_url: "https://app.chinmayarora.com/blog/beyond-the-attention-economy/"
+canonical_url: "https://brainvomit.blog/beyond-the-attention-economy/"
 og_image: "/assets/images/beyond-attention-economy-cover.png"
 image_alt: "Exploratory illustration of a post-attention economy where contribution, trust, and real-world outcomes replace raw visibility as the main source of value."
 

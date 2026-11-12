@@ -12,7 +12,7 @@ categories: [AI-Governance, Privacy, Applied-Research]
 tags: [AI-Governance, Privacy, Responsible-AI, Third-Party-Risk, Vendor-Risk, NIST-AI-RMF, ISO-42001, Aegis, Public-Sector-AI]
 
 permalink: /blog/ai-governance-privacy-trust-layer/
-canonical_url: "https://app.chinmayarora.com/blog/ai-governance-privacy-trust-layer/"
+canonical_url: "https://brainvomit.blog/ai-governance-privacy-trust-layer/"
 og_image: "/assets/images/og-aegis-ai-governance.png"
 image_alt: "Architecture diagram showing AI governance, privacy review, vendor risk, contract review, and responsible AI audit layers."
 

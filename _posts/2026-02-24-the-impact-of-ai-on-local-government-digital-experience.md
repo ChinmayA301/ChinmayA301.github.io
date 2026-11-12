@@ -9,7 +9,7 @@ description: "A technical exploration of how to operationalize AI in local gover
 categories: [AI-Strategy, Data-Science, GovTech]
 tags: [Hennepin-County, AI-Governance, AI-Auditing, Digital-Experience, Evaluation, Risk]
 og_image: "/assets/images/ai-audit-viz.png"
-canonical_url: "https://app.chinmayarora.com/blog/the-impact-of-ai-on-local-government-digital-experience/"
+canonical_url: "https://brainvomit.blog/the-impact-of-ai-on-local-government-digital-experience/"
 
 summary: I am developing a practical operating model for AI in local government digital experience, centered on risk-tiered intake, auditable decision logs, and measurable outcomes across time, quality, and equity.
 content_type: "concept_note"

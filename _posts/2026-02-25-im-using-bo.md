@@ -9,7 +9,7 @@ description: "A corrected Bayesian optimization influence maximization study on 
 categories: [machine-learning, networks, optimization]
 tags: [bayesian-optimization, influence-maximization, independent-cascade, graph-theory]
 permalink: /blog/influence-maximization-bayesian-optimization-higgs/
-canonical_url: "https://app.chinmayarora.com/blog/influence-maximization-bayesian-optimization-higgs/"
+canonical_url: "https://brainvomit.blog/influence-maximization-bayesian-optimization-higgs/"
 og_image: "/assets/images/og-higgs-bayesian-optimization.png"
 image_alt: "Bayesian optimization search paths across the Higgs Twitter retweet graph."
 last_modified_at: 2026-11-05

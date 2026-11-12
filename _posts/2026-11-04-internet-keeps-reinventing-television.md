@@ -14,7 +14,7 @@ content_label: "Opinion Essay"
 search_phrase: "internet entertainment lifecycle creators studios television"
 reading_time: "8 min read"
 permalink: /blog/internet-keeps-reinventing-television/
-canonical_url: "https://app.chinmayarora.com/blog/internet-keeps-reinventing-television/"
+canonical_url: "https://brainvomit.blog/internet-keeps-reinventing-television/"
 og_image: "/assets/images/og-internet-reinventing-television.png"
 image_alt: "An improvised phone sketch expands through a small crew into a television-scale studio while another creator finds a new corner to experiment."
 lang: "en"

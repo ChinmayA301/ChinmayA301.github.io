@@ -12,7 +12,7 @@ categories: [Visualization, History-Tech, GeoAI]
 tags: [Cultural-History, Interactive-Maps, Timeline, Civilizations, Geospatial, Storytelling, Education-Tech]
 
 permalink: /blog/interactive-cultural-timeline-map/
-canonical_url: "https://app.chinmayarora.com/blog/interactive-cultural-timeline-map/"
+canonical_url: "https://brainvomit.blog/interactive-cultural-timeline-map/"
 og_image: "/assets/images/cultural-timeline-map-cover.png"
 image_alt: "Interactive world map exploration showing floating cultural threads connecting civilizations across time."
 

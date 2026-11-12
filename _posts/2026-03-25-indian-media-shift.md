@@ -12,7 +12,7 @@ categories: [Media, Strategy, Data-Science]
 tags: [India, Entertainment, Media-Strategy, Streaming, Audience-Behavior, Content-Strategy, Localization, Digital-Culture]
 
 permalink: /blog/indian-media-strategy-shift/
-canonical_url: "https://app.chinmayarora.com/blog/indian-media-strategy-shift/"
+canonical_url: "https://brainvomit.blog/indian-media-strategy-shift/"
 og_image: "/assets/images/indian-media-strategy-cover.png"
 image_alt: "Exploratory image showing the shift in Indian media toward plot-driven, youth-focused, globally competitive storytelling."
 

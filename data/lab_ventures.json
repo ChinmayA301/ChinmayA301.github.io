@@ -73,7 +73,7 @@
         "title": "Text-to-AR Utility Systems",
         "summary": "Converts ordinary text-based information into contextual spatial interfaces for restaurants, venues, training, games, and guided real-world environments.",
         "business_hook": "Treats AR as a workflow and content-layer opportunity rather than a hardware-only bet.",
-        "url": "https://app.chinmayarora.com/blog/text-to-ar-human-centered-standard/",
+        "url": "https://brainvomit.blog/text-to-ar-human-centered-standard/",
         "tags": ["AR", "Interfaces", "Contextual AI", "Computer Vision"]
     },
     {
@@ -108,21 +108,21 @@
         "title": "High-Friction Data Access and Proxied Information Systems",
         "summary": "Products that make fragmented, expensive, permission-dependent, or hard-to-observe information more decision-ready through proxies, inference, confidence levels, and validation loops.",
         "business_hook": "Creates value where perfect data is unrealistic but better approximation and uncertainty communication can still improve decisions.",
-        "url": "https://app.chinmayarora.com/blog/simulation-engineering-ai/",
+        "url": "https://brainvomit.blog/simulation-engineering-ai/",
         "tags": ["Proxy Data", "Market Intelligence", "Simulation", "Decision Systems"]
     },
     {
         "title": "Sports Intelligence and Transfer Market Media Products",
         "summary": "Structured sports intelligence products that organize rumor ecosystems, tactical analysis, player tracking, and confidence scoring into repeatable fan-facing experiences.",
         "business_hook": "Productizes analysis rather than commentary by turning noisy sports information into trackable, trustable systems.",
-        "url": "https://app.chinmayarora.com/blog/successful-key-moment-metric/",
+        "url": "https://brainvomit.blog/successful-key-moment-metric/",
         "tags": ["Sports Analytics", "Football Intelligence", "Source Weighting", "Media Product"]
     },
     {
         "title": "Nutrition, Satiation, and Consumption System Redesign",
         "summary": "Consumer and public-health exploration around serving-size logic, satiation-adjusted food framing, meal-pattern analysis, and more realistic nutrition communication.",
         "business_hook": "Identifies a market mismatch between how food is labeled and how people actually eat, decide, and feel full.",
-        "url": "https://app.chinmayarora.com/blog/satiation-adjusted/",
+        "url": "https://brainvomit.blog/satiation-adjusted/",
         "tags": ["Nutrition", "Consumer Behavior", "Optimization", "Public Health"]
     }
 ]

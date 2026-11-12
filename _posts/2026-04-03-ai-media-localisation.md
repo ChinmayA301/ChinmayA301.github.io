@@ -12,7 +12,7 @@ categories: [AI, Media, NLP]
 tags: [Localisation, Media-Tech, NLP, Dubbing, Subtitling, Recommendation-Systems, Cultural-Intelligence, Generative-AI]
 
 permalink: /blog/ai-localisation-for-media/
-canonical_url: "https://app.chinmayarora.com/blog/ai-localisation-for-media/"
+canonical_url: "https://brainvomit.blog/ai-localisation-for-media/"
 og_image: "/assets/images/ai-localisation-media-cover.png"
 image_alt: "Visual showing a media localisation pipeline from script translation and dubbing to cultural adaptation and audience recommendation."
 
