@@ -3,7 +3,7 @@ layout: post
 title: "Engineering Virality with Bayesian Optimization"
 topic: data-decisions
 date: 2026-02-25
-last_modified_at: 2026-11-11
+last_modified_at: 2026-11-12
 description: "A Bayesian optimization study of virality and influence maximization, testing how sequential search, diffusion models, and graph-aware seed selection compare with simple network heuristics."
 summary: "What if trends were not just forecasted but engineered? This article explores how Bayesian Optimization transforms virality into a sequential decision-making problem."
 tags:
@@ -24,7 +24,7 @@ search_phrase: "Bayesian optimization for virality and influence systems"
 positioning_note: "This is a speculative modeling concept for influence systems, not a growth-hacking playbook."
 ---
 
-> **Correction and update, November 2026.** An audit of this post found that its three "BO vs random" figures were generated from hand-coded mock curves, not from any experiment, and that two diagrams and a "BO improves reach by ~20–50%" claim had no experimental basis. All of them have been removed. The post also claimed that applying BO to influence maximization was new; it is not, and that section now says what this work actually adds. Separately, the real-graph results were checked against real diffusion data and rerun on the follower graph; that section has been extended with the outcome.
+> **Correction and update, November 2026.** An audit of this post found that its three "BO vs random" figures were generated from hand-coded mock curves, not from any experiment, and that two diagrams and a "BO improves reach by ~20–50%" claim had no experimental basis. All of them have been removed. The post also claimed that applying BO to influence maximization was new; it is not, and that section now says what this work actually adds. Separately, the real-graph results were checked against real diffusion data and rerun on the follower graph; that section has been extended with the outcome. A follow-up experiment (12 November) tests the setting where a learning method should win: unknown per-account dynamics and costly, repeated campaigns.
 
 ## The Core Question
 
@@ -503,6 +503,32 @@ Even a human-grounded MatrAIx record becomes synthetic metadata once it is assig
 
 The implementation, conditioning audit, tests, and reporting contract are in the [Approach B research artifact](https://github.com/ChinmayA301/blog-artifacts/tree/codex/persona-conditioned-bo/virality-bayesian-optimization). The full 223,833-node performance result is intentionally not reported until the cached Higgs graph is supplied and every conditioning value is run.
 
+### When does a learning method earn its place?
+
+The setup above is the worst case for BO. The spread model is known, and a simulation costs milliseconds, so greedy (which comes with a near-optimality guarantee) wins. Sample-efficient methods should matter in the opposite corner: nobody knows how transmissible each account is, and every test is a real campaign. That is the online influence-maximization setting studied with combinatorial bandits. A follow-up experiment ran it on the same follower graph, with 50 campaign rounds and one real cascade per round.
+
+- **Ground-truth worlds.** In one, every account is equally transmissible. In another, each account's rate comes from its real retweet yield that week, shrunk toward the average. Worlds in between scale that heterogeneity up from zero.
+- **Learners.** Two bandit learners (CUCB and Thompson sampling) start from the aggregate calibration and learn per-account rates from who retweeted whom.
+- **Comparisons.** They are compared with top-degree, with greedy given the true model, and with BO choosing seeds from one cascade per evaluation.
+
+| Reach vs top-degree, over 50 rounds | Accounts alike | Rates as in the data |
+|---|---|---|
+| Greedy with the true model (the ceiling) | +0.3% | +15.1% |
+| Bandit (CUCB), average over all rounds | −3.3% | +12.9% |
+| BO choosing seeds | −1.4% | −3.2% |
+
+![Line chart: headroom over top-degree and the bandit's gain, as per-account heterogeneity grows from zero to the level in the data.](/assets/blog/virality_unknown_dynamics_dose_response.png)
+
+*A learner pays off only when the headroom over top-degree is bigger than what exploring costs, here about 3%. With rates as heterogeneous as the data suggests, the bandit passes top-degree in cumulative reach by round 2 and is close to the true-model ceiling by round 40.*
+
+What this does and doesn't show:
+
+- **Sample efficiency matters when the unknown is which accounts are strong, and campaigns repeat.**
+- **BO picking seeds doesn't win in any setting tried.** Its search space (a blend of centrality scores) cannot represent which accounts are strong. If BO has a role, it is in deciding the message, timing, or budget split around a seed set that greedy or a bandit chooses. Higgs has one topic, so that setting is untested.
+- **These are simulations, and the account-level worlds are scenarios** shaped by one week of data. They also assume nothing changes between campaigns, whereas real transmissibility tripled at the Higgs announcement.
+
+Details: [stage 6 write-up](https://github.com/ChinmayA301/blog-artifacts/tree/main/virality-bayesian-optimization#stage-6-when-does-a-sample-efficient-method-win-nov-2026).
+
 ---
 
 ## What This Work Adds (and What It Doesn't)
@@ -528,9 +554,7 @@ Here:
 - rewards are delayed  
 - sample efficiency matters  
 
-That makes BO a natural first choice here, though this project does not compare it against RL, so that is a design argument rather than a measured result.
-
-RL remains a future extension.
+That makes BO a natural first choice here, though this project does not compare it against full RL, so that is a design argument rather than a measured result. The follow-up experiment above does test the simplest RL setting, a bandit: it beats both top-degree and BO once campaigns repeat and accounts differ. Adaptive seeding over rounds is the next step up.
 
 ---
 
@@ -729,7 +753,8 @@ It enables AI to navigate social systems intelligently.
 Where this research can go next:
 
 - Graph Neural Network surrogates  
-- RL-based adaptive strategies  
+- Adaptive, multi-round seeding (bandits and RL) under changing dynamics  
+- Topic-aware influence maximization, where spread depends on the content (prior work exists, e.g. Chen et al., VLDB 2015)  
 - Multi-fidelity Bayesian Optimization  
 - Dynamic, evolving social graphs  
 - Real-time autonomous trend engineering  
@@ -760,6 +785,10 @@ It’s about learning how to move through the space.
 - Snoek et al. (2012). *Practical Bayesian Optimization*  
 - García-Hernández et al. (2022). *Bayesian Optimization for Influence Maximization*  
 - Liang (2024). *Bayesian Optimization of Functions over Node Subsets in Graphs*  
+- Chen, Wang, Yuan & Wang (2016). *Combinatorial Multi-Armed Bandit and Its Extension to Probabilistically Triggered Arms*, JMLR  
+- Wen, Kveton, Valko & Vaswani (2017). *Online Influence Maximization under Independent Cascade Model with Semi-Bandit Feedback*, NeurIPS  
+- Chen, Fan, Li, Feng, Tan & Tang (2015). *Online Topic-Aware Influence Maximization*, VLDB  
+- Guo (2023). *Online Influence Maximization: Concept and Algorithm*, arXiv:2312.00099  
 
 ---
 
