@@ -12,7 +12,7 @@ permalink: /blog/influence-maximization-bayesian-optimization-higgs/
 canonical_url: "https://brainvomit.blog/influence-maximization-bayesian-optimization-higgs/"
 og_image: "/assets/images/og-higgs-bayesian-optimization.png"
 image_alt: "Bayesian optimization search paths across the Higgs Twitter retweet graph."
-last_modified_at: 2026-11-05
+last_modified_at: 2026-11-11
 content_type: "research_study"
 content_label: "Research Study"
 search_phrase: "Bayesian optimization for influence maximization"
@@ -231,9 +231,15 @@ running backwards. A code audit caught the direction bug in one line.
 ## Honest limitations
 
 These results are specific to this graph, *k* = 20, and IC with a uniform
-*p* = 0.12. Settings with deeper cascades and more audience overlap are where
-diversity-aware seeding should matter. Examples include the follower graph, a
-weighted-cascade model, or a larger seed budget. I haven't tested any of them.
+*p* = 0.12. Settings with more audience overlap are where diversity-aware
+seeding should matter, so I tested the obvious one. **Update, November 2026:** on
+the follower graph (where the top-20 accounts' audiences overlap 44–65%), with a
+weighted-cascade model calibrated on the real Higgs retweet log and checked on a
+held-out time window, top-degree is still within 1% of the best seeding found
+(CELF +0.7%). A naive version of that model showed a +45% "win" that came entirely
+from a data-collection artifact; the details are in the
+[validation section of the companion post](/blog/virality-bo/#checking-the-simulator-against-real-diffusion).
+A larger seed budget remains untested.
 
 The attempt-3 collapse is partly a **budget artifact**. A 120-dimensional space
 with 60 noisy evaluations was never a fair fight.
