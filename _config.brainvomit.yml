@@ -15,7 +15,11 @@ include:
   - brainvomit
 
 exclude:
+  - live-data
+  - docs/FOOTBALL_MATCH_PULSE_PLAN.md
+  - docs/LIVE_DATA_AUDIT.md
   - PRODUCT.md
+  - DESIGN.md
   - index.html
   - CNAME
   - Readme.md
@@ -29,8 +33,10 @@ exclude:
   - resumes
   - coursework
   - projects
+  - dashboards
   - experience
   - intelligence
+  - observatories
   - ideas
   - job-agent
   - aegis-backend

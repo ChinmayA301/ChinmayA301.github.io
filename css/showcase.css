@@ -1,0 +1,102 @@
+/* Artifact-led work gallery; shares the portfolio's editorial palette and type. */
+.work-intro { max-width: 950px; margin-bottom: 3rem; }
+.work-page { padding-block: clamp(2.5rem, 5vw, 5rem) !important; }
+.work-intro .section-title { font-size: clamp(3.1rem, 6vw, 6rem) !important; }
+.work-controls { display: grid; gap: 1.5rem; padding-block: 1.5rem; border-block: 1px solid var(--rule-strong); }
+.work-search { display: grid; gap: .5rem; max-width: 460px; color: var(--quiet); font-size: .85rem; }
+.work-search input, .mock-period select { width: 100%; padding: .8rem 1rem; border: 1px solid var(--rule-strong); border-radius: 8px; background: var(--surface-1); color: var(--paper); font: inherit; caret-color: var(--rust-bright); }
+.work-search input::placeholder { color: var(--faint); }
+.work-controls .filter-bar { justify-content: flex-start; max-width: none; }
+.work-controls .filter-pill { min-height: 44px; }
+.work-count { margin: 1.5rem 0; color: var(--quiet); font-size: .85rem; font-variant-numeric: tabular-nums; }
+.work-grid, #selected-work .work-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem 1.5rem; border: 0; overflow: visible; }
+.work-grid-featured { margin-top: 2.5rem; }
+.work-tile { min-width: 0; display: flex; flex-direction: column; border-bottom: 1px solid var(--rule-strong); }
+.work-copy { flex: 1; display: flex; flex-direction: column; padding: 1.1rem 0 1.4rem; }
+.work-tile h3 { margin: 0 0 .75rem; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(1.7rem, 2.3vw, 2.2rem); line-height: 1.08; letter-spacing: -.025em; }
+.work-tile h3 a { color: var(--paper); text-decoration: none; }
+.work-tile h3 a:hover { color: var(--rust-bright); }
+.work-context { margin: 0 0 .6rem; color: var(--faint); font-size: .75rem; }
+.work-summary { max-width: 65ch; margin: 0 0 1rem; color: var(--quiet); font-size: .9rem; line-height: 1.6; }
+.work-tools { margin: auto 0 1rem; padding-top: .4rem; color: var(--faint); font-size: .75rem; }
+.work-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.work-links a { color: var(--paper); font-size: .85rem; text-decoration: underline; text-decoration-color: var(--rust); }
+.work-links a:first-child { color: var(--rust-bright); }
+.work-media { display: block; overflow: hidden; color: var(--quiet); text-decoration: none; background: var(--page-raised); }
+.work-media figure { margin: 0; }
+.work-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: var(--page-raised); transition: filter 240ms ease-out; }
+.work-media:hover img { filter: brightness(1.08); }
+.work-media figcaption { padding: .5rem .7rem; color: var(--quiet); font-size: .7rem; }
+.work-topic-links { display: flex; flex-wrap: wrap; gap: 1rem 1.8rem; margin-top: 2.5rem; }
+.work-topic-links a { color: var(--quiet); font-size: .85rem; }
+.work-empty { grid-column: 1 / -1; padding-block: 2rem; color: var(--quiet); }
+.work-grid a:focus-visible, .work-controls :focus-visible, .mock-page :focus-visible { outline: 2px solid var(--rust-bright); outline-offset: 5px; }
+#luthra, #freight-finance { scroll-margin-top: 100px; }
+/* Dashboard mock viewer. */
+.mock-page { color-scheme: dark; }
+.mock-page .container { margin-inline: auto; }
+.mock-page main { padding-block: clamp(3rem, 6vw, 6rem); }
+.mock-nav { padding-block: 1.2rem; border-bottom: 1px solid var(--rule); }
+.mock-nav .container { display: flex; justify-content: space-between; gap: 1rem; }
+.mock-nav a { font-size: .9rem; }
+.mock-page h1 { font: 400 clamp(3rem, 6vw, 5.5rem)/1 'Instrument Serif', Georgia, serif; letter-spacing: -.03em; max-width: 14ch; margin: 0 0 1.5rem; }
+.mock-lead { max-width: 65ch; color: var(--quiet); margin-bottom: 1.75rem; }
+.mock-disclosure { padding: 1rem 1.2rem; background: var(--surface-1); color: var(--paper); font-size: .88rem; border-radius: 8px; }
+.mock-disclosure strong { color: var(--rust-bright); }
+.mock-tabs { display: flex; gap: .6rem; flex-wrap: wrap; margin-block: 2rem; }
+.mock-tabs button, .mock-foot button, #retryMock { padding: .7rem 1rem; border: 1px solid var(--rule-strong); border-radius: 8px; color: var(--quiet); background: transparent; font: inherit; font-size: .85rem; min-height: 44px; }
+.mock-tabs button[aria-pressed=true] { background: var(--rust-bright); color: var(--ink); border-color: var(--rust-bright); }
+.mock-tabs button:disabled { opacity: .5; cursor: wait; }
+.mock-board { padding: clamp(1rem, 3vw, 2.5rem); background: var(--page-raised); border: 1px solid var(--rule-strong); border-radius: 12px; }
+.mock-heading { display: flex; justify-content: space-between; gap: 2rem; }
+.mock-heading h2 { font: 400 clamp(2rem, 4vw, 3rem)/1.1 'Instrument Serif', Georgia, serif; margin: 0 0 .8rem; }
+.mock-heading p { max-width: 60ch; color: var(--quiet); font-size: .9rem; }
+.mock-heading .mock-context { font-size: .75rem; color: var(--rust-bright); }
+.mock-period { display: grid; align-content: start; flex: 0 0 160px; gap: .5rem; color: var(--quiet); font-size: .8rem; }
+.mock-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 2rem 0; border-block: 1px solid var(--rule-strong); }
+.mock-metrics > div { padding: 1.4rem 0; }
+.mock-metrics dt { font-weight: 400; color: var(--quiet); font-size: .8rem; }
+.mock-metrics dd { margin: .5rem 0 0; font-size: clamp(1.4rem, 3vw, 2.4rem); font-variant-numeric: tabular-nums; }
+.mock-chart { padding-block: .5rem 2rem; }
+.mock-chart h3 { font-size: 1rem; margin: 0 0 .3rem; }
+.mock-chart > p { color: var(--faint); font-size: .75rem; }
+.mock-bars { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+.mock-bar-row { display: grid; grid-template-columns: 175px 1fr 65px; align-items: center; gap: 1rem; font-size: .85rem; }
+.mock-bar-row > strong { text-align: right; font-weight: 400; font-variant-numeric: tabular-nums; }
+.mock-bar-track { height: 16px; background: var(--surface-2); }
+.mock-bar-track > span { display: block; height: 100%; background: var(--rust-bright); }
+.mock-table-scroll { overflow: auto; scrollbar-color: var(--rust) var(--surface-1); }
+.mock-board table { width: 100%; min-width: 560px; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.mock-board caption { caption-side: top; padding-block: 1rem; color: var(--quiet); }
+.mock-board td, .mock-board th { padding: .9rem .8rem; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+.mock-board th { font-weight: 500; }
+.mock-board th:first-child { text-align: left; padding-left: 0; }
+.mock-board thead { color: var(--quiet); }
+.mock-foot { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; padding-top: 1.5rem; }
+.mock-foot p { flex-basis: 100%; max-width: 75ch; font-size: .8rem; color: var(--quiet); margin: 0; }
+.mock-foot a { font-size: .85rem; }
+.mock-page footer { margin-top: 2rem; padding-block: 2rem; color: var(--quiet); font-size: .8rem; }
+@media (max-width: 1000px) {
+    .work-grid, #selected-work .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+    .work-intro { margin-bottom: 1.75rem; }
+    .work-intro .section-title { font-size: 2.8rem !important; margin-bottom: 1rem !important; }
+    .work-intro .section-text { font-size: .95rem; }
+    .work-controls { gap: 1rem; padding-block: 1rem; }
+    .work-controls .filter-pill { font-size: .68rem; padding-inline: .65rem; }
+    .mock-page main { padding-top: 2rem; }
+    .mock-page h1 { font-size: 2.6rem; }
+    .mock-tabs { margin-block: 1.25rem; }
+    .work-grid, #selected-work .work-grid { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    .work-context { font-size: .8rem; }
+    .work-summary { font-size: .95rem; }
+    .mock-heading { flex-direction: column; gap: .5rem; }
+    .mock-period { flex-basis: auto; max-width: 200px; }
+    .mock-metrics { grid-template-columns: 1fr; }
+    .mock-metrics > div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .8rem 0; }
+    .mock-bar-row { grid-template-columns: 1fr 65px; gap: .5rem; }
+    .mock-bar-row > span { grid-column: 1 / -1; }
+    .mock-bar-track { grid-row: 2; }
+}
+@media (prefers-reduced-motion: reduce) { .work-media img { transition: none; } }

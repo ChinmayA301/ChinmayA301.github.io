@@ -1,0 +1,47 @@
+{
+  "captured_at": "2026-11-12T08:18:13.383919+00:00",
+  "verification": "Recomputed network outcome from constituent route-direction observations; checked horizon, outcome window, and both recorded absolute errors.",
+  "matched_examples": 3,
+  "examples": [
+    {
+      "route_key": "all",
+      "feature_ts": 1794470705000,
+      "issued_at": 1794470713201,
+      "target_at": 1794471313201,
+      "observed_at": 1794471364000,
+      "persistence": 170.5,
+      "candidate": 143.92391304347825,
+      "observed": 358,
+      "absolute_error_baseline": 187.5,
+      "absolute_error_candidate": 214.07608695652175,
+      "independent_observed": 358
+    },
+    {
+      "route_key": "all",
+      "feature_ts": 1794470762000,
+      "issued_at": 1794470773355,
+      "target_at": 1794471373355,
+      "observed_at": 1794471420000,
+      "persistence": 191.8,
+      "candidate": 187.8330578512397,
+      "observed": 360,
+      "absolute_error_baseline": 168.2,
+      "absolute_error_candidate": 172.1669421487603,
+      "independent_observed": 360
+    },
+    {
+      "route_key": "all",
+      "feature_ts": 1794470819000,
+      "issued_at": 1794470833531,
+      "target_at": 1794471433531,
+      "observed_at": 1794471483000,
+      "persistence": 191,
+      "candidate": 186.95505617977528,
+      "observed": 397.5,
+      "absolute_error_baseline": 206.5,
+      "absolute_error_candidate": 210.54494382022472,
+      "independent_observed": 397.5
+    }
+  ],
+  "limitation": "A few initial examples verify mechanics, not predictive quality."
+}

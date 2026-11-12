@@ -1,0 +1,32 @@
+name: Live data observatory checks
+on:
+  pull_request:
+    paths: ['live-data/**', 'observatories/**', 'css/observatory.css', 'js/observatory.js', '.github/workflows/live-data-checks.yml']
+  push:
+    branches: [main]
+    paths: ['live-data/**', 'observatories/**', 'css/observatory.css', 'js/observatory.js', '.github/workflows/live-data-checks.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: live-data
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: live-data/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm run types
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - name: Validate Worker bundle without deployment
+        run: npx wrangler deploy --dry-run
+        env:
+          WRANGLER_SEND_METRICS: 'false'

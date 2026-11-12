@@ -18,9 +18,16 @@ plugins:
   - jekyll-sitemap
 
 exclude:
+  - live-data
+  - docs/FOOTBALL_MATCH_PULSE_PLAN.md
+  - docs/LIVE_DATA_AUDIT.md
   - PRODUCT.md
+  - DESIGN.md
   - Readme.md
   - VISIBILITY.md
+  - docs/PORTFOLIO_ROADMAP.md
+  - docs/DOMAIN_MIGRATION.md
+  - docs/LIVE_DATA_PROJECTS.md
   - audit_output
   - scripts
   - brainvomit

@@ -1,5 +1,54 @@
 [
     {
+        "title": "ML Fundamentals — From-Scratch Implementations",
+        "course": "Machine learning coursework",
+        "term": "Graduate archive",
+        "summary": "Perceptron, k-means/PCA, and multilayer perceptron implementations.",
+        "tools": [
+            "Python",
+            "Machine learning"
+        ],
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/ml-programming"
+            }
+        ]
+    },
+    {
+        "title": "Sequential Decisions — Optimization & Graph Experiments",
+        "course": "Sequential decision experiments",
+        "term": "Graduate archive",
+        "summary": "Bayesian optimization, reinforcement learning, and trend propagation experiments.",
+        "tools": [
+            "Bayesian optimization",
+            "Reinforcement learning",
+            "Streamlit"
+        ],
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/ai-sequence-project"
+            }
+        ]
+    },
+    {
+        "title": "Rube Goldberg Machine — Data Structures",
+        "course": "Data structures",
+        "term": "Undergraduate archive",
+        "summary": "A C++ data-structures project with sample inputs and screenshots.",
+        "tools": [
+            "C++",
+            "Data structures"
+        ],
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/BTech/tree/main/dsa-project"
+            }
+        ]
+    },
+    {
         "title": "ML + PostgreSQL Systems",
         "course": "Coursework Project",
         "term": "Spring 24",
@@ -242,10 +291,10 @@
         ]
     },
     {
-        "title": "GeoSDOH & Diabetes Risk Mapping",
+        "title": "Longitudinal Diabetes Risk & Neighborhood Deprivation",
         "course": "Capstone",
         "term": "Capstone",
-        "summary": "Integrated geospatial deprivation indicators with diabetes outcomes to identify high-risk neighborhoods and intervention priority zones.",
+        "summary": "Temporal cohort design, ADI feature ablation, calibration, and aggregate follow-up-quality analysis.",
         "focus": [
             "ADI/SVI feature integration with outcome data",
             "Spatial clustering and hotspot detection",
@@ -256,15 +305,14 @@
             "Map dashboard"
         ],
         "tools": [
-            "R",
-            "GeoPandas",
-            "Power BI",
-            "Python"
+            "Python",
+            "scikit-learn",
+            "SHAP"
         ],
         "links": [
             {
-                "label": "MS Projects Repo",
-                "url": "https://github.com/ChinmayA301/MS-projectss"
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/capstone"
             }
         ]
     }

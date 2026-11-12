@@ -1,0 +1,32 @@
+{
+  "captured_at": "2026-11-12T08:17:14.503Z",
+  "origin": "https://chinmay-live-data-lab.chinmayarora30.workers.dev",
+  "checks": {
+    "public_api": true,
+    "seismic_metrics_match_pinned_upstream": true,
+    "distinct_successful_source_times": 12,
+    "invalid_selector_rejected": true,
+    "public_writes_rejected": true,
+    "forecast_issue_clock_separate_from_source_clock": true
+  },
+  "seismic": {
+    "report_revisions": 12,
+    "latest_report_sha": "043c939e1b3d892bfd7d7f263ad4a096d03fd6d1",
+    "generated_at": "2026-11-12T04:44:00.000Z",
+    "source_url": "https://raw.githubusercontent.com/ChinmayA301/Live-Seismic-ML-Pipeline/043c939e1b3d892bfd7d7f263ad4a096d03fd6d1/reports/_metrics.json"
+  },
+  "transit": {
+    "source_time": "2026-11-12T08:17:00.000Z",
+    "fetched_at": "2026-11-12T08:17:12.903Z",
+    "accepted_route_directions": 4,
+    "valid_vehicle_positions": 3,
+    "forecast_count": 1,
+    "settled_forecasts": 2,
+    "fitted_models": 0,
+    "archive_objects": 40
+  },
+  "limitations": [
+    "This is a timestamped acceptance capture, not a continuously updated report.",
+    "Empty model/evaluation counts mean history is still accumulating; no predictive gain is asserted."
+  ]
+}

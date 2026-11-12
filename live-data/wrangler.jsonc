@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "chinmay-live-data-lab",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-11-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": {"enabled": true, "head_sampling_rate": 1},
+  "triggers": {"crons": ["* * * * *"]},
+  "assets": {"directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*"]},
+  "d1_databases": [{"binding": "DB", "database_name": "chinmay-live-data-lab", "database_id": "89e716bc-1ffd-4601-8ee3-162fe02618ba", "migrations_dir": "migrations"}]
+}

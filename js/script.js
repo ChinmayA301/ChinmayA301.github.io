@@ -520,117 +520,92 @@ function resolveJsonUrls(path) {
     return Array.from(new Set(candidates));
 }
 
+const PROJECT_TOPICS = [
+    { key: "all", label: "All work" },
+    { key: "pipelines", label: "Pipelines & MLOps" },
+    { key: "bi", label: "Dashboards & BI" },
+    { key: "civic", label: "Civic & spatial" },
+    { key: "ai", label: "AI & agents" },
+    { key: "research", label: "Models & research" },
+    { key: "sports", label: "Sports & games" },
+    { key: "coursework", label: "Coursework & small builds" }
+];
+
+function projectActions(project) {
+    const actions = (project.links || []).filter(item => item?.url);
+    const githubUrl = [project.link, ...actions.map(item => item.url)]
+        .find(url => /^https:\/\/github\.com\//i.test(url || ""));
+    const mock = actions.find(item => item.label === "Dashboard mock");
+    const primary = githubUrl ? { label: "GitHub", url: githubUrl }
+        : mock || actions[0] || (project.link ? { label: "Open project", url: project.link } : null);
+    if (!primary) return [];
+    const secondary = actions.find(item => item.url !== primary.url
+        && /dashboard|demo|live|research|experience/i.test(item.label));
+    return [primary, secondary].filter(Boolean);
+}
+
+function projectTile(project, featured = false) {
+    const actions = projectActions(project);
+    const primary = actions[0];
+    if (!primary) return "";
+    const title = escapeHtml(project.title);
+    const anchor = (url, label, className = "") => `<a class="${className}" href="${escapeHtml(url)}"${/^https?:/.test(url) ? ' target="_blank" rel="noopener"' : ""}>${label}</a>`;
+    const preview = project.preview;
+    const media = preview ? anchor(primary.url, `<figure><img src="${escapeHtml(preview.src)}" alt="${escapeHtml(preview.alt)}" loading="lazy" width="960" height="540"><figcaption>${escapeHtml(preview.caption || "")}</figcaption></figure>`, "work-media") : "";
+    return `<article class="work-tile${featured ? " work-tile-featured" : ""}${preview ? " has-preview" : ""}">
+        ${media}
+        <div class="work-copy">
+            <p class="work-context">${escapeHtml(project.source || project.status || "Project")}</p>
+            <h3>${anchor(primary.url, title)}</h3>
+            <p class="work-summary">${escapeHtml(project.summary || compactProjectCopy(project.problem || project.description, 125))}</p>
+            <p class="work-tools">${(project.tags || []).slice(0, 3).map(escapeHtml).join(" · ")}</p>
+            <div class="work-links">${actions.map(action => anchor(action.url, escapeHtml(action.label))).join("")}</div>
+        </div>
+    </article>`;
+}
+
 function renderProjects(projects, options = {}) {
-    const gridId = options.gridId || "projectsGrid";
-    const columnClass = options.columnClass || "col-md-6";
-    const grid = document.getElementById(gridId);
+    const grid = document.getElementById(options.gridId || "projectsGrid");
     if (!grid) return;
-    if (!projects.length) {
-        grid.innerHTML = `<p class="text-muted small">No projects found yet.</p>`;
-        return;
-    }
-    grid.innerHTML = projects.map(p => {
-        const link = p.link || p.tweetUrl || "";
-        const tags = (p.tags || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${escapeHtml(t)}</span>`).join("");
-        const actions = (p.links || []).filter(item => item && item.url && item.label);
-        const actionLinks = actions.length ? `
-            <div class="project-actions mt-3">
-                ${actions.map(item => `
-                    <a class="project-cta" href="${escapeHtml(item.url)}" ${/^https?:\/\//i.test(item.url) ? 'target="_blank" rel="noopener"' : ""}>${escapeHtml(item.label === "GitHub" ? "Explore implementation" : item.label)}</a>
-                `).join("")}
-            </div>
-        ` : "";
-        const status = p.status ? `<p class="project-status mb-2">${escapeHtml(p.status)}</p>` : "";
-        const contributionText = p.contribution || p.role || "";
-        const contributionLabel = p.contribution ? "Contribution" : "Role";
-        const role = contributionText ? `<p class="project-role"><strong>${contributionLabel}</strong>${escapeHtml(contributionText)}</p>` : "";
-        const result = p.result ? `<p class="project-result"><strong>Result</strong>${escapeHtml(p.result)}</p>` : "";
-        const why = p.why ? `<p class="project-why"><strong>Operational relevance</strong>${escapeHtml(p.why)}</p>` : "";
-        const stack = p.stack ? `<p class="project-stack"><strong>Tools</strong>${escapeHtml(p.stack)}</p>` : "";
-        const projectMeta = role || stack ? `<div class="project-signal-meta">${role}${stack}</div>` : "";
-        const privacy = p.privacy ? `<p class="project-privacy">${escapeHtml(p.privacy)}</p>` : "";
-        const tweetEmbed = p.tweetUrl ? `
-            <div class="project-embed mt-3">
-                <blockquote class="twitter-tweet" data-media-max-width="560">
-                    <p lang="en" dir="ltr">${escapeHtml(p.tweetText || p.title)}</p>
-                    &mdash; Chinmay A (@Ch_Aurora3)
-                    <a href="${escapeHtml(p.tweetUrl)}">${escapeHtml(p.tweetDate || "April 7, 2026")}</a>
-                </blockquote>
-            </div>
-        ` : "";
-        const tweetCta = p.tweetUrl ? `
-            <a class="project-cta" href="${escapeHtml(p.tweetUrl)}" target="_blank" rel="noopener">Open video post</a>
-        ` : "";
-        const projectActions = [actionLinks, tweetCta].filter(Boolean).join("");
-        const cardBody = `
-            <div class="card-body">
-                <h3 class="h5">${escapeHtml(p.title)}</h3>
-                ${status}
-                <p class="mb-2 small text-muted">${escapeHtml(p.problem || p.description)}</p>
-                ${projectMeta}
-                ${result}
-                ${why}
-                ${privacy}
-                <div class="project-tags">${tags}</div>
-                ${tweetEmbed}
-                ${projectActions}
-            </div>
-        `;
-        return `
-          <div class="${columnClass}">
-            ${p.tweetUrl
-                ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
-                : actions.length
-                    ? `<article class="project-box card shadow-sm h-100">${cardBody}</article>`
-                    : link
-                        ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="project-box card shadow-sm h-100">${cardBody}</a>`
-                        : `<article class="project-box card shadow-sm h-100">${cardBody}</article>`}
-          </div>
-        `;
-    }).join("");
-    loadTwitterWidgets(grid);
-    applyStagger(grid.querySelectorAll(".project-box"));
+    grid.innerHTML = projects.length ? projects.map(project => projectTile(project)).join("")
+        : `<p class="work-empty">No matching projects. Try another topic or clear your search.</p>`;
 }
 
 function buildProjectFilters(projects) {
     const filterWrap = document.getElementById("projectsFilter");
     if (!filterWrap) return;
-    const paths = [
-        { key: "all", label: "All work" },
-        { key: "data-science", label: "Data Science" },
-        { key: "analytics", label: "Analytics" },
-        { key: "applied-ai", label: "Enterprise AI Solutions" },
-        { key: "responsible-ai", label: "AI Reliability & Governance" }
-    ];
+    const available = projects.filter(project => projectActions(project).length);
+    const legacyTopics = { "data-science": "research", analytics: "bi", "applied-ai": "ai", "responsible-ai": "research" };
     const params = new URLSearchParams(window.location.search);
-    const requestedPath = params.get("path");
-    const activePath = paths.some(path => path.key === requestedPath) ? requestedPath : "all";
-    filterWrap.innerHTML = paths.map(path => `
-      <button class="filter-pill ${path.key === activePath ? "active" : ""}" data-path="${path.key}">${path.label}</button>
-    `).join("");
-    applyStagger(filterWrap.querySelectorAll(".filter-pill"));
-
-    const renderPath = path => {
-        const filtered = path === "all"
-            ? projectCache
-            : projectCache.filter(project => (project.paths || []).includes(path));
-        renderProjects(filtered);
-    };
-
-    renderPath(activePath);
-
-    filterWrap.querySelectorAll(".filter-pill").forEach(btn => {
-        btn.addEventListener("click", () => {
-            filterWrap.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            const path = btn.getAttribute("data-path") || "all";
-            const nextUrl = new URL(window.location.href);
-            if (path === "all") nextUrl.searchParams.delete("path");
-            else nextUrl.searchParams.set("path", path);
-            window.history.replaceState({}, "", nextUrl);
-            renderPath(path);
+    let active = params.get("topic") || legacyTopics[params.get("path")] || "all";
+    if (!PROJECT_TOPICS.some(topic => topic.key === active)) active = "all";
+    const search = document.getElementById("projectSearch");
+    if (search) search.value = params.get("q") || "";
+    filterWrap.innerHTML = PROJECT_TOPICS.map(topic => `<button type="button" class="filter-pill" data-topic="${topic.key}" aria-pressed="${topic.key === active}">${topic.label}</button>`).join("");
+    const render = () => {
+        const query = (search?.value || "").trim().toLowerCase();
+        const filtered = available.filter(project => (active === "all" || (project.topics || []).includes(active))
+            && [project.title, project.summary, project.stack, project.source, ...(project.tags || [])].join(" ").toLowerCase().includes(query));
+        filterWrap.querySelectorAll("button").forEach(button => {
+            const selected = button.dataset.topic === active;
+            button.classList.toggle("active", selected);
+            button.setAttribute("aria-pressed", String(selected));
         });
+        renderProjects(filtered);
+        const count = document.getElementById("projectsCount");
+        if (count) count.textContent = `${filtered.length} project${filtered.length === 1 ? "" : "s"}`;
+        const next = new URL(window.location.href);
+        next.searchParams.delete("path");
+        if (active === "all") next.searchParams.delete("topic"); else next.searchParams.set("topic", active);
+        if (query) next.searchParams.set("q", search.value.trim()); else next.searchParams.delete("q");
+        window.history.replaceState({}, "", next);
+    };
+    filterWrap.addEventListener("click", event => {
+        const button = event.target.closest("button[data-topic]");
+        if (button) { active = button.dataset.topic; render(); }
     });
+    search?.addEventListener("input", render);
+    render();
 }
 
 function getPortfolioProfiles(projects) {
@@ -1114,8 +1089,7 @@ async function loadAiBenchmarkPulse() {
 }
 
 function projectImplementationUrl(project) {
-    const github = (project.links || []).find(item => item?.label?.toLowerCase().includes("github") && item.url);
-    return github?.url || project.link || (project.links || []).find(item => item?.url)?.url || "/projects/";
+    return projectActions(project)[0]?.url || "/projects/";
 }
 
 function compactProjectCopy(value, maxLength = 170) {
@@ -1216,58 +1190,9 @@ function renderLiveProjects(projects) {
     setupLiveProjectPreviews(grid);
 }
 
-function setupFeaturedProjectMarquee(grid) {
-    const primarySet = grid.querySelector(".technical-project-set:not([aria-hidden])");
-    const track = grid.querySelector(".technical-project-track");
-    if (!primarySet || !track) return;
-
-    let resizeFrame = null;
-    const updateSpeed = () => {
-        const distance = primarySet.getBoundingClientRect().width;
-        track.style.setProperty("--technical-marquee-duration", `${Math.max(34, distance / 46).toFixed(2)}s`);
-        resizeFrame = null;
-    };
-
-    window.addEventListener("resize", () => {
-        if (resizeFrame !== null) return;
-        resizeFrame = window.requestAnimationFrame(updateSpeed);
-    }, { passive: true });
-    updateSpeed();
-}
-
-function renderFeaturedProjectMarquee(projects) {
+function renderFeaturedProjects(projects) {
     const grid = document.getElementById("featuredProjectsGrid");
-    if (!grid) return;
-
-    const renderSet = isDuplicate => projects.map((project, index) => {
-        const implementationUrl = projectImplementationUrl(project);
-        const context = compactProjectCopy(project.problem || project.description, 112);
-        const result = compactProjectCopy(project.result, 92);
-        const tags = (project.tags || []).slice(0, 2);
-        return `
-            <a class="technical-project-card" data-project-index="${index}" href="${escapeHtml(implementationUrl)}" target="_blank" rel="noopener"${isDuplicate ? " tabindex=\"-1\"" : ""} aria-label="Explore ${escapeHtml(project.title)} implementation">
-                <span class="technical-project-index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
-                <span class="technical-project-copy">
-                    <h3>${escapeHtml(project.title)}</h3>
-                    <p>${escapeHtml(context)}</p>
-                </span>
-                ${result ? `<span class="technical-project-result"><strong>Result</strong>${escapeHtml(result)}</span>` : ""}
-                <span class="technical-project-footer">
-                    <span class="technical-project-tags">${tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</span>
-                    <span class="technical-project-cta">View work</span>
-                </span>
-            </a>
-        `;
-    }).join("");
-
-    grid.innerHTML = `
-        <div class="technical-project-track">
-            <div class="technical-project-set">${renderSet(false)}</div>
-            <div class="technical-project-set" aria-hidden="true">${renderSet(true)}</div>
-        </div>
-    `;
-
-    setupFeaturedProjectMarquee(grid);
+    if (grid) grid.innerHTML = projects.map(project => projectTile(project, true)).join("");
 }
 
 // Render Projects from JSON
@@ -1293,7 +1218,7 @@ async function loadProjects() {
             const featuredProjects = projectCache
                 .filter(project => project.featured)
                 .sort((a, b) => (a.featured_order || 99) - (b.featured_order || 99));
-            renderFeaturedProjectMarquee(featuredProjects);
+            renderFeaturedProjects(featuredProjects);
         }
     } catch (e) {
         if (grid) grid.innerHTML = `<p class="text-danger small">Could not load projects.</p>`;
@@ -1337,7 +1262,7 @@ async function loadExperience() {
 function renderTimelineItems(items) {
     const linkedInProfile = "https://www.linkedin.com/in/chinmay-arora-27682211b/";
     return items.map(item => `
-      <a class="timeline-item card text-decoration-none" href="${linkedInProfile}" target="_blank" rel="noopener">
+      <a ${item.org === "Luthra Corporate Advisors" ? 'id="luthra"' : item.org === "Freight Forwarding Clients" ? 'id="freight-finance"' : ""} class="timeline-item card text-decoration-none" href="${linkedInProfile}" target="_blank" rel="noopener">
         <div class="card-body text-white">
           <h3 class="h5 mb-1">${item.title}</h3>
           <p class="mb-1"><strong>${item.org}</strong> | ${item.time}</p>
@@ -1562,40 +1487,14 @@ async function loadCourseworkProjects() {
             grid.innerHTML = `<p class="text-muted small">No coursework projects available yet.</p>`;
             return;
         }
-        grid.innerHTML = items.map(p => `
-      <div class="col-lg-6">
-        <article class="course-card card h-100">
-          <div class="card-body">
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-              <h3 class="h5 mb-0">${p.title}</h3>
-              ${p.term ? `<span class="course-meta">${p.term}</span>` : ""}
-            </div>
-            ${p.course ? `<p class="course-subtitle mb-2">${p.course}</p>` : ""}
-            ${p.summary ? `<p class="mb-2">${p.summary}</p>` : ""}
-            ${(p.focus || []).length ? `
-              <div class="mb-2">
-                <h4 class="h6 mb-1">Focus</h4>
-                <ul class="mb-0">${p.focus.map(f => `<li>${f}</li>`).join("")}</ul>
-              </div>` : ""}
-            ${(p.deliverables || []).length ? `
-              <div class="mb-2">
-                <h4 class="h6 mb-1">Deliverables</h4>
-                <ul class="mb-0">${p.deliverables.map(d => `<li>${d}</li>`).join("")}</ul>
-              </div>` : ""}
-            <div class="course-tags">
-              ${(p.tools || []).map(t => `<span class="badge bg-secondary-subtle text-secondary me-1">${t}</span>`).join("")}
-            </div>
-            ${(p.links || []).length ? `
-              <div class="mt-3">
-                ${p.links.map(l => l.url
-                    ? `<a class="btn btn-outline-light btn-sm me-2" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`
-                    : `<span class="btn btn-outline-light btn-sm me-2 disabled">${l.label}</span>`).join("")}
-              </div>` : ""}
-          </div>
-        </article>
-      </div>
-    `).join("");
-        applyStagger(grid.querySelectorAll(".course-card"));
+        grid.classList.remove("row");
+        grid.classList.add("work-grid");
+        grid.innerHTML = items.map(project => projectTile({
+            ...project,
+            source: [project.course, project.term].filter(Boolean).join(" · "),
+            summary: compactProjectCopy(project.summary, 125),
+            tags: project.tools || []
+        })).join("");
     } catch (e) {
         grid.innerHTML = `<p class="text-danger small">Could not load coursework projects.</p>`;
         console.error("Coursework load error:", e);
