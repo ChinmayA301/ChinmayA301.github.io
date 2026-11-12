@@ -3,6 +3,7 @@ layout: post
 title: "Engineering Virality with Bayesian Optimization"
 topic: data-decisions
 date: 2026-02-25
+last_modified_at: 2026-11-11
 description: "A Bayesian optimization study of virality and influence maximization, testing how sequential search, diffusion models, and graph-aware seed selection compare with simple network heuristics."
 summary: "What if trends were not just forecasted but engineered? This article explores how Bayesian Optimization transforms virality into a sequential decision-making problem."
 tags:
@@ -22,6 +23,8 @@ content_label: "Research Study"
 search_phrase: "Bayesian optimization for virality and influence systems"
 positioning_note: "This is a speculative modeling concept for influence systems, not a growth-hacking playbook."
 ---
+
+> **Correction and update, November 2026.** An audit of this post found that its three "BO vs random" figures were generated from hand-coded mock curves, not from any experiment, and that two diagrams and a "BO improves reach by ~20–50%" claim had no experimental basis. All of them have been removed. The post also claimed that applying BO to influence maximization was new; it is not, and that section now says what this work actually adds. Separately, the real-graph results were checked against real diffusion data and rerun on the follower graph; that section has been extended with the outcome.
 
 ## The Core Question
 
@@ -176,10 +179,12 @@ Gaussian Processes model:
 
 'a(x) = μ(x) + κ σ(x)'
 
-This balances:
+This is the Upper Confidence Bound (UCB) rule. It balances:
 
 - exploitation (high-performing strategies)  
 - exploration (uncertain but promising strategies)
+
+The real-graph experiments below use a different acquisition rule, Expected Improvement (defined in the maths section), which makes the same trade-off.
 
 ---
 
@@ -341,7 +346,7 @@ flowchart TB
 
 ---
 
-## Performance vs. Random Seeding (Why BO Wins)
+## Performance vs. Random Seeding: How to Compare Fairly
 
 A simple baseline for trend seeding is **random selection**:
 
@@ -349,9 +354,7 @@ A simple baseline for trend seeding is **random selection**:
 - run the propagation simulation (IC / Monte Carlo)
 - record reach / engagement / virality
 
-This is appealing because it is easy and unbiased - but it is extremely inefficient in large combinatorial spaces.
-
-Bayesian Optimization (BO) improves over random by **learning from every evaluation** and deciding where to test next using a surrogate model + acquisition function. In high-noise propagation problems, this often yields stronger performance under a fixed evaluation budget.
+Random search is easy and unbiased. Bayesian Optimization learns from every evaluation and uses a surrogate model plus an acquisition function to decide where to test next. Whether that adaptivity pays off under a fixed budget is an empirical question, and the answer depends heavily on the search space (see the real-graph results below).
 
 ---
 
@@ -375,7 +378,7 @@ We compare two methods under the same budget \(N\):
 
 'BestSoFar(t) = max_{i ≤ t} f(x_i)'
 
-BO should rise faster and reach higher values with fewer evaluations.
+If BO is earning its keep, this should rise faster than random search's.
 
 2. **Area Under the Best-So-Far Curve (AUBC)**  
    A single-number summary of sample efficiency:
@@ -389,10 +392,10 @@ Higher AUBC means you achieved strong performance earlier and consistently.
 
 'r_N = f(x*) − max_{t ≤ N} f(x_t)'
 
-BO should yield lower regret under equal budgets.
+Lower regret under an equal budget is the claim a BO-vs-random comparison has to demonstrate.
 
 4. **Stability Under Noise (Propagation Variance)**  
-   Since MCST is stochastic, compare variance:
+   Since Monte Carlo IC estimates are stochastic, compare variance:
 
 'Var(f(x)) ≈ (1 / (K − 1)) Σ_{k=1}^{K} ( Reach_k(S_x) − Ȓeach(S_x) )²'
 
@@ -400,109 +403,24 @@ BO can incorporate uncertainty and avoid being misled by noisy single samples.
 
 ---
 
-### 1) Convergence: Best-So-Far Reach vs Iterations
-
-This diagram shows the typical qualitative behavior: BO climbs faster than random.
-
-```mermaid
-graph LR
-
-subgraph Iterations
-I1["Iter 1"] --> I2["Iter 2"] --> I3["Iter 3"] --> I4["Iter 4"] --> I5["Iter 5"]
-end
-
-subgraph Random
-R1["10"] --> R2["18"] --> R3["22"] --> R4["28"] --> R5["31"]
-end
-
-subgraph BO
-B1["10"] --> B2["25"] --> B3["40"] --> B4["55"] --> B5["65"]
-end
-
-I1 --- R1
-I2 --- R2
-I3 --- R3
-I4 --- R4
-I5 --- R5
-
-I1 --- B1
-I2 --- B2
-I3 --- B3
-I4 --- B4
-I5 --- B5
-```
+Two rules make the comparison fair: both methods get exactly the same number of objective evaluations, and each run's best answer is re-scored with fresh simulations so the noisy maximum doesn't flatter either method.
 
 ---
 
-### 2) Budget Efficiency: Same Budget, Different Outcome
+## Real-Graph Research Artifact: the Higgs Network
 
-With a fixed evaluation budget (e.g., 20 simulations), BO typically discovers a higher-performing strategy.
-
-```mermaid
-flowchart LR
-  R["Random\nBest Reach ≈ 55"]:::low --> C["Fixed Budget (N evals)"]
-  B["BO\nBest Reach ≈ 85"]:::high --> C
-
-  classDef low fill:#ffd6d6,stroke:#111,color:#111;
-  classDef high fill:#d6f5d6,stroke:#111,color:#111;
-```
-
----
-
-3) Why Random Fails: Search Space Explosion
-
-Random sampling wastes many evaluations in low-performing regions.
-
-```mermaid
-flowchart LR
-    A["Huge Strategy Space X"] --> B["Random picks mostly low/medium zones"]
-    A --> C["BO builds surrogate f̂(x) + uncertainty"]
-    C --> D["Acquisition picks high-potential regions"]
-    D --> E["Faster discovery of strong seeding strategies"]
-```
-
----
-
-Under the same evaluation budget (N),
-	•	BO should achieve higher BestSoFar reach
-	•	higher AUBC
-	•	lower simple regret
-	•	and often more stable improvement under Monte Carlo noise.
-
-A realistic target framing for synthetic IC experiments:
-	•	BO improves best reach by ~20–50% vs random under tight budgets (e.g., 20–50 evaluations), depending on:
-	•	network structure
-	•	seed set size
-	•	noise level (number of MC rollouts per evaluation)
-	•	dimensionality of strategy space
-
-## Performance vs Random Seeding (Figures)
-
-### Best-so-far convergence (mean ± 95% CI)
-![Best-so-far convergence](/assets/blog/bo_vs_random_best_so_far_ci.png)
-
-### Fixed-budget outcome (bar chart)
-![Fixed-budget best reach](/assets/blog/bo_vs_random_final_bar.png)
-
-### Distribution of best reach (violin plot)
-![Distribution of best reach](/assets/blog/bo_vs_random_final_violin.png)
-
----
-
-## Real-Graph Research Artifact: Higgs Retweet Network
-
-The synthetic IC figures above explain the optimization intuition. The research-artifact version uses the SNAP Higgs retweet graph: **223,833 nodes**, **308,596 edges**, and a seed budget of **k = 20**.
+The research-artifact version runs on the SNAP Higgs Twitter data, with a seed budget of **k = 20**. It was first run on the retweet graph (**223,833 nodes**, **308,596 edges**), then checked against real diffusion and rerun on the follower graph (below).
 
 > **Correction, November 2026.** An earlier version of this section said BO beat
 > the top-degree heuristic on the Higgs graph by a few percent. That came from a
 > bug: the graph's edges pointed against the direction information flows. After
 > fixing it and rerunning with matched controls, **BO does not beat top-degree on
 > this graph.** Top-degree is effectively optimal, and CELF selects the same 20
-> accounts. The synthetic-IC figures above are a separate illustration and were not affected.
+> accounts.
 
 ![Convergence trace showing BO and random search on the Higgs retweet graph, both approaching the top-degree plateau.](/assets/blog/bo_convergence.png)
 
-*Real data: BO reaches the top-degree plateau in fewer evaluations than random search (about 6 vs 12 to get within 1%), but the plateau is top-degree itself.*
+*Retweet graph: BO reaches the top-degree plateau in fewer evaluations than random search (about 6 vs 12 to get within 1%), but the plateau is top-degree itself.*
 
 ![Grouped bar chart comparing top-degree, random search, and BO across four search spaces on the same objective.](/assets/blog/bo_freenode_progression.png)
 
@@ -512,7 +430,27 @@ The synthetic IC figures above explain the optimization intuition. The research-
 
 *In the constrained 13-D space, BO clearly beats random search with the same budget but still finishes about 1.2% below top-degree.*
 
-On real graphs, the "BO beats random" intuition holds only when the search space is hard but well-posed. Beating a strong heuristic is a separate question, and on this graph the answer is no. For the full build log, corrections and limitations, see [Influence Maximization using BO](/blog/influence-maximization-bayesian-optimization-higgs/).
+### Checking the simulator against real diffusion
+
+Every comparison above happens inside a simulator, and the retweet graph has a structural problem as a simulation substrate: each of its edges is a retweet that already happened. Exposure on Twitter runs along follow edges, and the Higgs release includes both the follower graph (456k users, 14.9M edges) and a timestamped log of the week's retweets. So the simulator can be tested.
+
+- **Follow edges carry most diffusion.** 59% of retweets come from a follower of the source. On the follower graph, the top-20 accounts' audiences overlap 44–65%, against 13% on the retweet graph. That is the regime where diversity-aware seeding *should* beat top-degree.
+- **Calibrate before, test after.** A weighted cascade (each follower's activation probability shrinks with the number of accounts they follow) was calibrated on 1–3 July and tested from 4 July. Out of sample it reproduces how shallow real cascades are (depth 0.053 vs 0.056 observed) but under-predicts total spread about 4.7×, because people became roughly three times as likely to retweet once the discovery was announced.
+
+![Held-out check: predicted vs observed spread and cascade depth for uniform and weighted cascade models.](/assets/blog/virality_holdout_check.png)
+
+*Held-out check against the real activity log. Calibrated before the announcement, every model under-predicts spread; weighted cascade matches cascade depth.*
+
+- **The optimisers found a hole in the data.** Run naively on the follower graph, CELF and BO "beat" top-degree by +45% and +43%. Almost all of that came from one account: in the crawled data, 16,280 of its followers follow no one else, so the model treated it as a 12,000-node spreader. In the real log it was **never retweeted once**. The crawl only recorded follows among Higgs-involved users, so followee counts are truncated, and optimisers go straight for the accounts a model overrates. After a correction chosen by out-of-sample fit (a floor on the followee count, fixed before rerunning), the gain disappears.
+- **Per account, the model is no smarter than follower count.** Across the 3,000 candidate accounts, the model's predicted reach correlates with observed retweets at about 0.5 (Spearman), and 8 of its top 20 are in the observed top 20, exactly what ranking by follower count achieves.
+
+![Bar chart: spread vs top-degree for CELF and the best BO stage under three simulators.](/assets/blog/virality_substrate_comparison.png)
+
+*Whether anything beats top-degree depends on the simulator. On the retweet graph, nothing does. On the naive follower-graph model, a data artifact produces a +45% "win". On the follower-graph model that best fits real diffusion, the best seeding found is within 1% of top-degree.*
+
+On the corrected follower-graph simulator, top-degree remains within 1% of the best seeding found (CELF +0.7%), and BO adds nothing over random search with the same budget in the rule spaces. Heavy audience overlap costs little because any one follower's chance of being activated is small, so being reached twice is rare.
+
+Two lessons carry beyond this graph. Search-space design decides whether BO can reach a strong answer, not whether one exists. And an optimiser is only as trustworthy as the simulator it is pointed at: it will find and exploit the simulator's errors, so the simulator needs checking against real outcomes, account by account, before its optimum means anything. None of this establishes what a real seeding campaign would achieve; that needs a field experiment. The code, data provenance and every number are in the [validation write-up](https://github.com/ChinmayA301/blog-artifacts/tree/main/virality-bayesian-optimization/validation). For the full build log, see [Influence Maximization using BO](/blog/influence-maximization-bayesian-optimization-higgs/).
 
 ---
 
@@ -551,7 +489,7 @@ So the implementation treats persona assignment as an explicit sensitivity param
 
 A result that disappears across this grid is assumption-sensitive, not robust.
 
-The initial audit of the 999-row decoded public sample found 665 age-eligible records and an effective sample size of 652.8 after soft conditioning. The requested fields are usable but incomplete: coverage ranges from 18.0% to 77.0%. The ML-paper and sports-clip affinity scores are meaningfully distinct in the sample (correlation = -0.225). That is enough to run the mechanism as a synthetic sensitivity experiment. It is **not** evidence about the actual preferences of Higgs users.
+The initial audit of the 999-row decoded public sample (395 of those records are themselves synthetic by MatrAIx's own source labels; the rest are derived from Wikipedia, Stack Overflow, Amazon reviews, the General Social Survey and smaller sources) found 665 age-eligible records and an effective sample size of 652.8 after soft conditioning. The requested fields are usable but incomplete: coverage ranges from 18.0% to 77.0%. The ML-paper and sports-clip affinity scores are meaningfully distinct in the sample (correlation = -0.225). That is enough to run the mechanism as a synthetic sensitivity experiment. It is **not** evidence about the actual preferences of Higgs users.
 
 ### Three-tier provenance
 
@@ -567,23 +505,13 @@ The implementation, conditioning audit, tests, and reporting contract are in the
 
 ---
 
-## Why This Is Innovative
+## What This Work Adds (and What It Doesn't)
 
-Bayesian Optimization is commonly used for:
+Bayesian Optimization for influence maximization is not new. Earlier work, including several of the references below, applies BO to seed selection and to functions over node subsets. What this project contributes is narrower:
 
-- protein synthesis  
-- material discovery  
-- hyperparameter tuning  
-
-This work applies BO to:
-
-**Social influence optimization**
-
-Key innovation:
-
-- trends become optimization landscapes  
-- virality becomes an objective function  
-- strategy becomes a decision variable  
+- a comparison of four search-space designs on the same real graph, under one objective, with random search on the same budget as the control;
+- a test of the simulator itself against real diffusion data (the follower-graph validation below), which most influence-maximization studies skip;
+- a public correction record: the first version of these results came from a bug, and the corrected and validated numbers replaced them.
 
 ---
 
@@ -600,9 +528,9 @@ Here:
 - rewards are delayed  
 - sample efficiency matters  
 
-BO provides better uncertainty-aware exploration.
+That makes BO a natural first choice here, though this project does not compare it against RL, so that is a design argument rather than a measured result.
 
-RL becomes a future extension.
+RL remains a future extension.
 
 ---
 
@@ -691,7 +619,7 @@ This loss function learns weights \(w_i\) that best align predicted virality wit
 - (x_t) = strategy used
 - (T) = number of training instances
 
-The negative squared error formulation allows us to optimize weights using Bayesian Optimization itself, refining how virality is computed.
+As written, this is ordinary least squares (maximising the negative squared error), which has a closed-form solution; BO would add nothing for a linear model. BO becomes useful only if the score is a non-linear or non-differentiable function of its weights. None of the experiments in this post use this score.
 
 ---
 
@@ -752,9 +680,9 @@ The surrogate model uses kernels to measure similarity between strategies.
 
 'k_Matern(x, x') = (2^(1-ν) / Γ(ν)) · ( (√(2ν) ||x - x'||) / ℓ )^ν · K_ν( (√(2ν) ||x - x'||) / ℓ )'
 
-- More flexible than RBF
-- Better suited for noisy, less smooth social systems
+- More flexible than RBF: it allows a rougher (less smooth) objective
 - Controlled by smoothness parameter \(\nu\)
+- Observation noise is handled separately, by adding a white-noise term to the kernel
 
 ---
 
