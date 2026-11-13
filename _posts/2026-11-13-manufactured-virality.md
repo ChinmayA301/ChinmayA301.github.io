@@ -10,7 +10,8 @@ categories: [machine-learning, networks, trust-safety]
 tags: [influence-maximization, fake-stars, coordinated-inauthentic-behavior, bayesian-optimization, adversarial-robustness]
 permalink: /blog/manufactured-virality/
 canonical_url: "https://brainvomit.blog/manufactured-virality/"
-image_alt: "Evasion cost against detector false-flag rate for six defender designs."
+og_image: "/assets/images/og-manufactured-virality.png"
+image_alt: "Median cost to evade six fake-star detector designs, relative to the cheapest possible campaign, with each design's false-flag rate."
 content_type: "research_study"
 content_label: "Research Study"
 search_phrase: "cost of evading fake star and fake retweet detection"
@@ -229,10 +230,11 @@ previous round's campaign, depending on platform. The attacker then re-optimised
 - **Higgs is one topic in one week of 2012.** The content side of virality (what the post is about)
   is untested.
 
-**On release:** the detector, the organic models and the aggregate cost curves will be public. The
-attacker's optimised settings, and anything that works as a ready-made campaign generator, will not.
+**On release:** the detectors, the organic models, the simulation harness and the aggregate cost
+curves are public. The attacker's optimised settings, and anything that works as a ready-made
+campaign generator, are not.
 
-<!-- TODO before publishing: add the repository link once manufactured-virality is pushed, and an og_image. -->
+**Code and results:** [github.com/ChinmayA301/manufactured-virality](https://github.com/ChinmayA301/manufactured-virality). The organic models, detectors, game harness and aggregate results are there. The phase write-ups (`PHASE_A.md`, `PHASE_B.md`, `PHASE_C.md`) give the full numbers behind each claim.
 
 ### References
 
