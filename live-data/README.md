@@ -1,9 +1,11 @@
+> **Current deployment:** [Free snapshot dashboard](https://app.chinmayarora.com/live-data-lab/) on GitHub Pages, with a roughly 15-minute GitHub Actions collection schedule. See [migration and operating notes](MIGRATION.md). The Cloudflare architecture below documents the original always-on edition and retained rollback implementation; its cron is disabled. The snapshot edition does not offer raw replay or forecast evaluation.
+
 # Live Data Lab
 
 Two portfolio observatories backed by an independent scheduled collector and Cloudflare D1. No browser requests directly ingest source feeds. No synthetic records are used in the deployed dashboards.
 
-- [Seismic observatory](https://chinmay-live-data-lab.chinmayarora30.workers.dev/observatories/seismic/)
-- [Transit reliability lab](https://chinmay-live-data-lab.chinmayarora30.workers.dev/observatories/transit/)
+- [Seismic observatory](https://app.chinmayarora.com/live-data-lab/observatories/seismic/)
+- [Transit reliability lab](https://app.chinmayarora.com/live-data-lab/observatories/transit/)
 
 ## What exists
 

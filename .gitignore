@@ -19,3 +19,7 @@ _site_brainvomit/
 /live-data/public/
 /live-data/.wrangler/
 /live-data/worker-configuration.d.ts
+
+/live-data/storage/
+/live-data/*.sqlite*
+/live-data/*export*.sql

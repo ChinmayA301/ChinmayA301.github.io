@@ -234,7 +234,7 @@
             },
             {
                 "label": "Live observatory",
-                "url": "https://chinmay-live-data-lab.chinmayarora30.workers.dev/observatories/seismic/"
+                "url": "https://app.chinmayarora.com/live-data-lab/observatories/seismic/"
             },
             {
                 "label": "Live pipeline status",
@@ -1581,9 +1581,9 @@
     },
     {
         "title": "Twin Cities Transit Reliability Lab",
-        "description": "Independent one-minute collection of Metro Transit feeds, raw replay, route-direction delay estimates, and prospective forecasting.",
-        "summary": "Real transit feeds → validation and replay → delay charts → ten-minute forecast evaluation.",
-        "status": "Live data collection · evaluation accumulating",
+        "description": "Validated Metro Transit snapshots with a vehicle map, route filters, schedule-estimate history and data coverage. Portable Node/SQLite collector prepared for always-on hosting.",
+        "summary": "Reported vehicle locations, schedule estimates and coverage — refreshed by a scheduled data pipeline.",
+        "status": "Scheduled snapshots · free hosting",
         "paths": [
             "data-science",
             "analytics"
@@ -1599,16 +1599,16 @@
             "Temporal Evaluation",
             "Data Quality"
         ],
-        "stack": "Cloudflare Workers, D1, TypeScript, GTFS Realtime, D3, ridge regression",
-        "link": "https://chinmay-live-data-lab.chinmayarora30.workers.dev/observatories/transit/",
+        "stack": "GitHub Actions, GitHub Pages, Node.js, SQLite, TypeScript, GTFS Realtime, D3, Leaflet",
+        "link": "https://app.chinmayarora.com/live-data-lab/observatories/transit/",
         "links": [
             {
                 "label": "GitHub",
-                "url": "https://github.com/ChinmayA301/ChinmayA301.github.io/tree/codex/live-data-observatories/live-data"
+                "url": "https://github.com/ChinmayA301/live-data-lab"
             },
             {
                 "label": "Live lab",
-                "url": "https://chinmay-live-data-lab.chinmayarora30.workers.dev/observatories/transit/"
+                "url": "https://app.chinmayarora.com/live-data-lab/observatories/transit/"
             }
         ],
         "featured": true,
