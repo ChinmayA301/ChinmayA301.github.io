@@ -7,24 +7,51 @@
         "why": "Moves beyond nearest-neighbor similarity to propose two-way connections while limiting repeated pairs and overloaded attendees.",
         "stack": "TypeScript, Next.js, React, embeddings, LLM APIs, greedy matching with 2-opt repair, Azure deployment tooling",
         "status": "Hackathon prototype · October 2026",
-        "paths": ["applied-ai"],
+        "paths": [
+            "applied-ai"
+        ],
         "privacy": "Collaborative prototype, not a validated recommendation service. Matching-invariant tests are included; real-world match quality and adoption are not benchmarked. Sensitive deployments need stronger identity, consent, and data controls.",
-        "tags": ["Hackathon", "Semantic Matching", "Product Engineering", "Explainable Recommendations"],
-        "links": [{"label": "Team Repository", "url": "https://github.com/Sandeepbhuiya29/Hackahacka"}]
+        "tags": [
+            "Hackathon",
+            "Semantic Matching",
+            "Product Engineering",
+            "Explainable Recommendations"
+        ],
+        "links": [
+            {
+                "label": "Team Repository",
+                "url": "https://github.com/Sandeepbhuiya29/Hackahacka"
+            }
+        ],
+        "topics": [
+            "ai"
+        ],
+        "featured": false
     },
     {
         "title": "Semantic Studio — Executable Workflow Workspace",
-        "featured": true,
-        "featured_order": 6,
+        "featured": false,
         "description": "Prompt-first workspace and visual compiler lab for authoring, inspecting, debugging, and demonstrating typed executable workflows through one canonical semantic representation.",
         "role": "AI Systems Engineer / Language and Interface Designer",
         "result": "Implemented a semantic AST, schema/type/graph validation, execution IR, trace-producing runtime, generated TypeScript, semantic diffs, version history, and frontend app interfaces. Shared benchmark fixtures compare runtime, references, and generated code.",
         "why": "Lets users inspect the meaning, constraints, execution, and generated implementation behind a workflow instead of treating generated code as an opaque artifact.",
         "stack": "TypeScript, React, React Flow, JSON Schema, Ajv, compiler/runtime design, SQLite",
         "status": "Implemented local prototype",
-        "paths": ["applied-ai", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "responsible-ai"
+        ],
         "privacy": "Compiler-lab model blocks and effects are deterministic mocks. Live agents and external services require configuration; generated modules are not standalone deployment bundles.",
-        "tags": ["Visual Programming", "Agent Workflows", "Compilers", "Execution Traces"]
+        "tags": [
+            "Visual Programming",
+            "Agent Workflows",
+            "Compilers",
+            "Execution Traces"
+        ],
+        "topics": [
+            "ai",
+            "research"
+        ]
     },
     {
         "title": "StepLens — Camera-Guided Task Assistance",
@@ -34,9 +61,22 @@
         "why": "Explores contextual visual guidance while keeping uncertain observations and physical-task confirmations visible to the person doing the work.",
         "stack": "JavaScript, getUserMedia, Node.js, structured vision responses, state-based task gating",
         "status": "Private hosted prototype",
-        "paths": ["applied-ai", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "responsible-ai"
+        ],
         "privacy": "Camera preview and sample flow are implemented. Real image analysis requires a server API key; mocked browser tests do not validate vision accuracy or repair safety. The hosted demo remains private.",
-        "tags": ["Computer Vision", "Guided Interfaces", "Accessibility", "Human Confirmation"]
+        "tags": [
+            "Computer Vision",
+            "Guided Interfaces",
+            "Accessibility",
+            "Human Confirmation"
+        ],
+        "topics": [
+            "ai",
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "Intermission — Video Attention Switch",
@@ -46,9 +86,20 @@
         "why": "Gives the viewer a deliberate way to switch attention without changing the underlying stream.",
         "stack": "JavaScript, Chrome extension APIs, HTML video, chrome.storage.local",
         "status": "Implemented unpacked extension",
-        "paths": ["applied-ai"],
+        "paths": [
+            "applied-ai"
+        ],
         "privacy": "Manual activation only. V0 does not detect ads, skip content, alter playback speed, or support every fullscreen/embedded-video scenario.",
-        "tags": ["Browser Extension", "Media Interfaces", "Local Storage", "Product Engineering"]
+        "tags": [
+            "Browser Extension",
+            "Media Interfaces",
+            "Local Storage",
+            "Product Engineering"
+        ],
+        "topics": [
+            "ai"
+        ],
+        "featured": false
     },
     {
         "title": "Locstack — Media and Lyrics Localisation",
@@ -58,10 +109,28 @@
         "why": "Keeps timing, readability, cultural nuance, and human review in the same localisation workflow.",
         "stack": "Python, ASR, LLM APIs, ffmpeg, WebSockets, Chrome extension, WebAudio",
         "status": "Implemented research prototype",
-        "paths": ["applied-ai", "analytics"],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
         "privacy": "Voice cloning and dubbing are not implemented. Cultural and cadence checks are advisory; no localisation-quality benchmark is claimed, and DRM-protected video capture is unsupported.",
-        "tags": ["Media AI", "Subtitles", "Lyrics Adaptation", "Streaming"],
-        "links": [{"label": "Related Writing", "url": "https://brainvomit.blog/ai-localisation-for-media/"}]
+        "tags": [
+            "Media AI",
+            "Subtitles",
+            "Lyrics Adaptation",
+            "Streaming"
+        ],
+        "links": [
+            {
+                "label": "Related Writing",
+                "url": "https://brainvomit.blog/ai-localisation-for-media/"
+            }
+        ],
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "Text to Visual Breakdown",
@@ -71,9 +140,20 @@
         "why": "Makes a visual brief inspectable and reusable before committing to a production workflow.",
         "stack": "JavaScript, HTML, CSS, deterministic parsing, JSON contracts",
         "status": "Implemented browser prototype",
-        "paths": ["applied-ai"],
+        "paths": [
+            "applied-ai"
+        ],
         "privacy": "The current parser is deterministic; model-generated interpretation is a future extension.",
-        "tags": ["Visual Interfaces", "Storyboarding", "Structured Output", "Product Prototyping"]
+        "tags": [
+            "Visual Interfaces",
+            "Storyboarding",
+            "Structured Output",
+            "Product Prototyping"
+        ],
+        "topics": [
+            "ai"
+        ],
+        "featured": false
     },
     {
         "title": "Known / India — Cultural Discovery",
@@ -82,10 +162,27 @@
         "result": "Delivered a public interface for moving from a familiar cultural reference to its context, related traditions, and exploration routes.",
         "why": "Connects discovery to context rather than treating culture as isolated recommendations.",
         "status": "Deployed prototype",
-        "paths": ["applied-ai", "analytics"],
-        "tags": ["Cultural Discovery", "Interactive Media", "Editorial Product"],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
+        "tags": [
+            "Cultural Discovery",
+            "Interactive Media",
+            "Editorial Product"
+        ],
         "link": "https://known-india-discovery.chinmayarora2001.chatgpt.site",
-        "links": [{"label": "Live Prototype", "url": "https://known-india-discovery.chinmayarora2001.chatgpt.site"}]
+        "links": [
+            {
+                "label": "Live Prototype",
+                "url": "https://known-india-discovery.chinmayarora2001.chatgpt.site"
+            }
+        ],
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "THE COMPANY — Immersive Fashion Exhibition",
@@ -95,9 +192,20 @@
         "why": "Explores product discovery through spatial interaction while retaining conventional navigation and keyboard access.",
         "stack": "Next.js, TypeScript, React Three Fiber, Drei, Three.js, GSAP ScrollTrigger",
         "status": "Implemented frontend prototype",
-        "paths": ["applied-ai"],
+        "paths": [
+            "applied-ai"
+        ],
         "privacy": "Garments are procedural development assets, not production cloth simulation. A commerce interface does not establish a live checkout or deployed store.",
-        "tags": ["Creative Development", "WebGL", "3D Interfaces", "Frontend Engineering"]
+        "tags": [
+            "Creative Development",
+            "WebGL",
+            "3D Interfaces",
+            "Frontend Engineering"
+        ],
+        "topics": [
+            "ai"
+        ],
+        "featured": false
     },
     {
         "title": "Live Seismic ML Pipeline",
@@ -106,11 +214,45 @@
         "result": "Implemented idempotent ingestion, validation gates, temporal evaluation, conformal prediction intervals, MLflow tracking, Evidently reports, and scheduled GitHub Actions workflows.",
         "why": "Supports review of already-detected events that are inconsistent with their recording network; it does not forecast earthquakes.",
         "stack": "Python, scikit-learn, DuckDB, Great Expectations, MLflow, Evidently, GitHub Actions",
-        "status": "Implemented pipeline",
-        "paths": ["data-science", "applied-ai", "analytics"],
-        "tags": ["MLOps", "Live Data", "Conformal Prediction", "Data Quality"],
+        "status": "Scheduled pipeline · every 6 hours",
+        "paths": [
+            "data-science",
+            "applied-ai",
+            "analytics"
+        ],
+        "tags": [
+            "MLOps",
+            "DuckDB",
+            "Data Quality",
+            "Conformal Prediction"
+        ],
         "link": "https://github.com/ChinmayA301/Live-Seismic-ML-Pipeline",
-        "links": [{"label": "GitHub", "url": "https://github.com/ChinmayA301/Live-Seismic-ML-Pipeline"}]
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Live-Seismic-ML-Pipeline"
+            },
+            {
+                "label": "Live observatory",
+                "url": "https://app.chinmayarora.com/live-data-lab/observatories/seismic/"
+            },
+            {
+                "label": "Live pipeline status",
+                "url": "https://github.com/ChinmayA301/Live-Seismic-ML-Pipeline/blob/main/reports/STATUS.md"
+            }
+        ],
+        "summary": "USGS → DuckDB → validation → calibrated scoring, with a live observatory for report quality and pipeline execution.",
+        "topics": [
+            "pipelines",
+            "research"
+        ],
+        "featured": true,
+        "featured_order": 1,
+        "preview": {
+            "src": "/assets/projects/seismic-observatory.png",
+            "alt": "Live seismic observatory showing revision-pinned error and interval coverage charts",
+            "caption": "Live observatory · screenshot from Nov 12, 2026"
+        }
     },
     {
         "title": "Photon-Limited Imaging — Signal Quality Audit",
@@ -120,11 +262,30 @@
         "why": "Tests signal recovery in low-photon conditions while separating microscopy evidence from the motivating biomedical application.",
         "stack": "Python, Poisson–Gaussian modeling, Anscombe transforms, classical denoising, PSNR/SSIM",
         "status": "Partially implemented research",
-        "paths": ["data-science", "applied-ai"],
+        "paths": [
+            "data-science",
+            "applied-ai"
+        ],
         "privacy": "Evaluated on microscopy analog data, not clinical UPE measurements; no diagnostic claims.",
-        "tags": ["Computer Vision", "Statistical Imaging", "Noise Modeling", "Evaluation"],
+        "tags": [
+            "Computer Vision",
+            "Statistical Imaging",
+            "Noise Modeling",
+            "Evaluation"
+        ],
         "link": "https://github.com/ChinmayA301/Photon-Limited-Imaging",
-        "links": [{"label": "GitHub", "url": "https://github.com/ChinmayA301/Photon-Limited-Imaging"}]
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/Photon-Limited-Imaging"
+            }
+        ],
+        "summary": "Audit signal quality and model behavior under photon-limited imaging.",
+        "topics": [
+            "ai",
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "Algorithmic Trust Lab — Regime Benchmarking",
@@ -134,21 +295,57 @@
         "why": "Makes benchmark assumptions and resource trade-offs inspectable before selecting a model.",
         "stack": "Python, configurable experiments, tabular ML, calibration, bootstrap uncertainty",
         "status": "Benchmark implementation / full run pending",
-        "paths": ["data-science", "responsible-ai"],
+        "paths": [
+            "data-science",
+            "responsible-ai"
+        ],
         "privacy": "The first study is implemented; the other five studies are pre-registered. A completed full comparison or six finished studies is not claimed.",
-        "tags": ["ML Evaluation", "Benchmark Design", "Uncertainty", "AI Assurance"],
+        "tags": [
+            "ML Evaluation",
+            "Benchmark Design",
+            "Uncertainty",
+            "AI Assurance"
+        ],
         "link": "https://github.com/ChinmayA301/algorithmic-trust-lab",
-        "links": [{"label": "GitHub", "url": "https://github.com/ChinmayA301/algorithmic-trust-lab"}]
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/algorithmic-trust-lab"
+            }
+        ],
+        "summary": "Compare model behavior across benchmark regimes.",
+        "topics": [
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "Successful India — Companion Data Lab",
         "description": "Interactive dashboard exploring the gap between access and capability using ASER 2024 and official public statistics, with source-audited comparisons and explanatory context.",
         "role": "Data Analyst / Research Product Builder",
         "status": "Deployed prototype",
-        "paths": ["analytics", "data-science"],
-        "tags": ["Public Data", "Education Analytics", "Data Visualization"],
+        "paths": [
+            "analytics",
+            "data-science"
+        ],
+        "tags": [
+            "Public Data",
+            "Education Analytics",
+            "Data Visualization"
+        ],
         "link": "https://proxy-gap-india.chinmayarora2001.chatgpt.site",
-        "links": [{"label": "Live Data Lab", "url": "https://proxy-gap-india.chinmayarora2001.chatgpt.site"}]
+        "links": [
+            {
+                "label": "Live Data Lab",
+                "url": "https://proxy-gap-india.chinmayarora2001.chatgpt.site"
+            }
+        ],
+        "summary": "Explore education and enforcement claims through reproducible public-data audits.",
+        "topics": [
+            "research",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "Visual Operations OS — Workflow Simulation",
@@ -158,24 +355,67 @@
         "why": "Makes workflow changes inspectable before applying them to an operational process.",
         "stack": "Python, FastAPI, React, TypeScript, SQLite, JSON Schema, workflow compilation",
         "status": "Research prototype",
-        "paths": ["applied-ai", "analytics", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "analytics",
+            "responsible-ai"
+        ],
         "privacy": "Uses 2,000 synthetic shipments and mocked external integrations; it is not a customer freight deployment or a validated predictor of business savings.",
-        "tags": ["Solution Architecture", "Workflow Simulation", "Decision Traces", "Full Stack"]
+        "tags": [
+            "Solution Architecture",
+            "Workflow Simulation",
+            "Decision Traces",
+            "Full Stack"
+        ],
+        "summary": "Edit an operations graph and replay decisions against synthetic shipment history.",
+        "topics": [
+            "ai",
+            "research",
+            "bi"
+        ],
+        "featured": false,
+        "link": "https://github.com/ChinmayA301/viz-dev",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/viz-dev"
+            },
+            {
+                "label": "Live demo",
+                "url": "https://visual-ops-os.fly.dev"
+            }
+        ]
     },
     {
         "title": "Venture Command — Agent Workflow Workstation",
-        "featured": true,
-        "featured_order": 7,
+        "featured": false,
         "description": "Local-first Python/SQLite workstation that turns goals and versioned project knowledge into structured plans, dependency-aware tasks, bounded worker handoffs, and reviewable artifacts through a JavaScript dashboard.",
         "role": "Applied AI Engineer / Workflow Architect",
         "result": "Implemented plan validation, source-revision binding, durable jobs, cancellation, conservative recovery, backup/restore, scoped worker APIs, and an optional MCP bridge. One synthetic live Codex planning test passed; broader worker orchestration was tested with mocks.",
         "why": "Makes context changes, execution limits, dependencies, and human review explicit before work proceeds.",
         "stack": "Python, SQLite, JavaScript, Codex CLI, structured JSON, MCP, versioned knowledge",
         "status": "Local research prototype",
-        "paths": ["applied-ai", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "responsible-ai"
+        ],
         "privacy": "Roles execute through one local supervisor. Parallel autonomous workers, external-bot dispatch, and continuous monitoring are not established capabilities.",
-        "tags": ["Agent Orchestration", "Context Engineering", "Persistent State", "Human Review"],
-        "links": [{"label": "Engineering case study", "url": "https://brainvomit.blog/engineering-agent-workflows/"}]
+        "tags": [
+            "Agent Orchestration",
+            "Context Engineering",
+            "Persistent State",
+            "Human Review"
+        ],
+        "links": [
+            {
+                "label": "Engineering case study",
+                "url": "https://brainvomit.blog/engineering-agent-workflows/"
+            }
+        ],
+        "topics": [
+            "ai",
+            "research"
+        ]
     },
     {
         "title": "ContentOS — Evidence and Editorial Workflows",
@@ -185,10 +425,30 @@
         "why": "Connects an approved draft to the exact payload intended for delivery and keeps analytics tied to their sources and reporting windows.",
         "stack": "SQLite, OAuth, macOS Keychain, Cloudflare Workers, analytics ingestion, content hashing",
         "status": "Local application / publishing prototype",
-        "paths": ["applied-ai", "analytics", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "analytics",
+            "responsible-ai"
+        ],
         "privacy": "Website analytics reads, Instagram test-account authentication, and synthetic media transport were verified. Production social publishing and unattended model-based production are not established.",
-        "tags": ["Workflow Automation", "Approval Controls", "OAuth", "Analytics Engineering"],
-        "links": [{"label": "Engineering case study", "url": "https://brainvomit.blog/engineering-agent-workflows/"}]
+        "tags": [
+            "Workflow Automation",
+            "Approval Controls",
+            "OAuth",
+            "Analytics Engineering"
+        ],
+        "links": [
+            {
+                "label": "Engineering case study",
+                "url": "https://brainvomit.blog/engineering-agent-workflows/"
+            }
+        ],
+        "topics": [
+            "ai",
+            "research",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "Aegis Conformance — AI Evaluation and Evidence Engine",
@@ -198,10 +458,33 @@
         "why": "Connects deployment decisions to inspectable evidence while keeping authorization with a responsible human sponsor.",
         "stack": "Python, Pydantic, HTTP adapters, statistical evaluation, reproducible manifests, SHA-256/HMAC",
         "status": "Research implementation",
-        "paths": ["applied-ai", "responsible-ai", "data-science"],
+        "paths": [
+            "applied-ai",
+            "responsible-ai",
+            "data-science"
+        ],
         "privacy": "Synthetic fixtures exercise the pipeline. No published frontier-model ranking or accredited compliance certification is claimed.",
-        "tags": ["AI Evaluation", "AI Assurance", "Evidence Gates", "Reproducibility"],
-        "links": [{"label": "Engineering case study", "url": "https://brainvomit.blog/engineering-agent-workflows/"}, {"label": "Related Writing", "url": "https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/"}]
+        "tags": [
+            "AI Evaluation",
+            "AI Assurance",
+            "Evidence Gates",
+            "Reproducibility"
+        ],
+        "links": [
+            {
+                "label": "Engineering case study",
+                "url": "https://brainvomit.blog/engineering-agent-workflows/"
+            },
+            {
+                "label": "Related Writing",
+                "url": "https://brainvomit.blog/behavioral-policy-conformance-enterprise-ai/"
+            }
+        ],
+        "topics": [
+            "ai",
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "Aegis AI Governance & Readiness Platform",
@@ -211,7 +494,10 @@
         "why": "Helps regulated teams decide where AI is safe and worthwhile before procurement or sensitive-data exposure.",
         "stack": "AI readiness scoring, risk registers, human-in-the-loop controls, audit evidence, Cloudflare",
         "status": "Research prototype",
-        "paths": ["responsible-ai", "applied-ai"],
+        "paths": [
+            "responsible-ai",
+            "applied-ai"
+        ],
         "privacy": "Product and deployment shared; private implementation details withheld.",
         "tags": [
             "AI Governance",
@@ -241,12 +527,16 @@
                 "label": "Governance Essay",
                 "url": "https://brainvomit.blog/ai-governance-privacy-trust-layer/"
             }
-        ]
+        ],
+        "topics": [
+            "ai",
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "PolyRAG: Multi-Model Governance RAG",
-        "featured": true,
-        "featured_order": 4,
+        "featured": false,
         "problem": "Policy-heavy teams need grounded answers they can compare against the same retrieved evidence instead of trusting unsupported model fluency.",
         "contribution": "Designed and built the ingestion, shared-retrieval, multi-model comparison, citation, evaluation, API, and deployment workflow.",
         "description": "Citation-grounded RAG over real AI-governance documents with one retrieval pass and side-by-side answers from multiple OpenAI-compatible models; includes ingestion, FAISS indexing, OCR fallback, evaluation, FastAPI, Docker, and hosted demo.",
@@ -255,7 +545,10 @@
         "why": "Makes LLM comparison more auditable and useful for policy-heavy questions where unsupported fluency is a real risk.",
         "stack": "Python, FAISS, FastAPI, Docker, OCR, LLM APIs",
         "status": "Deployed demo",
-        "paths": ["applied-ai", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "responsible-ai"
+        ],
         "tags": [
             "RAG",
             "LLM Evaluation",
@@ -272,6 +565,11 @@
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/PolyRAG"
             }
+        ],
+        "summary": "Compare retrieval and model responses in a governance-focused RAG workspace.",
+        "topics": [
+            "ai",
+            "research"
         ]
     },
     {
@@ -282,7 +580,10 @@
         "why": "Turns noisy sports reporting into an explainable evidence product where readers can inspect why a claim is trusted.",
         "stack": "TypeScript, React, PostgreSQL, deterministic scoring, AI extraction, source-reliability analytics",
         "status": "Deployed demo",
-        "paths": ["applied-ai", "analytics"],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
         "privacy": "No private repo or internal code linked; public deployment shared.",
         "link": "https://transfer-signal.vercel.app/",
         "tags": [
@@ -296,7 +597,11 @@
                 "label": "Live Site",
                 "url": "https://transfer-signal.vercel.app/"
             }
-        ]
+        ],
+        "topics": [
+            "sports"
+        ],
+        "featured": false
     },
     {
         "title": "Stock Analyzer",
@@ -306,7 +611,10 @@
         "why": "Reduces the friction between monitoring a position, investigating a signal, and deciding what deserves deeper research.",
         "stack": "Market data, portfolio analytics, time-series signals, financial visualization, explainable decision support",
         "status": "Deployed demo",
-        "paths": ["analytics", "data-science"],
+        "paths": [
+            "analytics",
+            "data-science"
+        ],
         "privacy": "Live product shared; no brokerage credentials, private holdings, or user financial data are exposed through the portfolio.",
         "tags": [
             "Financial Analytics",
@@ -320,7 +628,12 @@
                 "label": "Live App",
                 "url": "https://www.investtracker.aiautomatedapp.com"
             }
-        ]
+        ],
+        "topics": [
+            "research",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "Multi-Agent AI-Native ERP for Compliance Mapping",
@@ -330,14 +643,22 @@
         "why": "Makes compliance operational: teams can see what must happen, who owns it, and what evidence proves it happened.",
         "stack": "Multi-agent workflows, compliance knowledge graphs, evidence mapping, orchestration, audit trails",
         "status": "In development",
-        "paths": ["applied-ai", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "responsible-ai"
+        ],
         "privacy": "Concept and capability shared; implementation details, schemas, and private code withheld.",
         "tags": [
             "Multi-Agent Systems",
             "AI ERP",
             "Compliance Mapping",
             "Operations"
-        ]
+        ],
+        "topics": [
+            "ai",
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "AI Survey & Interviewing Tool",
@@ -347,14 +668,22 @@
         "why": "Preserves qualitative nuance while making stakeholder research usable for prioritization and decision-making.",
         "stack": "Adaptive interviewing, structured extraction, multilingual capture, response quality scoring, insight synthesis",
         "status": "In development",
-        "paths": ["applied-ai", "analytics"],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
         "privacy": "Public description only; no private respondent data, prompts, or implementation details exposed.",
         "tags": [
             "AI Interviews",
             "Survey Intelligence",
             "Research Ops",
             "Insight Synthesis"
-        ]
+        ],
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "AI Football Intelligence & Tracking System",
@@ -364,33 +693,47 @@
         "why": "Football data becomes more useful when events, sources, roles, and tactical context are evaluated together rather than as isolated metrics.",
         "stack": "Sports data pipelines, confidence scoring, source ledgers, tactical analytics, editorial dashboards",
         "status": "In development",
-        "paths": ["data-science", "analytics"],
+        "paths": [
+            "data-science",
+            "analytics"
+        ],
         "privacy": "No private repo linked; public-facing deployment links can be added when each surface is ready.",
         "tags": [
             "Sports Analytics",
             "Football Intelligence",
             "Tracking Systems",
             "Editorial Product"
-        ]
+        ],
+        "topics": [
+            "sports"
+        ],
+        "featured": false
     },
     {
         "title": "IPL Dash",
         "description": "Interactive cricket analytics dashboard for IPL exploration, built to make match, team, player, and performance signals easier to scan through a public web interface.",
         "status": "Deployed demo",
-        "paths": ["analytics", "data-science"],
+        "paths": [
+            "analytics",
+            "data-science"
+        ],
         "tags": [
             "Sports Analytics",
             "Cricket Analytics",
             "Dashboard",
             "Data Visualization"
         ],
-        "link": "https://app.chinmayarora.com/ipl-dash/",
+        "link": "https://github.com/ChinmayA301/ipl-dash",
         "links": [
             {
-                "label": "Live Dashboard",
-                "url": "https://app.chinmayarora.com/ipl-dash/"
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/ipl-dash"
             }
-        ]
+        ],
+        "topics": [
+            "sports"
+        ],
+        "featured": false
     },
     {
         "title": "Opportunity Research & Outreach Agent",
@@ -400,14 +743,22 @@
         "why": "Keeps opportunity evidence, prior context, and consequential communications available for human review.",
         "stack": "Python, workflow automation, opportunity research, evidence logging, human approval",
         "status": "Research prototype",
-        "paths": ["applied-ai", "analytics"],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
         "privacy": "Capability described without exposing customer lists, prompts, workflows, or private code.",
         "tags": [
             "AI Agents",
             "Lead Discovery",
             "Opportunity Research",
             "Workflow Automation"
-        ]
+        ],
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "AI Governance Setup for Regulated Teams",
@@ -417,14 +768,22 @@
         "why": "Gives regulated teams an actionable path from policy language to controlled AI experimentation and accountable deployment.",
         "stack": "NIST AI RMF, policy mapping, model cards, vendor risk, impact assessment, monitoring design",
         "status": "In development",
-        "paths": ["responsible-ai", "applied-ai"],
+        "paths": [
+            "responsible-ai",
+            "applied-ai"
+        ],
         "privacy": "Sector-level framing only; no client-specific controls, data, or confidential policies exposed.",
         "tags": [
             "AI Governance",
             "HIPAA",
             "Finance",
             "Public Sector"
-        ]
+        ],
+        "topics": [
+            "ai",
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "Decision Intelligence",
@@ -434,7 +793,10 @@
         "why": "Helps decision-makers pressure-test ambiguous choices while keeping uncertainty and competing interpretations visible.",
         "stack": "FastAPI, Next.js, pgvector, retrieval, LLM orchestration, scenario analysis",
         "status": "Research prototype",
-        "paths": ["applied-ai", "analytics"],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
         "tags": [
             "Decision Intelligence",
             "AI Strategy",
@@ -447,7 +809,12 @@
                 "label": "Open live app",
                 "url": "https://decision-intelligence-azmg.vercel.app/"
             }
-        ]
+        ],
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "Operations Control Tower",
@@ -459,9 +826,12 @@
         "role": "Analytics Engineer / Data Analyst",
         "result": "Converted 98,666 real orders into a validated star schema and intervention views; late orders were 6.5× more likely to receive a 1–2-star review.",
         "why": "Moves operations reporting from descriptive totals toward a repeatable way to identify where logistics attention is needed.",
-        "stack": "Python, DuckDB SQL, dimensional modeling, Great Expectations, Looker Studio",
+        "stack": "SQL, DuckDB, Python, pandas, Looker Studio, dimensional modeling, KPI design",
         "status": "Completed analysis",
-        "paths": ["analytics", "data-science"],
+        "paths": [
+            "analytics",
+            "data-science"
+        ],
         "tags": [
             "Analytics Engineering",
             "Looker Studio",
@@ -473,13 +843,27 @@
             {
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/Operations-Control-Tower"
+            },
+            {
+                "label": "Live dashboard",
+                "url": "https://datastudio.google.com/reporting/b0b5e8fa-2c0c-4d5a-be35-3e319b6cb28e"
             }
-        ]
+        ],
+        "summary": "Five Looker Studio views turn marketplace orders into supplier, delivery, and product decisions.",
+        "topics": [
+            "pipelines",
+            "research",
+            "bi"
+        ],
+        "preview": {
+            "src": "/assets/projects/operations-overview.png",
+            "alt": "Executive Overview page of the Supply Chain Control Tower Looker Studio report",
+            "caption": "Looker Studio · executive overview"
+        }
     },
     {
         "title": "Healthcare Readmission Risk with Fairness & Calibration",
-        "featured": true,
-        "featured_order": 1,
+        "featured": false,
         "problem": "A readmission model can look strong in aggregate while remaining poorly calibrated or producing materially different errors across patient groups.",
         "contribution": "Designed the leakage-controlled cohort and evaluation, trained the models, analyzed calibration and subgroup errors, and wrote the model card.",
         "description": "Responsible-AI risk-modeling prototype on 101,766 real de-identified hospital encounters with leakage-controlled cohort design, calibration, subgroup fairness, SHAP, Fairlearn checks, and an honest model-card recommendation not to deploy as-is.",
@@ -488,7 +872,10 @@
         "why": "Demonstrates that responsible healthcare ML includes knowing when performance and subgroup behavior do not justify deployment.",
         "stack": "Python, scikit-learn, XGBoost, Fairlearn, SHAP, MLflow",
         "status": "Completed analysis",
-        "paths": ["data-science", "responsible-ai"],
+        "paths": [
+            "data-science",
+            "responsible-ai"
+        ],
         "tags": [
             "Responsible AI",
             "Healthcare ML",
@@ -501,12 +888,15 @@
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/Risk-Prediction-with-Fairness-Geography"
             }
+        ],
+        "summary": "Compare risk predictions across calibration, fairness, and geography.",
+        "topics": [
+            "research"
         ]
     },
     {
         "title": "Tabular ML Benchmark: Human FE vs AutoML",
-        "featured": true,
-        "featured_order": 2,
+        "featured": false,
         "problem": "Teams often compare model families without isolating the effects of preprocessing, split design, calibration, runtime, and distribution shift.",
         "contribution": "Designed the config-driven benchmark, fixed the evaluation protocol, ran the cross-domain experiments, and interpreted performance, calibration, runtime, and shift robustness.",
         "description": "Config-driven benchmark across healthcare, operations, and labor-market datasets measuring AUC, calibration, runtime, and robustness under shift; shows preprocessing and validation design matter more than model shopping.",
@@ -515,7 +905,10 @@
         "why": "Shows why reproducible preprocessing, calibration, and validation under shift matter more than model shopping.",
         "stack": "Python, scikit-learn, MLflow, Evidently, config-driven experiments",
         "status": "Completed analysis",
-        "paths": ["data-science", "responsible-ai"],
+        "paths": [
+            "data-science",
+            "responsible-ai"
+        ],
         "tags": [
             "ML Evaluation",
             "MLOps",
@@ -528,12 +921,16 @@
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/Tabular-ML-Benchmark-Human-Feature-Engineering-vs-AutoML-Agentic-Baselines"
             }
+        ],
+        "summary": "Human feature engineering versus AutoML and agentic baselines.",
+        "topics": [
+            "pipelines",
+            "research"
         ]
     },
     {
         "title": "SKM Football Analytics",
-        "featured": true,
-        "featured_order": 5,
+        "featured": false,
         "problem": "Isolated football event totals miss role, game state, and the process that makes decisive moments possible.",
         "contribution": "Developed and tested an original key-moment framework on StatsBomb open data, documented assumptions and role effects, and published reproducible analysis and writing.",
         "description": "Original football analytics research connecting event value, key moments, tactical context, and role-aware interpretation without presenting descriptive results as causal effects.",
@@ -542,7 +939,10 @@
         "why": "Relevant to sports analytics, media products, fan intelligence, player evaluation, and transfer analysis.",
         "stack": "Python, StatsBomb, pandas, probabilistic modeling, validation, Streamlit",
         "status": "Research prototype",
-        "paths": ["data-science", "analytics"],
+        "paths": [
+            "data-science",
+            "analytics"
+        ],
         "tags": [
             "Sports Analytics",
             "Event Data",
@@ -563,6 +963,10 @@
                 "label": "Article",
                 "url": "https://brainvomit.blog/successful-key-moment-metric/"
             }
+        ],
+        "summary": "Explore football event data, team styles, and tactical comparisons.",
+        "topics": [
+            "sports"
         ]
     },
     {
@@ -573,7 +977,10 @@
         "why": "A rigorous negative result showing cohort design, calibration, leakage control, and honest interpretation of social-risk variables, not a deployable clinical model.",
         "stack": "Python, pandas, scikit-learn, XGBoost, SHAP, longitudinal validation",
         "status": "Completed analysis",
-        "paths": ["data-science", "responsible-ai"],
+        "paths": [
+            "data-science",
+            "responsible-ai"
+        ],
         "privacy": "Only aggregate outputs, figures, and deidentified methodology are public; no patient-level or institution-restricted data is shared.",
         "tags": [
             "Healthcare ML",
@@ -587,7 +994,12 @@
                 "label": "Explore implementation",
                 "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/capstone"
             }
-        ]
+        ],
+        "summary": "Does neighborhood deprivation improve future diabetes-risk predictions?",
+        "topics": [
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "Public-Sector AI Readiness & Efficiency Evaluation",
@@ -597,7 +1009,10 @@
         "why": "Shows the bridge from data science and AI evaluation to privacy, equity, accessibility, human review, and operational decision-making in a high-stakes public context.",
         "stack": "Python, scikit-learn, SHAP, public 311 data, document AI benchmarks, Power BI",
         "status": "Completed analysis",
-        "paths": ["responsible-ai", "analytics"],
+        "paths": [
+            "responsible-ai",
+            "analytics"
+        ],
         "privacy": "Public evidence uses open or synthetic proxies; county and resident data, internal workflows, and confidential implementation details are not exposed.",
         "tags": [
             "Responsible AI",
@@ -615,7 +1030,14 @@
                 "label": "Related writing",
                 "url": "https://brainvomit.blog/the-impact-of-ai-on-local-government-digital-experience/"
             }
-        ]
+        ],
+        "summary": "A county AI decision framework connecting workflow baselines, evaluation, and resident equity.",
+        "topics": [
+            "research",
+            "bi",
+            "civic"
+        ],
+        "featured": false
     },
     {
         "title": "Financial Document Intelligence (FinBizInfo)",
@@ -625,7 +1047,10 @@
         "why": "Reduces manual document parsing while keeping analysts connected to the source evidence behind extracted financial claims.",
         "stack": "Python, OCR, RAG, LangChain, FastAPI, structured extraction, citation review",
         "status": "Deployed demo",
-        "paths": ["applied-ai", "analytics"],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
         "tags": [
             "Financial NLP",
             "RAG",
@@ -642,7 +1067,13 @@
                 "label": "Related Writing",
                 "url": "https://brainvomit.blog/financial-balance-sheet-rag/"
             }
-        ]
+        ],
+        "summary": "Extract financial ratios, risk flags, and source-backed answers from noisy PDFs.",
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "Freight Forwarding Finance BI",
@@ -652,14 +1083,37 @@
         "why": "Gives freight-finance teams a consistent way to trace performance questions back to operational source reports.",
         "stack": "Power BI, DAX, SQL, CargoWise reporting, finance KPI design, reconciliation",
         "status": "Completed analysis",
-        "paths": ["analytics"],
+        "paths": [
+            "analytics"
+        ],
         "privacy": "Described at outcome level only; no client data, private repo, or internal dashboards exposed.",
         "tags": [
             "Power BI",
             "CargoWise",
             "Logistics",
             "Finance Analytics"
-        ]
+        ],
+        "summary": "Power BI views for job margins, receivables, DSO, and source-report reconciliation.",
+        "topics": [
+            "bi"
+        ],
+        "featured": false,
+        "link": "/experience/#freight-finance",
+        "links": [
+            {
+                "label": "Dashboard mock",
+                "url": "/dashboards/?view=freight"
+            },
+            {
+                "label": "Experience",
+                "url": "/experience/#freight-finance"
+            }
+        ],
+        "preview": {
+            "src": "/assets/projects/freight-mock.svg",
+            "alt": "Illustrative freight finance dashboard",
+            "caption": "Dashboard mock · illustrative data"
+        }
     },
     {
         "title": "Data Science Career Audit",
@@ -669,7 +1123,10 @@
         "why": "Separates durable data-science judgment from the job-title bundle and shows how hiring language is changing under AI pressure.",
         "stack": "Python, pandas, NLP, public job-posting data, descriptive statistics, reproducible reporting",
         "status": "Completed analysis",
-        "paths": ["data-science", "analytics"],
+        "paths": [
+            "data-science",
+            "analytics"
+        ],
         "tags": [
             "Labor Analytics",
             "NLP",
@@ -686,7 +1143,13 @@
                 "label": "Essay",
                 "url": "https://brainvomit.blog/data-science-career-audit/"
             }
-        ]
+        ],
+        "summary": "Public job-posting analysis of how the data-science skill bundle is changing.",
+        "topics": [
+            "research",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "SignalGraph",
@@ -696,7 +1159,10 @@
         "why": "Provides investors and technical diligence teams with a more defensible signal for open-source credibility.",
         "stack": "FastAPI, PostgreSQL, graph signals, anomaly scoring, explainable risk, Recharts",
         "status": "Research prototype",
-        "paths": ["analytics", "applied-ai"],
+        "paths": [
+            "analytics",
+            "applied-ai"
+        ],
         "tags": [
             "Trust & Safety",
             "Graph Signals",
@@ -713,7 +1179,13 @@
                 "label": "Related Writing",
                 "url": "https://brainvomit.blog/signalgraph-github-fake-star-economy/"
             }
-        ]
+        ],
+        "summary": "Graph and anomaly signals for assessing open-source credibility.",
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "featured": false
     },
     {
         "title": "Wax Seal Trust Provenance",
@@ -723,7 +1195,10 @@
         "why": "Makes authenticity and tamper evidence understandable to people instead of hiding trust entirely inside backend cryptography.",
         "stack": "TypeScript, React, XState, Ed25519 signatures, CLI tooling, provenance schemas",
         "status": "Deployed demo",
-        "paths": ["applied-ai", "responsible-ai"],
+        "paths": [
+            "applied-ai",
+            "responsible-ai"
+        ],
         "tags": [
             "Trust Provenance",
             "Governance",
@@ -744,13 +1219,22 @@
                 "label": "Related Writing",
                 "url": "https://brainvomit.blog/wax-seal-cybersecurity/"
             }
-        ]
+        ],
+        "summary": "Sign, verify, and display provenance for digital artifacts.",
+        "topics": [
+            "ai",
+            "research"
+        ],
+        "featured": false
     },
     {
         "title": "Group of Death",
         "description": "Daily World Cup-themed draft-and-simulate game: pull player cards under constraints, build an XI, run a deterministic SKM match engine, and share the reveal card. Built as a React/Vite product with pure TypeScript game logic, Vercel functions, Upstash-backed daily seed/leaderboard support, and mobile-first interaction design.",
         "status": "Deployed demo",
-        "paths": ["data-science", "analytics"],
+        "paths": [
+            "data-science",
+            "analytics"
+        ],
         "tags": [
             "React",
             "TypeScript",
@@ -767,13 +1251,20 @@
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/group-of-death"
             }
-        ]
+        ],
+        "topics": [
+            "sports"
+        ],
+        "featured": false
     },
     {
         "title": "Geo Visualizer for the Indian Subcontinent",
         "description": "Interactive historical flat-map visualization for culture, trade, migration, religion, political power, and ideas across the subcontinent with filters, routes, nodes, and explanatory context.",
         "status": "Interactive experiment",
-        "paths": ["analytics", "data-science"],
+        "paths": [
+            "analytics",
+            "data-science"
+        ],
         "tags": [
             "React",
             "TypeScript",
@@ -793,13 +1284,21 @@
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/Geo-Visualizer"
             }
-        ]
+        ],
+        "topics": [
+            "research",
+            "bi",
+            "civic"
+        ],
+        "featured": false
     },
     {
         "title": "Severance-Style Segmentation Interface",
         "description": "High-concept segmentation interface that turns customer, resident, or user segments into memorable identity modules with deliberate reveal, comparison views, and product-grade interaction design.",
         "status": "Interactive experiment",
-        "paths": ["analytics"],
+        "paths": [
+            "analytics"
+        ],
         "tags": [
             "React",
             "TypeScript",
@@ -819,6 +1318,305 @@
                 "label": "GitHub",
                 "url": "https://github.com/ChinmayA301/Severance-style-Visualizer"
             }
-        ]
+        ],
+        "topics": [
+            "bi"
+        ],
+        "featured": false
+    },
+    {
+        "title": "Minneapolis 311 — Service Demand Segmentation",
+        "summary": "Spatial clustering of public 311 requests into neighborhood service-demand profiles.",
+        "description": "Spatial clustering of public 311 requests into neighborhood service-demand profiles.",
+        "tags": [
+            "Python",
+            "K-means",
+            "Spatial analytics"
+        ],
+        "topics": [
+            "pipelines",
+            "civic",
+            "research"
+        ],
+        "paths": [
+            "analytics"
+        ],
+        "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/civic-service-segmentation",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/civic-service-segmentation"
+            }
+        ],
+        "status": "Exploratory analysis",
+        "source": "Graduate project archive",
+        "featured": true,
+        "featured_order": 5,
+        "preview": {
+            "src": "/assets/projects/311-workflow.svg",
+            "alt": "Public requests to spatial grid, k-means clustering, and segment profiles",
+            "caption": "Public-data workflow · notebook + Python CLI"
+        }
+    },
+    {
+        "title": "Document Triage — Public Intake Benchmarks",
+        "summary": "Document classification with a ResNet18 baseline and public RVL-CDIP benchmark data.",
+        "description": "Document classification with a ResNet18 baseline and public RVL-CDIP benchmark data.",
+        "tags": [
+            "PyTorch",
+            "Document AI",
+            "RVL-CDIP"
+        ],
+        "topics": [
+            "pipelines",
+            "ai",
+            "research"
+        ],
+        "paths": [
+            "applied-ai",
+            "data-science"
+        ],
+        "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/document-intake-public-benchmarks",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/document-intake-public-benchmarks"
+            }
+        ],
+        "status": "Public-data benchmark",
+        "source": "Graduate project archive",
+        "featured": true,
+        "featured_order": 6,
+        "preview": {
+            "src": "/assets/projects/document-workflow.svg",
+            "alt": "RVL-CDIP through ResNet18 classification to exported metrics",
+            "caption": "Benchmark workflow · notebook + Python CLI"
+        }
+    },
+    {
+        "title": "County Digital Access — Resident Segmentation",
+        "summary": "Resident access barriers, service journeys, and segmentation research for Hennepin County.",
+        "description": "Resident access barriers, service journeys, and segmentation research for Hennepin County.",
+        "tags": [
+            "Power BI",
+            "Resident research",
+            "Segmentation"
+        ],
+        "topics": [
+            "civic",
+            "bi"
+        ],
+        "paths": [
+            "analytics",
+            "responsible-ai"
+        ],
+        "link": "https://brainvomit.blog/segmentation/",
+        "links": [
+            {
+                "label": "Dashboard mock",
+                "url": "/dashboards/?view=county"
+            },
+            {
+                "label": "Research",
+                "url": "https://brainvomit.blog/segmentation/"
+            }
+        ],
+        "status": "Research exploration · dashboard mock",
+        "preview": {
+            "src": "/assets/projects/county-mock.svg",
+            "alt": "Illustrative county service access dashboard",
+            "caption": "Dashboard mock · illustrative data"
+        },
+        "featured": true,
+        "featured_order": 4
+    },
+    {
+        "title": "Luthra — Internal Search & Reporting",
+        "summary": "Semantic search with source context, plus Python/SQL automation for finance and operations.",
+        "description": "Semantic search with source context, plus Python/SQL automation for finance and operations.",
+        "tags": [
+            "Pinecone",
+            "Python",
+            "SQL"
+        ],
+        "topics": [
+            "ai",
+            "bi"
+        ],
+        "paths": [
+            "applied-ai",
+            "analytics"
+        ],
+        "link": "/experience/#luthra",
+        "links": [
+            {
+                "label": "Dashboard mock",
+                "url": "/dashboards/?view=luthra"
+            },
+            {
+                "label": "Experience",
+                "url": "/experience/#luthra"
+            }
+        ],
+        "status": "Internal work",
+        "privacy": "Internal work; client data and dashboards are not public.",
+        "featured": true,
+        "featured_order": 7,
+        "preview": {
+            "src": "/assets/projects/luthra-mock.svg",
+            "alt": "Illustrative internal search and reporting dashboard",
+            "caption": "Dashboard mock · illustrative data"
+        }
+    },
+    {
+        "title": "ML Fundamentals — From-Scratch Implementations",
+        "summary": "Perceptron, k-means/PCA, and multilayer perceptron implementations.",
+        "description": "Perceptron, k-means/PCA, and multilayer perceptron implementations.",
+        "tags": [
+            "Python",
+            "Machine learning"
+        ],
+        "topics": [
+            "research",
+            "coursework"
+        ],
+        "paths": [
+            "data-science"
+        ],
+        "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/ml-programming",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/ml-programming"
+            }
+        ],
+        "source": "Graduate coursework",
+        "status": "Coursework",
+        "featured": false
+    },
+    {
+        "title": "Sequential Decisions — Optimization & Graph Experiments",
+        "summary": "Bayesian optimization, reinforcement learning, and trend propagation experiments.",
+        "description": "Bayesian optimization, reinforcement learning, and trend propagation experiments.",
+        "tags": [
+            "Bayesian optimization",
+            "Reinforcement learning",
+            "Streamlit"
+        ],
+        "topics": [
+            "research",
+            "coursework"
+        ],
+        "paths": [
+            "data-science"
+        ],
+        "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/ai-sequence-project",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/ai-sequence-project"
+            }
+        ],
+        "source": "Graduate project archive",
+        "status": "Coursework",
+        "featured": false,
+        "preview": {
+            "src": "/assets/blog/bo_vs_random_best_so_far_ci.png",
+            "alt": "Bayesian optimization comparison research figure",
+            "caption": "Related research · optimization experiments"
+        }
+    },
+    {
+        "title": "Commercial Real Estate — Data Pipeline",
+        "summary": "Consolidate CSV and PDF property extracts into structured portfolio tables.",
+        "description": "Consolidate CSV and PDF property extracts into structured portfolio tables.",
+        "tags": [
+            "Python",
+            "ETL",
+            "CSV/PDF"
+        ],
+        "topics": [
+            "pipelines",
+            "bi",
+            "coursework"
+        ],
+        "paths": [
+            "analytics"
+        ],
+        "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/commercial-real-estate-data-pipeline",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/MS-projectss/tree/main/commercial-real-estate-data-pipeline"
+            }
+        ],
+        "source": "Graduate project archive",
+        "status": "Applied pipeline",
+        "featured": false
+    },
+    {
+        "title": "Rube Goldberg Machine — Data Structures",
+        "summary": "A C++ data-structures project with sample inputs and screenshots.",
+        "description": "A C++ data-structures project with sample inputs and screenshots.",
+        "tags": [
+            "C++",
+            "Data structures"
+        ],
+        "topics": [
+            "coursework"
+        ],
+        "paths": [
+            "data-science"
+        ],
+        "link": "https://github.com/ChinmayA301/BTech/tree/main/dsa-project",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/BTech/tree/main/dsa-project"
+            }
+        ],
+        "source": "Undergraduate coursework",
+        "status": "Coursework",
+        "featured": false
+    },
+    {
+        "title": "Twin Cities Transit Reliability Lab",
+        "description": "Validated Metro Transit snapshots with a vehicle map, route filters, schedule-estimate history and data coverage. Portable Node/SQLite collector prepared for always-on hosting.",
+        "summary": "Reported vehicle locations, schedule estimates and coverage — refreshed by a scheduled data pipeline.",
+        "status": "Scheduled snapshots · free hosting",
+        "paths": [
+            "data-science",
+            "analytics"
+        ],
+        "topics": [
+            "pipelines",
+            "civic",
+            "research"
+        ],
+        "tags": [
+            "GTFS Realtime",
+            "SQL",
+            "Temporal Evaluation",
+            "Data Quality"
+        ],
+        "stack": "GitHub Actions, GitHub Pages, Node.js, SQLite, TypeScript, GTFS Realtime, D3, Leaflet",
+        "link": "https://app.chinmayarora.com/live-data-lab/observatories/transit/",
+        "links": [
+            {
+                "label": "GitHub",
+                "url": "https://github.com/ChinmayA301/live-data-lab"
+            },
+            {
+                "label": "Live lab",
+                "url": "https://app.chinmayarora.com/live-data-lab/observatories/transit/"
+            }
+        ],
+        "featured": true,
+        "preview": {
+            "src": "/assets/projects/transit-observatory.png",
+            "alt": "Live transit lab showing real delay estimate history and timestamped vehicle positions",
+            "caption": "Real feed snapshot · Nov 12, 2026"
+        },
+        "featured_order": 2
     }
 ]

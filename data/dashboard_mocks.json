@@ -1,0 +1,52 @@
+{
+  "county": {
+    "title": "County service access",
+    "context": "Hennepin County work · illustrative dashboard concept",
+    "description": "Explore how service completion and wait times differ across sample access profiles.",
+    "unit": "days",
+    "groupLabel": "Access profile",
+    "chartLabel": "Service completion by access profile",
+    "rows": [
+      {"period":"Q1","group":"Mobile-first","volume":180,"completed":132,"time":3.1},
+      {"period":"Q1","group":"Assisted access","volume":140,"completed":84,"time":5.8},
+      {"period":"Q1","group":"Digital independent","volume":220,"completed":198,"time":1.9},
+      {"period":"Q2","group":"Mobile-first","volume":210,"completed":168,"time":2.6},
+      {"period":"Q2","group":"Assisted access","volume":160,"completed":112,"time":4.9},
+      {"period":"Q2","group":"Digital independent","volume":230,"completed":212,"time":1.7}
+    ],
+    "researchUrl": "https://brainvomit.blog/segmentation/"
+  },
+  "luthra": {
+    "title": "Internal search & reporting",
+    "context": "Luthra work · illustrative dashboard concept",
+    "description": "A sample view of knowledge requests, reporting workflows, and turnaround time.",
+    "unit": "hours",
+    "groupLabel": "Workflow",
+    "chartLabel": "Completed requests by workflow",
+    "rows": [
+      {"period":"Q1","group":"Knowledge search","volume":260,"completed":218,"time":2.4},
+      {"period":"Q1","group":"Finance reporting","volume":120,"completed":98,"time":6.8},
+      {"period":"Q1","group":"Operations requests","volume":150,"completed":111,"time":5.2},
+      {"period":"Q2","group":"Knowledge search","volume":300,"completed":267,"time":1.8},
+      {"period":"Q2","group":"Finance reporting","volume":135,"completed":119,"time":5.6},
+      {"period":"Q2","group":"Operations requests","volume":175,"completed":142,"time":4.3}
+    ],
+    "researchUrl": "/experience/#luthra"
+  },
+  "freight": {
+    "title": "Freight finance",
+    "context": "Freight-forwarding BI · illustrative dashboard concept",
+    "description": "Compare revenue, job margin, and overdue receivables across sample transport modes.",
+    "groupLabel": "Mode",
+    "chartLabel": "Job margin by transport mode",
+    "rows": [
+      {"period":"Q1","group":"Air","revenue":184000,"cost":149000,"receivables":62000,"overdue":21000},
+      {"period":"Q1","group":"Ocean","revenue":286000,"cost":240000,"receivables":94000,"overdue":38000},
+      {"period":"Q1","group":"Road","revenue":112000,"cost":89000,"receivables":29000,"overdue":7000},
+      {"period":"Q2","group":"Air","revenue":205000,"cost":162000,"receivables":66000,"overdue":18000},
+      {"period":"Q2","group":"Ocean","revenue":310000,"cost":253000,"receivables":98000,"overdue":31000},
+      {"period":"Q2","group":"Road","revenue":126000,"cost":99000,"receivables":32000,"overdue":6000}
+    ],
+    "researchUrl": "/experience/#freight-finance"
+  }
+}

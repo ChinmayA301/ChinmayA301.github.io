@@ -13,3 +13,13 @@ _site_brainvomit/
 
 # Hosted independently through Sites; the portfolio embeds its production URL.
 /dashboards/metric-substitution-audit/
+
+# Live data backend dependencies and generated deploy assets
+/live-data/node_modules/
+/live-data/public/
+/live-data/.wrangler/
+/live-data/worker-configuration.d.ts
+
+/live-data/storage/
+/live-data/*.sqlite*
+/live-data/*export*.sql

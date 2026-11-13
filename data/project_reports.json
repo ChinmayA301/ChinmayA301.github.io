@@ -241,8 +241,12 @@
         ],
         "artifacts": [
             {
-                "label": "Brief",
-                "link": ""
+                "label": "Resident segmentation study",
+                "link": "https://brainvomit.blog/segmentation/"
+            },
+            {
+                "label": "Public-sector evaluation code",
+                "link": "https://github.com/ChinmayA301/MS-projectss/tree/main/public-sector-ai-efficiency"
             }
         ]
     },
@@ -304,7 +308,7 @@
             },
             {
                 "title": "Impact",
-                "text": "Improved data acquisition speed by 4\u00d7 and reduced manual reconciliation workload."
+                "text": "Improved data acquisition speed by 4× and reduced manual reconciliation workload."
             }
         ],
         "stack": [
